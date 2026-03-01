@@ -167,6 +167,7 @@
       margin: 0 auto;
       padding: 0 20px;
       width: 100%;
+      box-sizing: border-box;
     }
 
     .badge {
@@ -214,6 +215,9 @@
       letter-spacing: -0.03em;
       margin-bottom: 20px;
       animation: fadeInUp 0.8s ease 0.2s both;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .gradient-text {
@@ -244,6 +248,8 @@
       margin: 0 auto 32px;
       line-height: 1.6;
       animation: fadeInUp 1s ease 0.4s both;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .cta-buttons {
@@ -411,10 +417,14 @@
       border-radius: 20px;
       backdrop-filter: blur(10px);
       animation: fadeInUp 1s ease 0.8s both;
+      max-width: 100%;
+      box-sizing: border-box;
+      flex-wrap: wrap;
     }
 
     .hero-stat {
       text-align: center;
+      min-width: 80px;
     }
 
     .stat-number {
@@ -426,12 +436,14 @@
       background-clip: text;
       line-height: 1.2;
       margin-bottom: 4px;
+      white-space: nowrap;
     }
 
     .stat-label {
       font-size: 13px;
       color: var(--text-secondary);
       font-weight: 500;
+      white-space: nowrap;
     }
 
     /* Hero Quick Links */
@@ -489,22 +501,32 @@
       }
 
       .hero-content {
-        padding: 0 16px;
+        padding: 0 20px;
         text-align: center;
         width: 100%;
         max-width: 100%;
+        box-sizing: border-box;
       }
 
       h1 {
-        font-size: clamp(28px, 8vw, 40px);
+        font-size: clamp(26px, 7vw, 36px) !important;
         margin-bottom: 16px;
         text-align: center;
+        line-height: 1.2;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        padding: 0 5px;
       }
 
       .subtitle {
-        font-size: clamp(14px, 3vw, 16px);
+        font-size: clamp(14px, 3.5vw, 16px) !important;
         margin-bottom: 28px;
         text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        padding: 0 5px;
       }
 
       .badge {
@@ -519,18 +541,29 @@
         gap: 12px;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        padding: 0 10px;
       }
 
       .btn {
         padding: 12px 24px;
         font-size: 14px;
         gap: 10px;
+        max-width: 100%;
       }
 
       .hero-stats {
-        gap: 24px;
-        padding: 20px;
+        gap: 20px;
+        padding: 20px 16px;
         margin: 24px 0;
+        flex-wrap: wrap;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .hero-stat {
+        flex: 1;
+        min-width: 80px;
       }
 
       .stat-number {
@@ -565,23 +598,33 @@
       }
 
       .hero-content {
-        padding: 0 12px;
+        padding: 0 16px;
         text-align: center;
         width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
       }
 
       h1 {
-        font-size: clamp(24px, 9vw, 32px);
+        font-size: clamp(22px, 8vw, 28px) !important;
         margin-bottom: 12px;
-        line-height: 1.2;
+        line-height: 1.3;
         text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        padding: 0 5px;
       }
 
       .subtitle {
-        font-size: 14px;
+        font-size: 14px !important;
         margin-bottom: 24px;
-        line-height: 1.5;
+        line-height: 1.6;
         text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        padding: 0 5px;
       }
 
       .badge {
@@ -602,6 +645,7 @@
         gap: 10px;
         width: 100%;
         align-items: center;
+        padding: 0 10px;
       }
 
       .btn {
@@ -613,10 +657,17 @@
       }
 
       .hero-stats {
-        gap: 16px;
-        padding: 16px;
+        gap: 12px;
+        padding: 16px 12px;
         margin: 20px 0;
         flex-wrap: wrap;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .hero-stat {
+        flex: 1;
+        min-width: 70px;
       }
 
       .stat-number {
@@ -2931,6 +2982,9 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .final-cta-description {
@@ -2938,6 +2992,9 @@
       line-height: 1.6;
       color: var(--text-secondary);
       margin-bottom: 48px;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .final-cta-stats {
@@ -3224,11 +3281,18 @@
 
       .final-cta-title {
         margin-bottom: 20px;
+        font-size: clamp(24px, 6vw, 32px) !important;
+        padding: 0 10px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .final-cta-description {
         margin-bottom: 32px;
         font-size: 15px;
+        padding: 0 10px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .final-cta-stats {
@@ -3315,9 +3379,19 @@
         padding: 5px 14px;
       }
 
+      .final-cta-title {
+        font-size: clamp(20px, 7vw, 28px) !important;
+        padding: 0 10px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
       .final-cta-description {
         font-size: 14px;
         line-height: 1.5;
+        padding: 0 10px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .final-cta-stats {
@@ -4347,6 +4421,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="shared-nav.css">
 </head>
 
 <body>
@@ -4356,7 +4431,7 @@
 
   <!-- Navigation -->
   <nav class="navbar">
-    <div class="container">
+    <div class="nav-container">
       <div class="nav-content">
         <a href="index.html" class="logo">
           <span class="logo-icon">🎓</span>
@@ -4364,31 +4439,44 @@
         </a>
 
         <div class="nav-links">
-          <a href="index.html" class="nav-link">Главная</a>
+          <a href="index.html" class="nav-link active">Главная</a>
 
           <div class="nav-dropdown">
             <a href="courses.html" class="nav-link">Курсы</a>
             <div class="dropdown-content">
+              <a href="course.html">Обзор курса</a>
               <a href="pages/modules.html">12 Модулей обучения</a>
               <a href="pages/simulator.html">Симулятор переговоров</a>
               <a href="pages/calls.html">Примеры звонков</a>
               <a href="pages/cases.html">Практические кейсы</a>
+              <a href="pages/testing.html">Тестирование</a>
             </div>
           </div>
 
           <div class="nav-dropdown">
             <span class="nav-link">Инструменты</span>
             <div class="dropdown-content">
-              <a href="pages/loadboard.html">Поиск Грузов</a>
+              <a href="pages/loadboard.html">Load Board</a>
+              <a href="pages/load-finder.html">Load Finder</a>
               <a href="pages/dispatcher-cards.html">Dispatcher Cards</a>
               <a href="pages/simulator.html">Dispatch Simulator</a>
-              <a href="pages/loadboard.html">Load Board</a>
+            </div>
+          </div>
+
+          <div class="nav-dropdown">
+            <span class="nav-link">Информация</span>
+            <div class="dropdown-content">
+              <a href="about.html">О нас</a>
+              <a href="blog.html">Блог</a>
+              <a href="career.html">Карьера</a>
+              <a href="faq.html">FAQ</a>
+              <a href="help.html">Помощь</a>
+              <a href="contacts.html">Контакты</a>
             </div>
           </div>
 
           <a href="pages/documentation.html" class="nav-link">Документация</a>
           <a href="pricing.html" class="nav-link">Тарифы</a>
-          <a href="about.html" class="nav-link">О нас</a>
           <a href="dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Личный кабинет</a>
         </div>
 
@@ -4411,37 +4499,47 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
-    <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
-    <div class="mobile-nav-actions">
-      <a href="login.html" class="btn-login" style="width: 100%; text-align: center;">Войти</a>
-      <a href="register.html" class="btn-signup" style="width: 100%; text-align: center;">Регистрация</a>
-    </div>
     <div class="mobile-nav-links">
-      <a href="index.html" class="nav-link">🏠 Главная</a>
+      <a href="index.html" class="nav-link active">🏠 Главная</a>
 
       <div class="mobile-nav-section">
         <div class="mobile-section-title">📚 КУРСЫ</div>
         <a href="courses.html" class="nav-link nav-link-sub">Все курсы</a>
+        <a href="course.html" class="nav-link nav-link-sub">Обзор курса</a>
         <a href="pages/modules.html" class="nav-link nav-link-sub">12 Модулей обучения</a>
         <a href="pages/simulator.html" class="nav-link nav-link-sub">Симулятор переговоров</a>
         <a href="pages/calls.html" class="nav-link nav-link-sub">Примеры звонков</a>
         <a href="pages/cases.html" class="nav-link nav-link-sub">Практические кейсы</a>
+        <a href="pages/testing.html" class="nav-link nav-link-sub">Тестирование</a>
       </div>
 
       <div class="mobile-nav-section">
         <div class="mobile-section-title">🛠️ ИНСТРУМЕНТЫ</div>
-        <a href="pages/loadboard.html" class="nav-link nav-link-sub">Поиск Грузов</a>
+        <a href="pages/loadboard.html" class="nav-link nav-link-sub">Load Board</a>
+        <a href="pages/load-finder.html" class="nav-link nav-link-sub">Load Finder</a>
         <a href="pages/dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
         <a href="pages/simulator.html" class="nav-link nav-link-sub">Dispatch Simulator</a>
-        <a href="pages/loadboard.html" class="nav-link nav-link-sub">Load Board</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <div class="mobile-section-title">ℹ️ ИНФОРМАЦИЯ</div>
+        <a href="about.html" class="nav-link nav-link-sub">О нас</a>
+        <a href="blog.html" class="nav-link nav-link-sub">Блог</a>
+        <a href="career.html" class="nav-link nav-link-sub">Карьера</a>
+        <a href="faq.html" class="nav-link nav-link-sub">FAQ</a>
+        <a href="help.html" class="nav-link nav-link-sub">Помощь</a>
+        <a href="contacts.html" class="nav-link nav-link-sub">Контакты</a>
       </div>
 
       <div class="mobile-menu-divider"></div>
 
       <a href="pages/documentation.html" class="nav-link">📄 Документация</a>
       <a href="pricing.html" class="nav-link">💰 Тарифы</a>
-      <a href="about.html" class="nav-link">ℹ️ О нас</a>
       <a href="dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">👤 Личный кабинет</a>
+    </div>
+    <div class="mobile-nav-actions">
+      <a href="login.html" class="btn-login">Войти</a>
+      <a href="register.html" class="btn-signup">Регистрация</a>
     </div>
   </div>
 
@@ -5208,7 +5306,7 @@
       <div class="pricing-banner">
         <div class="pricing-banner-content">
           <div class="pricing-plans-preview">
-            <div class="plan-preview" onclick="window.location.href='certification.html'" style="cursor: pointer;">
+            <div class="plan-preview" onclick="window.location.href='pricing.html'" style="cursor: pointer;">
               <div class="plan-badge free">Бесплатно</div>
               <h4>Базовый</h4>
               <p>Полный доступ ко всей теоретической информации курса</p>
@@ -5220,8 +5318,7 @@
               <div class="plan-click-hint">Нажми для выбора тарифа</div>
             </div>
 
-            <div class="plan-preview featured" onclick="window.location.href='certification.html'"
-              style="cursor: pointer;">
+            <div class="plan-preview featured" onclick="window.location.href='pricing.html'" style="cursor: pointer;">
               <div class="plan-badge pro">Популярный</div>
               <h4>Профессионал</h4>
               <p>Весь функционал сайта: симуляторы, тесты, AI-чат и инструменты</p>
@@ -5233,7 +5330,7 @@
               <div class="plan-click-hint">Нажми для выбора тарифа</div>
             </div>
 
-            <div class="plan-preview" onclick="window.location.href='certification.html'" style="cursor: pointer;">
+            <div class="plan-preview" onclick="window.location.href='pricing.html'" style="cursor: pointer;">
               <div class="plan-badge premium">Премиум</div>
               <h4>Эксперт</h4>
               <p>Поддержка 24/7, консультации и гарантия трудоустройства в США</p>
@@ -5501,7 +5598,6 @@
         <div class="footer-section">
           <h4>Обучение</h4>
           <a href="courses.html">Курсы</a>
-          <a href="webinars.html">Вебинары</a>
         </div>
 
         <div class="footer-section">
@@ -6092,6 +6188,28 @@
   </script>
 
   <script src="auth.js"></script>
+
+  <!-- Mobile menu script -->
+  <script>
+    // Mobile menu functionality
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+    if (mobileMenuToggle && mobileMenu && mobileMenuOverlay) {
+      mobileMenuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        mobileMenuOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      });
+
+      mobileMenuOverlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+  </script>
 
 </body>
 

@@ -1,243 +1,56 @@
-<style>
-  /* Navigation Styles */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 16px 0;
-    transition: all 0.3s ease;
-  }
-
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 40px;
-  }
-
-  .nav-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 700;
-    color: #f1f5f9;
-  }
-
-  .logo-icon {
-    font-size: 28px;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .nav-link {
-    text-decoration: none;
-    color: #94a3b8;
-    font-weight: 500;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .nav-link.active {
-    color: #6366f1;
-  }
-
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #6366f1;
-    transition: width 0.3s ease;
-  }
-
-  .nav-link:hover::after,
-  .nav-link.active::after {
-    width: 100%;
-  }
-
-  .nav-actions {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .btn-login {
-    padding: 8px 20px;
-    text-decoration: none;
-    color: #f1f5f9;
-    font-weight: 600;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-
-  .btn-login:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .btn-signup {
-    padding: 8px 20px;
-    text-decoration: none;
-    color: white;
-    font-weight: 600;
-    font-size: 14px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-
-  .btn-signup:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-  }
-
-  /* Mobile Menu Toggle */
-  .mobile-menu-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-  }
-
-  .mobile-menu-toggle span {
-    width: 24px;
-    height: 2px;
-    background: #f1f5f9;
-    transition: all 0.3s ease;
-  }
-
-  /* Mobile Menu */
-  .mobile-menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .mobile-menu-overlay.active {
-    opacity: 1;
-  }
-
-  .mobile-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    max-width: 400px;
-    height: 100vh;
-    background: #0f172a;
-    z-index: 999;
-    padding: 80px 32px 32px;
-    transition: right 0.3s ease;
-    overflow-y: auto;
-  }
-
-  .mobile-menu.active {
-    right: 0;
-  }
-
-  .mobile-nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin-bottom: 32px;
-  }
-
-  .mobile-nav-links .nav-link {
-    font-size: 18px;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .mobile-nav-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .nav-links {
-      gap: 20px;
-    }
-
-    .nav-link {
-      font-size: 14px;
-    }
-  }
-
-  @media (max-width: 768px) {
-
-    .nav-links,
-    .nav-actions {
-      display: none;
-    }
-
-    .mobile-menu-toggle {
-      display: flex;
-    }
-
-    .mobile-menu-overlay {
-      display: block;
-    }
-
-    .container {
-      padding: 0 20px;
-    }
-  }
-</style>
-
 <nav class="navbar">
-  <div class="container">
+  <div class="nav-container">
     <div class="nav-content">
-      <a href="/index.html" class="logo">
+      <a href="index.html" class="logo">
         <span class="logo-icon">🎓</span>
         <span class="logo-text">Курсы Диспетчера</span>
       </a>
 
       <div class="nav-links">
-        <a href="/index.html#features" class="nav-link">Преимущества</a>
-        <a href="/index.html#pricing" class="nav-link">Тарифы</a>
-        <a href="/courses.html" class="nav-link">Курсы</a>
-        <a href="/pages/loadboard.html" class="nav-link">🚛 Поиск Грузов</a>
-        <a href="/pages/dispatcher-cards.html" class="nav-link">🎲 Dispatcher Cards</a>
-        <a href="/pages/simulator.html" class="nav-link">🎯 Dispatch Simulator</a>
-        <a href="/about.html" class="nav-link">О нас</a>
-        <a href="/dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Личный кабинет</a>
+        <a href="index.html" class="nav-link">Главная</a>
+
+        <div class="nav-dropdown">
+          <a href="courses.html" class="nav-link">Курсы</a>
+          <div class="dropdown-content">
+            <a href="course.html">Обзор курса</a>
+            <a href="pages/modules.html">12 Модулей обучения</a>
+            <a href="pages/simulator.html">Симулятор переговоров</a>
+            <a href="pages/calls.html">Примеры звонков</a>
+            <a href="pages/cases.html">Практические кейсы</a>
+            <a href="pages/testing.html">Тестирование</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <span class="nav-link">Инструменты</span>
+          <div class="dropdown-content">
+            <a href="pages/loadboard.html">Load Board</a>
+            <a href="pages/load-finder.html">Load Finder</a>
+            <a href="pages/dispatcher-cards.html">Dispatcher Cards</a>
+            <a href="pages/simulator.html">Dispatch Simulator</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <span class="nav-link">Информация</span>
+          <div class="dropdown-content">
+            <a href="about.html">О нас</a>
+            <a href="blog.html">Блог</a>
+            <a href="career.html">Карьера</a>
+            <a href="faq.html">FAQ</a>
+            <a href="help.html">Помощь</a>
+            <a href="contacts.html">Контакты</a>
+          </div>
+        </div>
+
+        <a href="pages/documentation.html" class="nav-link">Документация</a>
+        <a href="pricing.html" class="nav-link">Тарифы</a>
+        <a href="dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Личный кабинет</a>
       </div>
 
       <div class="nav-actions">
-        <a href="/login.html" class="btn-login">Войти</a>
-        <a href="/register.html" class="btn-signup">Регистрация</a>
+        <a href="login.html" class="btn-login">Войти</a>
+        <a href="register.html" class="btn-signup">Регистрация</a>
       </div>
 
       <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -255,17 +68,45 @@
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-nav-links">
-    <a href="/index.html#features" class="nav-link">Преимущества</a>
-    <a href="/index.html#pricing" class="nav-link">Тарифы</a>
-    <a href="/courses.html" class="nav-link">Курсы</a>
-    <a href="/pages/loadboard.html" class="nav-link">🚛 Поиск Грузов</a>
-    <a href="/pages/dispatcher-cards.html" class="nav-link">🎲 Dispatcher Cards</a>
-    <a href="/pages/simulator.html" class="nav-link">🎯 Dispatch Simulator</a>
-    <a href="/about.html" class="nav-link">О нас</a>
-    <a href="/dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">Личный кабинет</a>
+    <a href="index.html" class="nav-link">🏠 Главная</a>
+
+    <div class="mobile-nav-section">
+      <div class="mobile-section-title">📚 КУРСЫ</div>
+      <a href="courses.html" class="nav-link nav-link-sub">Все курсы</a>
+      <a href="course.html" class="nav-link nav-link-sub">Обзор курса</a>
+      <a href="pages/modules.html" class="nav-link nav-link-sub">12 Модулей обучения</a>
+      <a href="pages/simulator.html" class="nav-link nav-link-sub">Симулятор переговоров</a>
+      <a href="pages/calls.html" class="nav-link nav-link-sub">Примеры звонков</a>
+      <a href="pages/cases.html" class="nav-link nav-link-sub">Практические кейсы</a>
+      <a href="pages/testing.html" class="nav-link nav-link-sub">Тестирование</a>
+    </div>
+
+    <div class="mobile-nav-section">
+      <div class="mobile-section-title">🛠️ ИНСТРУМЕНТЫ</div>
+      <a href="pages/loadboard.html" class="nav-link nav-link-sub">Load Board</a>
+      <a href="pages/load-finder.html" class="nav-link nav-link-sub">Load Finder</a>
+      <a href="pages/dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
+      <a href="pages/simulator.html" class="nav-link nav-link-sub">Dispatch Simulator</a>
+    </div>
+
+    <div class="mobile-nav-section">
+      <div class="mobile-section-title">ℹ️ ИНФОРМАЦИЯ</div>
+      <a href="about.html" class="nav-link nav-link-sub">О нас</a>
+      <a href="blog.html" class="nav-link nav-link-sub">Блог</a>
+      <a href="career.html" class="nav-link nav-link-sub">Карьера</a>
+      <a href="faq.html" class="nav-link nav-link-sub">FAQ</a>
+      <a href="help.html" class="nav-link nav-link-sub">Помощь</a>
+      <a href="contacts.html" class="nav-link nav-link-sub">Контакты</a>
+    </div>
+
+    <div class="mobile-menu-divider"></div>
+
+    <a href="pages/documentation.html" class="nav-link">📄 Документация</a>
+    <a href="pricing.html" class="nav-link">💰 Тарифы</a>
+    <a href="dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">👤 Личный кабинет</a>
   </div>
   <div class="mobile-nav-actions">
-    <a href="/login.html" class="btn-login" style="width: 100%; text-align: center;">Войти</a>
-    <a href="/register.html" class="btn-signup" style="width: 100%; text-align: center;">Регистрация</a>
+    <a href="login.html" class="btn-login">Войти</a>
+    <a href="register.html" class="btn-signup">Регистрация</a>
   </div>
 </div>

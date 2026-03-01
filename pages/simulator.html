@@ -25,8 +25,9 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
+            overflow: hidden;
             padding-top: 60px;
+            height: 100vh;
         }
 
         /* Navigation */
@@ -47,7 +48,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 24px;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 32px;
         }
@@ -227,6 +228,12 @@
             background: rgba(99, 102, 241, 0.25);
             border-color: rgba(99, 102, 241, 0.5);
             transform: translateY(-1px);
+        }
+
+        /* Скрытые элементы не должны занимать место */
+        .nav-link[style*="display: none"],
+        .nav-link[style*="display:none"] {
+            display: none !important;
         }
 
         .mobile-menu-toggle {
@@ -504,12 +511,13 @@
         .container {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 32px;
-            min-height: 100vh;
+            height: calc(100vh - 60px);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         #canvas-bg {
@@ -576,6 +584,22 @@
             justify-content: flex-start;
             padding: 60px 20px 40px;
             animation: fadeIn 0.8s ease-out;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .welcome-screen::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .welcome-screen::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .welcome-screen::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 4px;
         }
 
         .welcome-title {
@@ -600,7 +624,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
             animation: fadeInUp 0.8s ease 0.8s forwards;
@@ -676,12 +700,13 @@
         .chat-view {
             display: none;
             flex-direction: column;
-            height: calc(100vh - 100px);
-            max-width: 900px;
+            height: 100%;
+            max-width: 1000px;
             margin: 0 auto;
             width: 100%;
             animation: fadeIn 0.5s ease-out;
-            padding-top: 20px;
+            padding: 20px 0;
+            overflow: hidden;
         }
 
         .chat-view.active {
@@ -849,6 +874,8 @@
             outline: none;
             resize: none;
             max-height: 120px;
+            padding: 0;
+            line-height: 1.5;
         }
 
         .input-field::placeholder {
@@ -882,38 +909,10 @@
             cursor: not-allowed;
         }
 
-        .reset-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 12px 24px;
-            color: #fff;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .reset-btn.visible {
-            display: block;
-        }
-
-        .reset-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 0 16px;
+                height: calc(100vh - 56px);
             }
 
             .nav-links,
@@ -945,8 +944,7 @@
             }
 
             .chat-view {
-                height: calc(100vh - 80px);
-                padding-top: 10px;
+                padding: 10px 0;
             }
 
             .messages-container {
@@ -963,13 +961,6 @@
                 height: 36px;
                 font-size: 18px;
             }
-
-            .reset-btn {
-                top: 12px;
-                right: 12px;
-                padding: 10px 18px;
-                font-size: 14px;
-            }
         }
 
         /* Info Sections */
@@ -985,7 +976,7 @@
         }
 
         .section-title-info {
-            font-size: clamp(32px, 5vw, 42px);
+            font-size: clamp(32px, 5vw, 48px);
             font-weight: 700;
             text-align: center;
             margin-bottom: 16px;
@@ -1135,56 +1126,620 @@
                 padding: 24px 16px;
             }
         }
+
+        /* ========================================
+           ПОЛНАЯ АДАПТИВНОСТЬ (СТАНДАРТЫ)
+           ======================================== */
+
+        /* Tablets landscape (1024px) */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 24px;
+                height: calc(100vh - 60px);
+            }
+
+            .header {
+                padding: 40px 24px 30px;
+            }
+
+            h1 {
+                font-size: clamp(28px, 5vw, 36px);
+            }
+
+            .bubbles-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        /* Tablets portrait (900px) */
+        @media (max-width: 900px) {
+            .container {
+                padding: 0 20px;
+                height: calc(100vh - 60px);
+            }
+
+            .header {
+                padding: 35px 20px 25px;
+            }
+
+            .welcome-title {
+                font-size: clamp(26px, 5vw, 32px);
+            }
+
+            .bubbles-container {
+                gap: 18px;
+            }
+
+            .bubble {
+                padding: 20px;
+            }
+        }
+
+        /* Mobile landscape (768px) - уже есть выше, дополним */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 56px;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .navbar {
+                padding: 8px 0;
+            }
+
+            .hero-badge {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+
+            h1 {
+                font-size: clamp(24px, 6vw, 32px);
+                margin-bottom: 12px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .welcome-screen {
+                padding: 60px 16px 30px;
+            }
+
+            .welcome-title {
+                font-size: clamp(22px, 5vw, 28px);
+                margin-bottom: 12px;
+            }
+
+            .welcome-subtitle {
+                font-size: 14px;
+                margin-bottom: 28px;
+            }
+
+            .bubbles-container {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 0 12px;
+            }
+
+            .bubble {
+                padding: 16px;
+            }
+
+            .bubble-icon {
+                font-size: 28px;
+                width: 48px;
+                height: 48px;
+            }
+
+            .bubble-title {
+                font-size: 16px;
+            }
+
+            .bubble-description {
+                font-size: 13px;
+            }
+
+            .chat-view {
+                padding: 8px 0;
+            }
+
+            .messages-container {
+                padding: 12px;
+                gap: 14px;
+            }
+
+            .message {
+                max-width: 85%;
+                gap: 10px;
+            }
+
+            .message-avatar {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+            }
+
+            .message-content {
+                padding: 10px 14px;
+                font-size: 14px;
+                border-radius: 14px;
+            }
+
+            .input-area {
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .input-field {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .send-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .section-title-info {
+                font-size: clamp(26px, 5vw, 36px);
+            }
+
+            .section-subtitle-info {
+                font-size: 15px;
+                margin-bottom: 32px;
+            }
+
+            .features-grid-info {
+                gap: 14px;
+            }
+
+            .feature-card-info {
+                padding: 20px;
+            }
+
+            .feature-icon-info {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                margin-bottom: 16px;
+            }
+
+            .feature-card-info h3 {
+                font-size: 18px;
+            }
+
+            .feature-card-info p {
+                font-size: 14px;
+            }
+        }
+
+        /* Mobile portrait (600px) */
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 16px;
+                height: calc(100vh - 56px);
+            }
+
+            .header {
+                padding: 30px 16px 20px;
+            }
+
+            h1 {
+                font-size: clamp(22px, 6vw, 28px);
+            }
+
+            .welcome-screen {
+                padding: 50px 12px 25px;
+            }
+
+            .bubbles-container {
+                padding: 0 8px;
+                gap: 12px;
+            }
+
+            .bubble {
+                padding: 14px;
+            }
+
+            .messages-container {
+                padding: 10px;
+                gap: 12px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .input-area {
+                padding: 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        /* Small mobile (480px) */
+        @media (max-width: 480px) {
+            body {
+                padding-top: 52px;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .container {
+                padding: 0 12px;
+                height: calc(100vh - 52px);
+            }
+
+            .header {
+                padding: 25px 12px 18px;
+            }
+
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 14px;
+                margin-bottom: 12px;
+            }
+
+            h1 {
+                font-size: clamp(20px, 6vw, 26px);
+                margin-bottom: 10px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .welcome-screen {
+                padding: 40px 10px 20px;
+            }
+
+            .welcome-title {
+                font-size: clamp(20px, 5vw, 24px);
+                margin-bottom: 10px;
+            }
+
+            .welcome-subtitle {
+                font-size: 13px;
+                margin-bottom: 24px;
+            }
+
+            .bubbles-container {
+                padding: 0 6px;
+                gap: 10px;
+            }
+
+            .bubble {
+                padding: 12px;
+            }
+
+            .bubble-icon {
+                font-size: 24px;
+                width: 42px;
+                height: 42px;
+            }
+
+            .bubble-title {
+                font-size: 15px;
+                margin-bottom: 4px;
+            }
+
+            .bubble-description {
+                font-size: 12px;
+            }
+
+            .chat-view {
+                padding: 6px 0;
+            }
+
+            .messages-container {
+                padding: 8px;
+                gap: 10px;
+            }
+
+            .message {
+                max-width: 92%;
+                gap: 8px;
+            }
+
+            .message-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+
+            .message-content {
+                padding: 8px 12px;
+                font-size: 13px;
+                border-radius: 12px;
+            }
+
+            .input-area {
+                padding: 8px;
+                gap: 8px;
+            }
+
+            .input-field {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+
+            .send-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .section-title-info {
+                font-size: clamp(22px, 5vw, 30px);
+                margin-bottom: 12px;
+            }
+
+            .section-subtitle-info {
+                font-size: 14px;
+                margin-bottom: 28px;
+            }
+
+            .info-section {
+                padding: 32px 12px;
+            }
+
+            .features-grid-info {
+                gap: 12px;
+            }
+
+            .feature-card-info {
+                padding: 18px;
+            }
+
+            .feature-icon-info {
+                width: 44px;
+                height: 44px;
+                font-size: 22px;
+                margin-bottom: 14px;
+            }
+
+            .feature-card-info h3 {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            .feature-card-info p {
+                font-size: 13px;
+            }
+
+            .stat-card {
+                padding: 20px 12px;
+            }
+
+            .stat-number {
+                font-size: clamp(28px, 6vw, 36px);
+            }
+
+            .stat-label {
+                font-size: 13px;
+            }
+        }
+
+        /* Extra small mobile (360px) */
+        @media (max-width: 360px) {
+            body {
+                padding-top: 50px;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .container {
+                padding: 0 10px;
+                height: calc(100vh - 50px);
+            }
+
+            .header {
+                padding: 20px 10px 16px;
+            }
+
+            .hero-badge {
+                font-size: 11px;
+                padding: 5px 12px;
+            }
+
+            h1 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .welcome-screen {
+                padding: 35px 8px 18px;
+            }
+
+            .welcome-title {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .welcome-subtitle {
+                font-size: 12px;
+                margin-bottom: 20px;
+            }
+
+            .bubbles-container {
+                padding: 0 4px;
+                gap: 8px;
+            }
+
+            .bubble {
+                padding: 10px;
+            }
+
+            .bubble-icon {
+                font-size: 22px;
+                width: 38px;
+                height: 38px;
+            }
+
+            .bubble-title {
+                font-size: 14px;
+            }
+
+            .bubble-description {
+                font-size: 11px;
+            }
+
+            .messages-container {
+                padding: 6px;
+                gap: 8px;
+            }
+
+            .message {
+                max-width: 94%;
+                gap: 6px;
+            }
+
+            .message-avatar {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+
+            .message-content {
+                padding: 7px 10px;
+                font-size: 12px;
+                border-radius: 10px;
+            }
+
+            .input-area {
+                padding: 6px;
+                gap: 6px;
+            }
+
+            .input-field {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .send-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
+            .section-title-info {
+                font-size: 22px;
+            }
+
+            .section-subtitle-info {
+                font-size: 13px;
+            }
+
+            .info-section {
+                padding: 28px 10px;
+            }
+
+            .feature-card-info {
+                padding: 16px;
+            }
+
+            .feature-icon-info {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .feature-card-info h3 {
+                font-size: 15px;
+            }
+
+            .feature-card-info p {
+                font-size: 12px;
+            }
+
+            .stat-card {
+                padding: 18px 10px;
+            }
+
+            .stat-number {
+                font-size: 28px;
+            }
+
+            .stat-label {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-content">
-            <a href="../index.html" class="logo">
-                <span class="logo-icon">🎓</span>
-                <span class="logo-text">Курсы Диспетчера</span>
-            </a>
+        <div class="nav-container">
+            <div class="nav-content">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon">🎓</span>
+                    <span class="logo-text">Курсы Диспетчера</span>
+                </a>
 
-            <div class="nav-links">
-                <a href="../index.html" class="nav-link">Главная</a>
+                <div class="nav-links">
+                    <a href="../index.html" class="nav-link">Главная</a>
 
-                <div class="nav-dropdown">
-                    <a href="../courses.html" class="nav-link">Курсы</a>
-                    <div class="dropdown-content">
-                        <a href="modules.html">12 Модулей обучения</a>
-                        <a href="simulator.html">Симулятор переговоров</a>
-                        <a href="calls.html">Примеры звонков</a>
-                        <a href="cases.html">Практические кейсы</a>
+                    <div class="nav-dropdown">
+                        <a href="../courses.html" class="nav-link">Курсы</a>
+                        <div class="dropdown-content">
+                            <a href="../course.html">Обзор курса</a>
+                            <a href="modules.html">12 Модулей обучения</a>
+                            <a href="simulator.html" class="active">Симулятор переговоров</a>
+                            <a href="calls.html">Примеры звонков</a>
+                            <a href="cases.html">Практические кейсы</a>
+                            <a href="testing.html">Тестирование</a>
+                        </div>
                     </div>
+
+                    <div class="nav-dropdown">
+                        <span class="nav-link">Инструменты</span>
+                        <div class="dropdown-content">
+                            <a href="loadboard.html">Load Board</a>
+                            <a href="load-finder.html">Load Finder</a>
+                            <a href="dispatcher-cards.html">Dispatcher Cards</a>
+                            <a href="simulator.html" class="active">Dispatch Simulator</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-dropdown">
+                        <span class="nav-link">Информация</span>
+                        <div class="dropdown-content">
+                            <a href="../about.html">О нас</a>
+                            <a href="../blog.html">Блог</a>
+                            <a href="../career.html">Карьера</a>
+                            <a href="../faq.html">FAQ</a>
+                            <a href="../help.html">Помощь</a>
+                            <a href="../contacts.html">Контакты</a>
+                        </div>
+                    </div>
+
+                    <a href="documentation.html" class="nav-link">Документация</a>
+                    <a href="../pricing.html" class="nav-link">Тарифы</a>
+                    <a href="../dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Личный
+                        кабинет</a>
                 </div>
 
-                <div class="nav-dropdown">
-                    <span class="nav-link">Инструменты</span>
-                    <div class="dropdown-content">
-                        <a href="loadboard.html">Поиск Грузов</a>
-                        <a href="dispatcher-cards.html">Dispatcher Cards</a>
-                        <a href="simulator.html">Dispatch Simulator</a>
-                        <a href="loadboard.html">Load Board</a>
-                    </div>
+                <div class="nav-actions">
+                    <a href="../login.html" class="btn-login">Войти</a>
+                    <a href="../register.html" class="btn-signup">Регистрация</a>
                 </div>
 
-                <a href="documentation.html" class="nav-link">Документация</a>
-                <a href="../pricing.html" class="nav-link">Тарифы</a>
-                <a href="../about.html" class="nav-link">О нас</a>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-
-            <div class="nav-actions">
-                <a href="../login.html" class="btn-login">Войти</a>
-                <a href="../register.html" class="btn-signup">Регистрация</a>
-            </div>
-
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
         </div>
     </nav>
 
@@ -1193,36 +1748,48 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
-        <div class="mobile-nav-actions">
-            <a href="../login.html" class="btn-login" style="width: 100%; text-align: center;">Войти</a>
-            <a href="../register.html" class="btn-signup" style="width: 100%; text-align: center;">Регистрация</a>
-        </div>
         <div class="mobile-nav-links">
             <a href="../index.html" class="nav-link">🏠 Главная</a>
 
             <div class="mobile-nav-section">
                 <div class="mobile-section-title">📚 КУРСЫ</div>
                 <a href="../courses.html" class="nav-link nav-link-sub">Все курсы</a>
+                <a href="../course.html" class="nav-link nav-link-sub">Обзор курса</a>
                 <a href="modules.html" class="nav-link nav-link-sub">12 Модулей обучения</a>
-                <a href="simulator.html" class="nav-link nav-link-sub">Симулятор переговоров</a>
+                <a href="simulator.html" class="nav-link nav-link-sub active">Симулятор переговоров</a>
                 <a href="calls.html" class="nav-link nav-link-sub">Примеры звонков</a>
                 <a href="cases.html" class="nav-link nav-link-sub">Практические кейсы</a>
+                <a href="testing.html" class="nav-link nav-link-sub">Тестирование</a>
             </div>
 
             <div class="mobile-nav-section">
                 <div class="mobile-section-title">🛠️ ИНСТРУМЕНТЫ</div>
-                <a href="loadboard.html" class="nav-link nav-link-sub">Поиск Грузов</a>
-                <a href="dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
-                <a href="simulator.html" class="nav-link nav-link-sub">Dispatch Simulator</a>
                 <a href="loadboard.html" class="nav-link nav-link-sub">Load Board</a>
+                <a href="load-finder.html" class="nav-link nav-link-sub">Load Finder</a>
+                <a href="dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
+                <a href="simulator.html" class="nav-link nav-link-sub active">Dispatch Simulator</a>
+            </div>
+
+            <div class="mobile-nav-section">
+                <div class="mobile-section-title">ℹ️ ИНФОРМАЦИЯ</div>
+                <a href="../about.html" class="nav-link nav-link-sub">О нас</a>
+                <a href="../blog.html" class="nav-link nav-link-sub">Блог</a>
+                <a href="../career.html" class="nav-link nav-link-sub">Карьера</a>
+                <a href="../faq.html" class="nav-link nav-link-sub">FAQ</a>
+                <a href="../help.html" class="nav-link nav-link-sub">Помощь</a>
+                <a href="../contacts.html" class="nav-link nav-link-sub">Контакты</a>
             </div>
 
             <div class="mobile-menu-divider"></div>
 
             <a href="documentation.html" class="nav-link">📄 Документация</a>
             <a href="../pricing.html" class="nav-link">💰 Тарифы</a>
-            <a href="../about.html" class="nav-link">ℹ️ О нас</a>
+            <a href="../dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">👤 Личный
+                кабинет</a>
+        </div>
+        <div class="mobile-nav-actions">
+            <a href="../login.html" class="btn-login">Войти</a>
+            <a href="../register.html" class="btn-signup">Регистрация</a>
         </div>
     </div>
 
@@ -1231,8 +1798,6 @@
     <!-- Canvas Background with Particles -->
     <canvas id="canvas-bg"
         style="position: fixed; top: -5%; left: -5%; width: 110%; height: 110%; z-index: 0; pointer-events: none;"></canvas>
-
-    <button class="reset-btn" id="resetBtn">🔄 Новый сценарий</button>
 
     <div class="container">
         <div class="header">
@@ -1344,7 +1909,6 @@
         const messagesContainer = document.getElementById('messagesContainer');
         const inputField = document.getElementById('inputField');
         const sendBtn = document.getElementById('sendBtn');
-        const resetBtn = document.getElementById('resetBtn');
         const infoSections = document.getElementById('infoSections');
 
         let conversationActive = false;
@@ -1395,7 +1959,6 @@
 
             welcomeScreen.style.display = 'none';
             chatView.classList.add('active');
-            resetBtn.classList.add('visible');
 
             // Hide info sections when chat starts
             if (infoSections) {
@@ -1591,8 +2154,6 @@
                     if (!sendBtn.disabled) sendMessage();
                 }
             });
-
-            resetBtn.addEventListener('click', resetConversation);
         }
 
         function sendMessage() {
@@ -1623,7 +2184,6 @@
             messagesContainer.innerHTML = '';
             chatView.classList.remove('active');
             welcomeScreen.style.display = 'flex';
-            resetBtn.classList.remove('visible');
 
             // Show info sections when resetting
             if (infoSections) {

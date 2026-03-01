@@ -359,6 +359,54 @@
     }
 }
 
+@media (max-width: 480px) {
+    .courses-deep-dive {
+        padding: 60px 0;
+    }
+
+    .course-stat-card {
+        padding: 20px 16px;
+    }
+
+    .course-stat-card .stat-icon {
+        font-size: 32px;
+    }
+
+    .course-stat-card .stat-value {
+        font-size: 24px;
+    }
+
+    .curriculum-heading,
+    .includes-heading {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .module-card {
+        padding: 20px 16px;
+    }
+
+    .module-title {
+        font-size: 16px;
+    }
+
+    .module-description {
+        font-size: 14px;
+    }
+
+    .course-cta {
+        padding: 24px 16px;
+    }
+
+    .course-cta h3 {
+        font-size: 20px;
+    }
+
+    .course-cta p {
+        font-size: 14px;
+    }
+}
+
 
 /* Final CTA Hero Section */
 .final-cta-hero {
@@ -374,6 +422,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    max-width: 100%;
 }
 
 .final-cta-box::before {

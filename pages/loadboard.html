@@ -63,30 +63,36 @@
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 100px 20px 60px;
+      padding: 0 32px;
       position: relative;
       z-index: 1;
+    }
+
+    /* Content wrapper with top padding */
+    .content-wrapper {
+      padding: 140px 0 60px;
     }
 
     /* Header */
     .header {
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 60px;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 20px;
+      gap: 6px;
+      padding: 6px 16px;
       background: rgba(34, 197, 94, 0.1);
       border: 1px solid rgba(34, 197, 94, 0.3);
       border-radius: 100px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       color: #22c55e;
       margin-bottom: 24px;
       animation: fadeInUp 0.6s ease;
+      backdrop-filter: blur(10px);
     }
 
     .badge-dot {
@@ -112,10 +118,11 @@
     }
 
     h1 {
-      font-size: clamp(36px, 6vw, 64px);
+      font-size: clamp(32px, 6vw, 56px);
       font-weight: 900;
       line-height: 1.1;
-      margin-bottom: 24px;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
       animation: fadeInUp 0.8s ease 0.2s both;
     }
 
@@ -124,13 +131,27 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientFlow 8s ease infinite;
+    }
+
+    @keyframes gradientFlow {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
     }
 
     .subtitle {
-      font-size: clamp(16px, 2.5vw, 20px);
+      font-size: clamp(14px, 2.5vw, 18px);
       color: #94a3b8;
-      max-width: 700px;
-      margin: 0 auto 40px;
+      max-width: 600px;
+      margin: 0 auto 32px;
       line-height: 1.6;
       animation: fadeInUp 1s ease 0.4s both;
     }
@@ -158,11 +179,12 @@
     .feature-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 32px;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(10px);
     }
 
     .feature-card::before {
@@ -211,17 +233,18 @@
     .comparison-section {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 40px;
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 60px;
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+      backdrop-filter: blur(10px);
     }
 
     .comparison-section h2 {
-      font-size: 20px;
-      font-weight: 800;
+      font-size: 22px;
+      font-weight: 700;
       text-align: center;
       margin-bottom: 24px;
       color: #ffffff;
@@ -439,27 +462,6 @@
       border-color: rgba(99, 102, 241, 0.3);
       color: #ffffff;
       transform: translateY(-4px);
-    }
-
-    /* Back Button */
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      margin-bottom: 40px;
-    }
-
-    .back-button:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateX(-4px);
     }
 
     /* Mobile Responsive */
@@ -832,361 +834,196 @@
         gap: 6px;
       }
     }
-  </style>
-</head>
 
-<body>
-  <!-- Navigation Header -->
-  <style>
-    /* Navigation */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 999;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px 0;
-      transition: all 0.3s ease;
-    }
+    /* ========================================
+       АДАПТИВНЫЕ СТИЛИ (СТАНДАРТЫ)
+       ======================================== */
 
-    .nav-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 40px;
-    }
-
-    .nav-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-    }
-
-    .logo:hover {
-      transform: translateY(-2px);
-    }
-
-    .logo-icon {
-      font-size: 16px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-secondary);
-      font-weight: 500;
-      font-size: clamp(11px, 1.1vw, 14px);
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: width 0.3s ease;
-    }
-
-    .nav-link:hover {
-      color: var(--text-primary);
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    /* Dropdown Navigation */
-    .nav-dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .nav-dropdown .nav-link {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .nav-dropdown .nav-link::before {
-      content: '▼';
-      font-size: 8px;
-      transition: transform 0.3s ease;
-      margin-left: 4px;
-    }
-
-    .nav-dropdown .nav-link::after {
-      display: none;
-    }
-
-    .nav-dropdown:hover .nav-link::before {
-      transform: rotate(180deg);
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      min-width: 200px;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 8px;
-      margin-top: 0;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-      z-index: 1000;
-    }
-
-    .nav-dropdown:hover .dropdown-content {
-      display: flex;
-      flex-direction: column;
-      animation: fadeInDown 0.3s ease;
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 10px 14px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .dropdown-content a:hover {
-      background: rgba(99, 102, 241, 0.15);
-      color: var(--text-primary);
-      transform: translateX(2px);
-    }
-
-    /* Responsive navigation for different screen sizes */
-    @media (min-width: 1400px) {
-      .nav-link {
-        font-size: 14px;
-      }
-    }
-
-    @media (max-width: 1200px) {
-      .nav-link {
-        font-size: 12px;
-      }
-    }
-
+    /* Tablets landscape (1024px) */
     @media (max-width: 1024px) {
-      .nav-link {
-        font-size: 11px;
-      }
-
-      .nav-links {
-        gap: 16px;
+      .container {
+        padding: 0 24px;
       }
     }
 
-    .nav-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .btn-login {
-      padding: 6px 16px;
-      text-decoration: none;
-      color: var(--text-primary);
-      font-weight: 500;
-      font-size: 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-
-    .btn-login:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    .btn-signup {
-      padding: 6px 16px;
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-      font-size: 12px;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-
-    .btn-signup:hover {
-      background: rgba(99, 102, 241, 0.25);
-      border-color: rgba(99, 102, 241, 0.5);
-      transform: translateY(-1px);
-    }
-
-    .mobile-menu-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      cursor: pointer;
-      padding: 10px 19px;
-      z-index: 1001;
-      transition: all 0.3s ease;
-      margin-right: 0;
-    }
-
-    .mobile-menu-toggle:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .mobile-menu-toggle span {
-      width: 38px;
-      height: 2px;
-      background: #ffffff;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .mobile-menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .mobile-menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px);
-    }
-
-    /* Mobile Menu */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 85%;
-      max-width: 380px;
-      height: 100vh;
-      background: rgba(15, 23, 42, 0.98);
-      backdrop-filter: blur(20px);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 100px 20px 32px;
-      transition: right 0.3s ease;
-      z-index: 1000;
-      overflow-y: auto;
-    }
-
-    .mobile-menu.active {
-      right: 0;
-    }
-
-    .mobile-menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      z-index: 999;
-    }
-
-    .mobile-menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .mobile-nav-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-bottom: 32px;
-      width: 100%;
-    }
-
-    .mobile-nav-links .nav-link {
-      padding: 14px 16px;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      font-size: 15px;
-    }
-
-    .mobile-nav-links .nav-link:hover {
-      background: rgba(99, 102, 241, 0.15);
-      transform: translateX(4px);
-    }
-
-    .mobile-nav-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    @media (max-width: 768px) {
-
-      .nav-links,
-      .nav-actions {
-        display: none;
-      }
-
-      .mobile-menu-toggle {
-        display: flex;
-      }
-
-      .nav-container {
+    /* Tablets portrait (900px) */
+    @media (max-width: 900px) {
+      .container {
         padding: 0 20px;
       }
     }
-  </style>
 
+    /* Mobile landscape (768px) */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+
+      .content-wrapper {
+        padding: 140px 0 60px;
+      }
+
+      .header {
+        margin-bottom: 48px;
+      }
+
+      h1 {
+        font-size: clamp(26px, 7vw, 36px);
+        margin-bottom: 16px;
+      }
+
+      .subtitle {
+        font-size: clamp(14px, 3.5vw, 16px);
+        margin-bottom: 28px;
+      }
+
+      .badge {
+        font-size: 12px;
+        padding: 5px 14px;
+        margin-bottom: 20px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 48px;
+      }
+
+      .feature-card {
+        padding: 24px;
+      }
+
+      .feature-icon {
+        font-size: 40px;
+        margin-bottom: 16px;
+      }
+
+      .feature-card h3 {
+        font-size: 20px;
+      }
+
+      .feature-card p {
+        font-size: 14px;
+      }
+
+      .comparison-section {
+        padding: 24px;
+        margin-bottom: 48px;
+      }
+
+      .comparison-section h2 {
+        font-size: 20px;
+      }
+
+      .comparison-table {
+        font-size: 11px;
+      }
+
+      .comparison-cell {
+        padding: 10px 8px;
+      }
+    }
+
+    /* Mobile portrait (600px) */
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 16px;
+      }
+    }
+
+    /* Small mobile (480px) */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .content-wrapper {
+        padding: 120px 0 50px;
+      }
+
+      h1 {
+        font-size: clamp(24px, 8vw, 32px);
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .feature-card {
+        padding: 20px;
+        border-radius: 20px;
+      }
+
+      .feature-icon {
+        font-size: 36px;
+      }
+
+      .feature-card h3 {
+        font-size: 18px;
+      }
+
+      .comparison-section {
+        padding: 20px;
+      }
+
+      .comparison-table {
+        font-size: 10px;
+      }
+
+      .comparison-cell {
+        padding: 8px 6px;
+      }
+
+      .region-name {
+        font-size: 14px;
+      }
+
+      .rate-value {
+        font-size: 18px;
+      }
+    }
+
+    /* Extra small mobile (360px) */
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 12px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+      }
+
+      .badge {
+        font-size: 11px;
+        padding: 4px 12px;
+      }
+
+      .feature-card {
+        padding: 16px;
+      }
+
+      .feature-icon {
+        font-size: 32px;
+      }
+
+      .feature-card h3 {
+        font-size: 16px;
+      }
+
+      .feature-card p {
+        font-size: 13px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../shared-nav.css">
+</head>
+
+<body>
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
       <div class="nav-content">
@@ -1196,13 +1033,45 @@
         </a>
 
         <div class="nav-links">
-          <a href="../index.html#features" class="nav-link">Преимущества</a>
-          <a href="../index.html#pricing" class="nav-link">Тарифы</a>
-          <a href="../courses.html" class="nav-link">Курсы</a>
-          <a href="loadboard.html" class="nav-link active">🚛 Поиск Грузов</a>
-          <a href="dispatcher-cards.html" class="nav-link">🎲 Dispatcher Cards</a>
-          <a href="simulator.html" class="nav-link">🎯 Dispatch Simulator</a>
-          <a href="../about.html" class="nav-link">О нас</a>
+          <a href="../index.html" class="nav-link">Главная</a>
+
+          <div class="nav-dropdown">
+            <a href="../courses.html" class="nav-link">Курсы</a>
+            <div class="dropdown-content">
+              <a href="../course.html">Обзор курса</a>
+              <a href="modules.html">12 Модулей обучения</a>
+              <a href="simulator.html">Симулятор переговоров</a>
+              <a href="calls.html">Примеры звонков</a>
+              <a href="cases.html">Практические кейсы</a>
+              <a href="testing.html">Тестирование</a>
+            </div>
+          </div>
+
+          <div class="nav-dropdown">
+            <span class="nav-link">Инструменты</span>
+            <div class="dropdown-content">
+              <a href="loadboard.html" class="active">Load Board</a>
+              <a href="load-finder.html">Load Finder</a>
+              <a href="dispatcher-cards.html">Dispatcher Cards</a>
+              <a href="simulator.html">Dispatch Simulator</a>
+            </div>
+          </div>
+
+          <div class="nav-dropdown">
+            <span class="nav-link">Информация</span>
+            <div class="dropdown-content">
+              <a href="../about.html">О нас</a>
+              <a href="../blog.html">Блог</a>
+              <a href="../career.html">Карьера</a>
+              <a href="../faq.html">FAQ</a>
+              <a href="../help.html">Помощь</a>
+              <a href="../contacts.html">Контакты</a>
+            </div>
+          </div>
+
+          <a href="documentation.html" class="nav-link">Документация</a>
+          <a href="../pricing.html" class="nav-link">Тарифы</a>
+          <a href="../dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Личный кабинет</a>
         </div>
 
         <div class="nav-actions">
@@ -1225,560 +1094,652 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-nav-links">
-      <a href="../index.html#features" class="nav-link">Преимущества</a>
-      <a href="../index.html#pricing" class="nav-link">Тарифы</a>
-      <a href="../courses.html" class="nav-link">Курсы</a>
-      <a href="loadboard.html" class="nav-link active">🚛 Поиск Грузов</a>
-      <a href="dispatcher-cards.html" class="nav-link">🎲 Dispatcher Cards</a>
-      <a href="simulator.html" class="nav-link">🎯 Dispatch Simulator</a>
-      <a href="../about.html" class="nav-link">О нас</a>
+      <a href="../index.html" class="nav-link">🏠 Главная</a>
+
+      <div class="mobile-nav-section">
+        <div class="mobile-section-title">📚 КУРСЫ</div>
+        <a href="../courses.html" class="nav-link nav-link-sub">Все курсы</a>
+        <a href="../course.html" class="nav-link nav-link-sub">Обзор курса</a>
+        <a href="modules.html" class="nav-link nav-link-sub">12 Модулей обучения</a>
+        <a href="simulator.html" class="nav-link nav-link-sub">Симулятор переговоров</a>
+        <a href="calls.html" class="nav-link nav-link-sub">Примеры звонков</a>
+        <a href="cases.html" class="nav-link nav-link-sub">Практические кейсы</a>
+        <a href="testing.html" class="nav-link nav-link-sub">Тестирование</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <div class="mobile-section-title">🛠️ ИНСТРУМЕНТЫ</div>
+        <a href="loadboard.html" class="nav-link nav-link-sub active">Load Board</a>
+        <a href="load-finder.html" class="nav-link nav-link-sub">Load Finder</a>
+        <a href="dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
+        <a href="simulator.html" class="nav-link nav-link-sub">Dispatch Simulator</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <div class="mobile-section-title">ℹ️ ИНФОРМАЦИЯ</div>
+        <a href="../about.html" class="nav-link nav-link-sub">О нас</a>
+        <a href="../blog.html" class="nav-link nav-link-sub">Блог</a>
+        <a href="../career.html" class="nav-link nav-link-sub">Карьера</a>
+        <a href="../faq.html" class="nav-link nav-link-sub">FAQ</a>
+        <a href="../help.html" class="nav-link nav-link-sub">Помощь</a>
+        <a href="../contacts.html" class="nav-link nav-link-sub">Контакты</a>
+      </div>
+
+      <div class="mobile-menu-divider"></div>
+
+      <a href="documentation.html" class="nav-link">📄 Документация</a>
+      <a href="../pricing.html" class="nav-link">💰 Тарифы</a>
+      <a href="../dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">👤 Личный кабинет</a>
     </div>
     <div class="mobile-nav-actions">
-      <a href="../login.html" class="btn-login" style="width: 100%; text-align: center;">Войти</a>
-      <a href="../register.html" class="btn-signup" style="width: 100%; text-align: center;">Регистрация</a>
+      <a href="../login.html" class="btn-login">Войти</a>
+      <a href="../register.html" class="btn-signup">Регистрация</a>
     </div>
   </div>
 
   <div class="container">
-    <a href="../course.html" class="back-button">← Назад к курсам</a>
+    <div class="content-wrapper">
 
-    <div class="header">
-      <div class="badge">
-        <span class="badge-dot"></span>
-        <span>БЕСПЛАТНЫЙ ДОСТУП ДЛЯ СТУДЕНТОВ</span>
-      </div>
-      <h1>
-        <span class="gradient-text">Load Board</span><br>
-        Реальные грузы в реальном времени
-      </h1>
-      <p class="subtitle">
-        Доступ к грузам от 50+ брокеров без огромных ежемесячных платежей.
-        Все лучшие брокеры в одном месте!
-      </p>
-    </div>
-
-    <!-- Rates Section -->
-    <div class="rates-section-wrapper" style="margin-bottom: 80px;">
-      <div class="section-header" style="text-align: center; margin-bottom: 60px;">
-        <h2
-          style="font-size: clamp(32px, 5vw, 48px); font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-          Актуальные ставки по регионам США
-        </h2>
-        <p style="font-size: clamp(16px, 2vw, 20px); color: var(--text-secondary);">
-          Средние ставки за милю по данным DAT (февраль 2026)
+      <div class="header">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          <span>БЕСПЛАТНЫЙ ДОСТУП ДЛЯ СТУДЕНТОВ</span>
+        </div>
+        <h1>
+          <span class="gradient-text">Load Board</span><br>
+          Реальные грузы в реальном времени
+        </h1>
+        <p class="subtitle">
+          Доступ к грузам от 50+ брокеров без огромных ежемесячных платежей.
+          Все лучшие брокеры в одном месте!
         </p>
       </div>
 
-      <div class="rates-container">
-        <!-- Dry Van Rates -->
-        <div class="rates-section">
-          <div class="rates-header">
-            <div class="rates-icon">🚛</div>
-            <h3>Dry Van</h3>
-            <div class="rates-badge">$2.42/миля средняя</div>
-          </div>
-
-          <div class="rates-chart">
-            <div class="rate-bar-modern" data-rate="2.83">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 80.86%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">Midwest</span>
-                <span class="rate-value">$2.83</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #10b981, transparent);">
-              </div>
-            </div>
-
-            <div class="rate-bar-modern" data-rate="2.30">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 65.71%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">Southeast</span>
-                <span class="rate-value">$2.30</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
-              </div>
-            </div>
-
-            <div class="rate-bar-modern" data-rate="2.27">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 64.86%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">South/TX</span>
-                <span class="rate-value">$2.27</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #8b5cf6, transparent);">
-              </div>
-            </div>
-
-            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.25">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 64.29%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">Northeast</span>
-                <span class="rate-value">$2.25</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
-              </div>
-            </div>
-
-            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.22">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 63.43%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">West</span>
-                <span class="rate-value">$2.22</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #f59e0b, transparent);">
-              </div>
-            </div>
-          </div>
-          <button class="rates-expand-btn" onclick="toggleRates(this)">
-            <span class="expand-text">Показать все регионы</span>
-            <span class="expand-icon">▼</span>
-          </button>
+      <!-- Rates Section -->
+      <div class="rates-section-wrapper" style="margin-bottom: 80px;">
+        <div class="section-header" style="text-align: center; margin-bottom: 60px;">
+          <h2
+            style="font-size: clamp(32px, 5vw, 48px); font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Актуальные ставки по регионам США
+          </h2>
+          <p style="font-size: clamp(16px, 2vw, 20px); color: var(--text-secondary);">
+            Средние ставки за милю по данным DAT (февраль 2026)
+          </p>
         </div>
 
-        <!-- Reefer Rates -->
-        <div class="rates-section">
-          <div class="rates-header">
-            <div class="rates-icon">❄️</div>
-            <h3>Reefer</h3>
-            <div class="rates-badge">$2.89/миля средняя</div>
-          </div>
-
-          <div class="rates-chart">
-            <div class="rate-bar-modern" data-rate="3.42">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 97.71%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">Midwest</span>
-                <span class="rate-value">$3.42</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #10b981, transparent);">
-              </div>
+        <div class="rates-container">
+          <!-- Dry Van Rates -->
+          <div class="rates-section">
+            <div class="rates-header">
+              <div class="rates-icon">🚛</div>
+              <h3>Dry Van</h3>
+              <div class="rates-badge">$2.42/миля средняя</div>
             </div>
 
-            <div class="rate-bar-modern" data-rate="3.05">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 87.14%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">South/TX</span>
-                <span class="rate-value">$3.05</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
-              </div>
-            </div>
-
-            <div class="rate-bar-modern" data-rate="2.78">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 79.43%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">West</span>
-                <span class="rate-value">$2.78</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #8b5cf6, transparent);">
-              </div>
-            </div>
-
-            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.59">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 74.00%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">Southeast</span>
-                <span class="rate-value">$2.59</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
-              </div>
-            </div>
-
-            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.58">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 73.71%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">Northeast</span>
-                <span class="rate-value">$2.58</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #f59e0b, transparent);">
-              </div>
-            </div>
-          </div>
-          <button class="rates-expand-btn" onclick="toggleRates(this)">
-            <span class="expand-text">Показать все регионы</span>
-            <span class="expand-icon">▼</span>
-          </button>
-        </div>
-
-        <!-- Flatbed Rates -->
-        <div class="rates-section">
-          <div class="rates-header">
-            <div class="rates-icon">🏗️</div>
-            <h3>Flatbed</h3>
-            <div class="rates-badge">$2.71/миля средняя</div>
-          </div>
-
-          <div class="rates-chart">
-            <div class="rate-bar-modern" data-rate="2.71">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 77.43%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">National Average</span>
-                <span class="rate-value">$2.71</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Дизель -->
-        <div class="rates-section" style="cursor: pointer;" data-type="diesel">
-          <div class="rates-header">
-            <div class="rates-icon">⛽</div>
-            <h3>Дизель</h3>
-            <div class="rates-badge">$3.45/галлон средняя</div>
-          </div>
-
-          <div class="rates-chart">
-            <div class="rate-bar-modern" data-rate="3.45">
-              <div class="rate-bar-bg"></div>
-              <div class="rate-bar-fill" style="width: 98.57%;"></div>
-              <div class="rate-bar-content">
-                <span class="region-name">National Average</span>
-                <span class="rate-value">$3.45</span>
-              </div>
-              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
-              </div>
-            </div>
-          </div>
-
-          <!-- Expandable States Info -->
-          <div class="states-info"
-            style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-            <div class="states-grid">
-              <div class="state-card">
-                <div class="state-name">California</div>
-                <div class="state-details">
-                  <span class="city-name">Los Angeles</span>
-                  <span class="fuel-price">$4.25/галлон</span>
+            <div class="rates-chart">
+              <div class="rate-bar-modern" data-rate="2.83">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 80.86%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">Midwest</span>
+                  <span class="rate-value">$2.83</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #10b981, transparent);">
                 </div>
               </div>
-              <div class="state-card">
-                <div class="state-name">Texas</div>
-                <div class="state-details">
-                  <span class="city-name">Houston</span>
-                  <span class="fuel-price">$3.15/галлон</span>
+
+              <div class="rate-bar-modern" data-rate="2.30">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 65.71%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">Southeast</span>
+                  <span class="rate-value">$2.30</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
                 </div>
               </div>
-              <div class="state-card">
-                <div class="state-name">Illinois</div>
-                <div class="state-details">
-                  <span class="city-name">Chicago</span>
-                  <span class="fuel-price">$3.62/галлон</span>
+
+              <div class="rate-bar-modern" data-rate="2.27">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 64.86%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">South/TX</span>
+                  <span class="rate-value">$2.27</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #8b5cf6, transparent);">
                 </div>
               </div>
-              <div class="state-card">
-                <div class="state-name">Florida</div>
-                <div class="state-details">
-                  <span class="city-name">Miami</span>
-                  <span class="fuel-price">$3.48/галлон</span>
+
+              <div class="rate-bar-modern rate-bar-hidden" data-rate="2.25">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 64.29%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">Northeast</span>
+                  <span class="rate-value">$2.25</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
+                </div>
+              </div>
+
+              <div class="rate-bar-modern rate-bar-hidden" data-rate="2.22">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 63.43%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">West</span>
+                  <span class="rate-value">$2.22</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #f59e0b, transparent);">
+                </div>
+              </div>
+            </div>
+            <button class="rates-expand-btn" onclick="toggleRates(this)">
+              <span class="expand-text">Показать все регионы</span>
+              <span class="expand-icon">▼</span>
+            </button>
+          </div>
+
+          <!-- Reefer Rates -->
+          <div class="rates-section">
+            <div class="rates-header">
+              <div class="rates-icon">❄️</div>
+              <h3>Reefer</h3>
+              <div class="rates-badge">$2.89/миля средняя</div>
+            </div>
+
+            <div class="rates-chart">
+              <div class="rate-bar-modern" data-rate="3.42">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 97.71%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">Midwest</span>
+                  <span class="rate-value">$3.42</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #10b981, transparent);">
+                </div>
+              </div>
+
+              <div class="rate-bar-modern" data-rate="3.05">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 87.14%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">South/TX</span>
+                  <span class="rate-value">$3.05</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
+                </div>
+              </div>
+
+              <div class="rate-bar-modern" data-rate="2.78">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 79.43%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">West</span>
+                  <span class="rate-value">$2.78</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #8b5cf6, transparent);">
+                </div>
+              </div>
+
+              <div class="rate-bar-modern rate-bar-hidden" data-rate="2.59">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 74.00%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">Southeast</span>
+                  <span class="rate-value">$2.59</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
+                </div>
+              </div>
+
+              <div class="rate-bar-modern rate-bar-hidden" data-rate="2.58">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 73.71%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">Northeast</span>
+                  <span class="rate-value">$2.58</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #f59e0b, transparent);">
+                </div>
+              </div>
+            </div>
+            <button class="rates-expand-btn" onclick="toggleRates(this)">
+              <span class="expand-text">Показать все регионы</span>
+              <span class="expand-icon">▼</span>
+            </button>
+          </div>
+
+          <!-- Flatbed Rates -->
+          <div class="rates-section">
+            <div class="rates-header">
+              <div class="rates-icon">🏗️</div>
+              <h3>Flatbed</h3>
+              <div class="rates-badge">$2.71/миля средняя</div>
+            </div>
+
+            <div class="rates-chart">
+              <div class="rate-bar-modern" data-rate="2.71">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 77.43%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">National Average</span>
+                  <span class="rate-value">$2.71</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Дизель -->
+          <div class="rates-section" style="cursor: pointer;" data-type="diesel">
+            <div class="rates-header">
+              <div class="rates-icon">⛽</div>
+              <h3>Дизель</h3>
+              <div class="rates-badge">$3.45/галлон средняя</div>
+            </div>
+
+            <div class="rates-chart">
+              <div class="rate-bar-modern" data-rate="3.45">
+                <div class="rate-bar-bg"></div>
+                <div class="rate-bar-fill" style="width: 98.57%;"></div>
+                <div class="rate-bar-content">
+                  <span class="region-name">National Average</span>
+                  <span class="rate-value">$3.45</span>
+                </div>
+                <div class="rate-bar-glow"
+                  style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
+                </div>
+              </div>
+            </div>
+
+            <!-- Expandable States Info -->
+            <div class="states-info"
+              style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+              <div class="states-grid">
+                <div class="state-card">
+                  <div class="state-name">California</div>
+                  <div class="state-details">
+                    <span class="city-name">Los Angeles</span>
+                    <span class="fuel-price">$4.25/галлон</span>
+                  </div>
+                </div>
+                <div class="state-card">
+                  <div class="state-name">Texas</div>
+                  <div class="state-details">
+                    <span class="city-name">Houston</span>
+                    <span class="fuel-price">$3.15/галлон</span>
+                  </div>
+                </div>
+                <div class="state-card">
+                  <div class="state-name">Illinois</div>
+                  <div class="state-details">
+                    <span class="city-name">Chicago</span>
+                    <span class="fuel-price">$3.62/галлон</span>
+                  </div>
+                </div>
+                <div class="state-card">
+                  <div class="state-name">Florida</div>
+                  <div class="state-details">
+                    <span class="city-name">Miami</span>
+                    <span class="fuel-price">$3.48/галлон</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="brokers-section">
+        <h2>📊 Статистика грузов по США в реальном времени</h2>
+
+        <div class="chart-container">
+          <h3>📈 Топ-10 штатов по количеству грузов <span
+              style="font-size: 11px; color: #94a3b8; font-weight: 500;">(наведите для цены на дизель)</span></h3>
+
+          <!-- Легенда -->
+          <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; font-size: 12px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div
+                style="width: 20px; height: 12px; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 3px;">
+              </div>
+              <span style="color: #94a3b8;">Количество грузов</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div
+                style="width: 20px; height: 12px; background: linear-gradient(90deg, #f59e0b, #ef4444); border-radius: 3px;">
+              </div>
+              <span style="color: #94a3b8;">Цена дизеля ($1-$10/gal)</span>
+            </div>
+          </div>
+
+          <div class="chart-bars">
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🌴</span>
+                <span>Californ.</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 100%;">
+                  <span class="chart-bar-value">3,247</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">⭐</span>
+                <span>Texas</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 89%;">
+                  <span class="chart-bar-value">2,891</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🌊</span>
+                <span>Florida</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 66%;">
+                  <span class="chart-bar-value">2,156</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🏙️</span>
+                <span>Illinois</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 59%;">
+                  <span class="chart-bar-value">1,923</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🍑</span>
+                <span>Georgia</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 52%;">
+                  <span class="chart-bar-value">1,687</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🌲</span>
+                <span>Pennsylv.</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 47%;">
+                  <span class="chart-bar-value">1,534</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🗽</span>
+                <span>New York</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 44%;">
+                  <span class="chart-bar-value">1,421</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🌾</span>
+                <span>Ohio</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 40%;">
+                  <span class="chart-bar-value">1,298</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🌲</span>
+                <span>N.Carolin.</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 35%;">
+                  <span class="chart-bar-value">1,147</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-label">
+                <span class="state-flag">🏔️</span>
+                <span>Arizona</span>
+              </div>
+              <div class="chart-bar-wrapper">
+                <div class="chart-bar" style="width: 30%;">
+                  <span class="chart-bar-value">987</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">🚛</div>
+            <div class="stat-number" id="totalLoads">15,847</div>
+            <div class="stat-label">Активных грузов</div>
+            <div class="stat-trend positive">↑ 12% за неделю</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏢</div>
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Брокеров</div>
+            <div class="stat-trend">TQL, C.H. Robinson, Arrive...</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-number" id="newLoads">5,247</div>
+            <div class="stat-label">Новых за час</div>
+            <div class="stat-trend positive">↑ Обновляется каждую секунду</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🗺️</div>
+            <div class="stat-number">50</div>
+            <div class="stat-label">Штатов США</div>
+            <div class="stat-trend">Полное покрытие</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🚛</span>
+          <h3>50+ Брокеров</h3>
+          <p>TQL, C.H. Robinson, Arrive Logistics, XPO, Coyote и многие другие в одном месте</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">⚡</span>
+          <h3>Реальное время</h3>
+          <p>Свежие грузы каждую секунду. Никаких устаревших данных</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">💰</span>
+          <h3>Бесплатно</h3>
+          <p>Не нужно платить $100-300/месяц как на DAT или Truckstop</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📱</span>
+          <h3>Удобный интерфейс</h3>
+          <p>Простой и понятный поиск грузов с фильтрами по штатам и оборудованию</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🎓</span>
+          <h3>Для студентов</h3>
+          <p>Специально для тех, кто учится на диспетчера и хочет практиковаться</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🔄</span>
+          <h3>Постоянные обновления</h3>
+          <p>База грузов обновляется автоматически 24/7</p>
+        </div>
+      </div>
+
+      <div class="comparison-section">
+        <h2>💸 Сравнение с популярными Load Boards</h2>
+        <div class="comparison-table">
+          <div class="comparison-header">Наш Load Board</div>
+          <div class="comparison-header">DAT</div>
+          <div class="comparison-header">Truckstop</div>
+
+          <div class="comparison-cell highlight">БЕСПЛАТНО</div>
+          <div class="comparison-cell negative">$149-299/месяц</div>
+          <div class="comparison-cell negative">$99-249/месяц</div>
+
+          <div class="comparison-cell highlight">50+ брокеров</div>
+          <div class="comparison-cell">Все брокеры</div>
+          <div class="comparison-cell">Все брокеры</div>
+
+          <div class="comparison-cell highlight">Реальное время</div>
+          <div class="comparison-cell">Реальное время</div>
+          <div class="comparison-cell">Реальное время</div>
+
+          <div class="comparison-cell highlight">Простой интерфейс</div>
+          <div class="comparison-cell">Сложный интерфейс</div>
+          <div class="comparison-cell">Средний интерфейс</div>
+
+          <div class="comparison-cell highlight">Для студентов</div>
+          <div class="comparison-cell">Для профессионалов</div>
+          <div class="comparison-cell">Для профессионалов</div>
+        </div>
+      </div>
+
+      <div class="brokers-section">
+        <h2>📊 Статистика грузов по США</h2>
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">🚛</div>
+            <div class="stat-number" id="totalLoads">15,847</div>
+            <div class="stat-label">Активных грузов</div>
+            <div class="stat-trend positive">↑ 12% за неделю</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏢</div>
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Брокеров</div>
+            <div class="stat-trend">TQL, C.H. Robinson, Arrive...</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-number" id="newLoads">5,247</div>
+            <div class="stat-label">Новых за час</div>
+            <div class="stat-trend positive">↑ Обновляется каждую секунду</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🗺️</div>
+            <div class="stat-number">50</div>
+            <div class="stat-label">Штатов США</div>
+            <div class="stat-trend">Полное покрытие</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-section">
+        <h2>🎯 Готовы начать поиск грузов?</h2>
+        <p>
+          Получите доступ к тысячам реальных грузов прямо сейчас.
+          Никаких скрытых платежей, никаких ограничений.
+        </p>
+        <a href="http://127.0.0.1:5003" target="_blank" class="cta-button">
+          <span>Открыть Load Board</span>
+          <span>→</span>
+        </a>
       </div>
     </div>
 
-    <div class="brokers-section">
-      <h2>📊 Статистика грузов по США в реальном времени</h2>
+    <script>
+      function toggleRates(button) {
+        const section = button.closest('.rates-section');
+        const expandText = button.querySelector('.expand-text');
 
-      <div class="chart-container">
-        <h3>📈 Топ-10 штатов по количеству грузов <span
-            style="font-size: 11px; color: #94a3b8; font-weight: 500;">(наведите для цены на дизель)</span></h3>
+        section.classList.toggle('expanded');
 
-        <!-- Легенда -->
-        <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; font-size: 12px;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <div
-              style="width: 20px; height: 12px; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 3px;">
-            </div>
-            <span style="color: #94a3b8;">Количество грузов</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <div
-              style="width: 20px; height: 12px; background: linear-gradient(90deg, #f59e0b, #ef4444); border-radius: 3px;">
-            </div>
-            <span style="color: #94a3b8;">Цена дизеля ($1-$10/gal)</span>
-          </div>
-        </div>
+        if (section.classList.contains('expanded')) {
+          expandText.textContent = 'Скрыть';
+        } else {
+          expandText.textContent = 'Показать все регионы';
+        }
+      }
+    </script>
 
-        <div class="chart-bars">
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🌴</span>
-              <span>Californ.</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 100%;">
-                <span class="chart-bar-value">3,247</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">⭐</span>
-              <span>Texas</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 89%;">
-                <span class="chart-bar-value">2,891</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🌊</span>
-              <span>Florida</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 66%;">
-                <span class="chart-bar-value">2,156</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🏙️</span>
-              <span>Illinois</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 59%;">
-                <span class="chart-bar-value">1,923</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🍑</span>
-              <span>Georgia</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 52%;">
-                <span class="chart-bar-value">1,687</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🌲</span>
-              <span>Pennsylv.</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 47%;">
-                <span class="chart-bar-value">1,534</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🗽</span>
-              <span>New York</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 44%;">
-                <span class="chart-bar-value">1,421</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🌾</span>
-              <span>Ohio</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 40%;">
-                <span class="chart-bar-value">1,298</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🌲</span>
-              <span>N.Carolin.</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 35%;">
-                <span class="chart-bar-value">1,147</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">
-              <span class="state-flag">🏔️</span>
-              <span>Arizona</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 30%;">
-                <span class="chart-bar-value">987</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-icon">🚛</div>
-          <div class="stat-number" id="totalLoads">15,847</div>
-          <div class="stat-label">Активных грузов</div>
-          <div class="stat-trend positive">↑ 12% за неделю</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🏢</div>
-          <div class="stat-number">50+</div>
-          <div class="stat-label">Брокеров</div>
-          <div class="stat-trend">TQL, C.H. Robinson, Arrive...</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">⚡</div>
-          <div class="stat-number" id="newLoads">5,247</div>
-          <div class="stat-label">Новых за час</div>
-          <div class="stat-trend positive">↑ Обновляется каждую секунду</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🗺️</div>
-          <div class="stat-number">50</div>
-          <div class="stat-label">Штатов США</div>
-          <div class="stat-trend">Полное покрытие</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-icon">🚛</span>
-        <h3>50+ Брокеров</h3>
-        <p>TQL, C.H. Robinson, Arrive Logistics, XPO, Coyote и многие другие в одном месте</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">⚡</span>
-        <h3>Реальное время</h3>
-        <p>Свежие грузы каждую секунду. Никаких устаревших данных</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">💰</span>
-        <h3>Бесплатно</h3>
-        <p>Не нужно платить $100-300/месяц как на DAT или Truckstop</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">📱</span>
-        <h3>Удобный интерфейс</h3>
-        <p>Простой и понятный поиск грузов с фильтрами по штатам и оборудованию</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">🎓</span>
-        <h3>Для студентов</h3>
-        <p>Специально для тех, кто учится на диспетчера и хочет практиковаться</p>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">🔄</span>
-        <h3>Постоянные обновления</h3>
-        <p>База грузов обновляется автоматически 24/7</p>
-      </div>
-    </div>
-
-    <div class="comparison-section">
-      <h2>💸 Сравнение с популярными Load Boards</h2>
-      <div class="comparison-table">
-        <div class="comparison-header">Наш Load Board</div>
-        <div class="comparison-header">DAT</div>
-        <div class="comparison-header">Truckstop</div>
-
-        <div class="comparison-cell highlight">БЕСПЛАТНО</div>
-        <div class="comparison-cell negative">$149-299/месяц</div>
-        <div class="comparison-cell negative">$99-249/месяц</div>
-
-        <div class="comparison-cell highlight">50+ брокеров</div>
-        <div class="comparison-cell">Все брокеры</div>
-        <div class="comparison-cell">Все брокеры</div>
-
-        <div class="comparison-cell highlight">Реальное время</div>
-        <div class="comparison-cell">Реальное время</div>
-        <div class="comparison-cell">Реальное время</div>
-
-        <div class="comparison-cell highlight">Простой интерфейс</div>
-        <div class="comparison-cell">Сложный интерфейс</div>
-        <div class="comparison-cell">Средний интерфейс</div>
-
-        <div class="comparison-cell highlight">Для студентов</div>
-        <div class="comparison-cell">Для профессионалов</div>
-        <div class="comparison-cell">Для профессионалов</div>
-      </div>
-    </div>
-
-    <div class="brokers-section">
-      <h2>📊 Статистика грузов по США</h2>
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-icon">🚛</div>
-          <div class="stat-number" id="totalLoads">15,847</div>
-          <div class="stat-label">Активных грузов</div>
-          <div class="stat-trend positive">↑ 12% за неделю</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🏢</div>
-          <div class="stat-number">50+</div>
-          <div class="stat-label">Брокеров</div>
-          <div class="stat-trend">TQL, C.H. Robinson, Arrive...</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">⚡</div>
-          <div class="stat-number" id="newLoads">5,247</div>
-          <div class="stat-label">Новых за час</div>
-          <div class="stat-trend positive">↑ Обновляется каждую секунду</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">🗺️</div>
-          <div class="stat-number">50</div>
-          <div class="stat-label">Штатов США</div>
-          <div class="stat-trend">Полное покрытие</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="cta-section">
-      <h2>🎯 Готовы начать поиск грузов?</h2>
-      <p>
-        Получите доступ к тысячам реальных грузов прямо сейчас.
-        Никаких скрытых платежей, никаких ограничений.
-      </p>
-      <a href="http://127.0.0.1:5003" target="_blank" class="cta-button">
-        <span>Открыть Load Board</span>
-        <span>→</span>
-      </a>
-    </div>
-  </div>
+  </div><!-- /.content-wrapper -->
+  </div><!-- /.container -->
 
   <script>
-    function toggleRates(button) {
-      const section = button.closest('.rates-section');
-      const expandText = button.querySelector('.expand-text');
+    // Mobile Menu Script
+    (function () {
+      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+      const mobileMenuClose = document.getElementById('mobileMenuClose');
 
-      section.classList.toggle('expanded');
+      if (mobileMenuToggle && mobileMenu && mobileMenuOverlay) {
+        mobileMenuToggle.addEventListener('click', function () {
+          mobileMenuToggle.classList.toggle('active');
+          mobileMenu.classList.toggle('active');
+          mobileMenuOverlay.classList.toggle('active');
+          document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
 
-      if (section.classList.contains('expanded')) {
-        expandText.textContent = 'Скрыть';
-      } else {
-        expandText.textContent = 'Показать все регионы';
+        mobileMenuOverlay.addEventListener('click', function () {
+          mobileMenuToggle.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          mobileMenuOverlay.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+
+        // Close button
+        if (mobileMenuClose) {
+          mobileMenuClose.addEventListener('click', function () {
+            mobileMenuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-links .nav-link').forEach(link => {
+          link.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('active')) {
+              mobileMenuToggle.classList.remove('active');
+              mobileMenu.classList.remove('active');
+              mobileMenuOverlay.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          });
+        });
       }
-    }
+    })();
   </script>
 </body>
 
@@ -2442,21 +2403,6 @@
 
     requestAnimationFrame(update);
   }
-
-  // Mobile menu toggle
-  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-
-  mobileMenuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-    mobileMenuOverlay.classList.toggle('active');
-  });
-
-  mobileMenuOverlay.addEventListener('click', () => {
-    mobileMenu.classList.remove('active');
-    mobileMenuOverlay.classList.remove('active');
-  });
 
   // Анимация появления ячеек таблицы сравнения
   window.addEventListener('load', () => {

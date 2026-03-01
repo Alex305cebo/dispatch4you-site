@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #020617;
+            color: white;
+        }
+
+        .test-content {
+            padding: 120px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #6366f1;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .status.success {
+            background: #10b981;
+            color: white;
+        }
+
+        .status.error {
+            background: #ef4444;
+            color: white;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <div class="test-content">
+        <div class="test-section">
+            <h2>🧪 Navigation Test Page</h2>
+            <p>This page tests if the shared navigation menu is loading correctly.</p>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Checklist</h2>
+            <ul class="checklist">
+                <li>✓ Do you see a navigation bar at the top of the page?</li>
+                <li>✓ Does it have a logo "🎓 Курсы Диспетчера" on the left?</li>
+                <li>✓ Are there menu items like "Главная", "Курсы", "Инструменты"?</li>
+                <li>✓ On desktop: Do dropdown menus appear when you hover over "Курсы"?</li>
+                <li>✓ On mobile: Do you see a hamburger menu (☰) button?</li>
+                <li>✓ On mobile: Does clicking the hamburger open a side menu?</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>🔍 Debug Information</h2>
+            <p><strong>Open Browser Console (F12)</strong> to see detailed logs:</p>
+            <ul class="checklist">
+                <li>Look for: <code>=== Header Loading Script Started ===</code></li>
+                <li>Look for: <code>✓✓✓ Header loaded successfully ✓✓✓</code></li>
+                <li>Check for any <span style="color: #ef4444;">red error messages</span></li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 Files Required</h2>
+            <ul class="checklist">
+                <li><code>shared-nav.css</code> - Navigation styles</li>
+                <li><code>shared-header.html</code> - Navigation HTML</li>
+                <li><code>load-header.js</code> - Loading script</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 Next Steps</h2>
+            <p>If the navigation appears correctly here, it should work on all pages that have:</p>
+            <ol>
+                <li><code>&lt;link rel="stylesheet" href="shared-nav.css"&gt;</code> in the <code>&lt;head&gt;</code>
+                </li>
+                <li><code>&lt;div id="header-placeholder"&gt;&lt;/div&gt;</code> at the start of
+                    <code>&lt;body&gt;</code>
+                </li>
+                <li><code>&lt;script src="load-header.js"&gt;&lt;/script&gt;</code> before closing
+                    <code>&lt;/body&gt;</code>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Load shared header -->
+    <script>
+        // Проверка: работает ли fetch для локальных файлов
+        fetch('shared-header.html')
+            .then(response => response.text())
+            .then(html => {
+                // Успех - загружаем нормальный скрипт
+                const script = document.createElement('script');
+                script.src = 'load-header.js';
+                document.body.appendChild(script);
+            })
+            .catch(error => {
+                // Ошибка - показываем понятное сообщение
+                const placeholder = document.getElementById('header-placeholder');
+                if (placeholder) {
+                    placeholder.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 12px; margin: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                            <h2 style="margin: 0 0 15px 0; font-size: 24px;">⚠️ Требуется веб-сервер</h2>
+                            <p style="margin: 0 0 20px 0; font-size: 16px; opacity: 0.9;">
+                                Эта страница использует динамическую загрузку навигации.<br>
+                                Для работы нужен локальный веб-сервер.
+                            </p>
+                            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                <p style="margin: 0 0 10px 0; font-weight: bold;">✅ Быстрое решение:</p>
+                                <p style="margin: 5px 0; font-size: 14px;">1. Откройте файл: <strong>test-nav-inline.html</strong></p>
+                                <p style="margin: 5px 0; font-size: 14px;">2. Или запустите: <strong>start-server.ps1</strong></p>
+                            </div>
+                            <a href="test-nav-inline.html" style="display: inline-block; background: white; color: #667eea; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px;">
+                                🚀 Открыть рабочую версию
+                            </a>
+                        </div>
+                    `;
+                }
+
+                // Убираем красное сообщение об ошибке
+                const errorBanner = document.querySelector('[style*="background: #ef4444"]');
+                if (errorBanner) {
+                    errorBanner.style.display = 'none';
+                }
+            });
+    </script>
+</body>
+
+</html>
