@@ -284,6 +284,30 @@
             right: 0;
         }
 
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .mobile-menu-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -636,20 +660,28 @@
 
         .bubble-text {
             font-size: clamp(13px, 2.5vw, 15px);
-            line-height: 1.6;
+            line-height: 1.8;
             color: #ffffff;
             position: relative;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bubble-text span {
+            display: block;
         }
 
         .chat-view {
             display: none;
             flex-direction: column;
-            height: calc(100vh - 180px);
+            height: calc(100vh - 100px);
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
             animation: fadeIn 0.5s ease-out;
+            padding-top: 20px;
         }
 
         .chat-view.active {
@@ -913,7 +945,8 @@
             }
 
             .chat-view {
-                height: calc(100vh - 140px);
+                height: calc(100vh - 80px);
+                padding-top: 10px;
             }
 
             .messages-container {
@@ -1160,6 +1193,7 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
         <div class="mobile-nav-actions">
             <a href="../login.html" class="btn-login" style="width: 100%; text-align: center;">Войти</a>
             <a href="../register.html" class="btn-signup" style="width: 100%; text-align: center;">Регистрация</a>
@@ -1226,7 +1260,7 @@
                     <div class="feature-card-info">
                         <div class="feature-icon-info">🎯</div>
                         <h3>Реальные сценарии работы</h3>
-                        <p>15+ различных сценариев переговоров, основанных на реальных ситуациях из практики диспетчеров
+                        <p>15 различных сценариев переговоров с реальными расстояниями, ставками и условиями
                             грузоперевозок США</p>
                     </div>
 
@@ -1239,9 +1273,9 @@
 
                     <div class="feature-card-info">
                         <div class="feature-icon-info">📊</div>
-                        <h3>Оценка ваших ответов</h3>
-                        <p>Система анализирует качество ваших ответов и дает рекомендации по улучшению навыков
-                            переговоров</p>
+                        <h3>3 пути развития диалога</h3>
+                        <p>Каждый сценарий имеет 3 варианта развития в зависимости от качества ваших ответов: быстрое
+                            бронирование, переговоры или отказ</p>
                     </div>
 
                     <div class="feature-card-info">
@@ -1267,13 +1301,13 @@
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">15+</div>
+                        <div class="stat-number">15</div>
                         <div class="stat-label">Сценариев</div>
                     </div>
 
                     <div class="stat-card">
-                        <div class="stat-number">100+</div>
-                        <div class="stat-label">Вариантов диалогов</div>
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Пути развития</div>
                     </div>
 
                     <div class="stat-card">
@@ -1300,6 +1334,9 @@
         </div>
     </div>
 
+    <!-- Scenarios Data -->
+    <script src="scenarios-data-test.js"></script>
+
     <script>
         const welcomeScreen = document.getElementById('welcomeScreen');
         const chatView = document.getElementById('chatView');
@@ -1313,59 +1350,20 @@
         let conversationActive = false;
         let conversationStep = 0;
         let currentScenario = null;
+        let currentPath = null; // 'good', 'normal', or 'bad'
+        let qualityScore = 0; // Track user's response quality
+
+        // Random names for dispatcher and broker
+        let dispatcherName = '';
+        let brokerName = '';
+
+        const dispatcherNames = ['Alex', 'Mike', 'Sarah', 'John', 'Maria', 'David', 'Lisa', 'Tom', 'Anna', 'Chris'];
+        const brokerNames = ['James', 'Robert', 'Jennifer', 'Michael', 'Linda', 'William', 'Patricia', 'Richard', 'Susan', 'Daniel'];
 
         const greetingOptions = [
-            "Good morning! This is Jake from Apex Logistics. Calling about your Atlanta to Charlotte load. Is it still available?",
-            "Hi! Sarah from Quick Dispatch. Your Dallas to Memphis load - is it still open?",
-            "Good afternoon! Mike from Midwest Freight. Saw your Chicago to Nashville posting. Still there?",
-            "Hey! Lisa from Desert Logistics. Your Phoenix to Denver load - still available?"
+            { lines: ["Dallas TX to Houston TX dry van. Still available?"], fullText: "Dallas TX to Houston TX dry van. Still available?", scenarioIndex: 0 }
         ];
 
-        const scenarios = {
-            atlanta: [
-                {
-                    question: "Morning! Yeah, it's open. What's your MC?",
-                    keywords: ['mc', 'number', '\\d{6}'],
-                    goodResponse: "Got it, checking you now... Alright, you're good. So it's Atlanta to Charlotte - 650 miles, 28,000 pounds. Pickup today between 2-6 PM, deliver tomorrow by noon. What equipment you running?",
-                    suggestions: [
-                        "MC 445566, we run this lane weekly",
-                        "MC 445566, driver's ready in Atlanta",
-                        "MC 778899",
-                        "Let me grab that"
-                    ]
-                },
-                {
-                    question: "What kind of trailer you got?",
-                    keywords: ['dry van', 'van', '53', 'trailer'],
-                    goodResponse: "Perfect, that'll work. Can your driver be there today between 2 and 6?",
-                    suggestions: [
-                        "53-foot dry van, air ride, driver's 30 minutes out",
-                        "Dry van, 53 footer",
-                        "Van"
-                    ]
-                },
-                {
-                    question: "Can you make pickup today 2-6 PM?",
-                    keywords: ['yes', 'today', 'can', 'sure'],
-                    goodResponse: "Excellent. Rate is $1,755 - that's $2.70 per mile. Work for you?",
-                    suggestions: [
-                        "Yes, driver can be there by 3 PM today",
-                        "Yeah, today works",
-                        "Need to check"
-                    ]
-                },
-                {
-                    question: "$1,755 for 650 miles. That work?",
-                    keywords: ['yes', 'ok', 'deal', 'book'],
-                    goodResponse: "Great! Sending rate con right now. Email me your insurance cert and we're set.",
-                    suggestions: [
-                        "Yes, $1,755 works. Let's book it",
-                        "Can you do $1,850?",
-                        "Need $2,000"
-                    ]
-                }
-            ]
-        };
 
         function init() {
             showRandomBubbles();
@@ -1374,19 +1372,26 @@
 
         function showRandomBubbles() {
             bubblesContainer.innerHTML = '';
-            greetingOptions.forEach(text => {
+            greetingOptions.forEach(option => {
                 const bubble = document.createElement('div');
                 bubble.className = 'bubble';
-                bubble.innerHTML = `<div class="bubble-text">${text}</div>`;
-                bubble.onclick = () => startConversation(text);
+                const linesHTML = option.lines.map(line => `<span>${line}</span>`).join('');
+                bubble.innerHTML = `<div class="bubble-text">${linesHTML}</div>`;
+                bubble.onclick = () => startConversation(option.fullText, option.scenarioIndex);
                 bubblesContainer.appendChild(bubble);
             });
         }
 
-        function startConversation(greeting) {
+        function startConversation(greeting, scenarioIndex) {
             conversationActive = true;
             conversationStep = 0;
-            currentScenario = scenarios.atlanta;
+            currentScenario = allScenarios[scenarioIndex];
+            currentPath = null;
+            qualityScore = 0;
+
+            // Generate random names for this conversation
+            dispatcherName = dispatcherNames[Math.floor(Math.random() * dispatcherNames.length)];
+            brokerName = brokerNames[Math.floor(Math.random() * brokerNames.length)];
 
             welcomeScreen.style.display = 'none';
             chatView.classList.add('active');
@@ -1403,9 +1408,10 @@
                 showTypingIndicator();
                 setTimeout(() => {
                     hideTypingIndicator();
-                    const scenario = currentScenario[conversationStep];
-                    addMessage(scenario.question, 'broker');
-                    showSuggestions(scenario.suggestions);
+                    // Start with first question from all paths (they all start the same)
+                    const firstStep = currentScenario.paths.good[0];
+                    addMessage(firstStep.brokerQuestion, 'broker');
+                    showSuggestions(firstStep.suggestions);
                 }, 1500);
             }, 500);
         }
@@ -1420,7 +1426,32 @@
 
             const content = document.createElement('div');
             content.className = 'message-content';
-            content.textContent = text;
+
+            // Add name label
+            if (dispatcherName && brokerName) {
+                const nameLabel = document.createElement('div');
+                nameLabel.style.fontWeight = '700';
+                nameLabel.style.fontSize = '14px';
+                nameLabel.style.marginBottom = '8px';
+                nameLabel.style.color = sender === 'user' ? '#818cf8' : '#a78bfa';
+                nameLabel.textContent = sender === 'user' ? `${dispatcherName} (Dispatcher)` : `${brokerName} (Broker)`;
+                content.appendChild(nameLabel);
+            }
+
+            // Support both string and array format
+            const textContent = document.createElement('div');
+            if (Array.isArray(text)) {
+                // Create separate spans for each line
+                text.forEach(line => {
+                    const span = document.createElement('span');
+                    span.textContent = line;
+                    span.style.display = 'block';
+                    textContent.appendChild(span);
+                });
+            } else {
+                textContent.textContent = text;
+            }
+            content.appendChild(textContent);
 
             message.appendChild(avatar);
             message.appendChild(content);
@@ -1462,11 +1493,26 @@
             hint.innerHTML = '💡 Выберите подходящий ответ';
             container.appendChild(hint);
 
-            suggestions.forEach(text => {
+            suggestions.forEach(suggestion => {
                 const btn = document.createElement('button');
                 btn.className = 'suggestion-btn';
+
+                const text = typeof suggestion === 'string' ? suggestion : suggestion.text;
+                const quality = typeof suggestion === 'object' ? suggestion.quality : 'normal';
+
                 btn.textContent = text;
-                btn.onclick = () => selectSuggestion(text);
+                btn.dataset.quality = quality;
+
+                // Add quality indicator styling
+                if (quality === 'good') {
+                    btn.style.borderColor = 'rgba(34, 197, 94, 0.4)';
+                    btn.style.background = 'rgba(34, 197, 94, 0.05)';
+                } else if (quality === 'bad') {
+                    btn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+                    btn.style.background = 'rgba(239, 68, 68, 0.05)';
+                }
+
+                btn.onclick = () => selectSuggestion(text, quality);
                 container.appendChild(btn);
             });
 
@@ -1474,35 +1520,60 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function selectSuggestion(text) {
+        function selectSuggestion(text, quality) {
             const suggestions = document.getElementById('suggestions');
             if (suggestions) suggestions.remove();
 
             addMessage(text, 'user');
-            conversationStep++;
 
-            if (conversationStep < currentScenario.length) {
+            // Determine path based on quality
+            if (currentPath === null) {
+                // First response determines the path
+                if (quality === 'good') {
+                    currentPath = 'good';
+                } else if (quality === 'bad') {
+                    currentPath = 'bad';
+                } else {
+                    currentPath = 'normal';
+                }
+            }
+
+            // Get current step from the selected path
+            const pathSteps = currentScenario.paths[currentPath];
+            const currentStep = pathSteps[conversationStep];
+
+            setTimeout(() => {
+                showTypingIndicator();
                 setTimeout(() => {
-                    showTypingIndicator();
-                    setTimeout(() => {
-                        hideTypingIndicator();
-                        const scenario = currentScenario[conversationStep];
-                        addMessage(scenario.goodResponse, 'broker');
+                    hideTypingIndicator();
 
+                    // Show broker's response
+                    addMessage(currentStep.brokerResponse, 'broker');
+
+                    // Check if this is the end of conversation
+                    if (currentStep.isSuccess !== undefined) {
+                        // Conversation ended
                         setTimeout(() => {
-                            if (conversationStep < currentScenario.length - 1) {
-                                const nextScenario = currentScenario[conversationStep + 1];
-                                addMessage(nextScenario.question, 'broker');
-                                showSuggestions(nextScenario.suggestions);
+                            if (currentStep.isSuccess) {
+                                addMessage("✅ Load booked successfully! Great job!", 'broker');
                             } else {
-                                setTimeout(() => {
-                                    addMessage("Perfect! Have a great day and safe travels!", 'broker');
-                                }, 1000);
+                                addMessage("❌ Load not booked. Better luck next time.", 'broker');
                             }
                         }, 1000);
-                    }, 1500);
-                }, 500);
-            }
+                    } else {
+                        // Continue conversation
+                        conversationStep++;
+
+                        if (conversationStep < pathSteps.length) {
+                            setTimeout(() => {
+                                const nextStep = pathSteps[conversationStep];
+                                addMessage(nextStep.brokerQuestion, 'broker');
+                                showSuggestions(nextStep.suggestions);
+                            }, 1000);
+                        }
+                    }
+                }, 1500);
+            }, 500);
         }
 
         function setupEventListeners() {
@@ -1546,6 +1617,8 @@
             conversationActive = false;
             conversationStep = 0;
             currentScenario = null;
+            currentPath = null;
+            qualityScore = 0;
 
             messagesContainer.innerHTML = '';
             chatView.classList.remove('active');
@@ -1734,6 +1807,7 @@
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
 
         if (mobileMenuToggle && mobileMenu && mobileMenuOverlay) {
             mobileMenuToggle.addEventListener('click', function () {
@@ -1749,6 +1823,16 @@
                 mobileMenuOverlay.classList.remove('active');
                 document.body.style.overflow = '';
             });
+
+            // Close button
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', function () {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    mobileMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
 
             // Close mobile menu when clicking on a link
             document.querySelectorAll('.mobile-nav-links .nav-link').forEach(link => {

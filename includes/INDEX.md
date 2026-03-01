@@ -123,7 +123,7 @@
 - 🎯 Покрытие: 5%
 
 ### Страницы с навигацией
-1. ✅ `pages/ai-chat.html`
+1. ✅ `pages/simulator.html`
 
 ---
 
