@@ -500,6 +500,338 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+    /* Rates Section Styles */
+    .rates-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+    .rates-section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .rates-section:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .rates-section[data-type="diesel"] {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .rates-section[data-type="diesel"]:hover {
+      background: rgba(245, 158, 11, 0.08);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .rates-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .rates-icon {
+      font-size: 40px;
+      flex-shrink: 0;
+    }
+
+    .rates-header h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .rates-badge {
+      padding: 6px 16px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #a5b4fc;
+      white-space: nowrap;
+    }
+
+    .rates-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .rate-bar-modern {
+      position: relative;
+      height: 70px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .rate-bar-modern:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .rate-bar-modern:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .rate-bar-modern:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .rate-bar-modern:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .rate-bar-modern:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .rate-bar-modern:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(99, 102, 241, 0.3);
+    }
+
+    .rate-bar-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .rate-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.2));
+      border-radius: 16px;
+      animation: fillBarSmooth 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      transform-origin: left;
+      box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.1);
+    }
+
+    .rate-bar-modern:nth-child(1) .rate-bar-fill {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.2));
+    }
+
+    .rate-bar-modern:nth-child(2) .rate-bar-fill {
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.4), rgba(99, 102, 241, 0.2));
+    }
+
+    .rate-bar-modern:nth-child(3) .rate-bar-fill {
+      background: linear-gradient(90deg, rgba(139, 92, 246, 0.4), rgba(139, 92, 246, 0.2));
+    }
+
+    .rate-bar-modern:nth-child(4) .rate-bar-fill {
+      background: linear-gradient(90deg, rgba(236, 72, 153, 0.4), rgba(236, 72, 153, 0.2));
+    }
+
+    .rate-bar-modern:nth-child(5) .rate-bar-fill {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.4), rgba(245, 158, 11, 0.2));
+    }
+
+    .rate-bar-hidden {
+      display: none;
+      opacity: 0;
+      max-height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .rates-section.expanded .rate-bar-hidden {
+      display: block;
+      opacity: 1;
+      max-height: 100px;
+      margin-bottom: 16px;
+      animation: fadeInUp 0.4s ease-out forwards;
+    }
+
+    .rates-expand-btn {
+      width: 100%;
+      padding: 12px 20px;
+      margin-top: 8px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .rates-expand-btn:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .expand-icon {
+      transition: transform 0.3s ease;
+      font-size: 12px;
+    }
+
+    .rates-section.expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    @keyframes fillBarSmooth {
+      from {
+        width: 0;
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .rate-bar-content {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .rate-bar-modern:hover .rate-bar-content {
+      transform: translateX(8px);
+      transition: transform 0.3s ease;
+    }
+
+    .region-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      letter-spacing: 0.5px;
+    }
+
+    .rate-value {
+      font-size: 24px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 16px rgba(99, 102, 241, 0.5);
+    }
+
+    .rate-bar-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      border-radius: 16px;
+    }
+
+    .rate-bar-modern:hover .rate-bar-glow {
+      opacity: 0.6;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+
+      0%,
+      100% {
+        opacity: 0.4;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .states-info .state-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .states-info .state-card:hover {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1));
+      border-color: rgba(245, 158, 11, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .states-info .state-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .states-info .state-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .states-info .city-name {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .states-info .fuel-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: #f59e0b;
+    }
+
+    @media (max-width: 768px) {
+      .rates-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .states-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 6px;
+      }
+    }
   </style>
 </head>
 
@@ -925,6 +1257,240 @@
       </p>
     </div>
 
+    <!-- Rates Section -->
+    <div class="rates-section-wrapper" style="margin-bottom: 80px;">
+      <div class="section-header" style="text-align: center; margin-bottom: 60px;">
+        <h2
+          style="font-size: clamp(32px, 5vw, 48px); font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          Актуальные ставки по регионам США
+        </h2>
+        <p style="font-size: clamp(16px, 2vw, 20px); color: var(--text-secondary);">
+          Средние ставки за милю по данным DAT (февраль 2026)
+        </p>
+      </div>
+
+      <div class="rates-container">
+        <!-- Dry Van Rates -->
+        <div class="rates-section">
+          <div class="rates-header">
+            <div class="rates-icon">🚛</div>
+            <h3>Dry Van</h3>
+            <div class="rates-badge">$2.42/миля средняя</div>
+          </div>
+
+          <div class="rates-chart">
+            <div class="rate-bar-modern" data-rate="2.83">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 80.86%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">Midwest</span>
+                <span class="rate-value">$2.83</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #10b981, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern" data-rate="2.30">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 65.71%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">Southeast</span>
+                <span class="rate-value">$2.30</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern" data-rate="2.27">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 64.86%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">South/TX</span>
+                <span class="rate-value">$2.27</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #8b5cf6, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.25">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 64.29%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">Northeast</span>
+                <span class="rate-value">$2.25</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.22">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 63.43%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">West</span>
+                <span class="rate-value">$2.22</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #f59e0b, transparent);">
+              </div>
+            </div>
+          </div>
+          <button class="rates-expand-btn" onclick="toggleRates(this)">
+            <span class="expand-text">Показать все регионы</span>
+            <span class="expand-icon">▼</span>
+          </button>
+        </div>
+
+        <!-- Reefer Rates -->
+        <div class="rates-section">
+          <div class="rates-header">
+            <div class="rates-icon">❄️</div>
+            <h3>Reefer</h3>
+            <div class="rates-badge">$2.89/миля средняя</div>
+          </div>
+
+          <div class="rates-chart">
+            <div class="rate-bar-modern" data-rate="3.42">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 97.71%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">Midwest</span>
+                <span class="rate-value">$3.42</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #10b981, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern" data-rate="3.05">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 87.14%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">South/TX</span>
+                <span class="rate-value">$3.05</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern" data-rate="2.78">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 79.43%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">West</span>
+                <span class="rate-value">$2.78</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #8b5cf6, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.59">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 74.00%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">Southeast</span>
+                <span class="rate-value">$2.59</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
+              </div>
+            </div>
+
+            <div class="rate-bar-modern rate-bar-hidden" data-rate="2.58">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 73.71%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">Northeast</span>
+                <span class="rate-value">$2.58</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #f59e0b, transparent);">
+              </div>
+            </div>
+          </div>
+          <button class="rates-expand-btn" onclick="toggleRates(this)">
+            <span class="expand-text">Показать все регионы</span>
+            <span class="expand-icon">▼</span>
+          </button>
+        </div>
+
+        <!-- Flatbed Rates -->
+        <div class="rates-section">
+          <div class="rates-header">
+            <div class="rates-icon">🏗️</div>
+            <h3>Flatbed</h3>
+            <div class="rates-badge">$2.71/миля средняя</div>
+          </div>
+
+          <div class="rates-chart">
+            <div class="rate-bar-modern" data-rate="2.71">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 77.43%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">National Average</span>
+                <span class="rate-value">$2.71</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #6366f1, transparent);">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Дизель -->
+        <div class="rates-section" style="cursor: pointer;" data-type="diesel">
+          <div class="rates-header">
+            <div class="rates-icon">⛽</div>
+            <h3>Дизель</h3>
+            <div class="rates-badge">$3.45/галлон средняя</div>
+          </div>
+
+          <div class="rates-chart">
+            <div class="rate-bar-modern" data-rate="3.45">
+              <div class="rate-bar-bg"></div>
+              <div class="rate-bar-fill" style="width: 98.57%;"></div>
+              <div class="rate-bar-content">
+                <span class="region-name">National Average</span>
+                <span class="rate-value">$3.45</span>
+              </div>
+              <div class="rate-bar-glow" style="background: linear-gradient(90deg, transparent, #ec4899, transparent);">
+              </div>
+            </div>
+          </div>
+
+          <!-- Expandable States Info -->
+          <div class="states-info"
+            style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+            <div class="states-grid">
+              <div class="state-card">
+                <div class="state-name">California</div>
+                <div class="state-details">
+                  <span class="city-name">Los Angeles</span>
+                  <span class="fuel-price">$4.25/галлон</span>
+                </div>
+              </div>
+              <div class="state-card">
+                <div class="state-name">Texas</div>
+                <div class="state-details">
+                  <span class="city-name">Houston</span>
+                  <span class="fuel-price">$3.15/галлон</span>
+                </div>
+              </div>
+              <div class="state-card">
+                <div class="state-name">Illinois</div>
+                <div class="state-details">
+                  <span class="city-name">Chicago</span>
+                  <span class="fuel-price">$3.62/галлон</span>
+                </div>
+              </div>
+              <div class="state-card">
+                <div class="state-name">Florida</div>
+                <div class="state-details">
+                  <span class="city-name">Miami</span>
+                  <span class="fuel-price">$3.48/галлон</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="brokers-section">
       <h2>📊 Статистика грузов по США в реальном времени</h2>
 
@@ -1199,6 +1765,21 @@
       </a>
     </div>
   </div>
+
+  <script>
+    function toggleRates(button) {
+      const section = button.closest('.rates-section');
+      const expandText = button.querySelector('.expand-text');
+
+      section.classList.toggle('expanded');
+
+      if (section.classList.contains('expanded')) {
+        expandText.textContent = 'Скрыть';
+      } else {
+        expandText.textContent = 'Показать все регионы';
+      }
+    }
+  </script>
 </body>
 
 </html>
