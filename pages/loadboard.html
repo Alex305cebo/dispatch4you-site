@@ -794,7 +794,7 @@
     }
 
     .state-card-mobile.expanded .state-card-main {
-      max-height: 300px;
+      max-height: 500px;
       opacity: 1;
       margin-top: 12px;
     }
@@ -826,6 +826,19 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    /* Цветные индикаторы для значений */
+    .state-card-value.green {
+      color: #22c55e;
+    }
+
+    .state-card-value.yellow {
+      color: #f59e0b;
+    }
+
+    .state-card-value.red {
+      color: #ef4444;
     }
 
     .state-card-details {
@@ -3476,6 +3489,41 @@
       else if (loads < 2000) activity = "Высокая";
       else activity = "Очень высокая";
 
+      // Важные показатели для диспетчера
+      // 1. Конкуренция (trucks-to-loads ratio)
+      let truckRatio = (loads / (loads * 0.85 + Math.random() * 100)).toFixed(2);
+      let competition = "Средняя";
+      let competitionColor = "#f59e0b";
+      if (truckRatio > 1.2) {
+        competition = "Низкая 🟢";
+        competitionColor = "#22c55e";
+      } else if (truckRatio < 0.8) {
+        competition = "Высокая 🔴";
+        competitionColor = "#ef4444";
+      } else {
+        competition = "Средняя 🟡";
+      }
+
+      // 2. Процент пустых миль (deadhead)
+      let deadheadPercent = (5 + Math.random() * 20).toFixed(0);
+      let deadheadStatus = deadheadPercent < 10 ? "Отлично" : deadheadPercent < 15 ? "Хорошо" : "Высокий";
+
+      // 3. Средняя маржа (broker margin)
+      let marginPercent = (12 + Math.random() * 8).toFixed(0);
+      let marginStatus = marginPercent > 18 ? "Высокая" : marginPercent > 15 ? "Средняя" : "Низкая";
+
+      // 4. Скорость бронирования (booking speed)
+      let bookingSpeed = (15 + Math.random() * 45).toFixed(0);
+      let bookingStatus = bookingSpeed < 30 ? "Быстро ⚡" : bookingSpeed < 45 ? "Средне" : "Медленно";
+
+      // 5. Процент отмен (cancellation rate)
+      let cancellationRate = (2 + Math.random() * 8).toFixed(1);
+      let cancellationStatus = cancellationRate < 4 ? "Низкий 🟢" : cancellationRate < 6 ? "Средний 🟡" : "Высокий 🔴";
+
+      // 6. Доступность обратных грузов (backhaul availability)
+      let backhaulPercent = (40 + Math.random() * 50).toFixed(0);
+      let backhaulStatus = backhaulPercent > 70 ? "Отлично" : backhaulPercent > 50 ? "Хорошо" : "Низко";
+
       const card = document.createElement('div');
       card.className = 'state-card-mobile';
       card.style.animationDelay = `${index * 0.05}s`;
@@ -3485,7 +3533,7 @@
           <span class="state-card-flag">${stateFlags[state.id] || '📍'}</span>
           <div class="state-card-info">
             <span class="state-card-name">${state.name}</span>
-            ${stateCities[state.id] ? `<span class="state-card-separator">•</span><span class="state-card-cities">${stateCities[state.id]}</span>` : ''}
+            ${stateCities[state.id] ? `<span class="state-card-cities">${stateCities[state.id]}</span>` : ''}
           </div>
           <div class="state-card-right">
             <span class="state-card-badge ${badgeClass}">${badgeText}</span>
@@ -3501,15 +3549,37 @@
           <div class="state-card-row">
             <span class="state-card-icon">⛽</span>
             <span class="state-card-label">Дизель</span>
-            <span class="state-card-value">${state.diesel}</span>
+            <span class="state-card-value">${state.diesel}/gal</span>
           </div>
-          <div class="state-card-detail-row">
-            <span class="state-card-detail-label">📊 Тренд:</span>
-            <span class="state-card-detail-value">${trend}</span>
+          <div class="state-card-row">
+            <span class="state-card-icon">🎯</span>
+            <span class="state-card-label">Конкуренция</span>
+            <span class="state-card-value" style="color: ${competitionColor}">${competition}</span>
           </div>
-          <div class="state-card-detail-row">
-            <span class="state-card-detail-label">🔥 Активность:</span>
-            <span class="state-card-detail-value">${activity}</span>
+          <div class="state-card-row">
+            <span class="state-card-icon">📍</span>
+            <span class="state-card-label">Пустые мили</span>
+            <span class="state-card-value">${deadheadPercent}% (${deadheadStatus})</span>
+          </div>
+          <div class="state-card-row">
+            <span class="state-card-icon">💰</span>
+            <span class="state-card-label">Маржа брокера</span>
+            <span class="state-card-value">${marginPercent}% (${marginStatus})</span>
+          </div>
+          <div class="state-card-row">
+            <span class="state-card-icon">⚡</span>
+            <span class="state-card-label">Скорость букинга</span>
+            <span class="state-card-value">${bookingSpeed} мин (${bookingStatus})</span>
+          </div>
+          <div class="state-card-row">
+            <span class="state-card-icon">❌</span>
+            <span class="state-card-label">Отмены</span>
+            <span class="state-card-value">${cancellationRate}% ${cancellationStatus}</span>
+          </div>
+          <div class="state-card-row">
+            <span class="state-card-icon">🔄</span>
+            <span class="state-card-label">Обратные грузы</span>
+            <span class="state-card-value">${backhaulPercent}% (${backhaulStatus})</span>
           </div>
         </div>
       `;
