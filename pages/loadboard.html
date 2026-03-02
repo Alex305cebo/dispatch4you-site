@@ -643,8 +643,8 @@
     .state-card-mobile {
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 14px;
-      padding: 16px 18px;
+      border-radius: 16px;
+      padding: 20px 22px;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
@@ -655,6 +655,9 @@
       min-height: auto;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+      pointer-events: auto;
+      z-index: 1;
+      touch-action: manipulation;
     }
 
     .state-card-mobile::before {
@@ -676,6 +679,7 @@
     .state-card-mobile.expanded {
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.08));
       border-color: rgba(99, 102, 241, 0.4);
+      z-index: 10;
     }
 
     .state-card-mobile.expanded::before {
@@ -706,7 +710,7 @@
     }
 
     .state-card-flag {
-      font-size: 32px;
+      font-size: 40px;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
       flex-shrink: 0;
     }
@@ -714,13 +718,13 @@
     .state-card-info {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
       flex: 1;
       min-width: 0;
     }
 
     .state-card-name {
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 700;
       color: #ffffff;
       white-space: nowrap;
@@ -733,7 +737,7 @@
     }
 
     .state-card-cities {
-      font-size: 13px;
+      font-size: 15px;
       color: #94a3b8;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -743,7 +747,7 @@
     }
 
     .state-card-rate {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 900;
       background: linear-gradient(135deg, #10b981, #22c55e);
       -webkit-background-clip: text;
@@ -753,8 +757,8 @@
     }
 
     .state-card-badge {
-      font-size: 11px;
-      padding: 4px 9px;
+      font-size: 13px;
+      padding: 5px 11px;
       border-radius: 8px;
       font-weight: 600;
       white-space: nowrap;
@@ -789,7 +793,7 @@
     .state-card-main {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       max-height: 0;
       overflow: hidden;
       opacity: 0;
@@ -799,29 +803,29 @@
     }
 
     .state-card-mobile.expanded .state-card-main {
-      max-height: 700px;
+      max-height: 800px;
       opacity: 1;
-      margin-top: 14px;
-      padding-top: 14px;
+      margin-top: 16px;
+      padding-top: 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .state-card-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 15px;
-      padding: 6px 0;
+      gap: 10px;
+      font-size: 17px;
+      padding: 8px 0;
     }
 
     .state-card-icon {
-      font-size: 18px;
+      font-size: 22px;
       flex-shrink: 0;
     }
 
     .state-card-label {
       color: #94a3b8;
-      font-size: 15px;
+      font-size: 17px;
       flex-shrink: 0;
       font-weight: 500;
     }
@@ -829,7 +833,7 @@
     .state-card-value {
       color: #ffffff;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 18px;
       margin-left: auto;
       text-align: right;
       overflow: hidden;
@@ -885,54 +889,55 @@
     @media (max-width: 768px) {
       .states-cards-container {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 12px;
       }
 
       .state-card-mobile {
-        padding: 14px 16px;
+        padding: 18px 20px;
         min-height: auto;
       }
 
       .state-card-flag {
-        font-size: 28px;
+        font-size: 36px;
       }
 
       .state-card-name {
-        font-size: 17px;
+        font-size: 20px;
       }
 
       .state-card-cities {
-        font-size: 12px;
+        font-size: 14px;
       }
 
       .state-card-rate {
-        font-size: 19px;
+        font-size: 22px;
       }
 
       .state-card-badge {
-        font-size: 10px;
-        padding: 4px 8px;
+        font-size: 12px;
+        padding: 5px 10px;
       }
 
       .state-card-row {
-        font-size: 14px;
-        padding: 5px 0;
+        font-size: 16px;
+        padding: 7px 0;
+        gap: 9px;
       }
 
       .state-card-icon {
-        font-size: 17px;
+        font-size: 20px;
       }
 
       .state-card-label {
-        font-size: 14px;
+        font-size: 16px;
       }
 
       .state-card-value {
-        font-size: 15px;
+        font-size: 17px;
       }
 
       .mobile-states-section h2 {
-        font-size: 22px;
+        font-size: 24px;
         margin-bottom: 24px;
       }
     }
@@ -940,59 +945,60 @@
     @media (max-width: 480px) {
       .states-cards-container {
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 10px;
       }
 
       .state-card-mobile {
-        padding: 12px 14px;
+        padding: 16px 18px;
         min-height: auto;
-        border-radius: 12px;
+        border-radius: 14px;
       }
 
       .state-card-flag {
-        font-size: 26px;
+        font-size: 34px;
       }
 
       .state-card-name {
-        font-size: 16px;
+        font-size: 19px;
       }
 
       .state-card-cities {
-        font-size: 11px;
+        font-size: 13px;
       }
 
       .state-card-rate {
-        font-size: 18px;
+        font-size: 21px;
       }
 
       .state-card-badge {
-        font-size: 9px;
-        padding: 3px 7px;
+        font-size: 11px;
+        padding: 4px 9px;
       }
 
       .state-card-left {
-        gap: 8px;
+        gap: 10px;
       }
 
       .state-card-right {
-        gap: 4px;
+        gap: 6px;
       }
 
       .state-card-row {
-        font-size: 13px;
-        padding: 5px 0;
+        font-size: 15px;
+        padding: 6px 0;
+        gap: 8px;
       }
 
       .state-card-icon {
-        font-size: 16px;
+        font-size: 19px;
       }
 
       .state-card-label {
-        font-size: 13px;
+        font-size: 15px;
       }
 
       .state-card-value {
-        font-size: 14px;
+        font-size: 16px;
       }
     }
 
@@ -1638,6 +1644,7 @@
       height: 100%;
       z-index: 10;
       min-height: 70px;
+      pointer-events: none;
     }
 
     .region-name {
@@ -2320,6 +2327,20 @@
 
       .region-dropdown.active {
         padding: 8px;
+      }
+    }
+
+    /* Fix for mobile click issues - ensure no overlay blocks clicks */
+    @media (max-width: 768px) {
+
+      body::before,
+      body::after {
+        pointer-events: none !important;
+      }
+
+      .mobile-menu-overlay:not(.active) {
+        display: none !important;
+        pointer-events: none !important;
       }
     }
   </style>
@@ -3243,342 +3264,348 @@
 
 
 <script>
-  // Анимация счетчика новых грузов
-  let currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
-  const newLoadsElement = document.getElementById('newLoads');
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('=== DOM LOADED ===');
 
-  function updateLoadsCounter() {
-    const random = Math.random();
+    // Анимация счетчика новых грузов
+    let currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
+    const newLoadsElement = document.getElementById('newLoads');
 
-    // 65% времени - увеличивается на +12
-    if (random < 0.65) {
-      currentLoads += 12;
-    }
-    // 15% времени - уменьшается на -85
-    else if (random < 0.80) {
-      currentLoads -= 85;
-    }
-    // 10% времени - уменьшается на -65
-    else if (random < 0.90) {
-      currentLoads -= 65;
-    }
-    // 10% времени - уменьшается на -45
-    else {
-      currentLoads -= 45;
-    }
+    function updateLoadsCounter() {
+      const random = Math.random();
 
-    // Если достигли максимума, возвращаемся к случайному числу в диапазоне
-    if (currentLoads > 7000) {
-      currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
-    }
+      // 65% времени - увеличивается на +12
+      if (random < 0.65) {
+        currentLoads += 12;
+      }
+      // 15% времени - уменьшается на -85
+      else if (random < 0.80) {
+        currentLoads -= 85;
+      }
+      // 10% времени - уменьшается на -65
+      else if (random < 0.90) {
+        currentLoads -= 65;
+      }
+      // 10% времени - уменьшается на -45
+      else {
+        currentLoads -= 45;
+      }
 
-    // Если упали ниже минимума, возвращаемся к случайному числу в диапазоне
-    if (currentLoads < 5000) {
-      currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
-    }
+      // Если достигли максимума, возвращаемся к случайному числу в диапазоне
+      if (currentLoads > 7000) {
+        currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
+      }
 
-    // Форматируем число с запятой
-    newLoadsElement.textContent = currentLoads.toLocaleString('ru-RU');
-  }
+      // Если упали ниже минимума, возвращаемся к случайному числу в диапазоне
+      if (currentLoads < 5000) {
+        currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
+      }
 
-  // Обновляем каждую секунду
-  setInterval(updateLoadsCounter, 1000);
-
-  // Анимация счетчика активных грузов
-  let totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
-  const totalLoadsElement = document.getElementById('totalLoads');
-
-  function updateTotalLoadsCounter() {
-    const random = Math.random();
-
-    // 70% времени - увеличивается на +18
-    if (random < 0.70) {
-      totalLoads += 18;
-    }
-    // 10% времени - уменьшается на -15
-    else if (random < 0.80) {
-      totalLoads -= 15;
-    }
-    // 10% времени - уменьшается на -5
-    else if (random < 0.90) {
-      totalLoads -= 5;
-    }
-    // 10% времени - уменьшается на -25
-    else {
-      totalLoads -= 25;
+      // Форматируем число с запятой
+      newLoadsElement.textContent = currentLoads.toLocaleString('ru-RU');
     }
 
-    // Если достигли максимума, возвращаемся к случайному числу в диапазоне
-    if (totalLoads > 2245) {
-      totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
+    // Обновляем каждую секунду
+    setInterval(updateLoadsCounter, 1000);
+
+    // Анимация счетчика активных грузов
+    let totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
+    const totalLoadsElement = document.getElementById('totalLoads');
+
+    function updateTotalLoadsCounter() {
+      const random = Math.random();
+
+      // 70% времени - увеличивается на +18
+      if (random < 0.70) {
+        totalLoads += 18;
+      }
+      // 10% времени - уменьшается на -15
+      else if (random < 0.80) {
+        totalLoads -= 15;
+      }
+      // 10% времени - уменьшается на -5
+      else if (random < 0.90) {
+        totalLoads -= 5;
+      }
+      // 10% времени - уменьшается на -25
+      else {
+        totalLoads -= 25;
+      }
+
+      // Если достигли максимума, возвращаемся к случайному числу в диапазоне
+      if (totalLoads > 2245) {
+        totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
+      }
+
+      // Если упали ниже минимума, возвращаемся к случайному числу в диапазоне
+      if (totalLoads < 1485) {
+        totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
+      }
+
+      // Форматируем число с запятой
+      totalLoadsElement.textContent = totalLoads.toLocaleString('ru-RU');
     }
 
-    // Если упали ниже минимума, возвращаемся к случайному числу в диапазоне
-    if (totalLoads < 1485) {
-      totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
-    }
+    // Обновляем каждую секунду
+    setInterval(updateTotalLoadsCounter, 1000);
 
-    // Форматируем число с запятой
-    totalLoadsElement.textContent = totalLoads.toLocaleString('ru-RU');
-  }
+    // Анимация появления баров графика при загрузке
+    let barsAnimated = false;
+    window.addEventListener('load', () => {
+      const bars = document.querySelectorAll('.chart-bar');
+      bars.forEach((bar, index) => {
+        const currentWidth = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.transition = 'width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+          bar.style.width = currentWidth;
+        }, index * 100 + 500);
+      });
 
-  // Обновляем каждую секунду
-  setInterval(updateTotalLoadsCounter, 1000);
-
-  // Анимация появления баров графика при загрузке
-  let barsAnimated = false;
-  window.addEventListener('load', () => {
-    const bars = document.querySelectorAll('.chart-bar');
-    bars.forEach((bar, index) => {
-      const currentWidth = bar.style.width;
-      bar.style.width = '0%';
       setTimeout(() => {
-        bar.style.transition = 'width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        bar.style.width = currentWidth;
-      }, index * 100 + 500);
+        barsAnimated = true;
+      }, 2500);
     });
 
-    setTimeout(() => {
-      barsAnimated = true;
-    }, 2500);
-  });
-
-  // Реалистичная анимация изменения данных в графике
-  // Данные основаны на реальной статистике грузоперевозок в США
-  const stateData = [
-    { name: 'California', flag: '🌴', baseValue: 3247, dieselPrice: 4.89, element: null, bar: null }, // Крупнейший порт и экономика
-    { name: 'Texas', flag: '⭐', baseValue: 2891, dieselPrice: 3.45, element: null, bar: null }, // Нефть, газ, производство
-    { name: 'Florida', flag: '🌊', baseValue: 2156, dieselPrice: 3.78, element: null, bar: null }, // Порты, туризм
-    { name: 'Illinois', flag: '🏙️', baseValue: 1923, dieselPrice: 4.12, element: null, bar: null }, // Чикаго - транспортный хаб
-    { name: 'Georgia', flag: '🍑', baseValue: 1687, dieselPrice: 3.65, element: null, bar: null }, // Атланта - логистический центр
-    { name: 'Pennsylvania', flag: '🌲', baseValue: 1534, dieselPrice: 4.23, element: null, bar: null }, // Производство
-    { name: 'New York', flag: '🗽', baseValue: 1421, dieselPrice: 4.56, element: null, bar: null }, // Порты, импорт
-    { name: 'Ohio', flag: '🌾', baseValue: 1298, dieselPrice: 3.92, element: null, bar: null }, // Производство, сельское хозяйство
-    { name: 'North Carolina', flag: '🌲', baseValue: 1147, dieselPrice: 3.71, element: null, bar: null }, // Производство
-    { name: 'Arizona', flag: '🏔️', baseValue: 987, dieselPrice: 3.98, element: null, bar: null } // Транзит с Мексикой
-  ];
-
-  // ============================================
-  // ДАННЫЕ О ШТАТАХ (вынесены для немедленной загрузки карточек)
-  // ============================================
-  const stateLoadsData = {
-    "US-CA": { loads: 3247, diesel: "$4.89", rate: "$2.45", name: "California" },
-    "US-TX": { loads: 2891, diesel: "$3.15", rate: "$2.35", name: "Texas" },
-    "US-FL": { loads: 2156, diesel: "$3.45", rate: "$2.40", name: "Florida" },
-    "US-IL": { loads: 1923, diesel: "$3.89", rate: "$2.83", name: "Illinois" },
-    "US-GA": { loads: 1687, diesel: "$3.35", rate: "$2.38", name: "Georgia" },
-    "US-PA": { loads: 1534, diesel: "$3.95", rate: "$2.42", name: "Pennsylvania" },
-    "US-NY": { loads: 1421, diesel: "$3.75", rate: "$2.35", name: "New York" },
-    "US-OH": { loads: 1298, diesel: "$3.65", rate: "$2.55", name: "Ohio" },
-    "US-MI": { loads: 1212, diesel: "$3.70", rate: "$2.48", name: "Michigan" },
-    "US-NC": { loads: 1147, diesel: "$3.55", rate: "$2.32", name: "North Carolina" },
-    "US-VA": { loads: 1089, diesel: "$3.48", rate: "$2.38", name: "Virginia" },
-    "US-AL": { loads: 1045, diesel: "$3.28", rate: "$2.36", name: "Alabama" },
-    "US-AZ": { loads: 987, diesel: "$3.85", rate: "$2.28", name: "Arizona" },
-    "US-TN": { loads: 898, diesel: "$3.30", rate: "$2.40", name: "Tennessee" },
-    "US-IN": { loads: 867, diesel: "$3.75", rate: "$2.60", name: "Indiana" },
-    "US-WA": { loads: 845, diesel: "$4.25", rate: "$2.18", name: "Washington" },
-    "US-LA": { loads: 834, diesel: "$3.30", rate: "$2.42", name: "Louisiana" },
-    "US-SC": { loads: 823, diesel: "$3.38", rate: "$2.34", name: "South Carolina" },
-    "US-OK": { loads: 756, diesel: "$3.25", rate: "$2.30", name: "Oklahoma" },
-    "US-KY": { loads: 745, diesel: "$3.40", rate: "$2.38", name: "Kentucky" },
-    "US-NJ": { loads: 734, diesel: "$3.88", rate: "$2.40", name: "New Jersey" },
-    "US-OR": { loads: 723, diesel: "$4.15", rate: "$2.15", name: "Oregon" },
-    "US-MO": { loads: 723, diesel: "$3.25", rate: "$2.45", name: "Missouri" },
-    "US-CO": { loads: 689, diesel: "$3.45", rate: "$2.25", name: "Colorado" },
-    "US-WI": { loads: 678, diesel: "$3.55", rate: "$2.65", name: "Wisconsin" },
-    "US-MN": { loads: 645, diesel: "$3.60", rate: "$2.70", name: "Minnesota" },
-    "US-MA": { loads: 612, diesel: "$3.78", rate: "$2.32", name: "Massachusetts" },
-    "US-MS": { loads: 567, diesel: "$3.25", rate: "$2.35", name: "Mississippi" },
-    "US-MD": { loads: 567, diesel: "$3.70", rate: "$2.38", name: "Maryland" },
-    "US-IA": { loads: 498, diesel: "$3.50", rate: "$2.55", name: "Iowa" },
-    "US-WV": { loads: 456, diesel: "$3.58", rate: "$2.42", name: "West Virginia" },
-    "US-NV": { loads: 454, diesel: "$4.35", rate: "$2.20", name: "Nevada" },
-    "US-KS": { loads: 445, diesel: "$3.35", rate: "$2.28", name: "Kansas" },
-    "US-NM": { loads: 423, diesel: "$3.55", rate: "$2.22", name: "New Mexico" },
-    "US-AR": { loads: 412, diesel: "$3.20", rate: "$2.28", name: "Arkansas" },
-    "US-CT": { loads: 389, diesel: "$3.82", rate: "$2.35", name: "Connecticut" },
-    "US-UT": { loads: 387, diesel: "$3.75", rate: "$2.18", name: "Utah" },
-    "US-NE": { loads: 334, diesel: "$3.45", rate: "$2.20", name: "Nebraska" },
-    "US-ID": { loads: 312, diesel: "$3.95", rate: "$2.12", name: "Idaho" },
-    "US-ME": { loads: 298, diesel: "$3.85", rate: "$2.25", name: "Maine" },
-    "US-NH": { loads: 267, diesel: "$3.72", rate: "$2.30", name: "New Hampshire" },
-    "US-MT": { loads: 245, diesel: "$3.85", rate: "$2.08", name: "Montana" },
-    "US-VT": { loads: 234, diesel: "$3.68", rate: "$2.28", name: "Vermont" },
-    "US-SD": { loads: 223, diesel: "$3.50", rate: "$2.15", name: "South Dakota" },
-    "US-WY": { loads: 198, diesel: "$3.65", rate: "$2.05", name: "Wyoming" },
-    "US-ND": { loads: 189, diesel: "$3.55", rate: "$2.10", name: "North Dakota" },
-    "US-DE": { loads: 178, diesel: "$3.65", rate: "$2.32", name: "Delaware" },
-    "US-HI": { loads: 156, diesel: "$5.25", rate: "$3.20", name: "Hawaii" },
-    "US-RI": { loads: 145, diesel: "$3.80", rate: "$2.28", name: "Rhode Island" },
-    "US-AK": { loads: 89, diesel: "$4.95", rate: "$3.50", name: "Alaska" }
-  };
-
-  // ============================================
-  // ГЕНЕРАЦИЯ КАРТОЧЕК ШТАТОВ (выполняется сразу)
-  // ============================================
-  (function generateMobileStatesCards() {
-    const container = document.querySelector('.states-cards-container');
-    if (!container) {
-      console.error('Container .states-cards-container not found!');
-      return;
-    }
-
-    console.log('Generating state cards...');
-
-    // Топ-30 штатов
-    const topStates = [
-      { id: "US-CA", ...stateLoadsData["US-CA"] },
-      { id: "US-TX", ...stateLoadsData["US-TX"] },
-      { id: "US-FL", ...stateLoadsData["US-FL"] },
-      { id: "US-IL", ...stateLoadsData["US-IL"] },
-      { id: "US-GA", ...stateLoadsData["US-GA"] },
-      { id: "US-PA", ...stateLoadsData["US-PA"] },
-      { id: "US-NY", ...stateLoadsData["US-NY"] },
-      { id: "US-OH", ...stateLoadsData["US-OH"] },
-      { id: "US-MI", ...stateLoadsData["US-MI"] },
-      { id: "US-NC", ...stateLoadsData["US-NC"] },
-      { id: "US-VA", ...stateLoadsData["US-VA"] },
-      { id: "US-AL", ...stateLoadsData["US-AL"] },
-      { id: "US-AZ", ...stateLoadsData["US-AZ"] },
-      { id: "US-TN", ...stateLoadsData["US-TN"] },
-      { id: "US-IN", ...stateLoadsData["US-IN"] },
-      { id: "US-WA", ...stateLoadsData["US-WA"] },
-      { id: "US-LA", ...stateLoadsData["US-LA"] },
-      { id: "US-SC", ...stateLoadsData["US-SC"] },
-      { id: "US-OK", ...stateLoadsData["US-OK"] },
-      { id: "US-KY", ...stateLoadsData["US-KY"] },
-      { id: "US-NJ", ...stateLoadsData["US-NJ"] },
-      { id: "US-OR", ...stateLoadsData["US-OR"] },
-      { id: "US-MO", ...stateLoadsData["US-MO"] },
-      { id: "US-CO", ...stateLoadsData["US-CO"] },
-      { id: "US-WI", ...stateLoadsData["US-WI"] },
-      { id: "US-MN", ...stateLoadsData["US-MN"] },
-      { id: "US-MA", ...stateLoadsData["US-MA"] },
-      { id: "US-MS", ...stateLoadsData["US-MS"] },
-      { id: "US-MD", ...stateLoadsData["US-MD"] },
-      { id: "US-IA", ...stateLoadsData["US-IA"] }
+    // Реалистичная анимация изменения данных в графике
+    // Данные основаны на реальной статистике грузоперевозок в США
+    const stateData = [
+      { name: 'California', flag: '🌴', baseValue: 3247, dieselPrice: 4.89, element: null, bar: null }, // Крупнейший порт и экономика
+      { name: 'Texas', flag: '⭐', baseValue: 2891, dieselPrice: 3.45, element: null, bar: null }, // Нефть, газ, производство
+      { name: 'Florida', flag: '🌊', baseValue: 2156, dieselPrice: 3.78, element: null, bar: null }, // Порты, туризм
+      { name: 'Illinois', flag: '🏙️', baseValue: 1923, dieselPrice: 4.12, element: null, bar: null }, // Чикаго - транспортный хаб
+      { name: 'Georgia', flag: '🍑', baseValue: 1687, dieselPrice: 3.65, element: null, bar: null }, // Атланта - логистический центр
+      { name: 'Pennsylvania', flag: '🌲', baseValue: 1534, dieselPrice: 4.23, element: null, bar: null }, // Производство
+      { name: 'New York', flag: '🗽', baseValue: 1421, dieselPrice: 4.56, element: null, bar: null }, // Порты, импорт
+      { name: 'Ohio', flag: '🌾', baseValue: 1298, dieselPrice: 3.92, element: null, bar: null }, // Производство, сельское хозяйство
+      { name: 'North Carolina', flag: '🌲', baseValue: 1147, dieselPrice: 3.71, element: null, bar: null }, // Производство
+      { name: 'Arizona', flag: '🏔️', baseValue: 987, dieselPrice: 3.98, element: null, bar: null } // Транзит с Мексикой
     ];
 
-    // Эмодзи флаги для штатов
-    const stateFlags = {
-      "US-CA": "🌴", "US-TX": "⭐", "US-FL": "🌊", "US-IL": "🏙️",
-      "US-GA": "🍑", "US-PA": "🌲", "US-NY": "🗽", "US-OH": "🌾",
-      "US-MI": "🚗", "US-NC": "🌲", "US-VA": "🏛️", "US-AL": "🏈",
-      "US-AZ": "🏜️", "US-TN": "🎸", "US-IN": "🏁", "US-WA": "🌲",
-      "US-LA": "🎺", "US-SC": "🌴", "US-OK": "🤠", "US-KY": "🐴",
-      "US-NJ": "🏖️", "US-OR": "🌲", "US-MO": "🎭", "US-CO": "⛰️",
-      "US-WI": "🧀", "US-MN": "❄️", "US-MA": "🦞", "US-MS": "🎵",
-      "US-MD": "🦀", "US-IA": "🌽"
+    // ============================================
+    // ДАННЫЕ О ШТАТАХ (вынесены для немедленной загрузки карточек)
+    // ============================================
+    const stateLoadsData = {
+      "US-CA": { loads: 3247, diesel: "$4.89", rate: "$2.45", name: "California" },
+      "US-TX": { loads: 2891, diesel: "$3.15", rate: "$2.35", name: "Texas" },
+      "US-FL": { loads: 2156, diesel: "$3.45", rate: "$2.40", name: "Florida" },
+      "US-IL": { loads: 1923, diesel: "$3.89", rate: "$2.83", name: "Illinois" },
+      "US-GA": { loads: 1687, diesel: "$3.35", rate: "$2.38", name: "Georgia" },
+      "US-PA": { loads: 1534, diesel: "$3.95", rate: "$2.42", name: "Pennsylvania" },
+      "US-NY": { loads: 1421, diesel: "$3.75", rate: "$2.35", name: "New York" },
+      "US-OH": { loads: 1298, diesel: "$3.65", rate: "$2.55", name: "Ohio" },
+      "US-MI": { loads: 1212, diesel: "$3.70", rate: "$2.48", name: "Michigan" },
+      "US-NC": { loads: 1147, diesel: "$3.55", rate: "$2.32", name: "North Carolina" },
+      "US-VA": { loads: 1089, diesel: "$3.48", rate: "$2.38", name: "Virginia" },
+      "US-AL": { loads: 1045, diesel: "$3.28", rate: "$2.36", name: "Alabama" },
+      "US-AZ": { loads: 987, diesel: "$3.85", rate: "$2.28", name: "Arizona" },
+      "US-TN": { loads: 898, diesel: "$3.30", rate: "$2.40", name: "Tennessee" },
+      "US-IN": { loads: 867, diesel: "$3.75", rate: "$2.60", name: "Indiana" },
+      "US-WA": { loads: 845, diesel: "$4.25", rate: "$2.18", name: "Washington" },
+      "US-LA": { loads: 834, diesel: "$3.30", rate: "$2.42", name: "Louisiana" },
+      "US-SC": { loads: 823, diesel: "$3.38", rate: "$2.34", name: "South Carolina" },
+      "US-OK": { loads: 756, diesel: "$3.25", rate: "$2.30", name: "Oklahoma" },
+      "US-KY": { loads: 745, diesel: "$3.40", rate: "$2.38", name: "Kentucky" },
+      "US-NJ": { loads: 734, diesel: "$3.88", rate: "$2.40", name: "New Jersey" },
+      "US-OR": { loads: 723, diesel: "$4.15", rate: "$2.15", name: "Oregon" },
+      "US-MO": { loads: 723, diesel: "$3.25", rate: "$2.45", name: "Missouri" },
+      "US-CO": { loads: 689, diesel: "$3.45", rate: "$2.25", name: "Colorado" },
+      "US-WI": { loads: 678, diesel: "$3.55", rate: "$2.65", name: "Wisconsin" },
+      "US-MN": { loads: 645, diesel: "$3.60", rate: "$2.70", name: "Minnesota" },
+      "US-MA": { loads: 612, diesel: "$3.78", rate: "$2.32", name: "Massachusetts" },
+      "US-MS": { loads: 567, diesel: "$3.25", rate: "$2.35", name: "Mississippi" },
+      "US-MD": { loads: 567, diesel: "$3.70", rate: "$2.38", name: "Maryland" },
+      "US-IA": { loads: 498, diesel: "$3.50", rate: "$2.55", name: "Iowa" },
+      "US-WV": { loads: 456, diesel: "$3.58", rate: "$2.42", name: "West Virginia" },
+      "US-NV": { loads: 454, diesel: "$4.35", rate: "$2.20", name: "Nevada" },
+      "US-KS": { loads: 445, diesel: "$3.35", rate: "$2.28", name: "Kansas" },
+      "US-NM": { loads: 423, diesel: "$3.55", rate: "$2.22", name: "New Mexico" },
+      "US-AR": { loads: 412, diesel: "$3.20", rate: "$2.28", name: "Arkansas" },
+      "US-CT": { loads: 389, diesel: "$3.82", rate: "$2.35", name: "Connecticut" },
+      "US-UT": { loads: 387, diesel: "$3.75", rate: "$2.18", name: "Utah" },
+      "US-NE": { loads: 334, diesel: "$3.45", rate: "$2.20", name: "Nebraska" },
+      "US-ID": { loads: 312, diesel: "$3.95", rate: "$2.12", name: "Idaho" },
+      "US-ME": { loads: 298, diesel: "$3.85", rate: "$2.25", name: "Maine" },
+      "US-NH": { loads: 267, diesel: "$3.72", rate: "$2.30", name: "New Hampshire" },
+      "US-MT": { loads: 245, diesel: "$3.85", rate: "$2.08", name: "Montana" },
+      "US-VT": { loads: 234, diesel: "$3.68", rate: "$2.28", name: "Vermont" },
+      "US-SD": { loads: 223, diesel: "$3.50", rate: "$2.15", name: "South Dakota" },
+      "US-WY": { loads: 198, diesel: "$3.65", rate: "$2.05", name: "Wyoming" },
+      "US-ND": { loads: 189, diesel: "$3.55", rate: "$2.10", name: "North Dakota" },
+      "US-DE": { loads: 178, diesel: "$3.65", rate: "$2.32", name: "Delaware" },
+      "US-HI": { loads: 156, diesel: "$5.25", rate: "$3.20", name: "Hawaii" },
+      "US-RI": { loads: 145, diesel: "$3.80", rate: "$2.28", name: "Rhode Island" },
+      "US-AK": { loads: 89, diesel: "$4.95", rate: "$3.50", name: "Alaska" }
     };
 
-    // Главные города для каждого штата
-    const stateCities = {
-      "US-CA": "LA, SF",
-      "US-TX": "Houston, Dallas",
-      "US-FL": "Miami, Tampa",
-      "US-IL": "Chicago",
-      "US-GA": "Atlanta",
-      "US-PA": "Philly, Pittsburgh",
-      "US-NY": "NYC, Buffalo",
-      "US-OH": "Columbus, Cleveland",
-      "US-MI": "Detroit",
-      "US-NC": "Charlotte, Raleigh",
-      "US-VA": "Richmond, Norfolk",
-      "US-AL": "Birmingham",
-      "US-AZ": "Phoenix, Tucson",
-      "US-TN": "Nashville, Memphis",
-      "US-IN": "Indianapolis",
-      "US-WA": "Seattle, Spokane",
-      "US-LA": "New Orleans",
-      "US-SC": "Charleston",
-      "US-OK": "Oklahoma City",
-      "US-KY": "Louisville",
-      "US-NJ": "Newark, Jersey City",
-      "US-OR": "Portland",
-      "US-MO": "Kansas City, St. Louis",
-      "US-CO": "Denver",
-      "US-WI": "Milwaukee",
-      "US-MN": "Minneapolis",
-      "US-MA": "Boston",
-      "US-MS": "Jackson",
-      "US-MD": "Baltimore",
-      "US-IA": "Des Moines"
-    };
+    // ============================================
+    // ГЕНЕРАЦИЯ КАРТОЧЕК ШТАТОВ (выполняется сразу)
+    // ============================================
+    (function generateMobileStatesCards() {
+      console.log('=== START: generateMobileStatesCards ===');
+      const container = document.querySelector('.states-cards-container');
+      console.log('Container found:', container);
 
-    topStates.forEach((state, index) => {
-      const loads = state.loads;
-
-      // Определяем badge
-      let badgeClass = 'minimal';
-      let badgeText = 'Низкая';
-      if (loads >= 3000) {
-        badgeClass = 'hot';
-        badgeText = '🔥 ТОП';
-      } else if (loads >= 2000) {
-        badgeClass = 'high';
-        badgeText = 'Высокая';
-      } else if (loads >= 1000) {
-        badgeClass = 'medium';
-        badgeText = 'Средняя';
-      } else if (loads >= 500) {
-        badgeClass = 'low';
-        badgeText = 'Низкая';
+      if (!container) {
+        console.error('Container .states-cards-container not found!');
+        return;
       }
 
-      // Определяем тренд
-      let trend = "→ Стабильно";
-      if (loads < 500) trend = "→ Стабильно";
-      else if (loads > 2000) trend = "🔥 Высокий спрос";
-      else trend = "↗️ Растет";
+      console.log('Generating state cards...');
 
-      // Определяем активность
-      let activity = "Высокая";
-      if (loads < 500) activity = "Низкая";
-      else if (loads < 1000) activity = "Средняя";
-      else if (loads < 2000) activity = "Высокая";
-      else activity = "Очень высокая";
+      // Топ-30 штатов
+      const topStates = [
+        { id: "US-CA", ...stateLoadsData["US-CA"] },
+        { id: "US-TX", ...stateLoadsData["US-TX"] },
+        { id: "US-FL", ...stateLoadsData["US-FL"] },
+        { id: "US-IL", ...stateLoadsData["US-IL"] },
+        { id: "US-GA", ...stateLoadsData["US-GA"] },
+        { id: "US-PA", ...stateLoadsData["US-PA"] },
+        { id: "US-NY", ...stateLoadsData["US-NY"] },
+        { id: "US-OH", ...stateLoadsData["US-OH"] },
+        { id: "US-MI", ...stateLoadsData["US-MI"] },
+        { id: "US-NC", ...stateLoadsData["US-NC"] },
+        { id: "US-VA", ...stateLoadsData["US-VA"] },
+        { id: "US-AL", ...stateLoadsData["US-AL"] },
+        { id: "US-AZ", ...stateLoadsData["US-AZ"] },
+        { id: "US-TN", ...stateLoadsData["US-TN"] },
+        { id: "US-IN", ...stateLoadsData["US-IN"] },
+        { id: "US-WA", ...stateLoadsData["US-WA"] },
+        { id: "US-LA", ...stateLoadsData["US-LA"] },
+        { id: "US-SC", ...stateLoadsData["US-SC"] },
+        { id: "US-OK", ...stateLoadsData["US-OK"] },
+        { id: "US-KY", ...stateLoadsData["US-KY"] },
+        { id: "US-NJ", ...stateLoadsData["US-NJ"] },
+        { id: "US-OR", ...stateLoadsData["US-OR"] },
+        { id: "US-MO", ...stateLoadsData["US-MO"] },
+        { id: "US-CO", ...stateLoadsData["US-CO"] },
+        { id: "US-WI", ...stateLoadsData["US-WI"] },
+        { id: "US-MN", ...stateLoadsData["US-MN"] },
+        { id: "US-MA", ...stateLoadsData["US-MA"] },
+        { id: "US-MS", ...stateLoadsData["US-MS"] },
+        { id: "US-MD", ...stateLoadsData["US-MD"] },
+        { id: "US-IA", ...stateLoadsData["US-IA"] }
+      ];
 
-      // Важные показатели для диспетчера
-      // 1. Конкуренция (trucks-to-loads ratio)
-      let truckRatio = (loads / (loads * 0.85 + Math.random() * 100)).toFixed(2);
-      let competition = "Средняя";
-      let competitionColor = "#f59e0b";
-      if (truckRatio > 1.2) {
-        competition = "Низкая 🟢";
-        competitionColor = "#22c55e";
-      } else if (truckRatio < 0.8) {
-        competition = "Высокая 🔴";
-        competitionColor = "#ef4444";
-      } else {
-        competition = "Средняя 🟡";
-      }
+      // Эмодзи флаги для штатов
+      const stateFlags = {
+        "US-CA": "🌴", "US-TX": "⭐", "US-FL": "🌊", "US-IL": "🏙️",
+        "US-GA": "🍑", "US-PA": "🌲", "US-NY": "🗽", "US-OH": "🌾",
+        "US-MI": "🚗", "US-NC": "🌲", "US-VA": "🏛️", "US-AL": "🏈",
+        "US-AZ": "🏜️", "US-TN": "🎸", "US-IN": "🏁", "US-WA": "🌲",
+        "US-LA": "🎺", "US-SC": "🌴", "US-OK": "🤠", "US-KY": "🐴",
+        "US-NJ": "🏖️", "US-OR": "🌲", "US-MO": "🎭", "US-CO": "⛰️",
+        "US-WI": "🧀", "US-MN": "❄️", "US-MA": "🦞", "US-MS": "🎵",
+        "US-MD": "🦀", "US-IA": "🌽"
+      };
 
-      // 2. Процент пустых миль (deadhead)
-      let deadheadPercent = (5 + Math.random() * 20).toFixed(0);
-      let deadheadStatus = deadheadPercent < 10 ? "Отлично" : deadheadPercent < 15 ? "Хорошо" : "Высокий";
+      // Главные города для каждого штата
+      const stateCities = {
+        "US-CA": "LA, SF",
+        "US-TX": "Houston, Dallas",
+        "US-FL": "Miami, Tampa",
+        "US-IL": "Chicago",
+        "US-GA": "Atlanta",
+        "US-PA": "Philly, Pittsburgh",
+        "US-NY": "NYC, Buffalo",
+        "US-OH": "Columbus, Cleveland",
+        "US-MI": "Detroit",
+        "US-NC": "Charlotte, Raleigh",
+        "US-VA": "Richmond, Norfolk",
+        "US-AL": "Birmingham",
+        "US-AZ": "Phoenix, Tucson",
+        "US-TN": "Nashville, Memphis",
+        "US-IN": "Indianapolis",
+        "US-WA": "Seattle, Spokane",
+        "US-LA": "New Orleans",
+        "US-SC": "Charleston",
+        "US-OK": "Oklahoma City",
+        "US-KY": "Louisville",
+        "US-NJ": "Newark, Jersey City",
+        "US-OR": "Portland",
+        "US-MO": "Kansas City, St. Louis",
+        "US-CO": "Denver",
+        "US-WI": "Milwaukee",
+        "US-MN": "Minneapolis",
+        "US-MA": "Boston",
+        "US-MS": "Jackson",
+        "US-MD": "Baltimore",
+        "US-IA": "Des Moines"
+      };
 
-      // 3. Средняя маржа (broker margin)
-      let marginPercent = (12 + Math.random() * 8).toFixed(0);
-      let marginStatus = marginPercent > 18 ? "Высокая" : marginPercent > 15 ? "Средняя" : "Низкая";
+      topStates.forEach((state, index) => {
+        const loads = state.loads;
 
-      // 4. Скорость бронирования (booking speed)
-      let bookingSpeed = (15 + Math.random() * 45).toFixed(0);
-      let bookingStatus = bookingSpeed < 30 ? "Быстро ⚡" : bookingSpeed < 45 ? "Средне" : "Медленно";
+        // Определяем badge
+        let badgeClass = 'minimal';
+        let badgeText = 'Низкая';
+        if (loads >= 3000) {
+          badgeClass = 'hot';
+          badgeText = '🔥 ТОП';
+        } else if (loads >= 2000) {
+          badgeClass = 'high';
+          badgeText = 'Высокая';
+        } else if (loads >= 1000) {
+          badgeClass = 'medium';
+          badgeText = 'Средняя';
+        } else if (loads >= 500) {
+          badgeClass = 'low';
+          badgeText = 'Низкая';
+        }
 
-      // 5. Процент отмен (cancellation rate)
-      let cancellationRate = (2 + Math.random() * 8).toFixed(1);
-      let cancellationStatus = cancellationRate < 4 ? "Низкий 🟢" : cancellationRate < 6 ? "Средний 🟡" : "Высокий 🔴";
+        // Определяем тренд
+        let trend = "→ Стабильно";
+        if (loads < 500) trend = "→ Стабильно";
+        else if (loads > 2000) trend = "🔥 Высокий спрос";
+        else trend = "↗️ Растет";
 
-      // 6. Доступность обратных грузов (backhaul availability)
-      let backhaulPercent = (40 + Math.random() * 50).toFixed(0);
-      let backhaulStatus = backhaulPercent > 70 ? "Отлично" : backhaulPercent > 50 ? "Хорошо" : "Низко";
+        // Определяем активность
+        let activity = "Высокая";
+        if (loads < 500) activity = "Низкая";
+        else if (loads < 1000) activity = "Средняя";
+        else if (loads < 2000) activity = "Высокая";
+        else activity = "Очень высокая";
 
-      const card = document.createElement('div');
-      card.className = 'state-card-mobile';
-      card.style.animationDelay = `${index * 0.05}s`;
+        // Важные показатели для диспетчера
+        // 1. Конкуренция (trucks-to-loads ratio)
+        let truckRatio = (loads / (loads * 0.85 + Math.random() * 100)).toFixed(2);
+        let competition = "Средняя";
+        let competitionColor = "#f59e0b";
+        if (truckRatio > 1.2) {
+          competition = "Низкая 🟢";
+          competitionColor = "#22c55e";
+        } else if (truckRatio < 0.8) {
+          competition = "Высокая 🔴";
+          competitionColor = "#ef4444";
+        } else {
+          competition = "Средняя 🟡";
+        }
 
-      card.innerHTML = `
+        // 2. Процент пустых миль (deadhead)
+        let deadheadPercent = (5 + Math.random() * 20).toFixed(0);
+        let deadheadStatus = deadheadPercent < 10 ? "Отлично" : deadheadPercent < 15 ? "Хорошо" : "Высокий";
+
+        // 3. Средняя маржа (broker margin)
+        let marginPercent = (12 + Math.random() * 8).toFixed(0);
+        let marginStatus = marginPercent > 18 ? "Высокая" : marginPercent > 15 ? "Средняя" : "Низкая";
+
+        // 4. Скорость бронирования (booking speed)
+        let bookingSpeed = (15 + Math.random() * 45).toFixed(0);
+        let bookingStatus = bookingSpeed < 30 ? "Быстро ⚡" : bookingSpeed < 45 ? "Средне" : "Медленно";
+
+        // 5. Процент отмен (cancellation rate)
+        let cancellationRate = (2 + Math.random() * 8).toFixed(1);
+        let cancellationStatus = cancellationRate < 4 ? "Низкий 🟢" : cancellationRate < 6 ? "Средний 🟡" : "Высокий 🔴";
+
+        // 6. Доступность обратных грузов (backhaul availability)
+        let backhaulPercent = (40 + Math.random() * 50).toFixed(0);
+        let backhaulStatus = backhaulPercent > 70 ? "Отлично" : backhaulPercent > 50 ? "Хорошо" : "Низко";
+
+        const card = document.createElement('div');
+        card.className = 'state-card-mobile';
+        card.style.animationDelay = `${index * 0.05}s`;
+
+        card.innerHTML = `
         <div class="state-card-header">
           <span class="state-card-flag">${stateFlags[state.id] || '📍'}</span>
           <div class="state-card-info">
@@ -3634,655 +3661,654 @@
         </div>
       `;
 
-      // Добавляем обработчик клика
-      card.addEventListener('click', function (e) {
-        console.log('Card clicked:', state.name);
-        this.classList.toggle('expanded');
-        console.log('Expanded:', this.classList.contains('expanded'));
+        // Добавляем обработчик клика
+        card.addEventListener('click', function (e) {
+          console.log('Card clicked:', state.name);
+          this.classList.toggle('expanded');
+          console.log('Expanded:', this.classList.contains('expanded'));
+        });
+
+        container.appendChild(card);
       });
 
-      container.appendChild(card);
-    });
+      console.log(`Generated ${topStates.length} state cards`);
+    })();
 
-    console.log(`Generated ${topStates.length} state cards`);
-  })();
+    // Инициализация элементов после загрузки
+    setTimeout(() => {
+      console.log('Initializing chart interactions...');
+      const chartItems = document.querySelectorAll('.chart-bar-item');
+      console.log(`Found ${chartItems.length} chart items`);
 
-  // Инициализация элементов после загрузки
-  setTimeout(() => {
-    console.log('Initializing chart interactions...');
-    const chartItems = document.querySelectorAll('.chart-bar-item');
-    console.log(`Found ${chartItems.length} chart items`);
+      chartItems.forEach((item, index) => {
+        if (stateData[index]) {
+          stateData[index].element = item.querySelector('.chart-bar-value');
+          stateData[index].bar = item.querySelector('.chart-bar');
+          stateData[index].currentValue = stateData[index].baseValue;
+          stateData[index].showingDiesel = false;
+          stateData[index].originalWidth = stateData[index].bar.style.width;
 
-    chartItems.forEach((item, index) => {
-      if (stateData[index]) {
-        stateData[index].element = item.querySelector('.chart-bar-value');
-        stateData[index].bar = item.querySelector('.chart-bar');
-        stateData[index].currentValue = stateData[index].baseValue;
-        stateData[index].showingDiesel = false;
-        stateData[index].originalWidth = stateData[index].bar.style.width;
+          console.log(`State ${index}: ${stateData[index].name}, width: ${stateData[index].originalWidth}, diesel: $${stateData[index].dieselPrice}`);
 
-        console.log(`State ${index}: ${stateData[index].name}, width: ${stateData[index].originalWidth}, diesel: $${stateData[index].dieselPrice}`);
+          // Добавляем текстовую подсказку на бар
+          const barLabel = document.createElement('span');
+          barLabel.className = 'bar-mode-label';
+          barLabel.textContent = 'Доступные грузы';
+          barLabel.style.cssText = 'position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 10px; color: rgba(255,255,255,0.08); font-weight: 600; z-index: 2; pointer-events: none; text-shadow: none; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; transition: all 0.4s ease; opacity: 0.3;';
+          stateData[index].bar.appendChild(barLabel);
+          stateData[index].barLabel = barLabel;
 
-        // Добавляем текстовую подсказку на бар
-        const barLabel = document.createElement('span');
-        barLabel.className = 'bar-mode-label';
-        barLabel.textContent = 'Доступные грузы';
-        barLabel.style.cssText = 'position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 10px; color: rgba(255,255,255,0.08); font-weight: 600; z-index: 2; pointer-events: none; text-shadow: none; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; transition: all 0.4s ease; opacity: 0.3;';
-        stateData[index].bar.appendChild(barLabel);
-        stateData[index].barLabel = barLabel;
-
-        // Функция для позиционирования лейбла в зависимости от ширины бара
-        stateData[index].updateLabelPosition = function () {
-          const barWidth = parseFloat(this.bar.style.width);
-          if (barWidth < 20) {
-            // Если бар слишком узкий, прячем лейбл
-            this.barLabel.style.opacity = '0';
-          } else {
-            // Показываем лейбл в центре
-            this.barLabel.style.opacity = '1';
-          }
-        };
-
-        // Функция для случайного исчезновения и появления надписи
-        stateData[index].animateLabel = function () {
-          if (!this.barLabel) return;
-
-          // Случайная задержка перед началом цикла (0-5 секунд)
-          const initialDelay = Math.random() * 5000;
-
-          setTimeout(() => {
-            this.toggleLabelVisibility();
-          }, initialDelay);
-        };
-
-        stateData[index].toggleLabelVisibility = function () {
-          if (!this.barLabel) return;
-
-          const currentOpacity = parseFloat(this.barLabel.style.opacity) || 1;
-
-          if (currentOpacity > 0.5) {
-            // Исчезаем
-            this.barLabel.style.transition = 'opacity 0.5s ease';
-            this.barLabel.style.opacity = '0';
-
-            // Появляемся через 3 секунды
-            setTimeout(() => {
-              if (this.barLabel) {
-                this.barLabel.style.transition = 'opacity 0.5s ease';
-                this.barLabel.style.opacity = '1';
-
-                // Снова исчезаем через 3 секунды
-                setTimeout(() => this.toggleLabelVisibility(), 3000);
-              }
-            }, 3000);
-          }
-        };
-
-        // Устанавливаем начальную позицию
-        stateData[index].updateLabelPosition();
-
-        // Запускаем анимацию с задержкой
-        setTimeout(() => stateData[index].animateLabel(), Math.random() * 2000);
-
-        // Добавляем обработчики для показа цены на дизель
-        const barWrapper = item.querySelector('.chart-bar-wrapper');
-
-        // Проверяем, мобильное ли устройство
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        console.log(`Device check for ${stateData[index].name}: isMobile = ${isMobile}, width = ${window.innerWidth}`);
-
-        if (!isMobile) {
-          // На десктопе: при наведении показываем цену на дизель
-          barWrapper.addEventListener('mouseenter', () => {
-            console.log(`HOVER: ${stateData[index].name}`);
-            if (!stateData[index].showingDiesel) {
-              stateData[index].originalValue = stateData[index].element.textContent;
-              stateData[index].element.textContent = `$${stateData[index].dieselPrice}/gal`;
-
-              // Меняем текст на баре
-              if (stateData[index].barLabel) {
-                stateData[index].barLabel.textContent = 'Цены на топливо';
-                stateData[index].barLabel.style.transition = 'all 0.4s ease';
-              }
-
-              // Меняем ширину бара по шкале от $1 до $10
-              const dieselWidth = (stateData[index].dieselPrice / 10) * 100;
-              console.log(`Setting width to ${dieselWidth}%`);
-              stateData[index].bar.style.transition = 'width 0.4s ease, background 0.4s ease';
-              stateData[index].bar.style.width = dieselWidth + '%';
-              stateData[index].bar.style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
-
-              // Обновляем позицию лейбла
-              setTimeout(() => stateData[index].updateLabelPosition(), 400);
-
-              stateData[index].showingDiesel = true;
-              barWrapper.style.cursor = 'pointer';
+          // Функция для позиционирования лейбла в зависимости от ширины бара
+          stateData[index].updateLabelPosition = function () {
+            const barWidth = parseFloat(this.bar.style.width);
+            if (barWidth < 20) {
+              // Если бар слишком узкий, прячем лейбл
+              this.barLabel.style.opacity = '0';
+            } else {
+              // Показываем лейбл в центре
+              this.barLabel.style.opacity = '1';
             }
-          });
+          };
 
-          // При уходе мыши возвращаем количество грузов
-          barWrapper.addEventListener('mouseleave', () => {
+          // Функция для случайного исчезновения и появления надписи
+          stateData[index].animateLabel = function () {
+            if (!this.barLabel) return;
+
+            // Случайная задержка перед началом цикла (0-5 секунд)
+            const initialDelay = Math.random() * 5000;
+
+            setTimeout(() => {
+              this.toggleLabelVisibility();
+            }, initialDelay);
+          };
+
+          stateData[index].toggleLabelVisibility = function () {
+            if (!this.barLabel) return;
+
+            const currentOpacity = parseFloat(this.barLabel.style.opacity) || 1;
+
+            if (currentOpacity > 0.5) {
+              // Исчезаем
+              this.barLabel.style.transition = 'opacity 0.5s ease';
+              this.barLabel.style.opacity = '0';
+
+              // Появляемся через 3 секунды
+              setTimeout(() => {
+                if (this.barLabel) {
+                  this.barLabel.style.transition = 'opacity 0.5s ease';
+                  this.barLabel.style.opacity = '1';
+
+                  // Снова исчезаем через 3 секунды
+                  setTimeout(() => this.toggleLabelVisibility(), 3000);
+                }
+              }, 3000);
+            }
+          };
+
+          // Устанавливаем начальную позицию
+          stateData[index].updateLabelPosition();
+
+          // Запускаем анимацию с задержкой
+          setTimeout(() => stateData[index].animateLabel(), Math.random() * 2000);
+
+          // Добавляем обработчики для показа цены на дизель
+          const barWrapper = item.querySelector('.chart-bar-wrapper');
+
+          // Проверяем, мобильное ли устройство
+          const isMobile = window.matchMedia('(max-width: 768px)').matches;
+          console.log(`Device check for ${stateData[index].name}: isMobile = ${isMobile}, width = ${window.innerWidth}`);
+
+          if (!isMobile) {
+            // На десктопе: при наведении показываем цену на дизель
+            barWrapper.addEventListener('mouseenter', () => {
+              console.log(`HOVER: ${stateData[index].name}`);
+              if (!stateData[index].showingDiesel) {
+                stateData[index].originalValue = stateData[index].element.textContent;
+                stateData[index].element.textContent = `$${stateData[index].dieselPrice}/gal`;
+
+                // Меняем текст на баре
+                if (stateData[index].barLabel) {
+                  stateData[index].barLabel.textContent = 'Цены на топливо';
+                  stateData[index].barLabel.style.transition = 'all 0.4s ease';
+                }
+
+                // Меняем ширину бара по шкале от $1 до $10
+                const dieselWidth = (stateData[index].dieselPrice / 10) * 100;
+                console.log(`Setting width to ${dieselWidth}%`);
+                stateData[index].bar.style.transition = 'width 0.4s ease, background 0.4s ease';
+                stateData[index].bar.style.width = dieselWidth + '%';
+                stateData[index].bar.style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
+
+                // Обновляем позицию лейбла
+                setTimeout(() => stateData[index].updateLabelPosition(), 400);
+
+                stateData[index].showingDiesel = true;
+                barWrapper.style.cursor = 'pointer';
+              }
+            });
+
+            // При уходе мыши возвращаем количество грузов
+            barWrapper.addEventListener('mouseleave', () => {
+              if (stateData[index].showingDiesel) {
+                stateData[index].element.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
+
+                // Возвращаем текст на баре
+                if (stateData[index].barLabel) {
+                  stateData[index].barLabel.textContent = 'Доступные грузы';
+                  stateData[index].barLabel.style.transition = 'all 0.4s ease';
+                }
+
+                // Возвращаем оригинальную ширину и цвет
+                stateData[index].bar.style.transition = 'width 0.4s ease, background 0.4s ease';
+                stateData[index].bar.style.width = stateData[index].originalWidth;
+                stateData[index].bar.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899)';
+
+                // Обновляем позицию лейбла
+                setTimeout(() => stateData[index].updateLabelPosition(), 400);
+
+                stateData[index].showingDiesel = false;
+              }
+            });
+          }
+
+          // На всех устройствах: при клике переключаем между грузами и ценой
+          barWrapper.addEventListener('click', (e) => {
+            console.log(`CLICK on ${stateData[index].name}, showingDiesel = ${stateData[index].showingDiesel}`);
+
             if (stateData[index].showingDiesel) {
+              // Возвращаем грузы
+              console.log(`Switching to loads for ${stateData[index].name}`);
               stateData[index].element.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
-
-              // Возвращаем текст на баре
               if (stateData[index].barLabel) {
                 stateData[index].barLabel.textContent = 'Доступные грузы';
                 stateData[index].barLabel.style.transition = 'all 0.4s ease';
               }
-
-              // Возвращаем оригинальную ширину и цвет
               stateData[index].bar.style.transition = 'width 0.4s ease, background 0.4s ease';
               stateData[index].bar.style.width = stateData[index].originalWidth;
               stateData[index].bar.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899)';
-
-              // Обновляем позицию лейбла
-              setTimeout(() => stateData[index].updateLabelPosition(), 400);
-
               stateData[index].showingDiesel = false;
+              setTimeout(() => stateData[index].updateLabelPosition(), 400);
+            } else {
+              stateData[index].element.textContent = `$${stateData[index].dieselPrice}/gal`;
+              if (stateData[index].barLabel) {
+                stateData[index].barLabel.textContent = 'Цены на топливо';
+                stateData[index].barLabel.style.transition = 'all 0.4s ease';
+              }
+              const dieselWidth = (stateData[index].dieselPrice / 10) * 100;
+              stateData[index].bar.style.transition = 'width 0.4s ease, background 0.4s ease';
+              stateData[index].bar.style.width = dieselWidth + '%';
+              stateData[index].bar.style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
+              stateData[index].showingDiesel = true;
+              setTimeout(() => stateData[index].updateLabelPosition(), 400);
             }
+            barWrapper.style.cursor = 'pointer';
+          });
+        }
+      });
+
+      // ============================================
+      // USA MAP INTERACTIVE FUNCTIONALITY (amCharts 5)
+      // ============================================
+
+      // Данные о штатах уже определены выше (stateLoadsData)
+
+      // Функция для определения цвета по количеству грузов
+      function getColorByLoads(loads) {
+        if (loads >= 3000) return am5.color(0x10b981); // Зеленый
+        if (loads >= 2000) return am5.color(0x6366f1); // Синий
+        if (loads >= 1000) return am5.color(0x8b5cf6); // Фиолетовый
+        if (loads >= 500) return am5.color(0xec4899);  // Розовый
+        return am5.color(0x64748b); // Серый
+      }
+
+      // Инициализация amCharts карты
+      am5.ready(function () {
+        // Создаем root элемент
+        var root = am5.Root.new("chartdiv");
+
+        // Убираем водяной знак amCharts
+        root._logo.dispose();
+
+        // Устанавливаем темную тему
+        root.setThemes([am5themes_Animated.new(root)]);
+
+        // Определяем мобильное устройство
+        const isMobile = window.innerWidth <= 768;
+
+        // Создаем карту (полностью статичная)
+        var chart = root.container.children.push(
+          am5map.MapChart.new(root, {
+            panX: "none",
+            panY: "none",
+            projection: am5map.geoAlbersUsa(),
+            homeGeoPoint: { longitude: -98, latitude: 38 },
+            wheelY: "none",
+            pinchZoom: false,
+            maxZoomLevel: 1,
+            minZoomLevel: 1
+          })
+        );
+
+        // Создаем серию полигонов (штаты)
+        var polygonSeries = chart.series.push(
+          am5map.MapPolygonSeries.new(root, {
+            geoJSON: am5geodata_usaLow,
+            valueField: "value",
+            calculateAggregates: true
+          })
+        );
+
+        // Настройка внешнего вида штатов
+        polygonSeries.mapPolygons.template.setAll({
+          tooltipText: isMobile
+            ? "{name}\n🚛 Грузов: {loads}\n💰 {rate}/миля\n⛽ {diesel}"
+            : "{name}\n🚛 Грузов: {loads}\n💰 Ставка: {rate}/миля\n⛽ Дизель: {diesel}\n📊 Тренд: {trend}\n🔥 Активность: {activity}",
+          fill: am5.color(0x64748b),
+          fillOpacity: 0.85,
+          stroke: am5.color(0x1e293b),
+          strokeWidth: isMobile ? 1.5 : 2,
+          strokeOpacity: 0.8,
+          interactive: true,
+          tooltipPosition: "pointer",
+          draggable: false,
+          cursorOverStyle: "pointer"
+        });
+
+        // Настройка tooltip с улучшенным дизайном и анимацией
+        polygonSeries.mapPolygons.template.set("tooltip", am5.Tooltip.new(root, {
+          getFillFromSprite: false,
+          fill: am5.color(0x1e293b),
+          fillOpacity: 0.95,
+          stroke: am5.color(0x6366f1),
+          strokeWidth: 2,
+          strokeOpacity: 1,
+          labelText: isMobile
+            ? "[bold fontSize:17px #ffffff]{name}[/]\n[fontSize:11px #94a3b8]━━━━━━━━━━━━━━━[/]\n[fontSize:14px]🚛 [bold #10b981]{loads}[/] грузов[/]\n[fontSize:13px]💰 [bold #6366f1]{rate}[/]/миля[/]\n[fontSize:13px]⛽ [bold #f59e0b]{diesel}[/][/]"
+            : "[bold fontSize:19px #ffffff]{name}[/]\n[fontSize:12px #94a3b8]━━━━━━━━━━━━━━━━━━━━[/]\n[fontSize:15px]🚛 Грузов: [bold #10b981]{loads}[/][/]\n[fontSize:14px]💰 Ставка: [bold #6366f1]{rate}[/]/миля[/]\n[fontSize:14px]⛽ Дизель: [bold #f59e0b]{diesel}[/][/]\n[fontSize:12px #94a3b8]━━━━━━━━━━━━━━━━━━━━[/]\n[fontSize:13px]📊 {trend}[/]\n[fontSize:13px]🔥 {activity}[/]",
+          pointerOrientation: "vertical",
+          paddingTop: 18,
+          paddingBottom: 18,
+          paddingLeft: 22,
+          paddingRight: 22,
+          centerX: am5.p50,
+          centerY: am5.p100,
+          autoTextColor: false,
+          shadowColor: am5.color(0x000000),
+          shadowBlur: 25,
+          shadowOffsetX: 0,
+          shadowOffsetY: 10,
+          shadowOpacity: 0.6,
+          cornerRadius: 14,
+          animationDuration: 300,
+          animationEasing: am5.ease.out(am5.ease.cubic)
+        }));
+
+        // Устанавливаем цвет текста tooltip
+        polygonSeries.mapPolygons.template.get("tooltip").label.setAll({
+          fill: am5.color(0xe2e8f0),
+          fontSize: isMobile ? 13 : 14,
+          lineHeight: 1.5,
+          oversizedBehavior: "wrap",
+          maxWidth: isMobile ? 250 : 320
+        });
+
+        // Добавляем анимацию при наведении на штат
+        polygonSeries.mapPolygons.template.events.on("pointerover", function (ev) {
+          const polygon = ev.target;
+          polygon.animate({
+            key: "fillOpacity",
+            to: 1,
+            duration: 200,
+            easing: am5.ease.out(am5.ease.quad)
+          });
+        });
+
+        polygonSeries.mapPolygons.template.events.on("pointerout", function (ev) {
+          const polygon = ev.target;
+          polygon.animate({
+            key: "fillOpacity",
+            to: 0.85,
+            duration: 200,
+            easing: am5.ease.out(am5.ease.quad)
+          });
+        });
+
+        // Улучшенный hover эффект с анимацией
+        polygonSeries.mapPolygons.template.states.create("hover", {
+          fill: am5.color(0xa5b4fc),
+          fillOpacity: 1,
+          stroke: am5.color(0x6366f1),
+          strokeWidth: isMobile ? 2.5 : 3.5,
+          strokeOpacity: 1
+        });
+
+        // Добавляем анимацию при наведении на штат
+        polygonSeries.mapPolygons.template.events.on("pointerover", function (ev) {
+          const polygon = ev.target;
+          polygon.animate({
+            key: "fillOpacity",
+            to: 1,
+            duration: 200,
+            easing: am5.ease.out(am5.ease.quad)
+          });
+        });
+
+        polygonSeries.mapPolygons.template.events.on("pointerout", function (ev) {
+          const polygon = ev.target;
+          polygon.animate({
+            key: "fillOpacity",
+            to: 0.85,
+            duration: 200,
+            easing: am5.ease.out(am5.ease.quad)
+          });
+        });
+
+        // Устанавливаем данные для штатов
+        polygonSeries.data.setAll(
+          Object.keys(stateLoadsData).map(id => {
+            const loads = stateLoadsData[id].loads;
+            // Определяем тренд
+            let trend = "↗️ Растет";
+            if (loads < 500) trend = "→ Стабильно";
+            else if (loads > 2000) trend = "🔥 Высокий спрос";
+
+            // Определяем активность
+            let activity = "Высокая";
+            if (loads < 500) activity = "Низкая";
+            else if (loads < 1000) activity = "Средняя";
+            else if (loads < 2000) activity = "Высокая";
+            else activity = "Очень высокая";
+
+            return {
+              id: id,
+              name: stateLoadsData[id].name,
+              loads: loads.toLocaleString('ru-RU'),
+              diesel: stateLoadsData[id].diesel,
+              rate: stateLoadsData[id].rate,
+              trend: trend,
+              activity: activity,
+              value: loads,
+              fill: getColorByLoads(loads)
+            };
+          })
+        );
+
+        // Применяем цвета к штатам
+        polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) {
+          var dataItem = target.dataItem;
+          if (dataItem) {
+            return dataItem.dataContext.fill;
+          }
+          return fill;
+        });
+
+        // Анимация пульсации для топ-3 штатов (только на десктопе)
+        if (!isMobile) {
+          polygonSeries.events.on("datavalidated", function () {
+            const hotStates = ["US-CA", "US-TX", "US-FL"];
+            polygonSeries.mapPolygons.each(function (polygon) {
+              if (hotStates.includes(polygon.dataItem.get("id"))) {
+                polygon.animate({
+                  key: "fill",
+                  to: am5.color(0xffffff),
+                  duration: 1000,
+                  loops: Infinity,
+                  easing: am5.ease.inOut(am5.ease.cubic)
+                });
+              }
+            });
           });
         }
 
-        // На всех устройствах: при клике переключаем между грузами и ценой
-        barWrapper.addEventListener('click', (e) => {
-          console.log(`CLICK on ${stateData[index].name}, showingDiesel = ${stateData[index].showingDiesel}`);
+        // Анимация появления
+        chart.appear(isMobile ? 500 : 1000, 100);
+      });
 
-          if (stateData[index].showingDiesel) {
-            // Возвращаем грузы
-            console.log(`Switching to loads for ${stateData[index].name}`);
-            stateData[index].element.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
-            if (stateData[index].barLabel) {
-              stateData[index].barLabel.textContent = 'Доступные грузы';
-              stateData[index].barLabel.style.transition = 'all 0.4s ease';
+      // ============================================
+      // MOBILE STATES CARDS GENERATION
+      // ============================================
+      // Карточки штатов уже сгенерированы выше (вне setTimeout)
+
+      // Запускаем анимацию изменения данных
+      if (barsAnimated) {
+        startChartAnimation();
+      }
+    }, 3000);
+
+    function startChartAnimation() {
+      setInterval(() => {
+        // Выбираем 4 случайных штата для одновременного изменения
+        const selectedIndices = new Set();
+        while (selectedIndices.size < 4) {
+          const randomIndex = Math.floor(Math.random() * stateData.length);
+          selectedIndices.add(randomIndex);
+        }
+
+        // Обновляем все 4 выбранных штата одновременно
+        selectedIndices.forEach(randomIndex => {
+          const state = stateData[randomIndex];
+
+          if (!state.element || !state.bar || state.showingDiesel) return;
+
+          // Определяем изменение: 70% увеличение, 30% уменьшение
+          const shouldIncrease = Math.random() < 0.7;
+          const changeAmount = Math.floor(Math.random() * 30) + 5; // от 5 до 35
+
+          let newValue;
+          if (shouldIncrease) {
+            newValue = state.currentValue + changeAmount;
+            // Ограничиваем максимум на 15% выше базового значения
+            if (newValue > state.baseValue * 1.15) {
+              newValue = state.baseValue;
             }
-            stateData[index].bar.style.transition = 'width 0.4s ease, background 0.4s ease';
-            stateData[index].bar.style.width = stateData[index].originalWidth;
-            stateData[index].bar.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899)';
-            stateData[index].showingDiesel = false;
-            setTimeout(() => stateData[index].updateLabelPosition(), 400);
           } else {
-            stateData[index].element.textContent = `$${stateData[index].dieselPrice}/gal`;
-            if (stateData[index].barLabel) {
-              stateData[index].barLabel.textContent = 'Цены на топливо';
-              stateData[index].barLabel.style.transition = 'all 0.4s ease';
+            newValue = state.currentValue - changeAmount;
+            // Ограничиваем минимум на 15% ниже базового значения
+            if (newValue < state.baseValue * 0.85) {
+              newValue = state.baseValue;
             }
-            const dieselWidth = (stateData[index].dieselPrice / 10) * 100;
-            stateData[index].bar.style.transition = 'width 0.4s ease, background 0.4s ease';
-            stateData[index].bar.style.width = dieselWidth + '%';
-            stateData[index].bar.style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
-            stateData[index].showingDiesel = true;
-            setTimeout(() => stateData[index].updateLabelPosition(), 400);
           }
-          barWrapper.style.cursor = 'pointer';
+
+          // Анимируем изменение числа
+          animateValue(state.element, state.currentValue, newValue, 800);
+
+          // Анимируем изменение ширины бара
+          const maxValue = stateData[0].baseValue;
+          const newWidth = (newValue / maxValue) * 100;
+          state.bar.style.transition = 'width 0.8s cubic-bezier(0.4, 0.0, 0.2, 1)';
+          state.bar.style.width = newWidth + '%';
+
+          // Обновляем сохраненную ширину
+          state.originalWidth = newWidth + '%';
+
+          state.currentValue = newValue;
         });
-      }
-    });
-
-    // ============================================
-    // USA MAP INTERACTIVE FUNCTIONALITY (amCharts 5)
-    // ============================================
-
-    // Данные о штатах уже определены выше (stateLoadsData)
-
-    // Функция для определения цвета по количеству грузов
-    function getColorByLoads(loads) {
-      if (loads >= 3000) return am5.color(0x10b981); // Зеленый
-      if (loads >= 2000) return am5.color(0x6366f1); // Синий
-      if (loads >= 1000) return am5.color(0x8b5cf6); // Фиолетовый
-      if (loads >= 500) return am5.color(0xec4899);  // Розовый
-      return am5.color(0x64748b); // Серый
+      }, 2500); // Каждые 2.5 секунды меняем 4 случайных штата
     }
 
-    // Инициализация amCharts карты
-    am5.ready(function () {
-      // Создаем root элемент
-      var root = am5.Root.new("chartdiv");
+    function animateValue(element, start, end, duration) {
+      const startTime = performance.now();
+      const difference = end - start;
 
-      // Убираем водяной знак amCharts
-      root._logo.dispose();
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
 
-      // Устанавливаем темную тему
-      root.setThemes([am5themes_Animated.new(root)]);
+        // Easing function для плавности
+        const easeProgress = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      // Определяем мобильное устройство
-      const isMobile = window.innerWidth <= 768;
+        const currentValue = Math.round(start + difference * easeProgress);
+        element.textContent = currentValue.toLocaleString('ru-RU');
 
-      // Создаем карту (полностью статичная)
-      var chart = root.container.children.push(
-        am5map.MapChart.new(root, {
-          panX: "none",
-          panY: "none",
-          projection: am5map.geoAlbersUsa(),
-          homeGeoPoint: { longitude: -98, latitude: 38 },
-          wheelY: "none",
-          pinchZoom: false,
-          maxZoomLevel: 1,
-          minZoomLevel: 1
-        })
-      );
-
-      // Создаем серию полигонов (штаты)
-      var polygonSeries = chart.series.push(
-        am5map.MapPolygonSeries.new(root, {
-          geoJSON: am5geodata_usaLow,
-          valueField: "value",
-          calculateAggregates: true
-        })
-      );
-
-      // Настройка внешнего вида штатов
-      polygonSeries.mapPolygons.template.setAll({
-        tooltipText: isMobile
-          ? "{name}\n🚛 Грузов: {loads}\n💰 {rate}/миля\n⛽ {diesel}"
-          : "{name}\n🚛 Грузов: {loads}\n💰 Ставка: {rate}/миля\n⛽ Дизель: {diesel}\n📊 Тренд: {trend}\n🔥 Активность: {activity}",
-        fill: am5.color(0x64748b),
-        fillOpacity: 0.85,
-        stroke: am5.color(0x1e293b),
-        strokeWidth: isMobile ? 1.5 : 2,
-        strokeOpacity: 0.8,
-        interactive: true,
-        tooltipPosition: "pointer",
-        draggable: false,
-        cursorOverStyle: "pointer"
-      });
-
-      // Настройка tooltip с улучшенным дизайном и анимацией
-      polygonSeries.mapPolygons.template.set("tooltip", am5.Tooltip.new(root, {
-        getFillFromSprite: false,
-        fill: am5.color(0x1e293b),
-        fillOpacity: 0.95,
-        stroke: am5.color(0x6366f1),
-        strokeWidth: 2,
-        strokeOpacity: 1,
-        labelText: isMobile
-          ? "[bold fontSize:17px #ffffff]{name}[/]\n[fontSize:11px #94a3b8]━━━━━━━━━━━━━━━[/]\n[fontSize:14px]🚛 [bold #10b981]{loads}[/] грузов[/]\n[fontSize:13px]💰 [bold #6366f1]{rate}[/]/миля[/]\n[fontSize:13px]⛽ [bold #f59e0b]{diesel}[/][/]"
-          : "[bold fontSize:19px #ffffff]{name}[/]\n[fontSize:12px #94a3b8]━━━━━━━━━━━━━━━━━━━━[/]\n[fontSize:15px]🚛 Грузов: [bold #10b981]{loads}[/][/]\n[fontSize:14px]💰 Ставка: [bold #6366f1]{rate}[/]/миля[/]\n[fontSize:14px]⛽ Дизель: [bold #f59e0b]{diesel}[/][/]\n[fontSize:12px #94a3b8]━━━━━━━━━━━━━━━━━━━━[/]\n[fontSize:13px]📊 {trend}[/]\n[fontSize:13px]🔥 {activity}[/]",
-        pointerOrientation: "vertical",
-        paddingTop: 18,
-        paddingBottom: 18,
-        paddingLeft: 22,
-        paddingRight: 22,
-        centerX: am5.p50,
-        centerY: am5.p100,
-        autoTextColor: false,
-        shadowColor: am5.color(0x000000),
-        shadowBlur: 25,
-        shadowOffsetX: 0,
-        shadowOffsetY: 10,
-        shadowOpacity: 0.6,
-        cornerRadius: 14,
-        animationDuration: 300,
-        animationEasing: am5.ease.out(am5.ease.cubic)
-      }));
-
-      // Устанавливаем цвет текста tooltip
-      polygonSeries.mapPolygons.template.get("tooltip").label.setAll({
-        fill: am5.color(0xe2e8f0),
-        fontSize: isMobile ? 13 : 14,
-        lineHeight: 1.5,
-        oversizedBehavior: "wrap",
-        maxWidth: isMobile ? 250 : 320
-      });
-
-      // Добавляем анимацию при наведении на штат
-      polygonSeries.mapPolygons.template.events.on("pointerover", function (ev) {
-        const polygon = ev.target;
-        polygon.animate({
-          key: "fillOpacity",
-          to: 1,
-          duration: 200,
-          easing: am5.ease.out(am5.ease.quad)
-        });
-      });
-
-      polygonSeries.mapPolygons.template.events.on("pointerout", function (ev) {
-        const polygon = ev.target;
-        polygon.animate({
-          key: "fillOpacity",
-          to: 0.85,
-          duration: 200,
-          easing: am5.ease.out(am5.ease.quad)
-        });
-      });
-
-      // Улучшенный hover эффект с анимацией
-      polygonSeries.mapPolygons.template.states.create("hover", {
-        fill: am5.color(0xa5b4fc),
-        fillOpacity: 1,
-        stroke: am5.color(0x6366f1),
-        strokeWidth: isMobile ? 2.5 : 3.5,
-        strokeOpacity: 1
-      });
-
-      // Добавляем анимацию при наведении на штат
-      polygonSeries.mapPolygons.template.events.on("pointerover", function (ev) {
-        const polygon = ev.target;
-        polygon.animate({
-          key: "fillOpacity",
-          to: 1,
-          duration: 200,
-          easing: am5.ease.out(am5.ease.quad)
-        });
-      });
-
-      polygonSeries.mapPolygons.template.events.on("pointerout", function (ev) {
-        const polygon = ev.target;
-        polygon.animate({
-          key: "fillOpacity",
-          to: 0.85,
-          duration: 200,
-          easing: am5.ease.out(am5.ease.quad)
-        });
-      });
-
-      // Устанавливаем данные для штатов
-      polygonSeries.data.setAll(
-        Object.keys(stateLoadsData).map(id => {
-          const loads = stateLoadsData[id].loads;
-          // Определяем тренд
-          let trend = "↗️ Растет";
-          if (loads < 500) trend = "→ Стабильно";
-          else if (loads > 2000) trend = "🔥 Высокий спрос";
-
-          // Определяем активность
-          let activity = "Высокая";
-          if (loads < 500) activity = "Низкая";
-          else if (loads < 1000) activity = "Средняя";
-          else if (loads < 2000) activity = "Высокая";
-          else activity = "Очень высокая";
-
-          return {
-            id: id,
-            name: stateLoadsData[id].name,
-            loads: loads.toLocaleString('ru-RU'),
-            diesel: stateLoadsData[id].diesel,
-            rate: stateLoadsData[id].rate,
-            trend: trend,
-            activity: activity,
-            value: loads,
-            fill: getColorByLoads(loads)
-          };
-        })
-      );
-
-      // Применяем цвета к штатам
-      polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) {
-        var dataItem = target.dataItem;
-        if (dataItem) {
-          return dataItem.dataContext.fill;
+        if (progress < 1) {
+          requestAnimationFrame(update);
         }
-        return fill;
-      });
-
-      // Анимация пульсации для топ-3 штатов (только на десктопе)
-      if (!isMobile) {
-        polygonSeries.events.on("datavalidated", function () {
-          const hotStates = ["US-CA", "US-TX", "US-FL"];
-          polygonSeries.mapPolygons.each(function (polygon) {
-            if (hotStates.includes(polygon.dataItem.get("id"))) {
-              polygon.animate({
-                key: "fill",
-                to: am5.color(0xffffff),
-                duration: 1000,
-                loops: Infinity,
-                easing: am5.ease.inOut(am5.ease.cubic)
-              });
-            }
-          });
-        });
       }
 
-      // Анимация появления
-      chart.appear(isMobile ? 500 : 1000, 100);
+      requestAnimationFrame(update);
+    }
+
+    // Анимация появления ячеек таблицы сравнения
+    window.addEventListener('load', () => {
+      const comparisonCells = document.querySelectorAll('.comparison-cell, .comparison-header');
+      comparisonCells.forEach((cell, index) => {
+        cell.style.opacity = '0';
+        cell.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          cell.style.transition = 'all 0.5s ease';
+          cell.style.opacity = '1';
+          cell.style.transform = 'translateY(0)';
+        }, index * 50);
+      });
     });
 
-    // ============================================
-    // MOBILE STATES CARDS GENERATION
-    // ============================================
-    // Карточки штатов уже сгенерированы выше (вне setTimeout)
-
-    // Запускаем анимацию изменения данных
-    if (barsAnimated) {
-      startChartAnimation();
-    }
-  }, 3000);
-
-  function startChartAnimation() {
-    setInterval(() => {
-      // Выбираем 4 случайных штата для одновременного изменения
-      const selectedIndices = new Set();
-      while (selectedIndices.size < 4) {
-        const randomIndex = Math.floor(Math.random() * stateData.length);
-        selectedIndices.add(randomIndex);
+    // Данные о штатах для каждого региона (глобальная переменная)
+    const regionData = {
+      'Midwest': {
+        icon: '🚛',
+        type: 'Dry Van',
+        averageRate: '$2.83',
+        states: [
+          { flag: '🏙️', name: 'Illinois', cities: 'Chicago', rate: '$2.95/миля', diesel: '$3.62/gal', info: 'Чикаго - крупнейший транспортный хаб' },
+          { flag: '🌾', name: 'Ohio', cities: 'Columbus, Cleveland', rate: '$2.88/миля', diesel: '$3.52/gal', info: 'Производство и сельское хозяйство' },
+          { flag: '🏭', name: 'Michigan', cities: 'Detroit', rate: '$2.82/миля', diesel: '$3.58/gal', info: 'Автомобильная промышленность' },
+          { flag: '🌽', name: 'Indiana', cities: 'Indianapolis', rate: '$2.79/миля', diesel: '$3.48/gal', info: 'Сельское хозяйство и логистика' },
+          { flag: '🧀', name: 'Wisconsin', cities: 'Milwaukee', rate: '$2.76/миля', diesel: '$3.55/gal', info: 'Молочная промышленность' },
+          { flag: '🌾', name: 'Iowa', cities: 'Des Moines', rate: '$2.71/миля', diesel: '$3.42/gal', info: 'Сельское хозяйство' },
+          { flag: '🌾', name: 'Minnesota', cities: 'Minneapolis', rate: '$2.68/миля', diesel: '$3.45/gal', info: 'Сельское хозяйство, логистика' },
+          { flag: '🌾', name: 'Missouri', cities: 'KC, St. Louis', rate: '$2.65/миля', diesel: '$3.38/gal', info: 'Транспортный хаб' }
+        ]
+      },
+      'Southeast': {
+        icon: '🚛',
+        type: 'Dry Van',
+        averageRate: '$2.30',
+        states: [
+          { flag: '🌊', name: 'Florida', cities: 'Miami, Tampa', rate: '$2.48/миля', diesel: '$3.48/gal', info: 'Порты, туризм, цитрусовые' },
+          { flag: '🍑', name: 'Georgia', cities: 'Atlanta', rate: '$2.45/миля', diesel: '$3.38/gal', info: 'Атланта - логистический центр' },
+          { flag: '🌲', name: 'North Carolina', cities: 'Charlotte, Raleigh', rate: '$2.38/миля', diesel: '$3.42/gal', info: 'Производство и текстиль' },
+          { flag: '🎸', name: 'Tennessee', cities: 'Nashville, Memphis', rate: '$2.32/миля', diesel: '$3.35/gal', info: 'Мемфис - транспортный хаб' },
+          { flag: '🏖️', name: 'South Carolina', cities: 'Charleston', rate: '$2.28/миля', diesel: '$3.40/gal', info: 'Порты и производство' },
+          { flag: '🎺', name: 'Alabama', cities: 'Birmingham', rate: '$2.22/миля', diesel: '$3.32/gal', info: 'Производство и сталь' },
+          { flag: '🎭', name: 'Mississippi', cities: 'Jackson', rate: '$2.18/миля', diesel: '$3.28/gal', info: 'Сельское хозяйство' },
+          { flag: '🎷', name: 'Louisiana', cities: 'New Orleans', rate: '$2.15/миля', diesel: '$3.22/gal', info: 'Порты и нефтехимия' }
+        ]
+      },
+      'South/TX': {
+        icon: '🚛',
+        type: 'Dry Van',
+        averageRate: '$2.27',
+        states: [
+          { flag: '⭐', name: 'Texas', cities: 'Houston, Dallas', rate: '$2.35/миля', diesel: '$3.15/gal', info: 'Нефть, газ, производство' },
+          { flag: '🏈', name: 'Oklahoma', cities: 'Oklahoma City', rate: '$2.22/миля', diesel: '$3.18/gal', info: 'Нефть и газ' },
+          { flag: '🌶️', name: 'Arkansas', cities: 'Little Rock', rate: '$2.18/миля', diesel: '$3.25/gal', info: 'Сельское хозяйство' },
+          { flag: '🎺', name: 'Louisiana', cities: 'New Orleans', rate: '$2.28/миля', diesel: '$3.22/gal', info: 'Порты и нефтехимия' },
+          { flag: '🌵', name: 'New Mexico', cities: 'Albuquerque', rate: '$2.15/миля', diesel: '$3.28/gal', info: 'Транзит и логистика' }
+        ]
+      },
+      'West': {
+        icon: '🚛',
+        type: 'Dry Van',
+        averageRate: '$2.22',
+        states: [
+          { flag: '🌴', name: 'California', cities: 'LA, SF', rate: '$2.45/миля', diesel: '$4.89/gal', info: 'Крупнейшая экономика, порты' },
+          { flag: '🏔️', name: 'Arizona', cities: 'Phoenix, Tucson', rate: '$2.28/миля', diesel: '$3.68/gal', info: 'Транзит с Мексикой' },
+          { flag: '🎰', name: 'Nevada', cities: 'Las Vegas', rate: '$2.22/миля', diesel: '$4.12/gal', info: 'Лас-Вегас, логистика' },
+          { flag: '🏔️', name: 'Utah', cities: 'Salt Lake City', rate: '$2.18/миля', diesel: '$3.72/gal', info: 'Горнодобыча и технологии' },
+          { flag: '🌲', name: 'Oregon', cities: 'Portland', rate: '$2.15/миля', diesel: '$4.25/gal', info: 'Порты и лесная промышленность' },
+          { flag: '🌲', name: 'Washington', cities: 'Seattle, Spokane', rate: '$2.12/миля', diesel: '$4.38/gal', info: 'Сиэтл - порт и технологии' }
+        ]
+      },
+      'Northeast': {
+        icon: '🚛',
+        type: 'Dry Van',
+        averageRate: '$2.25',
+        states: [
+          { flag: '🗽', name: 'New York', cities: 'NYC, Buffalo', rate: '$2.42/миля', diesel: '$4.15/gal', info: 'Порты, импорт, финансы' },
+          { flag: '🌲', name: 'Pennsylvania', cities: 'Philly, Pittsburgh', rate: '$2.35/миля', diesel: '$4.08/gal', info: 'Производство и логистика' },
+          { flag: '🦞', name: 'Massachusetts', cities: 'Boston', rate: '$2.28/миля', diesel: '$3.95/gal', info: 'Технологии и образование' },
+          { flag: '🏖️', name: 'New Jersey', cities: 'Newark, Jersey City', rate: '$2.25/миля', diesel: '$3.88/gal', info: 'Порты и логистика' },
+          { flag: '🦀', name: 'Maryland', cities: 'Baltimore', rate: '$2.18/миля', diesel: '$3.82/gal', info: 'Порты Балтимора' },
+          { flag: '🦞', name: 'Connecticut', cities: 'Hartford', rate: '$2.15/миля', diesel: '$3.92/gal', info: 'Финансы и страхование' },
+          { flag: '🏔️', name: 'Vermont', cities: 'Burlington', rate: '$2.12/миля', diesel: '$3.85/gal', info: 'Сельское хозяйство' },
+          { flag: '🌲', name: 'Maine', cities: 'Portland', rate: '$2.10/миля', diesel: '$3.78/gal', info: 'Морепродукты, лес' }
+        ]
+      },
+      // Reefer rates
+      'Midwest-Reefer': {
+        icon: '❄️',
+        type: 'Reefer',
+        averageRate: '$3.42',
+        states: [
+          { flag: '🏙️', name: 'Illinois', cities: 'Chicago', rate: '$3.58/миля', diesel: '$3.62/gal', info: 'Чикаго - крупнейший продуктовый хаб' },
+          { flag: '🌾', name: 'Ohio', cities: 'Columbus, Cleveland', rate: '$3.45/миля', diesel: '$3.52/gal', info: 'Молочные продукты' },
+          { flag: '🧀', name: 'Wisconsin', cities: 'Milwaukee', rate: '$3.42/миля', diesel: '$3.55/gal', info: 'Молочная промышленность' },
+          { flag: '🌽', name: 'Indiana', cities: 'Indianapolis', rate: '$3.38/миля', diesel: '$3.48/gal', info: 'Мясопереработка' },
+          { flag: '🏭', name: 'Michigan', cities: 'Detroit', rate: '$3.35/миля', diesel: '$3.58/gal', info: 'Фрукты и овощи' },
+          { flag: '🌾', name: 'Iowa', cities: 'Des Moines', rate: '$3.28/миля', diesel: '$3.42/gal', info: 'Свинина и кукуруза' },
+          { flag: '🌾', name: 'Minnesota', cities: 'Minneapolis', rate: '$3.25/миля', diesel: '$3.45/gal', info: 'Молочные продукты' },
+          { flag: '🌾', name: 'Missouri', cities: 'KC, St. Louis', rate: '$3.22/миля', diesel: '$3.38/gal', info: 'Мясопереработка' }
+        ]
+      },
+      'South/TX-Reefer': {
+        icon: '❄️',
+        type: 'Reefer',
+        averageRate: '$3.05',
+        states: [
+          { flag: '⭐', name: 'Texas', cities: 'Houston, Dallas', rate: '$3.18/миля', diesel: '$3.15/gal', info: 'Мясо, овощи из Мексики' },
+          { flag: '🎺', name: 'Louisiana', cities: 'New Orleans', rate: '$3.08/миля', diesel: '$3.22/gal', info: 'Морепродукты' },
+          { flag: '🏈', name: 'Oklahoma', cities: 'Oklahoma City', rate: '$2.98/миля', diesel: '$3.18/gal', info: 'Мясопереработка' },
+          { flag: '🌶️', name: 'Arkansas', cities: 'Little Rock', rate: '$2.92/миля', diesel: '$3.25/gal', info: 'Птицеводство' },
+          { flag: '🌵', name: 'New Mexico', cities: 'Albuquerque', rate: '$2.88/миля', diesel: '$3.28/gal', info: 'Овощи из Мексики' }
+        ]
+      },
+      'West-Reefer': {
+        icon: '❄️',
+        type: 'Reefer',
+        averageRate: '$2.78',
+        states: [
+          { flag: '🌴', name: 'California', cities: 'LA, SF', rate: '$2.95/миля', diesel: '$4.89/gal', info: 'Фрукты, овощи, вино' },
+          { flag: '🏔️', name: 'Arizona', cities: 'Phoenix, Tucson', rate: '$2.82/миля', diesel: '$3.68/gal', info: 'Овощи и цитрусовые' },
+          { flag: '🌲', name: 'Washington', cities: 'Seattle, Spokane', rate: '$2.75/миля', diesel: '$4.38/gal', info: 'Яблоки, вишня' },
+          { flag: '🌲', name: 'Oregon', cities: 'Portland', rate: '$2.68/миля', diesel: '$4.25/gal', info: 'Ягоды и фрукты' },
+          { flag: '🎰', name: 'Nevada', cities: 'Las Vegas', rate: '$2.62/миля', diesel: '$4.12/gal', info: 'Транзит продуктов' },
+          { flag: '🏔️', name: 'Utah', cities: 'Salt Lake City', rate: '$2.58/миля', diesel: '$3.72/gal', info: 'Транзит продуктов' },
+          { flag: '🏔️', name: 'Idaho', cities: 'Boise', rate: '$2.55/миля', diesel: '$3.65/gal', info: 'Картофель, овощи' }
+        ]
+      },
+      'Southeast-Reefer': {
+        icon: '❄️',
+        type: 'Reefer',
+        averageRate: '$2.59',
+        states: [
+          { flag: '🌊', name: 'Florida', cities: 'Miami, Tampa', rate: '$2.75/миля', diesel: '$3.48/gal', info: 'Цитрусовые, овощи' },
+          { flag: '🍑', name: 'Georgia', cities: 'Atlanta', rate: '$2.68/миля', diesel: '$3.38/gal', info: 'Персики, орехи' },
+          { flag: '🌲', name: 'North Carolina', cities: 'Charlotte, Raleigh', rate: '$2.58/миля', diesel: '$3.42/gal', info: 'Свинина, птица' },
+          { flag: '🏖️', name: 'South Carolina', cities: 'Charleston', rate: '$2.52/миля', diesel: '$3.40/gal', info: 'Персики' },
+          { flag: '🎸', name: 'Tennessee', cities: 'Nashville, Memphis', rate: '$2.48/миля', diesel: '$3.35/gal', info: 'Мясопереработка' },
+          { flag: '🎺', name: 'Alabama', cities: 'Birmingham', rate: '$2.45/миля', diesel: '$3.32/gal', info: 'Птицеводство' },
+          { flag: '🎭', name: 'Mississippi', cities: 'Jackson', rate: '$2.42/миля', diesel: '$3.28/gal', info: 'Птицеводство' }
+        ]
+      },
+      'Northeast-Reefer': {
+        icon: '❄️',
+        type: 'Reefer',
+        averageRate: '$2.58',
+        states: [
+          { flag: '🗽', name: 'New York', cities: 'NYC, Buffalo', rate: '$2.72/миля', diesel: '$4.15/gal', info: 'Импорт продуктов' },
+          { flag: '🌲', name: 'Pennsylvania', cities: 'Philly, Pittsburgh', rate: '$2.65/миля', diesel: '$4.08/gal', info: 'Молочные продукты' },
+          { flag: '🦞', name: 'Massachusetts', cities: 'Boston', rate: '$2.58/миля', diesel: '$3.95/gal', info: 'Морепродукты' },
+          { flag: '🏖️', name: 'New Jersey', cities: 'Newark, Jersey City', rate: '$2.52/миля', diesel: '$3.88/gal', info: 'Импорт через порты' },
+          { flag: '🦀', name: 'Maryland', cities: 'Baltimore', rate: '$2.48/миля', diesel: '$3.82/gal', info: 'Крабы и морепродукты' },
+          { flag: '🦞', name: 'Connecticut', cities: 'Hartford', rate: '$2.45/миля', diesel: '$3.92/gal', info: 'Молочные продукты' },
+          { flag: '🏔️', name: 'Vermont', cities: 'Burlington', rate: '$2.42/миля', diesel: '$3.85/gal', info: 'Молочные продукты' }
+        ]
       }
+    };
 
-      // Обновляем все 4 выбранных штата одновременно
-      selectedIndices.forEach(randomIndex => {
-        const state = stateData[randomIndex];
-
-        if (!state.element || !state.bar || state.showingDiesel) return;
-
-        // Определяем изменение: 70% увеличение, 30% уменьшение
-        const shouldIncrease = Math.random() < 0.7;
-        const changeAmount = Math.floor(Math.random() * 30) + 5; // от 5 до 35
-
-        let newValue;
-        if (shouldIncrease) {
-          newValue = state.currentValue + changeAmount;
-          // Ограничиваем максимум на 15% выше базового значения
-          if (newValue > state.baseValue * 1.15) {
-            newValue = state.baseValue;
-          }
-        } else {
-          newValue = state.currentValue - changeAmount;
-          // Ограничиваем минимум на 15% ниже базового значения
-          if (newValue < state.baseValue * 0.85) {
-            newValue = state.baseValue;
-          }
-        }
-
-        // Анимируем изменение числа
-        animateValue(state.element, state.currentValue, newValue, 800);
-
-        // Анимируем изменение ширины бара
-        const maxValue = stateData[0].baseValue;
-        const newWidth = (newValue / maxValue) * 100;
-        state.bar.style.transition = 'width 0.8s cubic-bezier(0.4, 0.0, 0.2, 1)';
-        state.bar.style.width = newWidth + '%';
-
-        // Обновляем сохраненную ширину
-        state.originalWidth = newWidth + '%';
-
-        state.currentValue = newValue;
-      });
-    }, 2500); // Каждые 2.5 секунды меняем 4 случайных штата
-  }
-
-  function animateValue(element, start, end, duration) {
-    const startTime = performance.now();
-    const difference = end - start;
-
-    function update(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Easing function для плавности
-      const easeProgress = progress < 0.5
-        ? 2 * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-      const currentValue = Math.round(start + difference * easeProgress);
-      element.textContent = currentValue.toLocaleString('ru-RU');
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
-    }
-
-    requestAnimationFrame(update);
-  }
-
-  // Анимация появления ячеек таблицы сравнения
-  window.addEventListener('load', () => {
-    const comparisonCells = document.querySelectorAll('.comparison-cell, .comparison-header');
-    comparisonCells.forEach((cell, index) => {
-      cell.style.opacity = '0';
-      cell.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        cell.style.transition = 'all 0.5s ease';
-        cell.style.opacity = '1';
-        cell.style.transform = 'translateY(0)';
-      }, index * 50);
-    });
-  });
-
-  // Данные о штатах для каждого региона (глобальная переменная)
-  const regionData = {
-    'Midwest': {
-      icon: '🚛',
-      type: 'Dry Van',
-      averageRate: '$2.83',
-      states: [
-        { flag: '🏙️', name: 'Illinois', cities: 'Chicago', rate: '$2.95/миля', diesel: '$3.62/gal', info: 'Чикаго - крупнейший транспортный хаб' },
-        { flag: '🌾', name: 'Ohio', cities: 'Columbus, Cleveland', rate: '$2.88/миля', diesel: '$3.52/gal', info: 'Производство и сельское хозяйство' },
-        { flag: '🏭', name: 'Michigan', cities: 'Detroit', rate: '$2.82/миля', diesel: '$3.58/gal', info: 'Автомобильная промышленность' },
-        { flag: '🌽', name: 'Indiana', cities: 'Indianapolis', rate: '$2.79/миля', diesel: '$3.48/gal', info: 'Сельское хозяйство и логистика' },
-        { flag: '🧀', name: 'Wisconsin', cities: 'Milwaukee', rate: '$2.76/миля', diesel: '$3.55/gal', info: 'Молочная промышленность' },
-        { flag: '🌾', name: 'Iowa', cities: 'Des Moines', rate: '$2.71/миля', diesel: '$3.42/gal', info: 'Сельское хозяйство' },
-        { flag: '🌾', name: 'Minnesota', cities: 'Minneapolis', rate: '$2.68/миля', diesel: '$3.45/gal', info: 'Сельское хозяйство, логистика' },
-        { flag: '🌾', name: 'Missouri', cities: 'KC, St. Louis', rate: '$2.65/миля', diesel: '$3.38/gal', info: 'Транспортный хаб' }
-      ]
-    },
-    'Southeast': {
-      icon: '🚛',
-      type: 'Dry Van',
-      averageRate: '$2.30',
-      states: [
-        { flag: '🌊', name: 'Florida', cities: 'Miami, Tampa', rate: '$2.48/миля', diesel: '$3.48/gal', info: 'Порты, туризм, цитрусовые' },
-        { flag: '🍑', name: 'Georgia', cities: 'Atlanta', rate: '$2.45/миля', diesel: '$3.38/gal', info: 'Атланта - логистический центр' },
-        { flag: '🌲', name: 'North Carolina', cities: 'Charlotte, Raleigh', rate: '$2.38/миля', diesel: '$3.42/gal', info: 'Производство и текстиль' },
-        { flag: '🎸', name: 'Tennessee', cities: 'Nashville, Memphis', rate: '$2.32/миля', diesel: '$3.35/gal', info: 'Мемфис - транспортный хаб' },
-        { flag: '🏖️', name: 'South Carolina', cities: 'Charleston', rate: '$2.28/миля', diesel: '$3.40/gal', info: 'Порты и производство' },
-        { flag: '🎺', name: 'Alabama', cities: 'Birmingham', rate: '$2.22/миля', diesel: '$3.32/gal', info: 'Производство и сталь' },
-        { flag: '🎭', name: 'Mississippi', cities: 'Jackson', rate: '$2.18/миля', diesel: '$3.28/gal', info: 'Сельское хозяйство' },
-        { flag: '🎷', name: 'Louisiana', cities: 'New Orleans', rate: '$2.15/миля', diesel: '$3.22/gal', info: 'Порты и нефтехимия' }
-      ]
-    },
-    'South/TX': {
-      icon: '🚛',
-      type: 'Dry Van',
-      averageRate: '$2.27',
-      states: [
-        { flag: '⭐', name: 'Texas', cities: 'Houston, Dallas', rate: '$2.35/миля', diesel: '$3.15/gal', info: 'Нефть, газ, производство' },
-        { flag: '🏈', name: 'Oklahoma', cities: 'Oklahoma City', rate: '$2.22/миля', diesel: '$3.18/gal', info: 'Нефть и газ' },
-        { flag: '🌶️', name: 'Arkansas', cities: 'Little Rock', rate: '$2.18/миля', diesel: '$3.25/gal', info: 'Сельское хозяйство' },
-        { flag: '🎺', name: 'Louisiana', cities: 'New Orleans', rate: '$2.28/миля', diesel: '$3.22/gal', info: 'Порты и нефтехимия' },
-        { flag: '🌵', name: 'New Mexico', cities: 'Albuquerque', rate: '$2.15/миля', diesel: '$3.28/gal', info: 'Транзит и логистика' }
-      ]
-    },
-    'West': {
-      icon: '🚛',
-      type: 'Dry Van',
-      averageRate: '$2.22',
-      states: [
-        { flag: '🌴', name: 'California', cities: 'LA, SF', rate: '$2.45/миля', diesel: '$4.89/gal', info: 'Крупнейшая экономика, порты' },
-        { flag: '🏔️', name: 'Arizona', cities: 'Phoenix, Tucson', rate: '$2.28/миля', diesel: '$3.68/gal', info: 'Транзит с Мексикой' },
-        { flag: '🎰', name: 'Nevada', cities: 'Las Vegas', rate: '$2.22/миля', diesel: '$4.12/gal', info: 'Лас-Вегас, логистика' },
-        { flag: '🏔️', name: 'Utah', cities: 'Salt Lake City', rate: '$2.18/миля', diesel: '$3.72/gal', info: 'Горнодобыча и технологии' },
-        { flag: '🌲', name: 'Oregon', cities: 'Portland', rate: '$2.15/миля', diesel: '$4.25/gal', info: 'Порты и лесная промышленность' },
-        { flag: '🌲', name: 'Washington', cities: 'Seattle, Spokane', rate: '$2.12/миля', diesel: '$4.38/gal', info: 'Сиэтл - порт и технологии' }
-      ]
-    },
-    'Northeast': {
-      icon: '🚛',
-      type: 'Dry Van',
-      averageRate: '$2.25',
-      states: [
-        { flag: '🗽', name: 'New York', cities: 'NYC, Buffalo', rate: '$2.42/миля', diesel: '$4.15/gal', info: 'Порты, импорт, финансы' },
-        { flag: '🌲', name: 'Pennsylvania', cities: 'Philly, Pittsburgh', rate: '$2.35/миля', diesel: '$4.08/gal', info: 'Производство и логистика' },
-        { flag: '🦞', name: 'Massachusetts', cities: 'Boston', rate: '$2.28/миля', diesel: '$3.95/gal', info: 'Технологии и образование' },
-        { flag: '🏖️', name: 'New Jersey', cities: 'Newark, Jersey City', rate: '$2.25/миля', diesel: '$3.88/gal', info: 'Порты и логистика' },
-        { flag: '🦀', name: 'Maryland', cities: 'Baltimore', rate: '$2.18/миля', diesel: '$3.82/gal', info: 'Порты Балтимора' },
-        { flag: '🦞', name: 'Connecticut', cities: 'Hartford', rate: '$2.15/миля', diesel: '$3.92/gal', info: 'Финансы и страхование' },
-        { flag: '🏔️', name: 'Vermont', cities: 'Burlington', rate: '$2.12/миля', diesel: '$3.85/gal', info: 'Сельское хозяйство' },
-        { flag: '🌲', name: 'Maine', cities: 'Portland', rate: '$2.10/миля', diesel: '$3.78/gal', info: 'Морепродукты, лес' }
-      ]
-    },
-    // Reefer rates
-    'Midwest-Reefer': {
-      icon: '❄️',
-      type: 'Reefer',
-      averageRate: '$3.42',
-      states: [
-        { flag: '🏙️', name: 'Illinois', cities: 'Chicago', rate: '$3.58/миля', diesel: '$3.62/gal', info: 'Чикаго - крупнейший продуктовый хаб' },
-        { flag: '🌾', name: 'Ohio', cities: 'Columbus, Cleveland', rate: '$3.45/миля', diesel: '$3.52/gal', info: 'Молочные продукты' },
-        { flag: '🧀', name: 'Wisconsin', cities: 'Milwaukee', rate: '$3.42/миля', diesel: '$3.55/gal', info: 'Молочная промышленность' },
-        { flag: '🌽', name: 'Indiana', cities: 'Indianapolis', rate: '$3.38/миля', diesel: '$3.48/gal', info: 'Мясопереработка' },
-        { flag: '🏭', name: 'Michigan', cities: 'Detroit', rate: '$3.35/миля', diesel: '$3.58/gal', info: 'Фрукты и овощи' },
-        { flag: '🌾', name: 'Iowa', cities: 'Des Moines', rate: '$3.28/миля', diesel: '$3.42/gal', info: 'Свинина и кукуруза' },
-        { flag: '🌾', name: 'Minnesota', cities: 'Minneapolis', rate: '$3.25/миля', diesel: '$3.45/gal', info: 'Молочные продукты' },
-        { flag: '🌾', name: 'Missouri', cities: 'KC, St. Louis', rate: '$3.22/миля', diesel: '$3.38/gal', info: 'Мясопереработка' }
-      ]
-    },
-    'South/TX-Reefer': {
-      icon: '❄️',
-      type: 'Reefer',
-      averageRate: '$3.05',
-      states: [
-        { flag: '⭐', name: 'Texas', cities: 'Houston, Dallas', rate: '$3.18/миля', diesel: '$3.15/gal', info: 'Мясо, овощи из Мексики' },
-        { flag: '🎺', name: 'Louisiana', cities: 'New Orleans', rate: '$3.08/миля', diesel: '$3.22/gal', info: 'Морепродукты' },
-        { flag: '🏈', name: 'Oklahoma', cities: 'Oklahoma City', rate: '$2.98/миля', diesel: '$3.18/gal', info: 'Мясопереработка' },
-        { flag: '🌶️', name: 'Arkansas', cities: 'Little Rock', rate: '$2.92/миля', diesel: '$3.25/gal', info: 'Птицеводство' },
-        { flag: '🌵', name: 'New Mexico', cities: 'Albuquerque', rate: '$2.88/миля', diesel: '$3.28/gal', info: 'Овощи из Мексики' }
-      ]
-    },
-    'West-Reefer': {
-      icon: '❄️',
-      type: 'Reefer',
-      averageRate: '$2.78',
-      states: [
-        { flag: '🌴', name: 'California', cities: 'LA, SF', rate: '$2.95/миля', diesel: '$4.89/gal', info: 'Фрукты, овощи, вино' },
-        { flag: '🏔️', name: 'Arizona', cities: 'Phoenix, Tucson', rate: '$2.82/миля', diesel: '$3.68/gal', info: 'Овощи и цитрусовые' },
-        { flag: '🌲', name: 'Washington', cities: 'Seattle, Spokane', rate: '$2.75/миля', diesel: '$4.38/gal', info: 'Яблоки, вишня' },
-        { flag: '🌲', name: 'Oregon', cities: 'Portland', rate: '$2.68/миля', diesel: '$4.25/gal', info: 'Ягоды и фрукты' },
-        { flag: '🎰', name: 'Nevada', cities: 'Las Vegas', rate: '$2.62/миля', diesel: '$4.12/gal', info: 'Транзит продуктов' },
-        { flag: '🏔️', name: 'Utah', cities: 'Salt Lake City', rate: '$2.58/миля', diesel: '$3.72/gal', info: 'Транзит продуктов' },
-        { flag: '🏔️', name: 'Idaho', cities: 'Boise', rate: '$2.55/миля', diesel: '$3.65/gal', info: 'Картофель, овощи' }
-      ]
-    },
-    'Southeast-Reefer': {
-      icon: '❄️',
-      type: 'Reefer',
-      averageRate: '$2.59',
-      states: [
-        { flag: '🌊', name: 'Florida', cities: 'Miami, Tampa', rate: '$2.75/миля', diesel: '$3.48/gal', info: 'Цитрусовые, овощи' },
-        { flag: '🍑', name: 'Georgia', cities: 'Atlanta', rate: '$2.68/миля', diesel: '$3.38/gal', info: 'Персики, орехи' },
-        { flag: '🌲', name: 'North Carolina', cities: 'Charlotte, Raleigh', rate: '$2.58/миля', diesel: '$3.42/gal', info: 'Свинина, птица' },
-        { flag: '🏖️', name: 'South Carolina', cities: 'Charleston', rate: '$2.52/миля', diesel: '$3.40/gal', info: 'Персики' },
-        { flag: '🎸', name: 'Tennessee', cities: 'Nashville, Memphis', rate: '$2.48/миля', diesel: '$3.35/gal', info: 'Мясопереработка' },
-        { flag: '🎺', name: 'Alabama', cities: 'Birmingham', rate: '$2.45/миля', diesel: '$3.32/gal', info: 'Птицеводство' },
-        { flag: '🎭', name: 'Mississippi', cities: 'Jackson', rate: '$2.42/миля', diesel: '$3.28/gal', info: 'Птицеводство' }
-      ]
-    },
-    'Northeast-Reefer': {
-      icon: '❄️',
-      type: 'Reefer',
-      averageRate: '$2.58',
-      states: [
-        { flag: '🗽', name: 'New York', cities: 'NYC, Buffalo', rate: '$2.72/миля', diesel: '$4.15/gal', info: 'Импорт продуктов' },
-        { flag: '🌲', name: 'Pennsylvania', cities: 'Philly, Pittsburgh', rate: '$2.65/миля', diesel: '$4.08/gal', info: 'Молочные продукты' },
-        { flag: '🦞', name: 'Massachusetts', cities: 'Boston', rate: '$2.58/миля', diesel: '$3.95/gal', info: 'Морепродукты' },
-        { flag: '🏖️', name: 'New Jersey', cities: 'Newark, Jersey City', rate: '$2.52/миля', diesel: '$3.88/gal', info: 'Импорт через порты' },
-        { flag: '🦀', name: 'Maryland', cities: 'Baltimore', rate: '$2.48/миля', diesel: '$3.82/gal', info: 'Крабы и морепродукты' },
-        { flag: '🦞', name: 'Connecticut', cities: 'Hartford', rate: '$2.45/миля', diesel: '$3.92/gal', info: 'Молочные продукты' },
-        { flag: '🏔️', name: 'Vermont', cities: 'Burlington', rate: '$2.42/миля', diesel: '$3.85/gal', info: 'Молочные продукты' }
-      ]
-    }
-  };
-
-  // Добавляем обработчики кликов для кнопок регионов (rate-bar-modern)
-  document.addEventListener('DOMContentLoaded', () => {
+    // Добавляем обработчики кликов для кнопок регионов (rate-bar-modern)
     console.log('=== INITIALIZING REGION BAR CLICK HANDLERS ===');
     const regionBars = document.querySelectorAll('.rate-bar-modern');
     console.log(`Found ${regionBars.length} region bars for click handlers`);
@@ -4358,18 +4384,17 @@
     });
 
     console.log('✅ Region bar click handlers initialized successfully');
-  });
 
-  // Функция создания выпадающего окна под кнопкой
-  function createRegionDropdown(barElement, data) {
-    console.log('Creating dropdown with data:', data);
+    // Функция создания выпадающего окна под кнопкой
+    function createRegionDropdown(barElement, data) {
+      console.log('Creating dropdown with data:', data);
 
-    // Создаем dropdown элемент
-    const dropdown = document.createElement('div');
-    dropdown.className = 'region-dropdown';
+      // Создаем dropdown элемент
+      const dropdown = document.createElement('div');
+      dropdown.className = 'region-dropdown';
 
-    // Создаем HTML содержимое с аккордионом для каждого штата
-    dropdown.innerHTML = `
+      // Создаем HTML содержимое с аккордионом для каждого штата
+      dropdown.innerHTML = `
       <div class="dropdown-states-grid">
         ${data.states.map((state, index) => `
           <div class="dropdown-state-card" data-state-index="${index}">
@@ -4408,37 +4433,39 @@
       </div>
     `;
 
-    // Добавляем dropdown ПОСЛЕ barElement (не внутри!)
-    barElement.insertAdjacentElement('afterend', dropdown);
+      // Добавляем dropdown ПОСЛЕ barElement (не внутри!)
+      barElement.insertAdjacentElement('afterend', dropdown);
 
-    // Показываем dropdown с анимацией
-    setTimeout(() => {
-      dropdown.classList.add('active');
-    }, 10);
+      // Показываем dropdown с анимацией
+      setTimeout(() => {
+        dropdown.classList.add('active');
+      }, 10);
 
-    // Добавляем обработчики клика для каждой карточки штата
-    setTimeout(() => {
-      const stateCards = dropdown.querySelectorAll('.dropdown-state-card');
-      stateCards.forEach(card => {
-        card.addEventListener('click', function (e) {
-          e.stopPropagation(); // Предотвращаем закрытие dropdown
-          this.classList.toggle('expanded');
+      // Добавляем обработчики клика для каждой карточки штата
+      setTimeout(() => {
+        const stateCards = dropdown.querySelectorAll('.dropdown-state-card');
+        stateCards.forEach(card => {
+          card.addEventListener('click', function (e) {
+            e.stopPropagation(); // Предотвращаем закрытие dropdown
+            this.classList.toggle('expanded');
+          });
         });
-      });
-    }, 50);
-  }
-
-  // Закрытие dropdown при клике вне его (опционально)
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('.rate-bar-modern') && !e.target.closest('.region-dropdown')) {
-      document.querySelectorAll('.region-dropdown.active').forEach(dropdown => {
-        dropdown.classList.remove('active');
-        const prevBar = dropdown.previousElementSibling;
-        if (prevBar?.classList.contains('rate-bar-modern')) {
-          prevBar.classList.remove('expanded');
-        }
-        setTimeout(() => dropdown.remove(), 400);
-      });
+      }, 50);
     }
-  });
+
+    // Закрытие dropdown при клике вне его (опционально)
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.rate-bar-modern') && !e.target.closest('.region-dropdown')) {
+        document.querySelectorAll('.region-dropdown.active').forEach(dropdown => {
+          dropdown.classList.remove('active');
+          const prevBar = dropdown.previousElementSibling;
+          if (prevBar?.classList.contains('rate-bar-modern')) {
+            prevBar.classList.remove('expanded');
+          }
+          setTimeout(() => dropdown.remove(), 400);
+        });
+      }
+    });
+
+  }); // END DOMContentLoaded
 </script>

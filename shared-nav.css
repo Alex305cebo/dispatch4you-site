@@ -230,7 +230,7 @@
 
 /* Mobile Menu */
 .mobile-menu-overlay {
-    display: none;
+    display: none !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -240,10 +240,13 @@
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .mobile-menu-overlay.active {
+    display: block !important;
     opacity: 1;
+    pointer-events: auto;
 }
 
 .mobile-menu {
@@ -481,9 +484,7 @@
         display: flex;
     }
 
-    .mobile-menu-overlay {
-        display: block;
-    }
+    /* Убираем display: block, чтобы overlay не блокировал клики */
 
     .nav-container {
         padding: 0 20px;
