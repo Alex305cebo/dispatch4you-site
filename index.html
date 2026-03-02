@@ -91,6 +91,12 @@
       display: block;
     }
 
+    @media (max-width: 768px) {
+      #neuralCanvas {
+        opacity: 0.45;
+      }
+    }
+
     /* Grid pattern overlay */
     body::after {
       content: '';
@@ -2727,15 +2733,14 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-bottom: 24px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
     .mobile-menu-divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-      margin: 0;
+      margin: 20px 0;
       width: 100%;
     }
 
@@ -4965,6 +4970,13 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-nav-links">
+      <div class="mobile-nav-actions">
+        <a href="login.html" class="btn-login">Войти</a>
+        <a href="register.html" class="btn-signup">Регистрация</a>
+      </div>
+
+      <div class="mobile-menu-divider"></div>
+
       <a href="index.html" class="nav-link active">🏠 Главная</a>
 
       <div class="mobile-nav-section">
@@ -4996,15 +5008,9 @@
         <a href="contacts.html" class="nav-link nav-link-sub">Контакты</a>
       </div>
 
-      <div class="mobile-menu-divider"></div>
-
       <a href="pages/documentation.html" class="nav-link">📄 Документация</a>
       <a href="pricing.html" class="nav-link">💰 Тарифы</a>
       <a href="dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">👤 Личный кабинет</a>
-    </div>
-    <div class="mobile-nav-actions">
-      <a href="login.html" class="btn-login">Войти</a>
-      <a href="register.html" class="btn-signup">Регистрация</a>
     </div>
   </div>
 
@@ -6140,7 +6146,7 @@
           this.vx = (Math.random() - 0.5) * 0.5;
           this.vy = (Math.random() - 0.5) * 0.5;
           this.radius = Math.random() * 2 + 1;
-          this.opacity = Math.random() * 0.5 + 0.3;
+          this.opacity = (Math.random() * 0.5 + 0.3) * 0.6;
         }
 
         update() {
@@ -6199,7 +6205,7 @@
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < connectionDistance) {
-              const opacity = (1 - distance / connectionDistance) * 0.3;
+              const opacity = (1 - distance / connectionDistance) * 0.18;
               ctx.beginPath();
               ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
               ctx.lineWidth = 1;
