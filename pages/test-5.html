@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тест: Модуль 5 - Коммуникация с брокерами | Курсы - Диспетчера</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../shared-styles.css">
+  <script>!function () { var t = localStorage.getItem('dispatcher-theme') || 'dark'; 'dark' === t && document.documentElement.setAttribute('data-theme', 'dark') }();</script>
+  <link rel="stylesheet" href="../dark-theme.css">
+  <script src="../dark-mode.js"></script>
+  <script src="auth-check.js"></script>
+  <link rel="stylesheet" href="../shared-nav.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #020617; color: #f1f5f9; min-height: 100vh; padding: 80px 20px 40px; display: flex; flex-direction: column; align-items: center; }
@@ -160,6 +170,121 @@
     <script src="../dark-mode.js"></script>
 </head>
 <body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-content">
+        <a href="../index.html" class="logo">
+          <span class="logo-icon">рџЋ“</span>
+          <span class="logo-text">РљСѓСЂСЃС‹ Р”РёСЃРїРµС‚С‡РµСЂР°</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="../index.html" class="nav-link">Р“Р»Р°РІРЅР°СЏ</a>
+
+          <div class="nav-dropdown">
+            <a href="../courses.html" class="nav-link">РљСѓСЂСЃС‹</a>
+            <div class="dropdown-content">
+              <a href="../course.html">РћР±Р·РѕСЂ РєСѓСЂСЃР°</a>
+              <a href="modules.html">12 РњРѕРґСѓР»РµР№ РѕР±СѓС‡РµРЅРёСЏ</a>
+              <a href="simulator.html">РЎРёРјСѓР»СЏС‚РѕСЂ РїРµСЂРµРіРѕРІРѕСЂРѕРІ</a>
+              <a href="calls.html">РџСЂРёРјРµСЂС‹ Р·РІРѕРЅРєРѕРІ</a>
+              <a href="cases.html">РџСЂР°РєС‚РёС‡РµСЃРєРёРµ РєРµР№СЃС‹</a>
+              <a href="testing.html">РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ</a>
+            </div>
+          </div>
+
+          <div class="nav-dropdown">
+            <span class="nav-link">РРЅСЃС‚СЂСѓРјРµРЅС‚С‹</span>
+            <div class="dropdown-content">
+              <a href="loadboard.html">Load Board</a>
+              <a href="load-finder.html">Load Finder</a>
+              <a href="dispatcher-cards.html">Dispatcher Cards</a>
+              <a href="simulator.html">Dispatch Simulator</a>
+            </div>
+          </div>
+
+          <div class="nav-dropdown">
+            <span class="nav-link">РРЅС„РѕСЂРјР°С†РёСЏ</span>
+            <div class="dropdown-content">
+              <a href="../about.html">Рћ РЅР°СЃ</a>
+              <a href="../blog.html">Р‘Р»РѕРі</a>
+              <a href="../career.html">РљР°СЂСЊРµСЂР°</a>
+              <a href="../faq.html">FAQ</a>
+              <a href="../help.html">РџРѕРјРѕС‰СЊ</a>
+              <a href="../contacts.html">РљРѕРЅС‚Р°РєС‚С‹</a>
+            </div>
+          </div>
+
+          <a href="documentation.html" class="nav-link">Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</a>
+          <a href="../pricing.html" class="nav-link">РўР°СЂРёС„С‹</a>
+          <a href="../dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚</a>
+        </div>
+
+        <div class="nav-actions">
+          <a href="../login.html" class="btn-login">Р’РѕР№С‚Рё</a>
+          <a href="../register.html" class="btn-signup">Р РµРіРёСЃС‚СЂР°С†РёСЏ</a>
+        </div>
+
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-nav-links">
+      <a href="../index.html" class="nav-link">рџЏ  Р“Р»Р°РІРЅР°СЏ</a>
+
+      <div class="mobile-nav-section">
+        <div class="mobile-section-title">рџ“љ РљРЈР РЎР«</div>
+        <a href="../courses.html" class="nav-link nav-link-sub">Р’СЃРµ РєСѓСЂСЃС‹</a>
+        <a href="../course.html" class="nav-link nav-link-sub">РћР±Р·РѕСЂ РєСѓСЂСЃР°</a>
+        <a href="modules.html" class="nav-link nav-link-sub">12 РњРѕРґСѓР»РµР№ РѕР±СѓС‡РµРЅРёСЏ</a>
+        <a href="simulator.html" class="nav-link nav-link-sub">РЎРёРјСѓР»СЏС‚РѕСЂ РїРµСЂРµРіРѕРІРѕСЂРѕРІ</a>
+        <a href="calls.html" class="nav-link nav-link-sub">РџСЂРёРјРµСЂС‹ Р·РІРѕРЅРєРѕРІ</a>
+        <a href="cases.html" class="nav-link nav-link-sub">РџСЂР°РєС‚РёС‡РµСЃРєРёРµ РєРµР№СЃС‹</a>
+        <a href="testing.html" class="nav-link nav-link-sub">РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <div class="mobile-section-title">рџ› пёЏ РРќРЎРўР РЈРњР•РќРўР«</div>
+        <a href="loadboard.html" class="nav-link nav-link-sub">Load Board</a>
+        <a href="load-finder.html" class="nav-link nav-link-sub">Load Finder</a>
+        <a href="dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
+        <a href="simulator.html" class="nav-link nav-link-sub">Dispatch Simulator</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <div class="mobile-section-title">в„№пёЏ РРќР¤РћР РњРђР¦РРЇ</div>
+        <a href="../about.html" class="nav-link nav-link-sub">Рћ РЅР°СЃ</a>
+        <a href="../blog.html" class="nav-link nav-link-sub">Р‘Р»РѕРі</a>
+        <a href="../career.html" class="nav-link nav-link-sub">РљР°СЂСЊРµСЂР°</a>
+        <a href="../faq.html" class="nav-link nav-link-sub">FAQ</a>
+        <a href="../help.html" class="nav-link nav-link-sub">РџРѕРјРѕС‰СЊ</a>
+        <a href="../contacts.html" class="nav-link nav-link-sub">РљРѕРЅС‚Р°РєС‚С‹</a>
+      </div>
+
+      <div class="mobile-menu-divider"></div>
+
+      <a href="documentation.html" class="nav-link">рџ“„ Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</a>
+      <a href="../pricing.html" class="nav-link">рџ’° РўР°СЂРёС„С‹</a>
+      <a href="../dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">рџ‘¤ Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚</a>
+    </div>
+    <div class="mobile-nav-actions">
+      <a href="../login.html" class="btn-login">Р’РѕР№С‚Рё</a>
+      <a href="../register.html" class="btn-signup">Р РµРіРёСЃС‚СЂР°С†РёСЏ</a>
+    </div>
+  </div>
+
 
     <div class="container">
         <div class="header">
