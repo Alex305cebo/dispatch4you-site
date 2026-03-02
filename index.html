@@ -4232,17 +4232,23 @@
 
     .chart-bars {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 16px;
+      height: 350px;
+      padding: 20px 10px;
     }
 
     .chart-bar-item {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
+      justify-content: flex-end;
+      flex: 1;
       opacity: 0;
-      transform: translateX(-30px);
-      animation: slideIn 0.6s ease forwards;
+      transform: translateY(30px);
+      animation: slideUp 0.6s ease forwards;
     }
 
     .chart-bar-item:nth-child(1) {
@@ -4285,31 +4291,33 @@
       animation-delay: 1s;
     }
 
-    @keyframes slideIn {
+    @keyframes slideUp {
       to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
       }
     }
 
     .chart-bar-label {
-      min-width: 90px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      font-size: 12px;
+      gap: 4px;
+      font-size: 11px;
       font-weight: 600;
       color: #ffffff;
+      margin-top: 8px;
+      text-align: center;
       transition: all 0.3s ease;
     }
 
     .chart-bar-item:hover .chart-bar-label {
-      transform: translateX(5px);
+      transform: translateY(5px);
       color: #8b5cf6;
     }
 
     .state-flag {
-      font-size: 16px;
+      font-size: 20px;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
       transition: transform 0.3s ease;
     }
@@ -4319,15 +4327,17 @@
     }
 
     .chart-bar-wrapper {
-      flex: 1;
+      width: 100%;
       background: rgba(15, 23, 42, 0.6);
       border-radius: 8px;
-      height: 32px;
       position: relative;
       overflow: hidden;
       box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
       cursor: pointer;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }
 
     .chart-bar-wrapper:hover {
@@ -4336,17 +4346,17 @@
     }
 
     .chart-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
-      background-size: 200% 100%;
-      border-radius: 8px;
+      width: 100%;
+      background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1);
+      background-size: 100% 200%;
+      border-radius: 8px 8px 0 0;
       display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-right: 12px;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 12px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 -4px 12px rgba(99, 102, 241, 0.4);
       animation: gradientShift 3s ease infinite;
       transition: all 0.3s ease;
     }
@@ -4355,37 +4365,37 @@
 
       0%,
       100% {
-        background-position: 0% 50%;
+        background-position: 50% 0%;
       }
 
       50% {
-        background-position: 100% 50%;
+        background-position: 50% 100%;
       }
     }
 
     .chart-bar-item:hover .chart-bar {
-      transform: scaleY(1.1);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+      transform: scaleX(1.1);
+      box-shadow: 0 -6px 20px rgba(99, 102, 241, 0.6);
     }
 
     .chart-bar::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
+      top: -100%;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       animation: shimmer 2.5s infinite;
     }
 
     @keyframes shimmer {
       0% {
-        left: -100%;
+        top: -100%;
       }
 
       100% {
-        left: 100%;
+        top: 100%;
       }
     }
 
@@ -5211,113 +5221,113 @@
 
         <div class="chart-bars">
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 100%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">3,247</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🌴</span>
               <span>Californ.</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 100%;">
-                <span class="chart-bar-value">3,247</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 89%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">2,891</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">⭐</span>
               <span>Texas</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 89%;">
-                <span class="chart-bar-value">2,891</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 66%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">2,156</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🌊</span>
               <span>Florida</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 66%;">
-                <span class="chart-bar-value">2,156</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 59%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">1,923</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🏙️</span>
               <span>Illinois</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 59%;">
-                <span class="chart-bar-value">1,923</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 52%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">1,687</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🍑</span>
               <span>Georgia</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 52%;">
-                <span class="chart-bar-value">1,687</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 47%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">1,534</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🌲</span>
               <span>Pennsylv.</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 47%;">
-                <span class="chart-bar-value">1,534</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 44%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">1,421</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🗽</span>
               <span>New York</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 44%;">
-                <span class="chart-bar-value">1,421</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 40%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">1,298</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🌾</span>
               <span>Ohio</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 40%;">
-                <span class="chart-bar-value">1,298</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 35%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">1,147</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🌲</span>
               <span>N.Carolin.</span>
             </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 35%;">
-                <span class="chart-bar-value">1,147</span>
-              </div>
-            </div>
           </div>
           <div class="chart-bar-item">
+            <div class="chart-bar-wrapper" style="height: 30%;">
+              <div class="chart-bar">
+                <span class="chart-bar-value">987</span>
+              </div>
+            </div>
             <div class="chart-bar-label">
               <span class="state-flag">🏔️</span>
               <span>Arizona</span>
-            </div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 30%;">
-                <span class="chart-bar-value">987</span>
-              </div>
             </div>
           </div>
         </div>
