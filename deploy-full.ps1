@@ -1,70 +1,70 @@
-# PowerShell скрипт деплоя на GitHub и Hostinger
+# PowerShell script for deployment to GitHub and Hostinger
 
-Write-Host "🚀 Деплой dispatch4you-site" -ForegroundColor Cyan
+Write-Host "Deploy dispatch4you-site" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Проверка изменений
+# Check for changes
 $status = git status -s
 if ([string]::IsNullOrWhiteSpace($status)) {
-    Write-Host "❌ Нет изменений для деплоя" -ForegroundColor Yellow
+    Write-Host "No changes to deploy" -ForegroundColor Yellow
     exit 0
 }
 
-# Показать изменения
-Write-Host "📝 Измененные файлы:" -ForegroundColor Green
+# Show changes
+Write-Host "Changed files:" -ForegroundColor Green
 git status -s
 Write-Host ""
 
-# Запрос сообщения коммита
-$commitMessage = Read-Host "💬 Введите описание изменений"
+# Request commit message
+$commitMessage = Read-Host "Enter commit message"
 
 if ([string]::IsNullOrWhiteSpace($commitMessage)) {
     $commitMessage = "Update $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
 }
 
-# Git операции
+# Git operations
 Write-Host ""
-Write-Host "📦 Добавление файлов..." -ForegroundColor Yellow
+Write-Host "Adding files..." -ForegroundColor Yellow
 git add .
 
-Write-Host "💾 Создание коммита..." -ForegroundColor Yellow
+Write-Host "Creating commit..." -ForegroundColor Yellow
 git commit -m $commitMessage
 
-# Отправка на GitHub
-Write-Host "🐙 Отправка на GitHub..." -ForegroundColor Yellow
+# Push to GitHub
+Write-Host "Pushing to GitHub..." -ForegroundColor Yellow
 git push origin main
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host ""
-    Write-Host "❌ Ошибка при отправке на GitHub" -ForegroundColor Red
+    Write-Host "Error pushing to GitHub" -ForegroundColor Red
     exit 1
 }
 
-Write-Host "✅ GitHub обновлен" -ForegroundColor Green
+Write-Host "GitHub updated" -ForegroundColor Green
 
-# Отправка на Hostinger (если настроен)
+# Push to Hostinger (if configured)
 $hasHostinger = git remote | Select-String -Pattern "hostinger"
 
 if ($hasHostinger) {
-    Write-Host "🌐 Отправка на Hostinger..." -ForegroundColor Yellow
+    Write-Host "Pushing to Hostinger..." -ForegroundColor Yellow
     git push hostinger main
     
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "✅ Hostinger обновлен" -ForegroundColor Green
+        Write-Host "Hostinger updated" -ForegroundColor Green
         Write-Host ""
-        Write-Host "🎉 Деплой успешно завершен!" -ForegroundColor Green
-        Write-Host "🔗 GitHub: https://github.com/Alex305cebo/dispatch4you-site" -ForegroundColor Cyan
-        Write-Host "🔗 Сайт: https://dispatch4you.com/" -ForegroundColor Cyan
+        Write-Host "Deployment completed successfully!" -ForegroundColor Green
+        Write-Host "GitHub: https://github.com/Alex305cebo/dispatch4you-site" -ForegroundColor Cyan
+        Write-Host "Website: https://dispatch4you.com/" -ForegroundColor Cyan
     } else {
-        Write-Host "⚠️  Ошибка при отправке на Hostinger" -ForegroundColor Yellow
-        Write-Host "💡 GitHub обновлен, но Hostinger не обновился" -ForegroundColor Yellow
+        Write-Host "Error pushing to Hostinger" -ForegroundColor Yellow
+        Write-Host "GitHub updated, but Hostinger was not updated" -ForegroundColor Yellow
     }
 } else {
     Write-Host ""
-    Write-Host "✅ Деплой на GitHub завершен!" -ForegroundColor Green
-    Write-Host "🔗 https://github.com/Alex305cebo/dispatch4you-site" -ForegroundColor Cyan
+    Write-Host "GitHub deployment completed!" -ForegroundColor Green
+    Write-Host "https://github.com/Alex305cebo/dispatch4you-site" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "💡 Hostinger remote не настроен" -ForegroundColor Yellow
-    Write-Host "   Для настройки следуйте инструкции в DEPLOY-HOSTINGER.md" -ForegroundColor Gray
+    Write-Host "Hostinger remote not configured" -ForegroundColor Yellow
+    Write-Host "Follow instructions in DEPLOY-HOSTINGER.md to configure" -ForegroundColor Gray
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 
 <head>
@@ -87,6 +87,63 @@
             color: #94a3b8;
             max-width: 640px;
             margin: 0 auto 32px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           FEATURES GRID
+           ═══════════════════════════════════════════════════════════ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #2563EB, #7C3AED);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.3);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 0;
+            color: #ffffff;
         }
 
         /* ═══════════════════════════════════════════════════════════
@@ -543,9 +600,9 @@
                     </div>
 
                     <div class="nav-dropdown">
-                        <span class="nav-link">Инструменты</span>
+                        <span class="nav-link" data-short="Инстр.">Инструменты</span>
                         <div class="dropdown-content">
-                            <a href="loadboard.html">Load Board</a>
+                            <a href="loadboard.html">Статистика рынка</a>
                             <a href="load-finder.html" class="active">Load Finder</a>
                             <a href="dispatcher-cards.html">Dispatcher Cards</a>
                             <a href="simulator.html">Dispatch Simulator</a>
@@ -553,7 +610,7 @@
                     </div>
 
                     <div class="nav-dropdown">
-                        <span class="nav-link">Информация</span>
+                        <span class="nav-link" data-short="Инфо">Информация</span>
                         <div class="dropdown-content">
                             <a href="../about.html">О нас</a>
                             <a href="../blog.html">Блог</a>
@@ -564,8 +621,8 @@
                         </div>
                     </div>
 
-                    <a href="documentation.html" class="nav-link">Документация</a>
-                    <a href="../pricing.html" class="nav-link">Тарифы</a>
+                    <a href="documentation.html" class="nav-link" data-short="Докум.">Документация</a>
+                    <a href="../pricing.html" class="nav-link" data-short="Тарифы">Тарифы</a>
                     <a href="../dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Личный
                         кабинет</a>
                 </div>
@@ -605,7 +662,7 @@
 
             <div class="mobile-nav-section">
                 <div class="mobile-section-title">🛠️ ИНСТРУМЕНТЫ</div>
-                <a href="loadboard.html" class="nav-link nav-link-sub">Load Board</a>
+                <a href="loadboard.html" class="nav-link nav-link-sub">Статистика рынка</a>
                 <a href="load-finder.html" class="nav-link nav-link-sub active">Load Finder</a>
                 <a href="dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
                 <a href="simulator.html" class="nav-link nav-link-sub">Dispatch Simulator</a>
@@ -646,6 +703,39 @@
             <p class="subtitle">
                 Профессиональный поиск грузов с полной информацией о брокерах, ценах и контактах
             </p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid" style="margin-bottom: 48px;">
+            <div class="feature-card">
+                <span class="feature-icon">🚛</span>
+                <h3>50+ Брокеров</h3>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>Реальное время</h3>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">💰</span>
+                <h3>Бесплатно</h3>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">📱</span>
+                <h3>Удобный интерфейс</h3>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🎓</span>
+                <h3>Для студентов</h3>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🔄</span>
+                <h3>Постоянные обновления</h3>
+            </div>
         </div>
 
         <div class="search-card">

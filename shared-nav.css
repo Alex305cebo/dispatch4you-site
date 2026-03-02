@@ -15,7 +15,7 @@
 }
 
 .nav-container {
-    max-width: 1400px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 40px;
     width: 100%;
@@ -26,7 +26,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 32px;
+    gap: 16px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -49,7 +49,7 @@
 
 .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 16px;
     align-items: center;
     flex-wrap: nowrap;
 }
@@ -346,14 +346,14 @@
 /* Extra large screens (1400px+) */
 @media (min-width: 1400px) {
     .nav-container {
-        max-width: 1600px;
+        max-width: 1300px;
     }
 }
 
 /* Large desktops (1200px - 1400px) */
 @media (max-width: 1400px) {
     .nav-container {
-        max-width: 1400px;
+        max-width: 1300px;
     }
 }
 
@@ -613,5 +613,102 @@
     .btn-signup {
         font-size: 14px;
         padding: 10px 16px;
+    }
+}
+
+
+/* Adaptive text for narrow screens (1024px - 1280px) */
+@media (max-width: 1280px)  {
+    .nav-link {
+        font-size: 14px;
+    }
+
+    .btn-login,
+    .btn-signup {
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+}
+
+/* Very narrow desktop screens (1025px - 1150px) */
+@media (max-width: 1150px)  {
+    .nav-links {
+        gap: 12px;
+    }
+
+    .nav-link {
+        font-size: 13px;
+    }
+
+    .btn-login,
+    .btn-signup {
+        font-size: 13px;
+        padding: 9px 16px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+}
+
+
+/* Show short text on narrow screens */
+@media (max-width: 1150px)  {
+    .nav-link[data-short] {
+        font-size: 0 !important;
+    }
+
+    .nav-link[data-short]::before {
+        content: attr(data-short);
+        font-size: 13px;
+    }
+}
+
+
+/* Show even shorter text on very narrow screens */
+@media (max-width: 1100px)  {
+    .nav-link[data-short] {
+        font-size: 0 !important;
+    }
+
+    .nav-link[data-short="Инстр."]::before {
+        content: "Инстр";
+    }
+
+    .nav-link[data-short="Инфо"]::before {
+        content: "Инфо";
+    }
+
+    .nav-link[data-short="Докум."]::before {
+        content: "Док";
+    }
+
+    .nav-link[data-short="Кабинет"]::before {
+        content: "ЛК";
+    }
+}
+
+/* Ultra narrow screens - maximum compression */
+@media (max-width: 1050px)  {
+    .nav-links {
+        gap: 8px;
+    }
+
+    .nav-link {
+        font-size: 12px !important;
+    }
+
+    .nav-link[data-short]::before {
+        font-size: 12px;
+    }
+
+    .btn-login,
+    .btn-signup {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .logo-text {
+        font-size: 16px;
     }
 }
