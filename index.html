@@ -4236,7 +4236,7 @@
       align-items: flex-end;
       justify-content: space-around;
       gap: 16px;
-      height: 350px;
+      height: 500px;
       padding: 20px 10px;
     }
 
@@ -4245,7 +4245,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      flex: 1;
+      width: 70px;
+      height: 100%;
       opacity: 0;
       transform: translateY(30px);
       animation: slideUp 0.6s ease forwards;
@@ -4255,40 +4256,80 @@
       animation-delay: 0.1s;
     }
 
+    .chart-bar-item:nth-child(1) .chart-bar {
+      animation-delay: 0.1s, 0.1s;
+    }
+
     .chart-bar-item:nth-child(2) {
       animation-delay: 0.2s;
+    }
+
+    .chart-bar-item:nth-child(2) .chart-bar {
+      animation-delay: 0.2s, 0.2s;
     }
 
     .chart-bar-item:nth-child(3) {
       animation-delay: 0.3s;
     }
 
+    .chart-bar-item:nth-child(3) .chart-bar {
+      animation-delay: 0.3s, 0.3s;
+    }
+
     .chart-bar-item:nth-child(4) {
       animation-delay: 0.4s;
+    }
+
+    .chart-bar-item:nth-child(4) .chart-bar {
+      animation-delay: 0.4s, 0.4s;
     }
 
     .chart-bar-item:nth-child(5) {
       animation-delay: 0.5s;
     }
 
+    .chart-bar-item:nth-child(5) .chart-bar {
+      animation-delay: 0.5s, 0.5s;
+    }
+
     .chart-bar-item:nth-child(6) {
       animation-delay: 0.6s;
+    }
+
+    .chart-bar-item:nth-child(6) .chart-bar {
+      animation-delay: 0.6s, 0.6s;
     }
 
     .chart-bar-item:nth-child(7) {
       animation-delay: 0.7s;
     }
 
+    .chart-bar-item:nth-child(7) .chart-bar {
+      animation-delay: 0.7s, 0.7s;
+    }
+
     .chart-bar-item:nth-child(8) {
       animation-delay: 0.8s;
+    }
+
+    .chart-bar-item:nth-child(8) .chart-bar {
+      animation-delay: 0.8s, 0.8s;
     }
 
     .chart-bar-item:nth-child(9) {
       animation-delay: 0.9s;
     }
 
+    .chart-bar-item:nth-child(9) .chart-bar {
+      animation-delay: 0.9s, 0.9s;
+    }
+
     .chart-bar-item:nth-child(10) {
       animation-delay: 1s;
+    }
+
+    .chart-bar-item:nth-child(10) .chart-bar {
+      animation-delay: 1s, 1s;
     }
 
     @keyframes slideUp {
@@ -4306,9 +4347,11 @@
       font-size: 11px;
       font-weight: 600;
       color: #ffffff;
-      margin-top: 8px;
+      margin-top: 12px;
       text-align: center;
       transition: all 0.3s ease;
+      flex-shrink: 0;
+      height: 50px;
     }
 
     .chart-bar-item:hover .chart-bar-label {
@@ -4338,6 +4381,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      min-height: 320px;
     }
 
     .chart-bar-wrapper:hover {
@@ -4357,8 +4401,21 @@
       position: relative;
       overflow: hidden;
       box-shadow: 0 -4px 12px rgba(99, 102, 241, 0.4);
-      animation: gradientShift 3s ease infinite;
-      transition: all 0.3s ease;
+      animation: gradientShift 3s ease infinite, fillVertical 1.5s ease-out forwards;
+      transition: all 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transform-origin: bottom;
+    }
+
+    @keyframes fillVertical {
+      from {
+        transform: scaleY(0);
+        opacity: 0;
+      }
+
+      to {
+        transform: scaleY(1);
+        opacity: 1;
+      }
     }
 
     @keyframes gradientShift {
@@ -5221,8 +5278,8 @@
 
         <div class="chart-bars">
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 100%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 100%;">
                 <span class="chart-bar-value">3,247</span>
               </div>
             </div>
@@ -5232,8 +5289,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 89%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 89%;">
                 <span class="chart-bar-value">2,891</span>
               </div>
             </div>
@@ -5243,8 +5300,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 66%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 66%;">
                 <span class="chart-bar-value">2,156</span>
               </div>
             </div>
@@ -5254,8 +5311,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 59%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 59%;">
                 <span class="chart-bar-value">1,923</span>
               </div>
             </div>
@@ -5265,8 +5322,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 52%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 52%;">
                 <span class="chart-bar-value">1,687</span>
               </div>
             </div>
@@ -5276,8 +5333,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 47%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 47%;">
                 <span class="chart-bar-value">1,534</span>
               </div>
             </div>
@@ -5287,8 +5344,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 44%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 44%;">
                 <span class="chart-bar-value">1,421</span>
               </div>
             </div>
@@ -5298,8 +5355,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 40%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 40%;">
                 <span class="chart-bar-value">1,298</span>
               </div>
             </div>
@@ -5309,8 +5366,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 35%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 35%;">
                 <span class="chart-bar-value">1,147</span>
               </div>
             </div>
@@ -5320,8 +5377,8 @@
             </div>
           </div>
           <div class="chart-bar-item">
-            <div class="chart-bar-wrapper" style="height: 30%;">
-              <div class="chart-bar">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 30%;">
                 <span class="chart-bar-value">987</span>
               </div>
             </div>
@@ -6003,16 +6060,16 @@
     window.addEventListener('load', () => {
       const bars = document.querySelectorAll('.chart-bar');
       bars.forEach((bar, index) => {
-        const currentWidth = bar.style.width;
-        bar.style.width = '0%';
+        const currentHeight = bar.style.height;
+        bar.style.height = '0%';
         setTimeout(() => {
-          bar.style.transition = 'width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          bar.style.width = currentWidth;
+          bar.style.transition = 'height 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          bar.style.height = currentHeight;
 
-          // Сохраняем оригинальную ширину после завершения анимации
+          // Сохраняем оригинальную высоту после завершения анимации
           setTimeout(() => {
             if (stateData[index]) {
-              stateData[index].originalWidth = currentWidth;
+              stateData[index].originalHeight = currentHeight;
             }
           }, 1600);
         }, index * 100 + 500);
@@ -6043,8 +6100,8 @@
           stateData[index].bar = item.querySelector('.chart-bar');
           stateData[index].currentValue = stateData[index].baseValue;
           stateData[index].showingDiesel = false;
-          // originalWidth будет установлен после завершения анимации загрузки
-          stateData[index].originalWidth = stateData[index].bar.style.width;
+          // originalHeight будет установлен после завершения анимации загрузки
+          stateData[index].originalHeight = stateData[index].bar.style.height;
 
           // Добавляем текстовую подсказку на бар
           const barLabel = document.createElement('span');
@@ -6108,9 +6165,12 @@
               if (!stateData[index].showingDiesel) {
                 stateData[index].showingDiesel = true;
 
+                // Добавляем плавную анимацию
+                stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
                 // Меняем цвет бара на оранжево-красный градиент
-                stateData[index].bar.style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
-                stateData[index].bar.style.backgroundSize = '200% 100%';
+                stateData[index].bar.style.background = 'linear-gradient(180deg, #f59e0b, #ef4444)';
+                stateData[index].bar.style.backgroundSize = '100% 200%';
 
                 // Меняем текст на цену дизеля
                 stateData[index].element.textContent = '$' + stateData[index].dieselPrice.toFixed(2);
@@ -6121,9 +6181,9 @@
                   stateData[index].barLabel.style.opacity = '0.08';
                 }
 
-                // Меняем ширину бара пропорционально цене (от $1 до $10)
+                // Меняем высоту бара пропорционально цене (от $1 до $10)
                 const dieselPercentage = (stateData[index].dieselPrice / 10) * 100;
-                stateData[index].bar.style.width = dieselPercentage + '%';
+                stateData[index].bar.style.height = dieselPercentage + '%';
               }
             });
 
@@ -6131,9 +6191,12 @@
               if (stateData[index].showingDiesel) {
                 stateData[index].showingDiesel = false;
 
+                // Добавляем плавную анимацию
+                stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
                 // Возвращаем оригинальный градиент
-                stateData[index].bar.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899)';
-                stateData[index].bar.style.backgroundSize = '200% 100%';
+                stateData[index].bar.style.background = 'linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1)';
+                stateData[index].bar.style.backgroundSize = '100% 200%';
 
                 // Возвращаем количество грузов
                 stateData[index].element.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
@@ -6144,8 +6207,8 @@
                   stateData[index].barLabel.style.opacity = '0.3';
                 }
 
-                // Возвращаем оригинальную ширину
-                stateData[index].bar.style.width = stateData[index].originalWidth;
+                // Возвращаем оригинальную высоту
+                stateData[index].bar.style.height = stateData[index].originalHeight;
               }
             });
           } else {
@@ -6155,9 +6218,12 @@
                 // Показываем цену на дизель
                 stateData[index].showingDiesel = true;
 
+                // Добавляем плавную анимацию
+                stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
                 // Меняем цвет бара на оранжево-красный градиент
-                stateData[index].bar.style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
-                stateData[index].bar.style.backgroundSize = '200% 100%';
+                stateData[index].bar.style.background = 'linear-gradient(180deg, #f59e0b, #ef4444)';
+                stateData[index].bar.style.backgroundSize = '100% 200%';
 
                 // Меняем текст на цену дизеля
                 stateData[index].element.textContent = '$' + stateData[index].dieselPrice.toFixed(2);
@@ -6168,16 +6234,19 @@
                   stateData[index].barLabel.style.opacity = '0.08';
                 }
 
-                // Меняем ширину бара пропорционально цене (от $1 до $10)
+                // Меняем высоту бара пропорционально цене (от $1 до $10)
                 const dieselPercentage = (stateData[index].dieselPrice / 10) * 100;
-                stateData[index].bar.style.width = dieselPercentage + '%';
+                stateData[index].bar.style.height = dieselPercentage + '%';
               } else {
                 // Возвращаем количество грузов
                 stateData[index].showingDiesel = false;
 
+                // Добавляем плавную анимацию
+                stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
                 // Возвращаем оригинальный градиент
-                stateData[index].bar.style.background = 'linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899)';
-                stateData[index].bar.style.backgroundSize = '200% 100%';
+                stateData[index].bar.style.background = 'linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1)';
+                stateData[index].bar.style.backgroundSize = '100% 200%';
 
                 // Возвращаем количество грузов
                 stateData[index].element.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
@@ -6188,8 +6257,8 @@
                   stateData[index].barLabel.style.opacity = '0.3';
                 }
 
-                // Возвращаем оригинальную ширину
-                stateData[index].bar.style.width = stateData[index].originalWidth;
+                // Возвращаем оригинальную высоту
+                stateData[index].bar.style.height = stateData[index].originalHeight;
               }
             });
           }
