@@ -699,6 +699,46 @@
             display: block;
         }
 
+        /* Стили для новых диалогов */
+        .bubble.new-dialog {
+            border-color: rgba(34, 197, 94, 0.4);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .bubble.new-dialog:hover {
+            border-color: rgba(34, 197, 94, 0.6);
+            background: rgba(34, 197, 94, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(34, 197, 94, 0.5);
+        }
+
+        .new-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
+            }
+        }
+
         .chat-view {
             display: none;
             flex-direction: column;
@@ -1939,10 +1979,9 @@
         const dispatcherNames = ['Alex', 'Mike', 'Sarah', 'John', 'Maria', 'David', 'Lisa', 'Tom', 'Anna', 'Chris'];
         const brokerNames = ['James', 'Robert', 'Jennifer', 'Michael', 'Linda', 'William', 'Patricia', 'Richard', 'Susan', 'Daniel'];
 
+        // Массив готов для новых диалогов
         const greetingOptions = [
-            { lines: ["Los Angeles CA to Dallas TX reefer. Still available?"], fullText: "Good morning! I'm calling about the LA to Dallas reefer load, #LAX-7823. Is this still available?", scenarioIndex: 0 },
-            { lines: ["Seattle WA to Miami FL cross-country. Is this still open?"], fullText: "Good afternoon! I'm calling about the Seattle to Miami cross-country load, #SEA-4429. Is this still open?", scenarioIndex: 1 },
-            { lines: ["Chicago IL to New York NY flatbed. Is this available?"], fullText: "Good morning! I'm calling about the Chicago to New York flatbed load, #CHI-8834. Is this still available?", scenarioIndex: 2 }
+            { lines: ["Chicago IL to Miami FL reefer.", "1,380 miles fresh produce."], fullText: "Good morning!\nThis is David from Midwest Cold Chain Logistics.\nI'm calling about your Chicago to Miami reefer load.\nIs this still available?", scenarioIndex: 0 }
         ];
 
 
@@ -1953,7 +1992,9 @@
 
         function showRandomBubbles() {
             bubblesContainer.innerHTML = '';
-            greetingOptions.forEach(option => {
+            const shuffled = greetingOptions.sort(() => 0.5 - Math.random());
+
+            shuffled.forEach(option => {
                 const bubble = document.createElement('div');
                 bubble.className = 'bubble';
                 const linesHTML = option.lines.map(line => `<span>${line}</span>`).join('');
@@ -1988,8 +2029,20 @@
                 showTypingIndicator();
                 setTimeout(() => {
                     hideTypingIndicator();
-                    // Start with first question from all paths (they all start the same)
-                    const firstStep = currentScenario.paths.good[0];
+                    // Start with first question from first available path
+                    const firstPath = Object.keys(currentScenario.paths)[0];
+                    const firstStep = currentScenario.paths[firstPath][0];
+
+                    // Show dispatcher prompt if available
+                    if (firstStep.dispatcherPrompt) {
+                        const promptDiv = document.createElement('div');
+                        promptDiv.className = 'dispatcher-prompt';
+                        promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
+                        promptDiv.textContent = firstStep.dispatcherPrompt;
+                        messagesContainer.appendChild(promptDiv);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }
+
                     addMessage(firstStep.brokerQuestion, 'broker');
                     showSuggestions(firstStep.suggestions);
                 }, 1500);
@@ -2079,20 +2132,32 @@
 
                 const text = typeof suggestion === 'string' ? suggestion : suggestion.text;
                 const quality = typeof suggestion === 'object' ? suggestion.quality : 'normal';
+                const path = typeof suggestion === 'object' ? suggestion.path : null;
 
                 btn.textContent = text;
                 btn.dataset.quality = quality;
+                if (path) btn.dataset.path = path;
 
                 // Add quality indicator styling
-                if (quality === 'good') {
+                if (quality === 'excellent') {
+                    btn.style.borderColor = 'rgba(34, 197, 94, 0.6)';
+                    btn.style.background = 'rgba(34, 197, 94, 0.1)';
+                    btn.style.fontWeight = '600';
+                } else if (quality === 'good') {
                     btn.style.borderColor = 'rgba(34, 197, 94, 0.4)';
                     btn.style.background = 'rgba(34, 197, 94, 0.05)';
-                } else if (quality === 'bad') {
+                } else if (quality === 'aggressive') {
+                    btn.style.borderColor = 'rgba(251, 191, 36, 0.5)';
+                    btn.style.background = 'rgba(251, 191, 36, 0.08)';
+                } else if (quality === 'weak') {
+                    btn.style.borderColor = 'rgba(156, 163, 175, 0.5)';
+                    btn.style.background = 'rgba(156, 163, 175, 0.08)';
+                } else if (quality === 'bad' || quality === 'reject') {
                     btn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
                     btn.style.background = 'rgba(239, 68, 68, 0.05)';
                 }
 
-                btn.onclick = () => selectSuggestion(text, quality);
+                btn.onclick = () => selectSuggestion(text, quality, path);
                 container.appendChild(btn);
             });
 
@@ -2100,19 +2165,30 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function selectSuggestion(text, quality) {
+        function selectSuggestion(text, quality, suggestedPath) {
             const suggestions = document.getElementById('suggestions');
             if (suggestions) suggestions.remove();
 
             addMessage(text, 'user');
 
-            // Determine path based on quality
+            // Determine path based on quality or explicit path
             if (currentPath === null) {
                 // First response determines the path
-                if (quality === 'good') {
+                // Check if suggestion has explicit path
+                const clickedSuggestion = currentScenario.paths[Object.keys(currentScenario.paths)[0]][conversationStep].suggestions.find(s => s.text === text);
+
+                if (clickedSuggestion && clickedSuggestion.path) {
+                    currentPath = clickedSuggestion.path;
+                } else if (quality === 'excellent') {
+                    currentPath = 'excellent';
+                } else if (quality === 'good') {
                     currentPath = 'good';
+                } else if (quality === 'aggressive') {
+                    currentPath = 'aggressive';
+                } else if (quality === 'weak') {
+                    currentPath = 'weak';
                 } else if (quality === 'bad') {
-                    currentPath = 'bad';
+                    currentPath = currentScenario.paths.unprofessional_fail ? 'unprofessional_fail' : 'bad';
                 } else {
                     currentPath = 'normal';
                 }
@@ -2120,6 +2196,13 @@
 
             // Get current step from the selected path
             const pathSteps = currentScenario.paths[currentPath];
+
+            // Fallback to 'good' path if selected path doesn't exist
+            if (!pathSteps) {
+                currentPath = 'good';
+                pathSteps = currentScenario.paths[currentPath];
+            }
+
             const currentStep = pathSteps[conversationStep];
 
             setTimeout(() => {
@@ -2135,9 +2218,11 @@
                         // Conversation ended
                         setTimeout(() => {
                             if (currentStep.isSuccess) {
-                                addMessage("✅ Load booked successfully! Great job!", 'broker');
+                                const outcomeMsg = currentStep.outcome || "✅ Load booked successfully! Great job!";
+                                addMessage(outcomeMsg, 'broker');
                             } else {
-                                addMessage("❌ Load not booked. Better luck next time.", 'broker');
+                                const outcomeMsg = currentStep.outcome || "❌ Load not booked. Better luck next time.";
+                                addMessage(outcomeMsg, 'broker');
                             }
                         }, 1000);
                     } else {
@@ -2147,6 +2232,17 @@
                         if (conversationStep < pathSteps.length) {
                             setTimeout(() => {
                                 const nextStep = pathSteps[conversationStep];
+
+                                // Show dispatcher prompt if available
+                                if (nextStep.dispatcherPrompt) {
+                                    const promptDiv = document.createElement('div');
+                                    promptDiv.className = 'dispatcher-prompt';
+                                    promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
+                                    promptDiv.textContent = nextStep.dispatcherPrompt;
+                                    messagesContainer.appendChild(promptDiv);
+                                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                                }
+
                                 addMessage(nextStep.brokerQuestion, 'broker');
                                 showSuggestions(nextStep.suggestions);
                             }, 1000);
