@@ -949,6 +949,685 @@
       margin: 0 auto;
     }
 
+    /* How It Works Section */
+    .how-it-works-section {
+      padding: 100px 0;
+      position: relative;
+      background: transparent;
+    }
+
+    .how-it-works-cta {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    /* Desktop: Professional Progress Timeline */
+    .progress-timeline {
+      display: block;
+      margin-top: 80px;
+      position: relative;
+      padding: 0 5%;
+    }
+
+    .timeline-track {
+      position: absolute;
+      top: 80px;
+      left: 10%;
+      right: 10%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .timeline-progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #10b981, #f59e0b, #ef4444);
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    }
+
+    .timeline-nodes {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .timeline-node {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .node-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(10, 14, 26, 0.95);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 24px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 3;
+    }
+
+    .node-circle::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, transparent, transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .timeline-node[data-step="1"] .node-circle::before {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+
+    .timeline-node[data-step="2"] .node-circle::before {
+      background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    }
+
+    .timeline-node[data-step="3"] .node-circle::before {
+      background: linear-gradient(135deg, #10b981, #14b8a6);
+    }
+
+    .timeline-node[data-step="4"] .node-circle::before {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+    }
+
+    .timeline-node[data-step="5"] .node-circle::before {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    .timeline-node.active .node-circle {
+      border-color: transparent;
+      color: #ffffff;
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    }
+
+    .timeline-node.active .node-circle::before {
+      opacity: 1;
+    }
+
+    .timeline-node:hover .node-circle {
+      transform: scale(1.05);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .node-content {
+      text-align: center;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-node.active .node-content,
+    .timeline-node:hover .node-content {
+      opacity: 1;
+    }
+
+    .node-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      filter: grayscale(0.5);
+      transition: filter 0.3s ease;
+      display: none;
+    }
+
+    .timeline-node.active .node-icon,
+    .timeline-node:hover .node-icon {
+      filter: grayscale(0);
+      display: none;
+    }
+
+    .node-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 6px;
+    }
+
+    .node-time {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .node-details {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.8;
+    }
+
+    .node-details p {
+      margin: 4px 0;
+    }
+
+    .timeline-node.active .node-details {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 8px;
+    }
+
+    .cards-timeline {
+      display: none;
+    }
+
+    .vertical-timeline {
+      display: none;
+    }
+
+    .progress-bar-container {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .progress-bar-line {
+      position: absolute;
+      top: 80px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: linear-gradient(90deg,
+          rgba(99, 102, 241, 0.3) 0%,
+          rgba(139, 92, 246, 0.3) 25%,
+          rgba(16, 185, 129, 0.3) 50%,
+          rgba(245, 158, 11, 0.3) 75%,
+          rgba(239, 68, 68, 0.3) 100%);
+      border-radius: 10px;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      padding: 0 10%;
+    }
+
+    .progress-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      border: 3px solid rgba(99, 102, 241, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #6366f1;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+      z-index: 2;
+      position: relative;
+      background-color: #0a0e1a;
+    }
+
+    .progress-step:hover .step-number {
+      transform: scale(1.15);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+    }
+
+    .step-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .step-time {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+
+    .step-description {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .step-description p {
+      margin: 4px 0;
+    }
+
+    /* Tablet: Cards Timeline */
+    @media (max-width: 1024px) {
+      .progress-timeline {
+        display: none;
+      }
+
+      .timeline-track {
+        display: none;
+      }
+
+      .timeline-nodes {
+        display: none;
+      }
+
+      .cards-timeline {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+        margin-top: 60px;
+      }
+
+      .step-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 30px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .step-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        transform: scaleX(0);
+        transition: transform 0.3s;
+      }
+
+      .step-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .step-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+      }
+
+      .card-number {
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+        opacity: 0.3;
+      }
+
+      .card-icon {
+        font-size: 40px;
+        margin-bottom: 16px;
+      }
+
+      .card-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+
+      .card-time {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-bottom: 12px;
+      }
+
+      .card-content p {
+        font-size: 13px;
+        color: #cbd5e1;
+        line-height: 1.5;
+      }
+    }
+
+    /* Mobile: Vertical Timeline */
+    @media (max-width: 768px) {
+      .cards-timeline {
+        display: none;
+      }
+
+      .progress-timeline {
+        display: block;
+        margin-top: 60px;
+        padding: 0 20px;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .timeline-track {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        height: auto;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 2px;
+      }
+
+      .timeline-progress {
+        width: 100%;
+        height: 0%;
+        background: linear-gradient(180deg, #6366f1, #8b5cf6, #10b981, #f59e0b, #ef4444);
+        transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+      }
+
+      .timeline-nodes {
+        display: block;
+        position: relative;
+      }
+
+      .timeline-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+        position: relative;
+        cursor: pointer;
+        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+      }
+
+      .timeline-node::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 55px;
+        transform: translateX(-50%);
+        width: 3px;
+        height: 0;
+        background: linear-gradient(180deg, rgba(99, 102, 241, 0.4), rgba(99, 102, 241, 0.1));
+        transition: height 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+        opacity: 0;
+      }
+
+      .timeline-node.active::before {
+        height: 50px;
+        opacity: 1;
+      }
+
+      .timeline-node[data-step="1"]::before {
+        background: linear-gradient(180deg, rgba(99, 102, 241, 0.5), rgba(139, 92, 246, 0.3));
+      }
+
+      .timeline-node[data-step="2"]::before {
+        background: linear-gradient(180deg, rgba(139, 92, 246, 0.5), rgba(16, 185, 129, 0.3));
+      }
+
+      .timeline-node[data-step="3"]::before {
+        background: linear-gradient(180deg, rgba(16, 185, 129, 0.5), rgba(245, 158, 11, 0.3));
+      }
+
+      .timeline-node[data-step="4"]::before {
+        background: linear-gradient(180deg, rgba(245, 158, 11, 0.5), rgba(239, 68, 68, 0.3));
+      }
+
+      .timeline-node.active {
+        align-items: center;
+        padding-left: 0;
+      }
+
+      .timeline-node:last-child {
+        margin-bottom: 0;
+      }
+
+      .node-circle {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 55px;
+        height: 55px;
+        margin-bottom: 16px;
+        flex-shrink: 0;
+        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+        transform: scale(1) translateX(0);
+        border-radius: 50%;
+      }
+
+      .timeline-node:not(.active) .node-circle.show-hint {
+        width: 110px;
+        height: 55px;
+        border-radius: 12px;
+        transition: all 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition-delay: 1.2s;
+      }
+
+      /* Return to circle when hint is removed */
+      .timeline-node:not(.active) .node-circle:not(.show-hint) {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        transition: all 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition-delay: 0s;
+      }
+
+      .timeline-node.active .node-circle {
+        margin-bottom: 0;
+        margin-right: 16px;
+        transform: scale(1.5) translateX(-80px);
+      }
+
+      .timeline-node[data-step="1"].active .node-circle::before {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      }
+
+      .timeline-node[data-step="2"].active .node-circle::before {
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+      }
+
+      .timeline-node[data-step="3"].active .node-circle::before {
+        background: linear-gradient(135deg, #10b981, #14b8a6);
+      }
+
+      .timeline-node[data-step="4"].active .node-circle::before {
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+      }
+
+      .timeline-node[data-step="5"].active .node-circle::before {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+      }
+
+      .node-circle span {
+        font-size: 20px;
+        display: inline-block;
+        position: relative;
+        color: transparent;
+        transition: all 1.6s cubic-bezier(0.45, 0.5, 0.45, 1);
+      }
+
+      /* Show number by default */
+      .node-circle span::before {
+        content: attr(data-number);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        color: #ffffff;
+        font-size: 20px;
+        opacity: 1;
+        transition: all 2.4s cubic-bezier(0.45, 0.5, 0.45, 1);
+      }
+
+      /* Hide number when showing hint */
+      .timeline-node:not(.active) .node-circle span.show-hint::before {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+        transition-delay: 0s;
+      }
+
+      /* Show number back when hint is removed */
+      .timeline-node:not(.active) .node-circle span:not(.show-hint)::before {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition-delay: 1.2s;
+      }
+
+      /* "Нажми" text appears after number fades */
+      .node-circle span::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        transition: all 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        font-size: 14px;
+        font-weight: 700;
+        white-space: nowrap;
+        color: #ffffff;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+      }
+
+      .timeline-node:not(.active) .node-circle span.show-hint::after {
+        content: 'Нажми';
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.8);
+        transition-delay: 1.2s;
+      }
+
+      /* When hint is removed, text shrinks back immediately */
+      .timeline-node:not(.active) .node-circle span:not(.show-hint)::after {
+        content: 'Нажми';
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+        transition-delay: 0s;
+      }
+
+      /* Active state - show number normally */
+      .timeline-node.active .node-circle span::before {
+        opacity: 1;
+      }
+
+      .timeline-node.active .node-circle span::after {
+        content: '';
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+
+      .node-content {
+        text-align: center;
+        opacity: 1;
+        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+        width: 100%;
+      }
+
+      .timeline-node.active .node-content {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .node-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+        filter: grayscale(0);
+        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+        display: none;
+      }
+
+      .timeline-node.active .node-icon {
+        display: none;
+      }
+
+      .node-content h4 {
+        font-size: 26px;
+        margin-bottom: 5px;
+        color: #ffffff;
+        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+      }
+
+      .timeline-node.active .node-content h4 {
+        margin-left: 0;
+        font-size: 24px;
+      }
+
+      .node-time {
+        font-size: 18px;
+        margin-bottom: 12px;
+        color: #94a3b8;
+        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+      }
+
+      .timeline-node.active .node-time {
+        margin-left: 0;
+        font-size: 17px;
+        margin-bottom: 8px;
+      }
+
+      .node-details {
+        font-size: 18px;
+        line-height: 1.7;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+        margin-left: 0;
+      }
+
+      .node-details strong {
+        color: #e2e8f0;
+        display: block;
+        margin-top: 8px;
+        margin-bottom: 4px;
+      }
+
+      .node-details p {
+        margin: 3px 0;
+        color: #94a3b8;
+      }
+
+      .timeline-node.active .node-details {
+        max-height: 400px;
+        opacity: 1;
+        margin-top: 12px;
+        margin-left: 0;
+      }
+
+      .vertical-timeline {
+        display: none;
+      }
+
+      .how-it-works-section {
+        padding: 60px 0;
+      }
+    }
+
     /* Load Finder special animated card */
     .feature-card.load-finder-highlight {
       background: linear-gradient(135deg,
@@ -5243,6 +5922,246 @@
     </div>
   </section>
 
+  <!-- How It Works Section -->
+  <section class="how-it-works-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Как это работает</h2>
+        <p class="section-subtitle">Простой путь от новичка до профессионала за 5 шагов</p>
+      </div>
+
+      <!-- Desktop: Wave Timeline -->
+      <div class="progress-timeline">
+        <div class="timeline-track">
+          <div class="timeline-progress" id="timelineProgress"></div>
+        </div>
+        <div class="timeline-nodes">
+          <div class="timeline-node" data-step="1">
+            <div class="node-circle"><span data-number="1">1</span></div>
+            <div class="node-content">
+              <div class="node-icon">📝</div>
+              <h4>Вход</h4>
+              <p class="node-time">Основы профессии</p>
+              <div class="node-details">
+                <p><strong>Терминология и правила:</strong></p>
+                <p>• Профессиональная терминология диспетчера</p>
+                <p>• Правила FMCSA и DOT регулирования</p>
+                <p>• Основы логистики грузоперевозок США</p>
+                <p>• Структура работы диспетчера</p>
+                <p><strong>📊 Результат:</strong> Полное понимание профессии и готовность к следующему этапу</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node" data-step="2">
+            <div class="node-circle"><span data-number="2">2</span></div>
+            <div class="node-content">
+              <div class="node-icon">🎯</div>
+              <h4>Изучение</h4>
+              <p class="node-time">Load Board и инструменты</p>
+              <div class="node-details">
+                <p><strong>База знаний + AI симулятор:</strong></p>
+                <p>• Работа с Load Board (DAT, Truckstop)</p>
+                <p>• 200+ статей и практических материалов</p>
+                <p>• Интерактивные карточки ситуаций</p>
+                <p>• Знакомство с AI-симулятором переговоров</p>
+                <p><strong>📊 Аналитика:</strong> 88% студентов успешно осваивают все инструменты платформы</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node" data-step="3">
+            <div class="node-circle"><span data-number="3">3</span></div>
+            <div class="node-content">
+              <div class="node-icon">📚</div>
+              <h4>Тренировка</h4>
+              <p class="node-time">Практика и техника</p>
+              <div class="node-details">
+                <p><strong>300+ реальных сценариев:</strong></p>
+                <p>• Диалоги с AI-брокерами в симуляторе</p>
+                <p>• Техника бронирования грузов</p>
+                <p>• Переговоры и торг с брокерами</p>
+                <p>• Персональная обратная связь по каждому диалогу</p>
+                <p><strong>📊 Эффективность:</strong> 85% студентов достигают профессионального уровня переговоров</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node" data-step="4">
+            <div class="node-circle"><span data-number="4">4</span></div>
+            <div class="node-content">
+              <div class="node-icon">💼</div>
+              <h4>Тестирование</h4>
+              <p class="node-time">Проверка навыков</p>
+              <div class="node-details">
+                <p><strong>Работа с DAT и переговоры:</strong></p>
+                <p>• Проверка знаний работы с Load Board</p>
+                <p>• Тестирование навыков поиска грузов</p>
+                <p>• Симуляция переговоров с брокерами</p>
+                <p>• Оценка техники бронирования</p>
+                <p><strong>📊 Результаты:</strong> Детальная обратная связь по всем аспектам работы диспетчера</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node" data-step="5">
+            <div class="node-circle"><span data-number="5">5</span></div>
+            <div class="node-content">
+              <div class="node-icon">🏆</div>
+              <h4>Карьера</h4>
+              <p class="node-time">Реальная практика</p>
+              <div class="node-details">
+                <p><strong>Экзамен с ментором:</strong></p>
+                <p>• Прохождение экзамена на реальном брокере</p>
+                <p>• Работа с реальным грузом под контролем</p>
+                <p>• Проверка пройденного с опытным диспетчером</p>
+                <p>• Помощь в трудоустройстве и карьерном росте</p>
+                <p><strong>📊 Трудоустройство:</strong> 92% выпускников находят работу. Средняя стартовая зарплата
+                  $2,800/мес</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tablet: Cards with Numbers -->
+      <div class="cards-timeline">
+        <div class="step-card">
+          <div class="card-number">01</div>
+          <div class="card-icon">📝</div>
+          <h3 class="card-title">СТАРТ</h3>
+          <div class="card-time">5 минут</div>
+          <div class="card-content">
+            <p>Регистрация и выбор тарифа</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="card-number">02</div>
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title">ОСНОВЫ</h3>
+          <div class="card-time">2-7 дней</div>
+          <div class="card-content">
+            <p>Изучите профессию и Load Board</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="card-number">03</div>
+          <div class="card-icon">📚</div>
+          <h3 class="card-title">ТЕОРИЯ</h3>
+          <div class="card-time">1-2 недели</div>
+          <div class="card-content">
+            <p>База знаний и карточки</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="card-number">04</div>
+          <div class="card-icon">💼</div>
+          <h3 class="card-title">ПРАКТИКА</h3>
+          <div class="card-time">2-3 недели</div>
+          <div class="card-content">
+            <p>Симулятор и 300+ кейсов</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="card-number">05</div>
+          <div class="card-icon">🏆</div>
+          <h3 class="card-title">МАСТЕРСТВО</h3>
+          <div class="card-time">1-2 недели</div>
+          <div class="card-content">
+            <p>Сложные сценарии и тесты</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile: Vertical Timeline -->
+      <div class="vertical-timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="marker-number">1</div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-icon">📝</div>
+            <h3 class="timeline-title">РЕГИСТРАЦИЯ</h3>
+            <div class="timeline-time">⏱️ 5 минут</div>
+            <ul class="timeline-list">
+              <li>✓ Создайте аккаунт</li>
+              <li>✓ Выберите тариф</li>
+              <li>✓ Получите мгновенный доступ</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="marker-number">2</div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-icon">🎯</div>
+            <h3 class="timeline-title">ЗНАКОМСТВО С ПРОФЕССИЕЙ</h3>
+            <div class="timeline-time">⏱️ 2-7 дней</div>
+            <ul class="timeline-list">
+              <li>✓ Основы профессии</li>
+              <li>✓ Обзор Load Board</li>
+              <li>✓ Терминология</li>
+              <li>✓ Первые шаги</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="marker-number">3</div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-icon">📚</div>
+            <h3 class="timeline-title">ГЛУБОКОЕ ИЗУЧЕНИЕ</h3>
+            <div class="timeline-time">⏱️ 1-2 недели</div>
+            <ul class="timeline-list">
+              <li>✓ База знаний</li>
+              <li>✓ Карточки ситуаций</li>
+              <li>✓ Документация</li>
+              <li>✓ Процессы и правила</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="marker-number">4</div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-icon">💼</div>
+            <h3 class="timeline-title">БАЗОВАЯ ПРАКТИКА</h3>
+            <div class="timeline-time">⏱️ 2-3 недели</div>
+            <ul class="timeline-list">
+              <li>✓ Симулятор диалогов</li>
+              <li>✓ 300+ простых сценариев</li>
+              <li>✓ Обратная связь</li>
+              <li>✓ Работа над ошибками</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="marker-number">5</div>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-icon">🏆</div>
+            <h3 class="timeline-title">ПРОДВИНУТАЯ ПРАКТИКА</h3>
+            <div class="timeline-time">⏱️ 1-2 недели</div>
+            <ul class="timeline-list">
+              <li>✓ Сложные сценарии</li>
+              <li>✓ 200+ экспертных кейсов</li>
+              <li>✓ Тесты и проверка</li>
+              <li>✓ Готовность к работе</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Load Finder Highlight Section -->
   <section class="load-finder-section">
     <div class="container">
@@ -5331,7 +6250,154 @@
     </div>
   </section>
 
+  <script>
+    // Professional Timeline with Progress Bar
+    (function () {
+      const nodes = document.querySelectorAll('.timeline-node');
+      const progress = document.getElementById('timelineProgress');
+      if (!nodes.length || !progress) return;
 
+      let current = 0;
+      const isMobile = window.innerWidth <= 768;
+
+      function updateTimeline() {
+        if (isMobile) {
+          // На мобильных не меняем активность автоматически
+          progress.style.height = (current / (nodes.length - 1)) * 100 + '%';
+          progress.style.width = '100%';
+        } else {
+          // На десктопе активируем автоматически
+          nodes.forEach((node, i) => {
+            node.classList.toggle('active', i === current);
+          });
+          progress.style.width = (current / (nodes.length - 1)) * 100 + '%';
+          progress.style.height = '100%';
+        }
+      }
+
+      nodes.forEach((node, i) => {
+        node.addEventListener('click', () => {
+          if (isMobile) {
+            // На мобильных переключаем активность при клике
+            node.classList.toggle('active');
+          } else {
+            // На десктопе меняем текущий шаг
+            current = i;
+            updateTimeline();
+          }
+        });
+      });
+
+      // Auto-cycle только на десктопе
+      if (!isMobile) {
+        setInterval(() => {
+          current = (current + 1) % nodes.length;
+          updateTimeline();
+        }, 4000);
+      }
+
+      updateTimeline();
+    })();
+
+    // Animate circle text (number <-> "Нажми")
+    (function () {
+      let currentHintIndex = 0; // Начинаем с первого раздела
+      let hintTimeout = null;
+      let isHintVisible = false;
+
+      function showHintOnNode(index) {
+        const nodes = document.querySelectorAll('.timeline-node');
+
+        // Убираем hint со всех узлов
+        nodes.forEach(node => {
+          const circle = node.querySelector('.node-circle');
+          const span = node.querySelector('.node-circle span');
+          if (span && circle) {
+            span.classList.remove('show-hint');
+            circle.classList.remove('show-hint');
+          }
+        });
+
+        // Показываем hint только на указанном узле
+        if (index < nodes.length) {
+          const targetNode = nodes[index];
+          const circle = targetNode.querySelector('.node-circle');
+          const span = targetNode.querySelector('.node-circle span');
+          if (span && circle) {
+            setTimeout(() => {
+              span.classList.add('show-hint');
+              circle.classList.add('show-hint');
+              isHintVisible = true;
+            }, 50);
+          }
+        }
+      }
+
+      function hideHint() {
+        const nodes = document.querySelectorAll('.timeline-node');
+        nodes.forEach(node => {
+          const circle = node.querySelector('.node-circle');
+          const span = node.querySelector('.node-circle span');
+          if (span && circle) {
+            span.classList.remove('show-hint');
+            circle.classList.remove('show-hint');
+          }
+        });
+        isHintVisible = false;
+      }
+
+      function scheduleNextHint() {
+        // Очищаем предыдущий таймаут
+        if (hintTimeout) {
+          clearTimeout(hintTimeout);
+        }
+
+        const nodes = document.querySelectorAll('.timeline-node');
+
+        if (isHintVisible) {
+          // Если hint видим, скрываем его и планируем следующий
+          hideHint();
+
+          // Задержка перед следующим показом - 12 секунд
+          hintTimeout = setTimeout(() => {
+            // Переходим к следующему разделу
+            currentHintIndex = (currentHintIndex + 1) % nodes.length;
+            showHintOnNode(currentHintIndex);
+
+            // Планируем скрытие через 8 секунд
+            hintTimeout = setTimeout(scheduleNextHint, 8000);
+          }, 12000);
+        } else {
+          // Если hint скрыт, показываем его
+          showHintOnNode(currentHintIndex);
+
+          // Планируем скрытие через 8 секунд
+          hintTimeout = setTimeout(scheduleNextHint, 8000);
+        }
+      }
+
+      // Слушаем клики на узлах
+      const nodes = document.querySelectorAll('.timeline-node');
+      nodes.forEach((node, index) => {
+        node.addEventListener('click', () => {
+          // При клике на любой узел, показываем hint на нём
+          currentHintIndex = index;
+          hideHint();
+          showHintOnNode(currentHintIndex);
+
+          // Перезапускаем цикл
+          if (hintTimeout) {
+            clearTimeout(hintTimeout);
+          }
+          hintTimeout = setTimeout(scheduleNextHint, 8000);
+        });
+      });
+
+      // Показываем hint на первом узле и запускаем цикл
+      showHintOnNode(currentHintIndex);
+      hintTimeout = setTimeout(scheduleNextHint, 8000);
+    })();
+  </script>
 
   <script>
     // Красивые анимированные графики ставок (только визуальные эффекты)
@@ -6125,7 +7191,7 @@
       });
     });
 
-    // Minimalist Waves Animation
+    // Modern Gradient Particles Animation
     (function () {
       const canvas = document.getElementById('neuralCanvas');
       if (!canvas) return;
@@ -6135,25 +7201,46 @@
       let height = window.innerHeight;
       let animationFrameId;
       let particles = [];
-      const particleCount = 80;
-      const connectionDistance = 150;
-      const mouse = { x: null, y: null, radius: 150 };
+      const particleCount = 40; // Уменьшено для менее заметного эффекта
+      const connectionDistance = 180;
+      const mouse = { x: null, y: null, radius: 200 };
+      let scrollOffset = 0;
 
       class Particle {
         constructor() {
           this.x = Math.random() * width;
           this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 0.5;
-          this.vy = (Math.random() - 0.5) * 0.5;
-          this.radius = Math.random() * 2 + 1;
-          this.opacity = (Math.random() * 0.5 + 0.3) * 0.6;
+          this.vx = (Math.random() - 0.5) * 0.3; // Медленнее движение
+          this.vy = (Math.random() - 0.5) * 0.3;
+          this.radius = Math.random() * 1.5 + 0.5; // Меньше размер
+          this.opacity = (Math.random() * 0.15 + 0.1) * 0.5; // Еще слабее
+          this.pulseSpeed = Math.random() * 0.01 + 0.005;
+          this.pulsePhase = Math.random() * Math.PI * 2;
+          this.baseY = this.y;
+          this.baseX = this.x;
+          // Добавляем плавное волнообразное движение
+          this.waveSpeed = Math.random() * 0.02 + 0.01;
+          this.waveAmplitude = Math.random() * 20 + 10;
+          this.wavePhase = Math.random() * Math.PI * 2;
         }
 
         update() {
-          this.x += this.vx;
-          this.y += this.vy;
+          // Волнообразное движение
+          this.wavePhase += this.waveSpeed;
+          const waveX = Math.sin(this.wavePhase) * this.waveAmplitude;
+          const waveY = Math.cos(this.wavePhase * 0.5) * (this.waveAmplitude * 0.5);
 
-          // Отталкивание от мыши
+          this.baseX += this.vx;
+          this.baseY += this.vy;
+
+          // Применяем волну и скроллинг
+          this.x = this.baseX + waveX;
+          this.y = this.baseY + waveY + scrollOffset * 0.08;
+
+          // Пульсация
+          this.pulsePhase += this.pulseSpeed;
+
+          // Отталкивание от мыши (более плавное)
           if (mouse.x !== null && mouse.y !== null) {
             const dx = this.x - mouse.x;
             const dy = this.y - mouse.y;
@@ -6161,24 +7248,41 @@
 
             if (distance < mouse.radius) {
               const force = (mouse.radius - distance) / mouse.radius;
-              this.x += dx * force * 0.1;
-              this.y += dy * force * 0.1;
+              this.baseX += dx * force * 0.05;
+              this.baseY += dy * force * 0.05;
             }
           }
 
-          // Отскок от границ
-          if (this.x < 0 || this.x > width) this.vx *= -1;
-          if (this.y < 0 || this.y > height) this.vy *= -1;
+          // Плавный отскок от границ
+          if (this.baseX < -50 || this.baseX > width + 50) this.vx *= -1;
+          if (this.baseY < -50 || this.baseY > height + 50) this.vy *= -1;
 
-          // Ограничение позиции
-          this.x = Math.max(0, Math.min(width, this.x));
-          this.y = Math.max(0, Math.min(height, this.y));
+          this.baseX = Math.max(-50, Math.min(width + 50, this.baseX));
+          this.baseY = Math.max(-50, Math.min(height + 50, this.baseY));
         }
 
         draw() {
+          const pulse = Math.sin(this.pulsePhase) * 0.2 + 1;
+          const currentRadius = this.radius * pulse;
+
+          // Простое белое свечение
+          const gradient = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, currentRadius * 2.5
+          );
+          gradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity * 0.6})`);
+          gradient.addColorStop(0.5, `rgba(255, 255, 255, ${this.opacity * 0.2})`);
+          gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
           ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
+          ctx.arc(this.x, this.y, currentRadius * 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+
+          // Яркое ядро
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, currentRadius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.8})`;
           ctx.fill();
         }
       }
@@ -6205,10 +7309,12 @@
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < connectionDistance) {
-              const opacity = (1 - distance / connectionDistance) * 0.18;
+              const opacity = (1 - distance / connectionDistance) * 0.08; // Еще слабее
+
+              // Простая белая линия
               ctx.beginPath();
-              ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
-              ctx.lineWidth = 1;
+              ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+              ctx.lineWidth = 0.8;
               ctx.moveTo(particles[i].x, particles[i].y);
               ctx.lineTo(particles[j].x, particles[j].y);
               ctx.stroke();
@@ -6253,6 +7359,10 @@
         mouse.y = null;
       }
 
+      function handleScroll() {
+        scrollOffset = window.pageYOffset || document.documentElement.scrollTop;
+      }
+
       // Start
       init();
       animate();
@@ -6260,6 +7370,7 @@
       window.addEventListener('resize', handleResize);
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseleave', handleMouseLeave);
+      window.addEventListener('scroll', handleScroll);
     })();
   </script>
 
