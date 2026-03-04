@@ -238,5 +238,4 @@ const allScenarios = [
             }
         ]
     }
-}
 ];
