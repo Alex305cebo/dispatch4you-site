@@ -957,16 +957,19 @@ const allScenarios = [
                         {
                             text: "MC 778899, we're a reefer specialist with 5 years experience.\nDriver currently empty in Bakersfield CA, about 110 miles from LA.\nCan be at pickup location within 2 hours.\n2022 Freightliner Cascadia with 2021 Thermo King reefer unit, fully serviced last week.",
                             quality: "master",
+                            path: "master",
                             analytics: "Отлично! Полная информация + показали специализацию."
                         },
                         {
                             text: "MC 778899, driver in Bakersfield area with reefer trailer.\nCan pickup today or tomorrow.",
                             quality: "good",
+                            path: "master",
                             analytics: "Хорошо, но мало деталей про оборудование."
                         },
                         {
                             text: "MC 778899, reefer available in California.",
                             quality: "weak",
+                            path: "master",
                             analytics: "Слишком мало информации."
                         }
                     ]
