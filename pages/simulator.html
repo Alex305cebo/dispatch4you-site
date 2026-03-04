@@ -992,12 +992,26 @@
             }
 
             .chat-view {
-                padding: 10px 0;
+                padding: 0;
+                min-height: 100vh;
+                max-height: 100vh;
+                max-width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1000;
+                background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
             }
 
             .messages-container {
-                padding: 16px;
-                gap: 16px;
+                padding: 12px;
+                gap: 12px;
+                border-radius: 0;
+                border: none;
+                margin: 0;
+                flex: 1;
             }
 
             .message {
@@ -1007,6 +1021,25 @@
             .message-avatar {
                 width: 36px;
                 height: 36px;
+                font-size: 18px;
+            }
+
+            .input-container {
+                padding: 12px;
+                margin: 0;
+                border-radius: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(10, 14, 26, 0.95);
+            }
+
+            .input-field {
+                font-size: 16px;
+                padding: 12px 16px;
+            }
+
+            .send-btn {
+                width: 44px;
+                height: 44px;
                 font-size: 18px;
             }
         }
