@@ -1,19 +1,20 @@
-п»ї<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 
 <head>
   <!-- Auto-deploy test: 2026-02-25 23:50 - New webhook -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>РљСѓСЂСЃС‹ Р”РёСЃРїРµС‚С‡РµСЂР° | РџСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅРѕРµ РѕР±СѓС‡РµРЅРёРµ</title>
+  <title>Курсы Диспетчера | Профессиональное обучение</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="courses-section.css">
+
   <script>
-    // РћС‚РєР»СЋС‡Р°РµРј Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЃРєСЂРѕР»Р»Р° РїСЂРё РїРµСЂРµР·Р°РіСЂСѓР·РєРµ СЃС‚СЂР°РЅРёС†С‹
+    // Отключаем автоматическое восстановление скролла при перезагрузке страницы
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
@@ -494,7 +495,612 @@
       font-weight: 700;
     }
 
-    /* Mobile Responsive РґР»СЏ Hero */
+    /* ============================================
+       CINEMATIC VIDEO HERO SECTION
+       ============================================ */
+
+    .hero-video {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    /* Video Background */
+    .hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      /* Animated gradient background as fallback */
+      background: linear-gradient(135deg,
+          #0a0e1a 0%,
+          #1a1f35 25%,
+          #2a1f3f 50%,
+          #1a1f35 75%,
+          #0a0e1a 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .hero-video-element {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+      display: none;
+      /* Hide until video is added */
+    }
+
+    /* Show video when source is available */
+    .hero-video-element[src] {
+      display: block;
+    }
+
+    /* Animated Map Lines */
+    .map-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      opacity: 0.15;
+    }
+
+    .map-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, #6366f1, transparent);
+      height: 2px;
+      width: 100%;
+      animation: moveLine 20s linear infinite;
+    }
+
+    .map-line-1 {
+      top: 20%;
+      animation-delay: 0s;
+      animation-duration: 25s;
+    }
+
+    .map-line-2 {
+      top: 40%;
+      animation-delay: 5s;
+      animation-duration: 30s;
+    }
+
+    .map-line-3 {
+      top: 60%;
+      animation-delay: 10s;
+      animation-duration: 28s;
+    }
+
+    .map-line-4 {
+      top: 80%;
+      animation-delay: 15s;
+      animation-duration: 32s;
+    }
+
+    @keyframes moveLine {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Gradient Overlay */
+    .hero-video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg,
+          rgba(10, 14, 26, 0.95) 0%,
+          rgba(10, 14, 26, 0.85) 50%,
+          rgba(99, 102, 241, 0.2) 100%);
+      z-index: 1;
+    }
+
+    /* Content */
+    .hero-video-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease both;
+    }
+
+    /* Title */
+    .hero-video-title {
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: #ffffff;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .gradient-text-video {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientFlow 8s ease infinite;
+      filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.5));
+    }
+
+    /* Subtitle */
+    .hero-video-subtitle {
+      font-size: clamp(16px, 3vw, 22px);
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 48px;
+      line-height: 1.6;
+      font-weight: 400;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Buttons */
+    .hero-video-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 80px;
+    }
+
+    .btn-video {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+    }
+
+    .btn-video-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-video-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn-video-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-video-primary:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.6);
+    }
+
+    .btn-video-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-video-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Scroll Indicator */
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
+      font-weight: 500;
+      animation: fadeIn 1s ease 1.5s both;
+    }
+
+    .scroll-mouse {
+      width: 24px;
+      height: 40px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .scroll-wheel {
+      width: 4px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 2px;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollWheel 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollWheel {
+
+      0%,
+      100% {
+        top: 8px;
+        opacity: 1;
+      }
+
+      50% {
+        top: 20px;
+        opacity: 0.3;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Mobile Responsive для Video Hero */
+    @media (max-width: 768px) {
+      .hero-video {
+        min-height: 100vh;
+        padding: 80px 0 40px;
+      }
+
+      .hero-video-title {
+        font-size: clamp(32px, 10vw, 48px);
+        margin-bottom: 20px;
+      }
+
+      .hero-video-subtitle {
+        font-size: clamp(14px, 4vw, 18px);
+        margin-bottom: 36px;
+      }
+
+      .hero-video-buttons {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 60px;
+      }
+
+      .btn-video {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+        padding: 16px 28px;
+      }
+
+      .hero-scroll-indicator {
+        bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-video-content {
+        padding: 0 16px;
+      }
+
+      .btn-video {
+        padding: 14px 24px;
+        font-size: 15px;
+      }
+    }
+
+    /* ============================================
+       END CINEMATIC VIDEO HERO SECTION
+       ============================================ */
+
+    /* ============================================
+       GRADIENT HERO WITH CANVAS ANIMATION
+       ============================================ */
+
+    .hero-gradient {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 80px 0;
+      background: linear-gradient(135deg, #1a0b2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #7b2cbf 100%);
+      background-size: 400% 400%;
+      animation: gradientShiftHero 15s ease infinite;
+    }
+
+    @keyframes gradientShiftHero {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hero-gradient-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 14, 26, 0.4) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-gradient-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero-gradient-title {
+      font-size: clamp(36px, 7vw, 64px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: #ffffff;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .gradient-text-animated {
+      background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientFlowHero 8s ease infinite;
+      filter: drop-shadow(0 0 30px rgba(167, 139, 250, 0.6));
+    }
+
+    @keyframes gradientFlowHero {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .hero-gradient-subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 48px;
+      line-height: 1.6;
+      font-weight: 400;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    .hero-feature-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+      animation: fadeInUp 1.2s ease 0.4s both;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 32px 24px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .hero-card:hover::before {
+      left: 100%;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(167, 139, 250, 0.4);
+      box-shadow: 0 20px 60px rgba(167, 139, 250, 0.3);
+    }
+
+    .hero-card-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 4px 12px rgba(167, 139, 250, 0.4));
+      animation: floatIcon 3s ease-in-out infinite;
+    }
+
+    .hero-card:nth-child(2) .hero-card-icon {
+      animation-delay: 0.5s;
+    }
+
+    .hero-card:nth-child(3) .hero-card-icon {
+      animation-delay: 1s;
+    }
+
+    @keyframes floatIcon {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .hero-card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .hero-card-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+    }
+
+    .hero-gradient-cta {
+      animation: fadeInUp 1.4s ease 0.6s both;
+    }
+
+    .btn-gradient-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 40px;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #a78bfa, #ec4899);
+      color: white;
+      box-shadow: 0 10px 40px rgba(167, 139, 250, 0.5);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gradient-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn-gradient-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-gradient-primary:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(167, 139, 250, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      .hero-gradient {
+        min-height: 100vh;
+        padding: 100px 0 60px;
+      }
+
+      .hero-gradient-title {
+        font-size: clamp(28px, 9vw, 42px);
+        margin-bottom: 20px;
+      }
+
+      .hero-gradient-subtitle {
+        font-size: clamp(14px, 4vw, 16px);
+        margin-bottom: 36px;
+      }
+
+      .hero-feature-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 36px;
+      }
+
+      .hero-card {
+        padding: 24px 20px;
+      }
+
+      .btn-gradient-primary {
+        width: 100%;
+        max-width: 360px;
+        justify-content: center;
+        padding: 18px 32px;
+        font-size: 16px;
+      }
+    }
+
+    /* ============================================
+       END GRADIENT HERO
+       ============================================ */
+
+    /* Mobile Responsive для Hero */
     @media (max-width: 768px) {
       .hero {
         min-height: auto;
@@ -1023,6 +1629,134 @@
       transform: scale(1) translateY(0);
     }
 
+    /* Floating animation for desktop circles */
+    @media (min-width: 769px) {
+      .timeline-node:not(.active)[data-step="1"] .node-circle {
+        animation: float1 6s ease-in-out infinite;
+      }
+
+      .timeline-node:not(.active)[data-step="2"] .node-circle {
+        animation: float2 7s ease-in-out infinite;
+      }
+
+      .timeline-node:not(.active)[data-step="3"] .node-circle {
+        animation: float3 8s ease-in-out infinite;
+      }
+
+      .timeline-node:not(.active)[data-step="4"] .node-circle {
+        animation: float4 7.5s ease-in-out infinite;
+      }
+
+      .timeline-node:not(.active)[data-step="5"] .node-circle {
+        animation: float5 6.5s ease-in-out infinite;
+      }
+
+      /* Stop animation when active on desktop */
+      .timeline-node.active .node-circle {
+        animation: none;
+      }
+
+      @keyframes float1 {
+
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+
+        25% {
+          transform: translate(3px, -5px) scale(1.02);
+        }
+
+        50% {
+          transform: translate(-2px, -8px) scale(0.98);
+        }
+
+        75% {
+          transform: translate(4px, -3px) scale(1.01);
+        }
+      }
+
+      @keyframes float2 {
+
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+
+        25% {
+          transform: translate(-4px, -6px) scale(1.01);
+        }
+
+        50% {
+          transform: translate(3px, -4px) scale(0.99);
+        }
+
+        75% {
+          transform: translate(-3px, -7px) scale(1.02);
+        }
+      }
+
+      @keyframes float3 {
+
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+
+        25% {
+          transform: translate(5px, -4px) scale(0.98);
+        }
+
+        50% {
+          transform: translate(-3px, -6px) scale(1.01);
+        }
+
+        75% {
+          transform: translate(2px, -5px) scale(0.99);
+        }
+      }
+
+      @keyframes float4 {
+
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+
+        25% {
+          transform: translate(-3px, -7px) scale(1.02);
+        }
+
+        50% {
+          transform: translate(4px, -5px) scale(0.98);
+        }
+
+        75% {
+          transform: translate(-4px, -4px) scale(1.01);
+        }
+      }
+
+      @keyframes float5 {
+
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+
+        25% {
+          transform: translate(3px, -6px) scale(0.99);
+        }
+
+        50% {
+          transform: translate(-4px, -7px) scale(1.01);
+        }
+
+        75% {
+          transform: translate(5px, -4px) scale(0.98);
+        }
+      }
+    }
+
     .node-circle span {
       position: relative;
       color: transparent;
@@ -1041,7 +1775,7 @@
       transition: all 0.8s cubic-bezier(0.45, 0.5, 0.45, 1);
     }
 
-    /* Desktop: "РќР°Р¶РјРё" hint */
+    /* Desktop: "Нажми" hint */
     .node-circle span::after {
       content: '';
       position: absolute;
@@ -1088,14 +1822,14 @@
     }
 
     .timeline-node:not(.active) .node-circle span.show-hint::after {
-      content: 'РќР°Р¶РјРё';
+      content: 'Нажми';
       opacity: 0.5;
       transform: translate(-50%, -50%) scale(1.3);
       transition-delay: 0.4s;
     }
 
     .timeline-node:not(.active) .node-circle span:not(.show-hint)::after {
-      content: 'РќР°Р¶РјРё';
+      content: 'Нажми';
       opacity: 0;
       transform: translate(-50%, -50%) scale(0);
       transition-delay: 0s;
@@ -1131,12 +1865,25 @@
       background: linear-gradient(135deg, #ef4444, #dc2626);
     }
 
-    .timeline-node.active .node-circle {
-      border-color: transparent;
-      color: #ffffff;
-      transform: scale(1.2) translateY(0);
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-      animation: moveCircleUpDesktop 0.6s ease-out 1.2s forwards;
+    /* Desktop active circle animation */
+    @media (min-width: 769px) {
+      .timeline-node.active .node-circle {
+        border-color: transparent;
+        color: #ffffff;
+        transform: scale(1.2) translateY(0);
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+        animation: moveCircleUpDesktop 0.6s ease-out 1.2s forwards;
+      }
+
+      @keyframes moveCircleUpDesktop {
+        from {
+          transform: scale(1.2) translateY(0);
+        }
+
+        to {
+          transform: scale(1.2) translateY(-10px);
+        }
+      }
     }
 
     .timeline-node.active .node-circle span::before {
@@ -1150,23 +1897,16 @@
       transform: translate(-50%, -50%) scale(0);
     }
 
-    @keyframes moveCircleUpDesktop {
-      from {
-        transform: scale(1.2) translateY(0);
-      }
-
-      to {
-        transform: scale(1.2) translateY(-10px);
-      }
-    }
-
     .timeline-node.active .node-circle::before {
       opacity: 1;
     }
 
-    .timeline-node:hover .node-circle {
-      transform: scale(1.05);
-      border-color: rgba(99, 102, 241, 0.3);
+    /* Desktop only hover effect */
+    @media (min-width: 769px) {
+      .timeline-node:hover .node-circle {
+        transform: scale(1.05);
+        border-color: rgba(99, 102, 241, 0.3);
+      }
     }
 
     .node-content {
@@ -1183,7 +1923,7 @@
     }
 
     .node-content h4 {
-      font-size: 16px;
+      font-size: 11px;
       font-weight: 600;
       color: #e2e8f0;
       margin-bottom: 4px;
@@ -1193,7 +1933,7 @@
     }
 
     .node-time {
-      font-size: 12px;
+      font-size: 8px;
       color: #64748b;
       margin-bottom: 12px;
       opacity: 1;
@@ -1207,7 +1947,7 @@
       opacity: 0;
       transform: translateY(-20px);
       transition: all 1.2s cubic-bezier(0.45, 0.5, 0.45, 1);
-      font-size: 12px;
+      font-size: 8px;
       color: #94a3b8;
       line-height: 1.6;
     }
@@ -1223,12 +1963,23 @@
       transform: translateY(0);
     }
 
-    .cards-timeline {
+    .vertical-timeline {
       display: none;
     }
 
-    .vertical-timeline {
-      display: none;
+    /* Tablet: Show desktop timeline (769px - 1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .progress-timeline {
+        display: block;
+      }
+
+      .timeline-track {
+        display: block;
+      }
+
+      .timeline-nodes {
+        display: flex;
+      }
     }
 
     .progress-bar-container {
@@ -1319,103 +2070,8 @@
       margin: 4px 0;
     }
 
-    /* Tablet: Cards Timeline */
-    @media (max-width: 1024px) {
-      .progress-timeline {
-        display: none;
-      }
-
-      .timeline-track {
-        display: none;
-      }
-
-      .timeline-nodes {
-        display: none;
-      }
-
-      .cards-timeline {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 20px;
-        margin-top: 60px;
-      }
-
-      .step-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        padding: 30px 20px;
-        text-align: center;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .step-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        transform: scaleX(0);
-        transition: transform 0.3s;
-      }
-
-      .step-card:hover::before {
-        transform: scaleX(1);
-      }
-
-      .step-card:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(99, 102, 241, 0.3);
-        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
-      }
-
-      .card-number {
-        font-size: 48px;
-        font-weight: 900;
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 12px;
-        opacity: 0.3;
-      }
-
-      .card-icon {
-        font-size: 40px;
-        margin-bottom: 16px;
-      }
-
-      .card-title {
-        font-size: 16px;
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 8px;
-      }
-
-      .card-time {
-        font-size: 12px;
-        color: #94a3b8;
-        margin-bottom: 12px;
-      }
-
-      .card-content p {
-        font-size: 13px;
-        color: #cbd5e1;
-        line-height: 1.5;
-      }
-    }
-
     /* Mobile: Vertical Timeline */
     @media (max-width: 768px) {
-      .cards-timeline {
-        display: none;
-      }
-
       .progress-timeline {
         display: block;
         margin-top: 60px;
@@ -1511,242 +2167,413 @@
         height: 55px;
         margin-bottom: 16px;
         flex-shrink: 0;
-        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
-        transform: scale(1) translateX(0) translateY(0);
         border-radius: 50%;
+        /* Используем CSS переменные для управления позицией */
+        --circle-x: 0px;
+        --circle-y: 0px;
+        --circle-scale: 1;
+        transform: scale(var(--circle-scale)) translateX(var(--circle-x)) translateY(var(--circle-y));
+        transition: transform 4s ease-in-out;
       }
 
-      .timeline-node:not(.active) .node-circle.show-hint {
-        width: 110px;
-        height: 55px;
-        border-radius: 12px;
-        transition: all 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        transition-delay: 1.2s;
+      /* Floating animation для неактивных кругов */
+      .timeline-node:not(.active):not(.moving-left):not(.moving-right)[data-step="1"] .node-circle {
+        animation: floatMobile1 6s ease-in-out infinite;
       }
 
-      /* Return to circle when hint is removed */
-      .timeline-node:not(.active) .node-circle:not(.show-hint) {
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        transition: all 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        transition-delay: 0s;
+      .timeline-node:not(.active):not(.moving-left):not(.moving-right)[data-step="2"] .node-circle {
+        animation: floatMobile2 7s ease-in-out infinite;
       }
 
-      .timeline-node.active .node-circle {
+      .timeline-node:not(.active):not(.moving-left):not(.moving-right)[data-step="3"] .node-circle {
+        animation: floatMobile3 8s ease-in-out infinite;
+      }
+
+      .timeline-node:not(.active):not(.moving-left):not(.moving-right)[data-step="4"] .node-circle {
+        animation: floatMobile4 7.5s ease-in-out infinite;
+      }
+
+      .timeline-node:not(.active):not(.moving-left):not(.moving-right)[data-step="5"] .node-circle {
+        animation: floatMobile5 6.5s ease-in-out infinite;
+      }
+
+      /* Состояние: движение влево (открытие) */
+      .timeline-node.moving-left .node-circle {
+        --circle-x: -80px;
+        --circle-scale: 1.5;
+        animation: none;
         margin-bottom: 0;
         margin-right: 16px;
+      }
+
+      /* Состояние: активный (полностью открыт) */
+      .timeline-node.active .node-circle {
+        --circle-x: -80px;
+        --circle-scale: 1.5;
+        animation: pulseMobile 16s ease-in-out infinite;
+        margin-bottom: 0;
+        margin-right: 16px;
+      }
+
+      /* Пульсирующая анимация для активного круга */
+      @keyframes pulseMobile {
+
+        0%,
+        100% {
+          transform: scale(1.5) translateX(-80px);
+        }
+
+        50% {
+          transform: scale(1.1) translateX(-80px);
+        }
+      }
+
+      /* Состояние: движение вправо (закрытие - возврат в центр) */
+      .timeline-node.moving-right .node-circle {
+        --circle-x: 0px;
+        --circle-scale: 1;
+        animation: none;
+        margin-bottom: 16px;
+        margin-right: 0;
+      }
+    }
+
+    @keyframes floatMobile1 {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      25% {
+        transform: translate(4px, -3px) scale(1.02);
+      }
+
+      50% {
+        transform: translate(-3px, -5px) scale(0.98);
+      }
+
+      75% {
+        transform: translate(5px, -2px) scale(1.01);
+      }
+    }
+
+    @keyframes floatMobile2 {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      25% {
+        transform: translate(-5px, -4px) scale(1.01);
+      }
+
+      50% {
+        transform: translate(4px, -3px) scale(0.99);
+      }
+
+      75% {
+        transform: translate(-4px, -5px) scale(1.02);
+      }
+    }
+
+    @keyframes floatMobile3 {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      25% {
+        transform: translate(6px, -3px) scale(0.98);
+      }
+
+      50% {
+        transform: translate(-4px, -4px) scale(1.01);
+      }
+
+      75% {
+        transform: translate(3px, -4px) scale(0.99);
+      }
+    }
+
+    @keyframes floatMobile4 {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      25% {
+        transform: translate(-4px, -5px) scale(1.02);
+      }
+
+      50% {
+        transform: translate(5px, -4px) scale(0.98);
+      }
+
+      75% {
+        transform: translate(-5px, -3px) scale(1.01);
+      }
+    }
+
+    @keyframes floatMobile5 {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      25% {
+        transform: translate(4px, -4px) scale(0.99);
+      }
+
+      50% {
+        transform: translate(-5px, -5px) scale(1.01);
+      }
+
+      75% {
+        transform: translate(6px, -3px) scale(0.98);
+      }
+    }
+
+    .timeline-node:not(.active):not(.moving-left):not(.moving-right) .node-circle.show-hint {
+      width: 110px;
+      height: 55px;
+      border-radius: 12px;
+      transition: width 2.4s cubic-bezier(0.34, 1.56, 0.64, 1), height 2.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition-delay: 1.2s;
+    }
+
+    /* Return to circle when hint is removed */
+    .timeline-node:not(.active):not(.moving-left):not(.moving-right) .node-circle:not(.show-hint) {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      transition: width 2.4s cubic-bezier(0.34, 1.56, 0.64, 1), height 2.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition-delay: 0s;
+    }
+
+    .timeline-node[data-step="1"].active .node-circle::before,
+    .timeline-node[data-step="1"].moving-left .node-circle::before {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+
+    .timeline-node[data-step="2"].active .node-circle::before,
+    .timeline-node[data-step="2"].moving-left .node-circle::before {
+      background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    }
+
+    .timeline-node[data-step="3"].active .node-circle::before,
+    .timeline-node[data-step="3"].moving-left .node-circle::before {
+      background: linear-gradient(135deg, #10b981, #14b8a6);
+    }
+
+    .timeline-node[data-step="4"].active .node-circle::before,
+    .timeline-node[data-step="4"].moving-left .node-circle::before {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+    }
+
+    .timeline-node[data-step="5"].active .node-circle::before,
+    .timeline-node[data-step="5"].moving-left .node-circle::before {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    /* Keyframe for upward movement on mobile */
+    @keyframes moveCircleUp {
+      from {
         transform: scale(1.5) translateX(-80px) translateY(0);
-        animation: moveCircleUp 1s ease-out 3.2s forwards;
       }
 
-      @keyframes moveCircleUp {
-        from {
-          transform: scale(1.5) translateX(-80px) translateY(0);
-        }
-
-        to {
-          transform: scale(1.5) translateX(-80px) translateY(-15px);
-        }
+      to {
+        transform: scale(1.5) translateX(-80px) translateY(-15px);
       }
+    }
 
-      .timeline-node[data-step="1"].active .node-circle::before {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      }
+    .node-circle span {
+      font-size: 20px;
+      display: inline-block;
+      position: relative;
+      color: transparent;
+      transition: all 1.6s cubic-bezier(0.45, 0.5, 0.45, 1);
+    }
 
-      .timeline-node[data-step="2"].active .node-circle::before {
-        background: linear-gradient(135deg, #8b5cf6, #a855f7);
-      }
+    /* Show number by default */
+    .node-circle span::before {
+      content: attr(data-number);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      color: #ffffff;
+      font-size: 20px;
+      opacity: 1;
+      transition: all 2.4s cubic-bezier(0.45, 0.5, 0.45, 1);
+    }
 
-      .timeline-node[data-step="3"].active .node-circle::before {
-        background: linear-gradient(135deg, #10b981, #14b8a6);
-      }
+    /* Hide number when showing hint */
+    .timeline-node:not(.active):not(.moving-left):not(.moving-right) .node-circle span.show-hint::before {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+      transition-delay: 0s;
+    }
 
-      .timeline-node[data-step="4"].active .node-circle::before {
-        background: linear-gradient(135deg, #f59e0b, #f97316);
-      }
+    /* Show number back when hint is removed */
+    .timeline-node:not(.active):not(.moving-left):not(.moving-right) .node-circle span:not(.show-hint)::before {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      transition-delay: 1.2s;
+    }
 
-      .timeline-node[data-step="5"].active .node-circle::before {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-      }
+    /* "Нажми" text appears after number fades */
+    .node-circle span::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      transition: all 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.4);
+      text-shadow: none;
+      pointer-events: none;
+    }
 
-      .node-circle span {
-        font-size: 20px;
-        display: inline-block;
-        position: relative;
-        color: transparent;
-        transition: all 1.6s cubic-bezier(0.45, 0.5, 0.45, 1);
-      }
+    .timeline-node:not(.active):not(.moving-left):not(.moving-right) .node-circle span.show-hint::after {
+      content: 'Нажми';
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(1.5);
+      transition-delay: 1.2s;
+    }
 
-      /* Show number by default */
-      .node-circle span::before {
-        content: attr(data-number);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1);
-        color: #ffffff;
-        font-size: 20px;
-        opacity: 1;
-        transition: all 2.4s cubic-bezier(0.45, 0.5, 0.45, 1);
-      }
+    /* When hint is removed, text shrinks back immediately */
+    .timeline-node:not(.active):not(.moving-left):not(.moving-right) .node-circle span:not(.show-hint)::after {
+      content: 'Нажми';
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+      transition-delay: 0s;
+    }
 
-      /* Hide number when showing hint */
-      .timeline-node:not(.active) .node-circle span.show-hint::before {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
-        transition-delay: 0s;
-      }
+    /* Active state - show number normally */
+    .timeline-node.active .node-circle span::before,
+    .timeline-node.moving-left .node-circle span::before {
+      opacity: 1;
+    }
 
-      /* Show number back when hint is removed */
-      .timeline-node:not(.active) .node-circle span:not(.show-hint)::before {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        transition-delay: 1.2s;
-      }
+    .timeline-node.active .node-circle span::after,
+    .timeline-node.moving-left .node-circle span::after {
+      content: '';
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+    }
 
-      /* "РќР°Р¶РјРё" text appears after number fades */
-      .node-circle span::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0;
-        transition: all 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        font-size: 11px;
-        font-weight: 600;
-        white-space: nowrap;
-        color: rgba(255, 255, 255, 0.4);
-        text-shadow: none;
-        pointer-events: none;
-      }
+    .node-content {
+      text-align: center;
+      opacity: 1;
+      transition: all 4s ease-in-out;
+      width: 100%;
+      max-height: 100px;
+      overflow: hidden;
+    }
 
-      .timeline-node:not(.active) .node-circle span.show-hint::after {
-        content: 'РќР°Р¶РјРё';
-        opacity: 0.5;
-        transform: translate(-50%, -50%) scale(1.5);
-        transition-delay: 1.2s;
-      }
+    .timeline-node.active .node-content,
+    .timeline-node.moving-left .node-content {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      max-height: 1000px;
+    }
 
-      /* When hint is removed, text shrinks back immediately */
-      .timeline-node:not(.active) .node-circle span:not(.show-hint)::after {
-        content: 'РќР°Р¶РјРё';
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
-        transition-delay: 0s;
-      }
+    .node-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+      filter: grayscale(0);
+      transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
+      display: none;
+    }
 
-      /* Active state - show number normally */
-      .timeline-node.active .node-circle span::before {
-        opacity: 1;
-      }
+    .timeline-node.active .node-icon {
+      display: none;
+    }
 
-      .timeline-node.active .node-circle span::after {
-        content: '';
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
-      }
+    .node-content h4 {
+      font-size: 26px;
+      margin-bottom: 5px;
+      color: #ffffff;
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 4s ease-in-out;
+    }
 
-      .node-content {
-        text-align: center;
-        opacity: 1;
-        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
-        width: 100%;
-        max-height: 100px;
-        overflow: hidden;
-      }
+    .timeline-node.active .node-content h4,
+    .timeline-node.moving-left .node-content h4 {
+      margin-left: 0;
+      font-size: 24px;
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      .timeline-node.active .node-content {
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        max-height: 1000px;
-      }
+    .node-time {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #94a3b8;
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 4s ease-in-out;
+    }
 
-      .node-icon {
-        font-size: 32px;
-        margin-bottom: 10px;
-        filter: grayscale(0);
-        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
-        display: none;
-      }
+    .timeline-node.active .node-time,
+    .timeline-node.moving-left .node-time {
+      margin-left: 0;
+      font-size: 17px;
+      margin-bottom: 8px;
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      .timeline-node.active .node-icon {
-        display: none;
-      }
+    .node-details {
+      font-size: 18px;
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 4s ease-in-out;
+      margin-left: 0;
+    }
 
-      .node-content h4 {
-        font-size: 26px;
-        margin-bottom: 5px;
-        color: #ffffff;
-        opacity: 1;
-        transform: translateY(0);
-        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
-      }
+    .node-details strong {
+      color: #e2e8f0;
+      display: block;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
 
-      .timeline-node.active .node-content h4 {
-        margin-left: 0;
-        font-size: 24px;
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .node-details p {
+      margin: 3px 0;
+      color: #94a3b8;
+    }
 
-      .node-time {
-        font-size: 18px;
-        margin-bottom: 12px;
-        color: #94a3b8;
-        opacity: 1;
-        transform: translateY(0);
-        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
-      }
+    .timeline-node.active .node-details,
+    .timeline-node.moving-left .node-details {
+      max-height: 400px;
+      opacity: 1;
+      transform: translateY(0);
+      margin-top: 12px;
+      margin-left: 0;
+    }
 
-      .timeline-node.active .node-time {
-        margin-left: 0;
-        font-size: 17px;
-        margin-bottom: 8px;
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .vertical-timeline {
+      display: none;
+    }
 
-      .node-details {
-        font-size: 18px;
-        line-height: 1.7;
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(-20px);
-        transition: all 3.2s cubic-bezier(0.45, 0.5, 0.45, 1);
-        margin-left: 0;
-      }
-
-      .node-details strong {
-        color: #e2e8f0;
-        display: block;
-        margin-top: 8px;
-        margin-bottom: 4px;
-      }
-
-      .node-details p {
-        margin: 3px 0;
-        color: #94a3b8;
-      }
-
-      .timeline-node.active .node-details {
-        max-height: 400px;
-        opacity: 1;
-        transform: translateY(0);
-        margin-top: 12px;
-        margin-left: 0;
-      }
-
-      .vertical-timeline {
-        display: none;
-      }
-
-      .how-it-works-section {
-        padding: 60px 0;
-      }
+    .how-it-works-section {
+      padding: 60px 0;
+    }
     }
 
     /* Load Finder special animated card */
@@ -2173,7 +3000,7 @@
       animation-delay: 0.5s;
     }
 
-    /* РќРѕРІС‹Рµ СЃРѕРІСЂРµРјРµРЅРЅС‹Рµ РїРѕР»РѕСЃРєРё */
+    /* Новые современные полоски */
     .rate-bar-modern {
       position: relative;
       height: 70px;
@@ -2379,7 +3206,7 @@
       }
     }
 
-    /* Р’С‹РїР°РґР°СЋС‰Р°СЏ РІРєР»Р°РґРєР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РїРѕ С€С‚Р°С‚Р°Рј - РєРѕРјРїР°РєС‚РЅР°СЏ РІРµСЂСЃРёСЏ */
+    /* Выпадающая вкладка с информацией по штатам - компактная версия */
     .states-dropdown {
       max-height: 0;
       opacity: 0;
@@ -2531,7 +3358,7 @@
     }
 
     .insight-card::after {
-      content: 'в„№пёЏ';
+      content: '??';
       position: absolute;
       top: 12px;
       right: 12px;
@@ -3221,7 +4048,7 @@
     }
 
     .nav-dropdown .nav-link::before {
-      content: 'в–ј';
+      content: 'Ў';
       font-size: 8px;
       transition: transform 0.3s ease;
       margin-left: 4px;
@@ -3506,7 +4333,7 @@
     }
 
     .nav-link-sub::before {
-      content: 'в†’';
+      content: '>';
       position: absolute;
       left: 16px;
       color: var(--primary);
@@ -4672,7 +5499,7 @@
           padding: 0 16px;
         }
 
-        /* Grid РґР»СЏ Flatbed Рё Р”РёР·РµР»СЊ РЅР° РјРѕР±РёР»СЊРЅС‹С… */
+        /* Grid для Flatbed и Дизель на мобильных */
         div[style*="grid-template-columns: 1fr 1fr"] {
           grid-template-columns: 1fr !important;
         }
@@ -5703,27 +6530,27 @@
     <div class="nav-container">
       <div class="nav-content">
         <a href="index.html" class="logo">
-          <span class="logo-icon">рџЋ“</span>
-          <span class="logo-text">РљСѓСЂСЃС‹ Р”РёСЃРїРµС‚С‡РµСЂР°</span>
+          <span class="logo-icon">??</span>
+          <span class="logo-text">Курсы Диспетчера</span>
         </a>
 
         <div class="nav-links">
-          <a href="index.html" class="nav-link active" data-short="Р“Р»Р°РІРЅР°СЏ">Р“Р»Р°РІРЅР°СЏ</a>
+          <a href="index.html" class="nav-link active" data-short="Главная">Главная</a>
 
           <div class="nav-dropdown">
-            <a href="courses.html" class="nav-link" data-short="РљСѓСЂСЃС‹">РљСѓСЂСЃС‹</a>
+            <a href="courses.html" class="nav-link" data-short="Курсы">Курсы</a>
             <div class="dropdown-content">
-              <a href="course.html">РћР±Р·РѕСЂ РєСѓСЂСЃР°</a>
-              <a href="pages/modules.html">12 РњРѕРґСѓР»РµР№ РѕР±СѓС‡РµРЅРёСЏ</a>
-              <a href="pages/simulator.html">РЎРёРјСѓР»СЏС‚РѕСЂ РїРµСЂРµРіРѕРІРѕСЂРѕРІ</a>
-              <a href="pages/calls.html">РџСЂРёРјРµСЂС‹ Р·РІРѕРЅРєРѕРІ</a>
-              <a href="pages/cases.html">РџСЂР°РєС‚РёС‡РµСЃРєРёРµ РєРµР№СЃС‹</a>
-              <a href="pages/testing.html">РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ</a>
+              <a href="course.html">Обзор курса</a>
+              <a href="pages/modules.html">12 Модулей обучения</a>
+              <a href="pages/simulator.html">Симулятор переговоров</a>
+              <a href="pages/calls.html">Примеры звонков</a>
+              <a href="pages/cases.html">Практические кейсы</a>
+              <a href="pages/testing.html">Тестирование</a>
             </div>
           </div>
 
           <div class="nav-dropdown">
-            <span class="nav-link" data-short="РРЅСЃС‚СЂ.">РРЅСЃС‚СЂСѓРјРµРЅС‚С‹</span>
+            <span class="nav-link" data-short="Инстр.">Инструменты</span>
             <div class="dropdown-content">
               <a href="pages/loadboard.html">Load Board</a>
               <a href="pages/load-finder.html">Load Finder</a>
@@ -5733,26 +6560,26 @@
           </div>
 
           <div class="nav-dropdown">
-            <span class="nav-link" data-short="РРЅС„Рѕ">РРЅС„РѕСЂРјР°С†РёСЏ</span>
+            <span class="nav-link" data-short="Инфо">Информация</span>
             <div class="dropdown-content">
-              <a href="about.html">Рћ РЅР°СЃ</a>
-              <a href="blog.html">Р‘Р»РѕРі</a>
-              <a href="career.html">РљР°СЂСЊРµСЂР°</a>
+              <a href="about.html">О нас</a>
+              <a href="blog.html">Блог</a>
+              <a href="career.html">Карьера</a>
               <a href="faq.html">FAQ</a>
-              <a href="help.html">РџРѕРјРѕС‰СЊ</a>
-              <a href="contacts.html">РљРѕРЅС‚Р°РєС‚С‹</a>
+              <a href="help.html">Помощь</a>
+              <a href="contacts.html">Контакты</a>
             </div>
           </div>
 
-          <a href="pages/documentation.html" class="nav-link" data-short="Р”РѕРєСѓРј.">Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</a>
-          <a href="pricing.html" class="nav-link" data-short="РўР°СЂРёС„С‹">РўР°СЂРёС„С‹</a>
+          <a href="pages/documentation.html" class="nav-link" data-short="Докум.">Документация</a>
+          <a href="pricing.html" class="nav-link" data-short="Тарифы">Тарифы</a>
           <a href="dashboard.html" class="nav-link" id="dashboardLink" style="display: none;"
-            data-short="РљР°Р±РёРЅРµС‚">Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚</a>
+            data-short="Кабинет">Личный кабинет</a>
         </div>
 
         <div class="nav-actions">
-          <a href="login.html" class="btn-login">Р’РѕР№С‚Рё</a>
-          <a href="register.html" class="btn-signup">Р РµРіРёСЃС‚СЂР°С†РёСЏ</a>
+          <a href="login.html" class="btn-login">Войти</a>
+          <a href="register.html" class="btn-signup">Регистрация</a>
         </div>
 
         <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -5771,27 +6598,27 @@
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-nav-links">
       <div class="mobile-nav-actions">
-        <a href="login.html" class="btn-login">Р’РѕР№С‚Рё</a>
-        <a href="register.html" class="btn-signup">Р РµРіРёСЃС‚СЂР°С†РёСЏ</a>
+        <a href="login.html" class="btn-login">Войти</a>
+        <a href="register.html" class="btn-signup">Регистрация</a>
       </div>
 
       <div class="mobile-menu-divider"></div>
 
-      <a href="index.html" class="nav-link active">рџЏ  Р“Р»Р°РІРЅР°СЏ</a>
+      <a href="index.html" class="nav-link active">?? Главная</a>
 
       <div class="mobile-nav-section">
-        <div class="mobile-section-title">рџ“љ РљРЈР РЎР«</div>
-        <a href="courses.html" class="nav-link nav-link-sub">Р’СЃРµ РєСѓСЂСЃС‹</a>
-        <a href="course.html" class="nav-link nav-link-sub">РћР±Р·РѕСЂ РєСѓСЂСЃР°</a>
-        <a href="pages/modules.html" class="nav-link nav-link-sub">12 РњРѕРґСѓР»РµР№ РѕР±СѓС‡РµРЅРёСЏ</a>
-        <a href="pages/simulator.html" class="nav-link nav-link-sub">РЎРёРјСѓР»СЏС‚РѕСЂ РїРµСЂРµРіРѕРІРѕСЂРѕРІ</a>
-        <a href="pages/calls.html" class="nav-link nav-link-sub">РџСЂРёРјРµСЂС‹ Р·РІРѕРЅРєРѕРІ</a>
-        <a href="pages/cases.html" class="nav-link nav-link-sub">РџСЂР°РєС‚РёС‡РµСЃРєРёРµ РєРµР№СЃС‹</a>
-        <a href="pages/testing.html" class="nav-link nav-link-sub">РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ</a>
+        <div class="mobile-section-title">?? КУРСЫ</div>
+        <a href="courses.html" class="nav-link nav-link-sub">Все курсы</a>
+        <a href="course.html" class="nav-link nav-link-sub">Обзор курса</a>
+        <a href="pages/modules.html" class="nav-link nav-link-sub">12 Модулей обучения</a>
+        <a href="pages/simulator.html" class="nav-link nav-link-sub">Симулятор переговоров</a>
+        <a href="pages/calls.html" class="nav-link nav-link-sub">Примеры звонков</a>
+        <a href="pages/cases.html" class="nav-link nav-link-sub">Практические кейсы</a>
+        <a href="pages/testing.html" class="nav-link nav-link-sub">Тестирование</a>
       </div>
 
       <div class="mobile-nav-section">
-        <div class="mobile-section-title">рџ› пёЏ РРќРЎРўР РЈРњР•РќРўР«</div>
+        <div class="mobile-section-title">??? ИНСТРУМЕНТЫ</div>
         <a href="pages/loadboard.html" class="nav-link nav-link-sub">Load Board</a>
         <a href="pages/load-finder.html" class="nav-link nav-link-sub">Load Finder</a>
         <a href="pages/dispatcher-cards.html" class="nav-link nav-link-sub">Dispatcher Cards</a>
@@ -5799,90 +6626,47 @@
       </div>
 
       <div class="mobile-nav-section">
-        <div class="mobile-section-title">в„№пёЏ РРќР¤РћР РњРђР¦РРЇ</div>
-        <a href="about.html" class="nav-link nav-link-sub">Рћ РЅР°СЃ</a>
-        <a href="blog.html" class="nav-link nav-link-sub">Р‘Р»РѕРі</a>
-        <a href="career.html" class="nav-link nav-link-sub">РљР°СЂСЊРµСЂР°</a>
+        <div class="mobile-section-title">?? ИНФОРМАЦИЯ</div>
+        <a href="about.html" class="nav-link nav-link-sub">О нас</a>
+        <a href="blog.html" class="nav-link nav-link-sub">Блог</a>
+        <a href="career.html" class="nav-link nav-link-sub">Карьера</a>
         <a href="faq.html" class="nav-link nav-link-sub">FAQ</a>
-        <a href="help.html" class="nav-link nav-link-sub">РџРѕРјРѕС‰СЊ</a>
-        <a href="contacts.html" class="nav-link nav-link-sub">РљРѕРЅС‚Р°РєС‚С‹</a>
+        <a href="help.html" class="nav-link nav-link-sub">Помощь</a>
+        <a href="contacts.html" class="nav-link nav-link-sub">Контакты</a>
       </div>
 
-      <a href="pages/documentation.html" class="nav-link">рџ“„ Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</a>
-      <a href="pricing.html" class="nav-link">рџ’° РўР°СЂРёС„С‹</a>
-      <a href="dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">рџ‘¤ Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚</a>
+      <a href="pages/documentation.html" class="nav-link">?? Документация</a>
+      <a href="pricing.html" class="nav-link">?? Тарифы</a>
+      <a href="dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">?? Личный кабинет</a>
     </div>
   </div>
 
   <!-- Hero Section -->
-  <!-- New Enhanced Hero Section -->
   <section class="hero">
     <div class="container">
       <div class="hero-content">
-        <!-- Top Badge -->
-        <div class="badge">
-          <span class="badge-dot"></span>
-          <span>рџљЂ РЎС‚Р°СЂС‚ РєР°СЂСЊРµСЂС‹ РІ РЎРЁРђ</span>
-        </div>
-
         <!-- Main Headline -->
         <h1>
-          РЎС‚Р°РЅСЊС‚Рµ <span class="gradient-text">Р”РёСЃРїРµС‚С‡РµСЂРѕРј</span><br>
-          Р“СЂСѓР·РѕРїРµСЂРµРІРѕР·РѕРє РІ РЎРЁРђ
+          Станьте <span class="gradient-text">Диспетчером</span><br>
+          Грузоперевозок в США
         </h1>
 
         <!-- Subtitle -->
         <p class="subtitle">
-          РћСЃРІРѕР№С‚Рµ РІС‹СЃРѕРєРѕРѕРїР»Р°С‡РёРІР°РµРјСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ СѓРґР°Р»РµРЅРЅРѕ.<br>
-          РџРѕР»РЅРѕРµ РѕР±СѓС‡РµРЅРёРµ СЃ РЅСѓР»СЏ Р·Р° 3-4 РЅРµРґРµР»Рё + РїРѕРјРѕС‰СЊ РІ С‚СЂСѓРґРѕСѓСЃС‚СЂРѕР№СЃС‚РІРµ.
+          Освойте высокооплачиваемую профессию удаленно.<br>
+          Полное обучение с нуля за 3-4 недели + помощь в трудоустройстве.
         </p>
-
-        <!-- Key Stats Row -->
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="stat-number">80+</div>
-            <div class="stat-label">РЎС‚СѓРґРµРЅС‚РѕРІ</div>
-          </div>
-          <div class="hero-stat">
-            <div class="stat-number">92%</div>
-            <div class="stat-label">РўСЂСѓРґРѕСѓСЃС‚СЂРѕРµРЅС‹</div>
-          </div>
-          <div class="hero-stat">
-            <div class="stat-number">$2,800</div>
-            <div class="stat-label">РЎС‚Р°СЂС‚ Р·Р°СЂРїР»Р°С‚Р°</div>
-          </div>
-        </div>
 
         <!-- CTA Buttons -->
         <div class="cta-buttons">
           <a href="course.html" class="btn btn-primary btn-large">
-            <span>рџЋ“ РќР°С‡Р°С‚СЊ РѕР±СѓС‡РµРЅРёРµ Р±РµСЃРїР»Р°С‚РЅРѕ</span>
-            <span class="arrow">в†’</span>
+            <span>?? Начать обучение бесплатно</span>
+            <span class="arrow">></span>
           </a>
           <a href="pages/simulator.html" class="btn btn-chat">
-            <span class="chat-icon">рџ’¬</span>
+            <span class="chat-icon">??</span>
             <span>Dispatch Simulator</span>
             <span class="chat-pulse"></span>
-          </a>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="hero-quick-links">
-          <a href="pages/modules.html" class="quick-link">
-            <span class="link-icon">рџ“љ</span>
-            <span>12 РњРѕРґСѓР»РµР№</span>
-          </a>
-          <a href="pages/cases.html" class="quick-link">
-            <span class="link-icon">рџЋЇ</span>
-            <span>50+ РљРµР№СЃРѕРІ</span>
-          </a>
-          <a href="quiz/index.html" class="quick-link">
-            <span class="link-icon">вњ…</span>
-            <span>РўРµСЃС‚С‹</span>
-          </a>
-          <a href="pages/documentation.html" class="quick-link">
-            <span class="link-icon">рџ“–</span>
-            <span>Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</span>
           </a>
         </div>
       </div>
@@ -5895,52 +6679,52 @@
       <div class="final-cta-grid">
         <!-- Left Side - Main Content -->
         <div class="final-cta-content">
-          <div class="final-cta-badge">рџљЂ РќР°С‡РЅРёС‚Рµ СЃРµРіРѕРґРЅСЏ</div>
-          <h2 class="final-cta-title">РЎС‚Р°РЅСЊС‚Рµ РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅС‹Рј РґРёСЃРїРµС‚С‡РµСЂРѕРј Р·Р° 3-4 РЅРµРґРµР»Рё</h2>
+          <div class="final-cta-badge">?? Начните сегодня</div>
+          <h2 class="final-cta-title">Станьте профессиональным диспетчером за 3-4 недели</h2>
           <p class="final-cta-description">
-            РџРѕР»СѓС‡РёС‚Рµ РІРѕСЃС‚СЂРµР±РѕРІР°РЅРЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ СЃ Р·Р°СЂРїР»Р°С‚РѕР№ РѕС‚ $3,000-$6,000 РІ РјРµСЃСЏС†.
-            Р Р°Р±РѕС‚Р°Р№С‚Рµ СѓРґР°Р»РµРЅРЅРѕ РёР· Р»СЋР±РѕР№ С‚РѕС‡РєРё РјРёСЂР°.
+            Получите востребованную профессию с зарплатой от $3,000-$6,000 в месяц.
+            Работайте удаленно из любой точки мира.
           </p>
 
           <!-- Success Stats -->
           <div class="final-cta-stats">
             <div class="final-stat-item">
               <div class="final-stat-number">80+</div>
-              <div class="final-stat-label">РђРєС‚РёРІРЅС‹С… СЃС‚СѓРґРµРЅС‚РѕРІ</div>
+              <div class="final-stat-label">Активных студентов</div>
             </div>
             <div class="final-stat-item">
               <div class="final-stat-number">92%</div>
-              <div class="final-stat-label">РЈСЃРїРµС€РЅРѕ С‚СЂСѓРґРѕСѓСЃС‚СЂРѕРµРЅС‹</div>
+              <div class="final-stat-label">Успешно трудоустроены</div>
             </div>
             <div class="final-stat-item">
               <div class="final-stat-number">$2,800</div>
-              <div class="final-stat-label">РЎС‚Р°СЂС‚РѕРІР°СЏ Р·Р°СЂРїР»Р°С‚Р°</div>
+              <div class="final-stat-label">Стартовая зарплата</div>
             </div>
           </div>
 
           <!-- Benefits List -->
           <div class="final-cta-benefits">
             <div class="final-benefit-item">
-              <span class="benefit-icon">вњ“</span>
-              <span>Р РµР°Р»СЊРЅС‹Рµ РїСЂРёРјРµСЂС‹ РёР· РёРЅРґСѓСЃС‚СЂРёРё РіСЂСѓР·РѕРїРµСЂРµРІРѕР·РѕРє</span>
+              <span class="benefit-icon">?</span>
+              <span>Реальные примеры из индустрии грузоперевозок</span>
             </div>
             <div class="final-benefit-item">
-              <span class="benefit-icon">вњ“</span>
-              <span>РљРѕРЅСЃСѓР»СЊС‚Р°С†РёРё СЌРєСЃРїРµСЂС‚РѕРІ РІ Р»СЋР±РѕРµ РІСЂРµРјСЏ</span>
+              <span class="benefit-icon">?</span>
+              <span>Консультации экспертов в любое время</span>
             </div>
             <div class="final-benefit-item">
-              <span class="benefit-icon">вњ“</span>
-              <span>РЎРѕРґРµР№СЃС‚РІРёРµ РІ РїРѕРёСЃРєРµ СЂР°Р±РѕС‚С‹ РІ РЎРЁРђ</span>
+              <span class="benefit-icon">?</span>
+              <span>Содействие в поиске работы в США</span>
             </div>
           </div>
 
           <div class="final-cta-buttons">
             <a href="course.html" class="btn btn-primary btn-large final-cta-btn">
-              <span>РќР°С‡Р°С‚СЊ РѕР±СѓС‡РµРЅРёРµ Р±РµСЃРїР»Р°С‚РЅРѕ</span>
-              <span class="arrow">в†’</span>
+              <span>Начать обучение бесплатно</span>
+              <span class="arrow">></span>
             </a>
             <a href="pricing.html" class="btn btn-secondary btn-large">
-              <span>РџРѕСЃРјРѕС‚СЂРµС‚СЊ С‚Р°СЂРёС„С‹</span>
+              <span>Посмотреть тарифы</span>
             </a>
           </div>
         </div>
@@ -6011,32 +6795,52 @@
   <section class="features" id="features">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Р§С‚Рѕ РІС‹ РїРѕР»СѓС‡РёС‚Рµ</h2>
-        <p class="section-subtitle">РђРєС‚СѓР°Р»СЊРЅС‹Рµ Р·РЅР°РЅРёСЏ Рѕ СЂС‹РЅРєРµ РіСЂСѓР·РѕРїРµСЂРµРІРѕР·РѕРє РЎРЁРђ. РќР°СѓС‡РёС‚РµСЃСЊ Р°РЅР°Р»РёР·РёСЂРѕРІР°С‚СЊ СЃС‚Р°РІРєРё,
-          РЅР°С…РѕРґРёС‚СЊ РІС‹РіРѕРґРЅС‹Рµ РјР°СЂС€СЂСѓС‚С‹ Рё СЂР°Р±РѕС‚Р°С‚СЊ СѓРґР°Р»РµРЅРЅРѕ</p>
+        <h2 class="section-title">Что вы получите</h2>
+        <p class="section-subtitle">Актуальные знания о рынке грузоперевозок США. Научитесь анализировать ставки,
+          находить выгодные маршруты и работать удаленно</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="hero-quick-links" style="margin-bottom: 60px;">
+        <a href="pages/modules.html" class="quick-link">
+          <span class="link-icon">??</span>
+          <span>12 Модулей</span>
+        </a>
+        <a href="pages/cases.html" class="quick-link">
+          <span class="link-icon">??</span>
+          <span>50+ Кейсов</span>
+        </a>
+        <a href="quiz/index.html" class="quick-link">
+          <span class="link-icon">?</span>
+          <span>Тесты</span>
+        </a>
+        <a href="pages/documentation.html" class="quick-link">
+          <span class="link-icon">??</span>
+          <span>Документация</span>
+        </a>
       </div>
 
       <div class="features-grid">
         <div class="feature-card" data-link="pages/documentation.html" style="cursor: pointer;">
-          <div class="feature-badge" data-target="#pricing">вњЁ Р‘РµСЃРїР»Р°С‚РЅРѕ</div>
-          <div class="feature-icon">рџЋ“</div>
-          <h3>Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</h3>
-          <p>РџРѕР»РЅРѕРµ СЂСѓРєРѕРІРѕРґСЃС‚РІРѕ РїРѕ РґРёСЃРїРµС‚С‡РµСЂСЃС‚РІСѓ РіСЂСѓР·РѕРїРµСЂРµРІРѕР·РѕРє РІ РЎРЁРђ. РћС‚ РѕСЃРЅРѕРІ FMCSA Рё DOT РґРѕ РїСЂРѕРґРІРёРЅСѓС‚С‹С… С‚РµС…РЅРёРє
-            РїРµСЂРµРіРѕРІРѕСЂРѕРІ Рё РѕРїС‚РёРјРёР·Р°С†РёРё РјР°СЂС€СЂСѓС‚РѕРІ</p>
+          <div class="feature-badge" data-target="#pricing">? Бесплатно</div>
+          <div class="feature-icon">??</div>
+          <h3>Документация</h3>
+          <p>Полное руководство по диспетчерству грузоперевозок в США. От основ FMCSA и DOT до продвинутых техник
+            переговоров и оптимизации маршрутов</p>
         </div>
 
         <div class="feature-card" data-link="pages/simulator.html" style="cursor: pointer;">
-          <div class="feature-icon">рџ“ћ</div>
+          <div class="feature-icon">??</div>
           <h3>Dispatch Simulator</h3>
-          <p>AI-СЃРёРјСѓР»СЏС‚РѕСЂ РїРµСЂРµРіРѕРІРѕСЂРѕРІ СЃ Р±СЂРѕРєРµСЂР°РјРё. РџСЂР°РєС‚РёРєСѓР№С‚Рµ СЂРµР°Р»СЊРЅС‹Рµ РґРёР°Р»РѕРіРё, РїРѕР»СѓС‡Р°Р№С‚Рµ РјРіРЅРѕРІРµРЅРЅСѓСЋ РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ Рё
-            СЃРѕРІРµСЂС€РµРЅСЃС‚РІСѓР№С‚Рµ РЅР°РІС‹РєРё С‚РѕСЂРіР°</p>
+          <p>AI-симулятор переговоров с брокерами. Практикуйте реальные диалоги, получайте мгновенную обратную связь и
+            совершенствуйте навыки торга</p>
         </div>
 
         <div class="feature-card" data-link="pages/modules.html" style="cursor: pointer;">
-          <div class="feature-icon">рџ“љ</div>
-          <h3>12 РњРѕРґСѓР»РµР№ РѕР±СѓС‡РµРЅРёСЏ</h3>
-          <p>РљРѕРјРїР»РµРєСЃРЅР°СЏ РїСЂРѕРіСЂР°РјРјР° РїРѕРґРіРѕС‚РѕРІРєРё РґРёСЃРїРµС‚С‡РµСЂР° РіСЂСѓР·РѕРїРµСЂРµРІРѕР·РѕРє РЎРЁРђ. РљР°Р¶РґС‹Р№ РјРѕРґСѓР»СЊ РІРєР»СЋС‡Р°РµС‚ С‚РµРѕСЂРµС‚РёС‡РµСЃРєРёР№
-            РјР°С‚РµСЂРёР°Р» Рё С‚РµСЃС‚ РґР»СЏ РїСЂРѕРІРµСЂРєРё Р·РЅР°РЅРёР№</p>
+          <div class="feature-icon">??</div>
+          <h3>12 Модулей обучения</h3>
+          <p>Комплексная программа подготовки диспетчера грузоперевозок США. Каждый модуль включает теоретический
+            материал и тест для проверки знаний</p>
         </div>
 
       </div>
@@ -6047,8 +6851,8 @@
   <section class="how-it-works-section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">РљР°Рє СЌС‚Рѕ СЂР°Р±РѕС‚Р°РµС‚</h2>
-        <p class="section-subtitle">РџСЂРѕСЃС‚РѕР№ РїСѓС‚СЊ РѕС‚ РЅРѕРІРёС‡РєР° РґРѕ РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»Р° Р·Р° 5 С€Р°РіРѕРІ</p>
+        <h2 class="section-title">Как это работает</h2>
+        <p class="section-subtitle">Простой путь от новичка до профессионала за 5 шагов</p>
       </div>
 
       <!-- Desktop: Wave Timeline -->
@@ -6060,131 +6864,78 @@
           <div class="timeline-node" data-step="1">
             <div class="node-circle"><span data-number="1">1</span></div>
             <div class="node-content">
-              <h4>Р’С…РѕРґ</h4>
-              <p class="node-time">РћСЃРЅРѕРІС‹ РїСЂРѕС„РµСЃСЃРёРё</p>
+              <h4>Вход</h4>
+              <p class="node-time">Основы профессии</p>
               <div class="node-details">
-                <p><strong>РўРµСЂРјРёРЅРѕР»РѕРіРёСЏ Рё РїСЂР°РІРёР»Р°:</strong></p>
-                <p>вЂў РџСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅР°СЏ С‚РµСЂРјРёРЅРѕР»РѕРіРёСЏ РґРёСЃРїРµС‚С‡РµСЂР°</p>
-                <p>вЂў РџСЂР°РІРёР»Р° FMCSA Рё DOT СЂРµРіСѓР»РёСЂРѕРІР°РЅРёСЏ</p>
-                <p>вЂў РћСЃРЅРѕРІС‹ Р»РѕРіРёСЃС‚РёРєРё РіСЂСѓР·РѕРїРµСЂРµРІРѕР·РѕРє РЎРЁРђ</p>
-                <p>вЂў РЎС‚СЂСѓРєС‚СѓСЂР° СЂР°Р±РѕС‚С‹ РґРёСЃРїРµС‚С‡РµСЂР°</p>
-                <p><strong>Р РµР·СѓР»СЊС‚Р°С‚:</strong> РџРѕР»РЅРѕРµ РїРѕРЅРёРјР°РЅРёРµ РїСЂРѕС„РµСЃСЃРёРё Рё РіРѕС‚РѕРІРЅРѕСЃС‚СЊ Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СЌС‚Р°РїСѓ</p>
+                <p><strong>Терминология и правила:</strong></p>
+                <p>• Профессиональная терминология диспетчера</p>
+                <p>• Правила FMCSA и DOT регулирования</p>
+                <p>• Основы логистики грузоперевозок США</p>
+                <p>• Структура работы диспетчера</p>
+                <p><strong>Результат:</strong> Полное понимание профессии и готовность к следующему этапу</p>
               </div>
             </div>
           </div>
           <div class="timeline-node" data-step="2">
             <div class="node-circle"><span data-number="2">2</span></div>
             <div class="node-content">
-              <h4>РР·СѓС‡РµРЅРёРµ</h4>
-              <p class="node-time">Load Board Рё РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹</p>
+              <h4>Изучение</h4>
+              <p class="node-time">Load Board и инструменты</p>
               <div class="node-details">
-                <p><strong>Р‘Р°Р·Р° Р·РЅР°РЅРёР№ + AI СЃРёРјСѓР»СЏС‚РѕСЂ:</strong></p>
-                <p>вЂў Р Р°Р±РѕС‚Р° СЃ Load Board (DAT, Truckstop)</p>
-                <p>вЂў 200+ СЃС‚Р°С‚РµР№ Рё РїСЂР°РєС‚РёС‡РµСЃРєРёС… РјР°С‚РµСЂРёР°Р»РѕРІ</p>
-                <p>вЂў РРЅС‚РµСЂР°РєС‚РёРІРЅС‹Рµ РєР°СЂС‚РѕС‡РєРё СЃРёС‚СѓР°С†РёР№</p>
-                <p>вЂў Р—РЅР°РєРѕРјСЃС‚РІРѕ СЃ AI-СЃРёРјСѓР»СЏС‚РѕСЂРѕРј РїРµСЂРµРіРѕРІРѕСЂРѕРІ</p>
-                <p><strong>РђРЅР°Р»РёС‚РёРєР°:</strong> 88% СЃС‚СѓРґРµРЅС‚РѕРІ СѓСЃРїРµС€РЅРѕ РѕСЃРІР°РёРІР°СЋС‚ РІСЃРµ РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹ РїР»Р°С‚С„РѕСЂРјС‹</p>
+                <p><strong>База знаний + AI симулятор:</strong></p>
+                <p>• Работа с Load Board (DAT, Truckstop)</p>
+                <p>• 200+ статей и практических материалов</p>
+                <p>• Интерактивные карточки ситуаций</p>
+                <p>• Знакомство с AI-симулятором переговоров</p>
+                <p><strong>Аналитика:</strong> 88% студентов успешно осваивают все инструменты платформы</p>
               </div>
             </div>
           </div>
           <div class="timeline-node" data-step="3">
             <div class="node-circle"><span data-number="3">3</span></div>
             <div class="node-content">
-              <h4>РўСЂРµРЅРёСЂРѕРІРєР°</h4>
-              <p class="node-time">РџСЂР°РєС‚РёРєР° Рё С‚РµС…РЅРёРєР°</p>
+              <h4>Тренировка</h4>
+              <p class="node-time">Практика и техника</p>
               <div class="node-details">
-                <p><strong>300+ СЂРµР°Р»СЊРЅС‹С… СЃС†РµРЅР°СЂРёРµРІ:</strong></p>
-                <p>вЂў Р”РёР°Р»РѕРіРё СЃ AI-Р±СЂРѕРєРµСЂР°РјРё РІ СЃРёРјСѓР»СЏС‚РѕСЂРµ</p>
-                <p>вЂў РўРµС…РЅРёРєР° Р±СЂРѕРЅРёСЂРѕРІР°РЅРёСЏ РіСЂСѓР·РѕРІ</p>
-                <p>вЂў РџРµСЂРµРіРѕРІРѕСЂС‹ Рё С‚РѕСЂРі СЃ Р±СЂРѕРєРµСЂР°РјРё</p>
-                <p>вЂў РџРµСЂСЃРѕРЅР°Р»СЊРЅР°СЏ РѕР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ РїРѕ РєР°Р¶РґРѕРјСѓ РґРёР°Р»РѕРіСѓ</p>
-                <p><strong>Р­С„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ:</strong> 85% СЃС‚СѓРґРµРЅС‚РѕРІ РґРѕСЃС‚РёРіР°СЋС‚ РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РїРµСЂРµРіРѕРІРѕСЂРѕРІ</p>
+                <p><strong>300+ реальных сценариев:</strong></p>
+                <p>• Диалоги с AI-брокерами в симуляторе</p>
+                <p>• Техника бронирования грузов</p>
+                <p>• Переговоры и торг с брокерами</p>
+                <p>• Персональная обратная связь по каждому диалогу</p>
+                <p><strong>Эффективность:</strong> 85% студентов достигают профессионального уровня переговоров</p>
               </div>
             </div>
           </div>
           <div class="timeline-node" data-step="4">
             <div class="node-circle"><span data-number="4">4</span></div>
             <div class="node-content">
-              <h4>РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ</h4>
-              <p class="node-time">РџСЂРѕРІРµСЂРєР° РЅР°РІС‹РєРѕРІ</p>
+              <h4>Тестирование</h4>
+              <p class="node-time">Проверка навыков</p>
               <div class="node-details">
-                <p><strong>Р Р°Р±РѕС‚Р° СЃ DAT Рё РїРµСЂРµРіРѕРІРѕСЂС‹:</strong></p>
-                <p>вЂў РџСЂРѕРІРµСЂРєР° Р·РЅР°РЅРёР№ СЂР°Р±РѕС‚С‹ СЃ Load Board</p>
-                <p>вЂў РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ РЅР°РІС‹РєРѕРІ РїРѕРёСЃРєР° РіСЂСѓР·РѕРІ</p>
-                <p>вЂў РЎРёРјСѓР»СЏС†РёСЏ РїРµСЂРµРіРѕРІРѕСЂРѕРІ СЃ Р±СЂРѕРєРµСЂР°РјРё</p>
-                <p>вЂў РћС†РµРЅРєР° С‚РµС…РЅРёРєРё Р±СЂРѕРЅРёСЂРѕРІР°РЅРёСЏ</p>
-                <p><strong>Р РµР·СѓР»СЊС‚Р°С‚С‹:</strong> Р”РµС‚Р°Р»СЊРЅР°СЏ РѕР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ РїРѕ РІСЃРµРј Р°СЃРїРµРєС‚Р°Рј СЂР°Р±РѕС‚С‹ РґРёСЃРїРµС‚С‡РµСЂР°</p>
+                <p><strong>Работа с DAT и переговоры:</strong></p>
+                <p>• Проверка знаний работы с Load Board</p>
+                <p>• Тестирование навыков поиска грузов</p>
+                <p>• Симуляция переговоров с брокерами</p>
+                <p>• Оценка техники бронирования</p>
+                <p><strong>Результаты:</strong> Детальная обратная связь по всем аспектам работы диспетчера</p>
               </div>
             </div>
           </div>
           <div class="timeline-node" data-step="5">
             <div class="node-circle"><span data-number="5">5</span></div>
             <div class="node-content">
-              <h4>РљР°СЂСЊРµСЂР°</h4>
-              <p class="node-time">Р РµР°Р»СЊРЅР°СЏ РїСЂР°РєС‚РёРєР°</p>
+              <h4>Карьера</h4>
+              <p class="node-time">Реальная практика</p>
               <div class="node-details">
-                <p><strong>Р­РєР·Р°РјРµРЅ СЃ РјРµРЅС‚РѕСЂРѕРј:</strong></p>
-                <p>вЂў РџСЂРѕС…РѕР¶РґРµРЅРёРµ СЌРєР·Р°РјРµРЅР° РЅР° СЂРµР°Р»СЊРЅРѕРј Р±СЂРѕРєРµСЂРµ</p>
-                <p>вЂў Р Р°Р±РѕС‚Р° СЃ СЂРµР°Р»СЊРЅС‹Рј РіСЂСѓР·РѕРј РїРѕРґ РєРѕРЅС‚СЂРѕР»РµРј</p>
-                <p>вЂў РџСЂРѕРІРµСЂРєР° РїСЂРѕР№РґРµРЅРЅРѕРіРѕ СЃ РѕРїС‹С‚РЅС‹Рј РґРёСЃРїРµС‚С‡РµСЂРѕРј</p>
-                <p>вЂў РџРѕРјРѕС‰СЊ РІ С‚СЂСѓРґРѕСѓСЃС‚СЂРѕР№СЃС‚РІРµ Рё РєР°СЂСЊРµСЂРЅРѕРј СЂРѕСЃС‚Рµ</p>
-                <p><strong>РўСЂСѓРґРѕСѓСЃС‚СЂРѕР№СЃС‚РІРѕ:</strong> 92% РІС‹РїСѓСЃРєРЅРёРєРѕРІ РЅР°С…РѕРґСЏС‚ СЂР°Р±РѕС‚Сѓ. РЎСЂРµРґРЅСЏСЏ СЃС‚Р°СЂС‚РѕРІР°СЏ Р·Р°СЂРїР»Р°С‚Р°
-                  $2,800/РјРµСЃ</p>
+                <p><strong>Экзамен с ментором:</strong></p>
+                <p>• Прохождение экзамена на реальном брокере</p>
+                <p>• Работа с реальным грузом под контролем</p>
+                <p>• Проверка пройденного с опытным диспетчером</p>
+                <p>• Помощь в трудоустройстве и карьерном росте</p>
+                <p><strong>Трудоустройство:</strong> 92% выпускников находят работу. Средняя стартовая зарплата
+                  $2,800/мес</p>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tablet: Cards with Numbers -->
-      <div class="cards-timeline">
-        <div class="step-card">
-          <div class="card-number">01</div>
-          <div class="card-icon">рџ“ќ</div>
-          <h3 class="card-title">РЎРўРђР Рў</h3>
-          <div class="card-time">5 РјРёРЅСѓС‚</div>
-          <div class="card-content">
-            <p>Р РµРіРёСЃС‚СЂР°С†РёСЏ Рё РІС‹Р±РѕСЂ С‚Р°СЂРёС„Р°</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="card-number">02</div>
-          <div class="card-icon">рџЋЇ</div>
-          <h3 class="card-title">РћРЎРќРћР’Р«</h3>
-          <div class="card-time">2-7 РґРЅРµР№</div>
-          <div class="card-content">
-            <p>РР·СѓС‡РёС‚Рµ РїСЂРѕС„РµСЃСЃРёСЋ Рё Load Board</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="card-number">03</div>
-          <div class="card-icon">рџ“љ</div>
-          <h3 class="card-title">РўР•РћР РРЇ</h3>
-          <div class="card-time">1-2 РЅРµРґРµР»Рё</div>
-          <div class="card-content">
-            <p>Р‘Р°Р·Р° Р·РЅР°РЅРёР№ Рё РєР°СЂС‚РѕС‡РєРё</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="card-number">04</div>
-          <div class="card-icon">рџ’ј</div>
-          <h3 class="card-title">РџР РђРљРўРРљРђ</h3>
-          <div class="card-time">2-3 РЅРµРґРµР»Рё</div>
-          <div class="card-content">
-            <p>РЎРёРјСѓР»СЏС‚РѕСЂ Рё 300+ РєРµР№СЃРѕРІ</p>
-          </div>
-        </div>
-
-        <div class="step-card">
-          <div class="card-number">05</div>
-          <div class="card-icon">рџЏ†</div>
-          <h3 class="card-title">РњРђРЎРўР•Р РЎРўР’Рћ</h3>
-          <div class="card-time">1-2 РЅРµРґРµР»Рё</div>
-          <div class="card-content">
-            <p>РЎР»РѕР¶РЅС‹Рµ СЃС†РµРЅР°СЂРёРё Рё С‚РµСЃС‚С‹</p>
           </div>
         </div>
       </div>
@@ -6196,13 +6947,13 @@
             <div class="marker-number">1</div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-icon">рџ“ќ</div>
-            <h3 class="timeline-title">Р Р•Р“РРЎРўР РђР¦РРЇ</h3>
-            <div class="timeline-time">вЏ±пёЏ 5 РјРёРЅСѓС‚</div>
+            <div class="timeline-icon">??</div>
+            <h3 class="timeline-title">РЕГИСТРАЦИЯ</h3>
+            <div class="timeline-time">?? 5 минут</div>
             <ul class="timeline-list">
-              <li>вњ“ РЎРѕР·РґР°Р№С‚Рµ Р°РєРєР°СѓРЅС‚</li>
-              <li>вњ“ Р’С‹Р±РµСЂРёС‚Рµ С‚Р°СЂРёС„</li>
-              <li>вњ“ РџРѕР»СѓС‡РёС‚Рµ РјРіРЅРѕРІРµРЅРЅС‹Р№ РґРѕСЃС‚СѓРї</li>
+              <li>? Создайте аккаунт</li>
+              <li>? Выберите тариф</li>
+              <li>? Получите мгновенный доступ</li>
             </ul>
           </div>
         </div>
@@ -6212,14 +6963,14 @@
             <div class="marker-number">2</div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-icon">рџЋЇ</div>
-            <h3 class="timeline-title">Р—РќРђРљРћРњРЎРўР’Рћ РЎ РџР РћР¤Р•РЎРЎРР•Р™</h3>
-            <div class="timeline-time">вЏ±пёЏ 2-7 РґРЅРµР№</div>
+            <div class="timeline-icon">??</div>
+            <h3 class="timeline-title">ЗНАКОМСТВО С ПРОФЕССИЕЙ</h3>
+            <div class="timeline-time">?? 2-7 дней</div>
             <ul class="timeline-list">
-              <li>вњ“ РћСЃРЅРѕРІС‹ РїСЂРѕС„РµСЃСЃРёРё</li>
-              <li>вњ“ РћР±Р·РѕСЂ Load Board</li>
-              <li>вњ“ РўРµСЂРјРёРЅРѕР»РѕРіРёСЏ</li>
-              <li>вњ“ РџРµСЂРІС‹Рµ С€Р°РіРё</li>
+              <li>? Основы профессии</li>
+              <li>? Обзор Load Board</li>
+              <li>? Терминология</li>
+              <li>? Первые шаги</li>
             </ul>
           </div>
         </div>
@@ -6229,14 +6980,14 @@
             <div class="marker-number">3</div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-icon">рџ“љ</div>
-            <h3 class="timeline-title">Р“Р›РЈР‘РћРљРћР• РР—РЈР§Р•РќРР•</h3>
-            <div class="timeline-time">вЏ±пёЏ 1-2 РЅРµРґРµР»Рё</div>
+            <div class="timeline-icon">??</div>
+            <h3 class="timeline-title">ГЛУБОКОЕ ИЗУЧЕНИЕ</h3>
+            <div class="timeline-time">?? 1-2 недели</div>
             <ul class="timeline-list">
-              <li>вњ“ Р‘Р°Р·Р° Р·РЅР°РЅРёР№</li>
-              <li>вњ“ РљР°СЂС‚РѕС‡РєРё СЃРёС‚СѓР°С†РёР№</li>
-              <li>вњ“ Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</li>
-              <li>вњ“ РџСЂРѕС†РµСЃСЃС‹ Рё РїСЂР°РІРёР»Р°</li>
+              <li>? База знаний</li>
+              <li>? Карточки ситуаций</li>
+              <li>? Документация</li>
+              <li>? Процессы и правила</li>
             </ul>
           </div>
         </div>
@@ -6246,14 +6997,14 @@
             <div class="marker-number">4</div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-icon">рџ’ј</div>
-            <h3 class="timeline-title">Р‘РђР—РћР’РђРЇ РџР РђРљРўРРљРђ</h3>
-            <div class="timeline-time">вЏ±пёЏ 2-3 РЅРµРґРµР»Рё</div>
+            <div class="timeline-icon">??</div>
+            <h3 class="timeline-title">БАЗОВАЯ ПРАКТИКА</h3>
+            <div class="timeline-time">?? 2-3 недели</div>
             <ul class="timeline-list">
-              <li>вњ“ РЎРёРјСѓР»СЏС‚РѕСЂ РґРёР°Р»РѕРіРѕРІ</li>
-              <li>вњ“ 300+ РїСЂРѕСЃС‚С‹С… СЃС†РµРЅР°СЂРёРµРІ</li>
-              <li>вњ“ РћР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ</li>
-              <li>вњ“ Р Р°Р±РѕС‚Р° РЅР°Рґ РѕС€РёР±РєР°РјРё</li>
+              <li>? Симулятор диалогов</li>
+              <li>? 300+ простых сценариев</li>
+              <li>? Обратная связь</li>
+              <li>? Работа над ошибками</li>
             </ul>
           </div>
         </div>
@@ -6263,14 +7014,14 @@
             <div class="marker-number">5</div>
           </div>
           <div class="timeline-content">
-            <div class="timeline-icon">рџЏ†</div>
-            <h3 class="timeline-title">РџР РћР”Р’РРќРЈРўРђРЇ РџР РђРљРўРРљРђ</h3>
-            <div class="timeline-time">вЏ±пёЏ 1-2 РЅРµРґРµР»Рё</div>
+            <div class="timeline-icon">??</div>
+            <h3 class="timeline-title">ПРОДВИНУТАЯ ПРАКТИКА</h3>
+            <div class="timeline-time">?? 1-2 недели</div>
             <ul class="timeline-list">
-              <li>вњ“ РЎР»РѕР¶РЅС‹Рµ СЃС†РµРЅР°СЂРёРё</li>
-              <li>вњ“ 200+ СЌРєСЃРїРµСЂС‚РЅС‹С… РєРµР№СЃРѕРІ</li>
-              <li>вњ“ РўРµСЃС‚С‹ Рё РїСЂРѕРІРµСЂРєР°</li>
-              <li>вњ“ Р“РѕС‚РѕРІРЅРѕСЃС‚СЊ Рє СЂР°Р±РѕС‚Рµ</li>
+              <li>? Сложные сценарии</li>
+              <li>? 200+ экспертных кейсов</li>
+              <li>? Тесты и проверка</li>
+              <li>? Готовность к работе</li>
             </ul>
           </div>
         </div>
@@ -6282,15 +7033,15 @@
   <section class="load-finder-section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">РљР°СЂС‚РѕС‡РєРё СЌРєСЃС‚СЂРµРЅРЅС‹С… СЃРёС‚СѓР°С†РёР№</h2>
+        <h2 class="section-title">Карточки экстренных ситуаций</h2>
       </div>
       <div class="load-finder-container">
         <div class="feature-card load-finder-highlight" onclick="window.location.href='pages/dispatcher-cards.html'"
           style="cursor: pointer;">
-          <div class="feature-icon">рџљЁ</div>
+          <div class="feature-icon">??</div>
           <h3>Dispatcher Cards</h3>
-          <p>РџСЂР°РєС‚РёС‡РµСЃРєРёРµ СЃС†РµРЅР°СЂРёРё РєСЂРёС‚РёС‡РµСЃРєРёС… СЃРёС‚СѓР°С†РёР№ СЃ РїРѕС€Р°РіРѕРІС‹РјРё СЂРµС€РµРЅРёСЏРјРё. Р“РѕС‚РѕРІС‹Рµ Р°Р»РіРѕСЂРёС‚РјС‹ РґРµР№СЃС‚РІРёР№ РґР»СЏ
-            РѕРїРµСЂР°С‚РёРІРЅРѕРіРѕ СЂРµР°РіРёСЂРѕРІР°РЅРёСЏ РЅР° РЅРµСЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ СЃР»СѓС‡Р°Рё
+          <p>Практические сценарии критических ситуаций с пошаговыми решениями. Готовые алгоритмы действий для
+            оперативного реагирования на нестандартные случаи
           </p>
         </div>
       </div>
@@ -6302,47 +7053,47 @@
     <div class="container">
       <!-- What's Included -->
       <div class="course-includes">
-        <h3 class="includes-heading">Р§С‚Рѕ РІС…РѕРґРёС‚ РІ РєСѓСЂСЃ</h3>
+        <h3 class="includes-heading">Что входит в курс</h3>
         <div class="includes-grid">
           <div class="include-item">
-            <div class="include-icon">рџ“љ</div>
-            <h4>РџРѕР»РЅР°СЏ РґРѕРєСѓРјРµРЅС‚Р°С†РёСЏ</h4>
-            <p>РЎС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅР°СЏ Р±Р°Р·Р° Р·РЅР°РЅРёР№ РїРѕ РІСЃРµРј Р°СЃРїРµРєС‚Р°Рј РґРёСЃРїРµС‚С‡РµСЂСЃС‚РІР°</p>
+            <div class="include-icon">??</div>
+            <h4>Полная документация</h4>
+            <p>Структурированная база знаний по всем аспектам диспетчерства</p>
           </div>
           <div class="include-item">
-            <div class="include-icon">рџ“ћ</div>
-            <h4>РЎРёРјСѓР»СЏС‚РѕСЂ Р·РІРѕРЅРєРѕРІ</h4>
-            <p>РџСЂР°РєС‚РёРєР° РїРµСЂРµРіРѕРІРѕСЂРѕРІ СЃ Р±СЂРѕРєРµСЂР°РјРё РІ СЂРµР°Р»РёСЃС‚РёС‡РЅРѕР№ СЃСЂРµРґРµ</p>
+            <div class="include-icon">??</div>
+            <h4>Симулятор звонков</h4>
+            <p>Практика переговоров с брокерами в реалистичной среде</p>
           </div>
           <div class="include-item">
-            <div class="include-icon">рџЋЇ</div>
-            <h4>РџСЂР°РєС‚РёС‡РµСЃРєРёРµ РєРµР№СЃС‹</h4>
-            <p>Р РµР°Р»СЊРЅС‹Рµ СЃРёС‚СѓР°С†РёРё РёР· РёРЅРґСѓСЃС‚СЂРёРё РґР»СЏ РѕС‚СЂР°Р±РѕС‚РєРё РЅР°РІС‹РєРѕРІ</p>
+            <div class="include-icon">??</div>
+            <h4>Практические кейсы</h4>
+            <p>Реальные ситуации из индустрии для отработки навыков</p>
           </div>
           <div class="include-item">
-            <div class="include-icon">рџ“Љ</div>
-            <h4>РђРєС‚СѓР°Р»СЊРЅС‹Рµ СЃС‚Р°РІРєРё</h4>
-            <p>Р”Р°РЅРЅС‹Рµ DAT РїРѕ РІСЃРµРј СЂРµРіРёРѕРЅР°Рј РЎРЁРђ РІ СЂРµР°Р»СЊРЅРѕРј РІСЂРµРјРµРЅРё</p>
+            <div class="include-icon">??</div>
+            <h4>Актуальные ставки</h4>
+            <p>Данные DAT по всем регионам США в реальном времени</p>
           </div>
           <div class="include-item">
-            <div class="include-icon">рџљ›</div>
+            <div class="include-icon">??</div>
             <h4>Load Finder</h4>
-            <p>РРЅСЃС‚СЂСѓРјРµРЅС‚ РїРѕРёСЃРєР° РіСЂСѓР·РѕРІ СЃ Р±Р°Р·РѕР№ 30+ Р±СЂРѕРєРµСЂРѕРІ</p>
+            <p>Инструмент поиска грузов с базой 30+ брокеров</p>
           </div>
           <div class="include-item">
-            <div class="include-icon">рџ“ќ</div>
-            <h4>РўРµСЃС‚С‹ Рё РєРІРёР·С‹</h4>
-            <p>РџСЂРѕРІРµСЂРєР° Р·РЅР°РЅРёР№ Рё Р·Р°РєСЂРµРїР»РµРЅРёРµ РјР°С‚РµСЂРёР°Р»Р°</p>
+            <div class="include-icon">??</div>
+            <h4>Тесты и квизы</h4>
+            <p>Проверка знаний и закрепление материала</p>
           </div>
           <div class="include-item">
-            <div class="include-icon">рџ“„</div>
-            <h4>200+ СЃС‚СЂР°РЅРёС† РјР°С‚РµСЂРёР°Р»РѕРІ</h4>
-            <p>РљРѕРЅСЃРїРµРєС‚С‹, С‡РµРє-Р»РёСЃС‚С‹, С€Р°Р±Р»РѕРЅС‹ РґРѕРєСѓРјРµРЅС‚РѕРІ</p>
+            <div class="include-icon">??</div>
+            <h4>200+ страниц материалов</h4>
+            <p>Конспекты, чек-листы, шаблоны документов</p>
           </div>
           <div class="include-item">
-            <div class="include-icon">рџ’¬</div>
-            <h4>РџРѕРґРґРµСЂР¶РєР° СЃС‚СѓРґРµРЅС‚РѕРІ</h4>
-            <p>РџРѕР»РЅР°СЏ СЂРµР°Р»СЊРЅР°СЏ РїРѕРґРґРµСЂР¶РєР° РЅР° РІСЃРµС… СЌС‚Р°РїР°С… РѕР±СѓС‡РµРЅРёСЏ</p>
+            <div class="include-icon">??</div>
+            <h4>Поддержка студентов</h4>
+            <p>Полная реальная поддержка на всех этапах обучения</p>
           </div>
         </div>
       </div>
@@ -6350,15 +7101,15 @@
       <!-- CTA -->
       <div class="course-cta">
         <div class="cta-content">
-          <h3>Р“РѕС‚РѕРІС‹ РЅР°С‡Р°С‚СЊ РєР°СЂСЊРµСЂСѓ РґРёСЃРїРµС‚С‡РµСЂР°?</h3>
-          <p>РќР°С‡РЅРёС‚Рµ РѕР±СѓС‡РµРЅРёРµ Р±РµСЃРїР»Р°С‚РЅРѕ Рё РїРѕР»СѓС‡РёС‚Рµ РґРѕСЃС‚СѓРї РєРѕ РІСЃРµРј РјР°С‚РµСЂРёР°Р»Р°Рј РїР»Р°С‚С„РѕСЂРјС‹</p>
+          <h3>Готовы начать карьеру диспетчера?</h3>
+          <p>Начните обучение бесплатно и получите доступ ко всем материалам платформы</p>
           <div class="cta-buttons">
             <a href="courses.html" class="btn btn-primary btn-large">
-              <span>РќР°С‡Р°С‚СЊ РѕР±СѓС‡РµРЅРёРµ Р±РµСЃРїР»Р°С‚РЅРѕ</span>
-              <span class="arrow">в†’</span>
+              <span>Начать обучение бесплатно</span>
+              <span class="arrow">></span>
             </a>
             <a href="pricing.html" class="btn btn-secondary btn-large">
-              <span>РџРѕСЃРјРѕС‚СЂРµС‚СЊ С‚Р°СЂРёС„С‹</span>
+              <span>Посмотреть тарифы</span>
             </a>
           </div>
         </div>
@@ -6367,6 +7118,105 @@
   </section>
 
   <script>
+    // Canvas Particle Animation for Hero
+    (function () {
+      const canvas = document.getElementById('heroCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let animationId;
+
+      // Set canvas size
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Particle class
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 3 + 1;
+          this.speedX = (Math.random() - 0.5) * 0.5;
+          this.speedY = (Math.random() - 0.5) * 0.5;
+          this.opacity = Math.random() * 0.5 + 0.2;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+
+          // Wrap around edges
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+          ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Create particles
+      function init() {
+        particles = [];
+        const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 15000), 100);
+        for (let i = 0; i < particleCount; i++) {
+          particles.push(new Particle());
+        }
+      }
+
+      // Animation loop
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+              ctx.strokeStyle = `rgba(167, 139, 250, ${0.15 * (1 - distance / 150)})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Update and draw particles
+        particles.forEach(particle => {
+          particle.update();
+          particle.draw();
+        });
+
+        animationId = requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', () => {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+      });
+    })();
+
     // Professional Timeline with Progress Bar
     (function () {
       const nodes = document.querySelectorAll('.timeline-node');
@@ -6378,36 +7228,84 @@
 
       function updateTimeline() {
         if (isMobile) {
-          // РќР° РјРѕР±РёР»СЊРЅС‹С… РЅРµ РјРµРЅСЏРµРј Р°РєС‚РёРІРЅРѕСЃС‚СЊ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё
+          // На мобильных не меняем активность автоматически
           progress.style.height = (current / (nodes.length - 1)) * 100 + '%';
           progress.style.width = '100%';
         } else {
-          // РќР° РґРµСЃРєС‚РѕРїРµ С‚РѕР¶Рµ С‚РѕР»СЊРєРѕ РїРѕ РєР»РёРєСѓ
+          // На десктопе тоже только по клику
           progress.style.width = (current / (nodes.length - 1)) * 100 + '%';
           progress.style.height = '100%';
         }
       }
 
       nodes.forEach((node, i) => {
+        let animationTimeout = null;
+
         node.addEventListener('click', () => {
-          // РќР° РІСЃРµС… СѓСЃС‚СЂРѕР№СЃС‚РІР°С… РїРµСЂРµРєР»СЋС‡Р°РµРј Р°РєС‚РёРІРЅРѕСЃС‚СЊ РїСЂРё РєР»РёРєРµ
-          node.classList.toggle('active');
+          const isActive = node.classList.contains('active');
+          const isMovingLeft = node.classList.contains('moving-left');
+          const isMovingRight = node.classList.contains('moving-right');
+
+          // Очищаем предыдущие таймауты
+          if (animationTimeout) {
+            clearTimeout(animationTimeout);
+            animationTimeout = null;
+          }
+
+          // Если круг в процессе открытия или открыт - закрываем
+          if (isActive || isMovingLeft) {
+            // Убираем все классы открытия
+            node.classList.remove('active', 'moving-left');
+
+            // Начинаем закрытие: движение вправо
+            node.classList.add('moving-right');
+
+            // Через 4 секунды - полностью закрыто
+            animationTimeout = setTimeout(() => {
+              node.classList.remove('moving-right');
+            }, 4000);
+          }
+          // Если круг в процессе закрытия - открываем
+          else if (isMovingRight) {
+            // Убираем класс закрытия
+            node.classList.remove('moving-right');
+
+            // Начинаем открытие: движение влево
+            node.classList.add('moving-left');
+
+            // Через 4 секунды - полностью открыто
+            animationTimeout = setTimeout(() => {
+              node.classList.remove('moving-left');
+              node.classList.add('active');
+            }, 4000);
+          }
+          // Если круг закрыт - открываем
+          else {
+            // Начинаем открытие: движение влево
+            node.classList.add('moving-left');
+
+            // Через 4 секунды - полностью открыто
+            animationTimeout = setTimeout(() => {
+              node.classList.remove('moving-left');
+              node.classList.add('active');
+            }, 4000);
+          }
         });
       });
 
       updateTimeline();
     })();
 
-    // Animate circle text (number <-> "РќР°Р¶РјРё")
+    // Animate circle text (number <-> "Нажми")
     (function () {
-      let currentHintIndex = 0; // РќР°С‡РёРЅР°РµРј СЃ РїРµСЂРІРѕРіРѕ СЂР°Р·РґРµР»Р°
+      let currentHintIndex = 0; // Начинаем с первого раздела
       let hintTimeout = null;
       let isHintVisible = false;
 
       function showHintOnNode(index) {
         const nodes = document.querySelectorAll('.timeline-node');
 
-        // РЈР±РёСЂР°РµРј hint СЃРѕ РІСЃРµС… СѓР·Р»РѕРІ
+        // Убираем hint со всех узлов
         nodes.forEach(node => {
           const circle = node.querySelector('.node-circle');
           const span = node.querySelector('.node-circle span');
@@ -6417,7 +7315,7 @@
           }
         });
 
-        // РџРѕРєР°Р·С‹РІР°РµРј hint С‚РѕР»СЊРєРѕ РЅР° СѓРєР°Р·Р°РЅРЅРѕРј СѓР·Р»Рµ
+        // Показываем hint только на указанном узле
         if (index < nodes.length) {
           const targetNode = nodes[index];
           const circle = targetNode.querySelector('.node-circle');
@@ -6446,7 +7344,7 @@
       }
 
       function scheduleNextHint() {
-        // РћС‡РёС‰Р°РµРј РїСЂРµРґС‹РґСѓС‰РёР№ С‚Р°Р№РјР°СѓС‚
+        // Очищаем предыдущий таймаут
         if (hintTimeout) {
           clearTimeout(hintTimeout);
         }
@@ -6454,56 +7352,56 @@
         const nodes = document.querySelectorAll('.timeline-node');
 
         if (isHintVisible) {
-          // Р•СЃР»Рё hint РІРёРґРёРј, СЃРєСЂС‹РІР°РµРј РµРіРѕ Рё РїР»Р°РЅРёСЂСѓРµРј СЃР»РµРґСѓСЋС‰РёР№
+          // Если hint видим, скрываем его и планируем следующий
           hideHint();
 
-          // Р—Р°РґРµСЂР¶РєР° РїРµСЂРµРґ СЃР»РµРґСѓСЋС‰РёРј РїРѕРєР°Р·РѕРј - 20 СЃРµРєСѓРЅРґ
+          // Задержка перед следующим показом - 12 секунд
           hintTimeout = setTimeout(() => {
-            // РџРµСЂРµС…РѕРґРёРј Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СЂР°Р·РґРµР»Сѓ
+            // Переходим к следующему разделу
             currentHintIndex = (currentHintIndex + 1) % nodes.length;
             showHintOnNode(currentHintIndex);
 
-            // РџР»Р°РЅРёСЂСѓРµРј СЃРєСЂС‹С‚РёРµ С‡РµСЂРµР· 2 СЃРµРєСѓРЅРґС‹
-            hintTimeout = setTimeout(scheduleNextHint, 2000);
-          }, 20000);
+            // Планируем скрытие через 3 секунды
+            hintTimeout = setTimeout(scheduleNextHint, 3000);
+          }, 12000);
         } else {
-          // Р•СЃР»Рё hint СЃРєСЂС‹С‚, РїРѕРєР°Р·С‹РІР°РµРј РµРіРѕ
+          // Если hint скрыт, показываем его
           showHintOnNode(currentHintIndex);
 
-          // РџР»Р°РЅРёСЂСѓРµРј СЃРєСЂС‹С‚РёРµ С‡РµСЂРµР· 2 СЃРµРєСѓРЅРґС‹
-          hintTimeout = setTimeout(scheduleNextHint, 2000);
+          // Планируем скрытие через 3 секунды
+          hintTimeout = setTimeout(scheduleNextHint, 3000);
         }
       }
 
-      // РЎР»СѓС€Р°РµРј РєР»РёРєРё РЅР° СѓР·Р»Р°С…
+      // Слушаем клики на узлах
       const nodes = document.querySelectorAll('.timeline-node');
       nodes.forEach((node, index) => {
         node.addEventListener('click', () => {
-          // РџСЂРё РєР»РёРєРµ РЅР° Р»СЋР±РѕР№ СѓР·РµР», РїРѕРєР°Р·С‹РІР°РµРј hint РЅР° РЅС‘Рј
+          // При клике на любой узел, показываем hint на нём
           currentHintIndex = index;
           hideHint();
           showHintOnNode(currentHintIndex);
 
-          // РџРµСЂРµР·Р°РїСѓСЃРєР°РµРј С†РёРєР»
+          // Перезапускаем цикл
           if (hintTimeout) {
             clearTimeout(hintTimeout);
           }
-          hintTimeout = setTimeout(scheduleNextHint, 2000);
+          hintTimeout = setTimeout(scheduleNextHint, 3000);
         });
       });
 
-      // РџРѕРєР°Р·С‹РІР°РµРј hint РЅР° РїРµСЂРІРѕРј СѓР·Р»Рµ Рё Р·Р°РїСѓСЃРєР°РµРј С†РёРєР» С‡РµСЂРµР· 5 СЃРµРєСѓРЅРґ
+      // Показываем hint на первом узле и запускаем цикл через 5 секунд
       setTimeout(() => {
         showHintOnNode(currentHintIndex);
-        hintTimeout = setTimeout(scheduleNextHint, 2000);
+        hintTimeout = setTimeout(scheduleNextHint, 3000);
       }, 5000);
     })();
   </script>
 
   <script>
-    // РљСЂР°СЃРёРІС‹Рµ Р°РЅРёРјРёСЂРѕРІР°РЅРЅС‹Рµ РіСЂР°С„РёРєРё СЃС‚Р°РІРѕРє (С‚РѕР»СЊРєРѕ РІРёР·СѓР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹)
+    // Красивые анимированные графики ставок (только визуальные эффекты)
 
-    // Р”Р°РЅРЅС‹Рµ РїРѕ С€С‚Р°С‚Р°Рј РґР»СЏ РєР°Р¶РґРѕРіРѕ СЂРµРіРёРѕРЅР° (С‚РѕР»СЊРєРѕ 4 РіР»Р°РІРЅС‹С… РіРѕСЂРѕРґР°)
+    // Данные по штатам для каждого региона (только 4 главных города)
     const ratesData = {
       dryvan: {
         'Midwest': {
@@ -6623,7 +7521,7 @@
       }
     };
 
-    // Р”РѕР±Р°РІР»СЏРµРј С„СѓРЅРєС†РёРѕРЅР°Р» СЂР°СЃРєСЂС‹С‚РёСЏ РїСЂРё РєР»РёРєРµ
+    // Добавляем функционал раскрытия при клике
     document.addEventListener('DOMContentLoaded', function () {
       const rateBars = document.querySelectorAll('.rate-bar-modern');
 
@@ -6635,7 +7533,7 @@
           const section = this.closest('.rates-section');
           const sectionTitle = section.querySelector('h3').textContent.toLowerCase();
 
-          // РћРїСЂРµРґРµР»СЏРµРј С‚РёРї РѕР±РѕСЂСѓРґРѕРІР°РЅРёСЏ
+          // Определяем тип оборудования
           let equipmentType = 'dryvan';
           if (sectionTitle.includes('reefer')) equipmentType = 'reefer';
           if (sectionTitle.includes('flatbed')) equipmentType = 'flatbed';
@@ -6645,10 +7543,10 @@
 
           if (!regionData) return;
 
-          // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё СѓР¶Рµ РѕС‚РєСЂС‹С‚Р°СЏ РІРєР»Р°РґРєР°
+          // Проверяем, есть ли уже открытая вкладка
           let existingDropdown = this.nextElementSibling;
           if (existingDropdown && existingDropdown.classList.contains('states-dropdown')) {
-            // Р—Р°РєСЂС‹РІР°РµРј
+            // Закрываем
             existingDropdown.style.maxHeight = '0';
             existingDropdown.style.opacity = '0';
             setTimeout(() => existingDropdown.remove(), 300);
@@ -6656,7 +7554,7 @@
             return;
           }
 
-          // Р—Р°РєСЂС‹РІР°РµРј РІСЃРµ РґСЂСѓРіРёРµ РѕС‚РєСЂС‹С‚С‹Рµ РІРєР»Р°РґРєРё РІ СЌС‚РѕР№ СЃРµРєС†РёРё
+          // Закрываем все другие открытые вкладки в этой секции
           const chart = this.closest('.rates-chart');
           chart.querySelectorAll('.states-dropdown').forEach(dropdown => {
             dropdown.style.maxHeight = '0';
@@ -6665,7 +7563,7 @@
           });
           chart.querySelectorAll('.rate-bar-modern').forEach(b => b.classList.remove('active'));
 
-          // РЎРѕР·РґР°РµРј РІС‹РїР°РґР°СЋС‰СѓСЋ РІРєР»Р°РґРєСѓ
+          // Создаем выпадающую вкладку
           const dropdown = document.createElement('div');
           dropdown.className = 'states-dropdown';
           dropdown.innerHTML = `
@@ -6674,8 +7572,8 @@
             <div class="state-item">
               <div class="state-name">${state.name} <span class="state-city">(${state.city})</span></div>
               <div class="state-details">
-                <span class="state-rate">${state.rate}/РјРёР»СЏ</span>
-                <span class="state-loads">рџ“¦ ${state.loads} РіСЂСѓР·РѕРІ</span>
+                <span class="state-rate">${state.rate}/миля</span>
+                <span class="state-loads">?? ${state.loads} грузов</span>
               </div>
             </div>
           `).join('')}
@@ -6685,47 +7583,47 @@
           this.classList.add('active');
           this.parentNode.insertBefore(dropdown, this.nextSibling);
 
-          // РџСЂРµРґРѕС‚РІСЂР°С‰Р°РµРј Р·Р°РєСЂС‹С‚РёРµ РїСЂРё РєР»РёРєРµ РІРЅСѓС‚СЂРё dropdown
+          // Предотвращаем закрытие при клике внутри dropdown
           dropdown.addEventListener('click', function (e) {
             e.stopPropagation();
           });
 
-          // РђРЅРёРјР°С†РёСЏ РїРѕСЏРІР»РµРЅРёСЏ
+          // Анимация появления
           setTimeout(() => {
             dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
             dropdown.style.opacity = '1';
 
-            // Р—Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ РёР·РјРµРЅРµРЅРёСЏ С‡РёСЃРµР» РіСЂСѓР·РѕРІ СЃ РјР°Р»РµРЅСЊРєРёРјРё С€Р°РіР°РјРё
+            // Запускаем анимацию изменения чисел грузов с маленькими шагами
             const loadsElements = dropdown.querySelectorAll('.state-loads');
             loadsElements.forEach((element, index) => {
               const originalLoads = regionData.states[index].loads;
               let currentLoads = originalLoads;
 
               function animateLoads() {
-                // РњР°Р»РµРЅСЊРєРёР№ С€Р°Рі: РёР·РјРµРЅРµРЅРёРµ РЅР° В±1-3%
-                const smallStep = (Math.random() * 0.04 - 0.02); // РѕС‚ -0.02 РґРѕ +0.02 (В±2%)
+                // Маленький шаг: изменение на ±1-3%
+                const smallStep = (Math.random() * 0.04 - 0.02); // от -0.02 до +0.02 (±2%)
                 currentLoads = currentLoads * (1 + smallStep);
 
-                // РћРіСЂР°РЅРёС‡РёРІР°РµРј РґРёР°РїР°Р·РѕРЅ: -10% РґРѕ +15% РѕС‚ РѕСЂРёРіРёРЅР°Р»Р°
+                // Ограничиваем диапазон: -10% до +15% от оригинала
                 const minLoads = originalLoads * 0.9;
                 const maxLoads = originalLoads * 1.15;
                 currentLoads = Math.max(minLoads, Math.min(maxLoads, currentLoads));
 
-                element.textContent = `рџ“¦ ${Math.round(currentLoads)} РіСЂСѓР·РѕРІ`;
+                element.textContent = `?? ${Math.round(currentLoads)} грузов`;
 
-                // РџРѕРІС‚РѕСЂСЏРµРј РєР°Р¶РґС‹Рµ 1-2 СЃРµРєСѓРЅРґС‹ РґР»СЏ РїР»Р°РІРЅРѕСЃС‚Рё
+                // Повторяем каждые 1-2 секунды для плавности
                 const delay = 1000 + Math.random() * 1000;
                 setTimeout(animateLoads, delay);
               }
 
-              // Р—Р°РїСѓСЃРєР°РµРј СЃ РЅРµР±РѕР»СЊС€РѕР№ Р·Р°РґРµСЂР¶РєРѕР№ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+              // Запускаем с небольшой задержкой для каждого элемента
               setTimeout(animateLoads, 500 + index * 200);
             });
           }, 10);
         });
       });
 
-      // РћР±СЂР°Р±РѕС‚С‡РёРє РєР»РёРєР° РЅР° Diesel СЃРµРєС†РёСЋ
+      // Обработчик клика на Diesel секцию
       const dieselSection = document.querySelector('.rates-section[data-type="diesel"]');
       if (dieselSection) {
         dieselSection.addEventListener('click', function () {
@@ -6751,29 +7649,29 @@
   <section class="pricing" id="pricing">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">РўР°СЂРёС„РЅС‹Рµ РїР»Р°РЅС‹</h2>
-        <p class="section-subtitle">Р’С‹Р±РµСЂРёС‚Рµ РѕРїС‚РёРјР°Р»СЊРЅС‹Р№ РїР»Р°РЅ РѕР±СѓС‡РµРЅРёСЏ РґР»СЏ РґРѕСЃС‚РёР¶РµРЅРёСЏ РІР°С€РёС… С†РµР»РµР№</p>
+        <h2 class="section-title">Тарифные планы</h2>
+        <p class="section-subtitle">Выберите оптимальный план обучения для достижения ваших целей</p>
       </div>
 
       <div class="pricing-banner">
         <div class="pricing-banner-content">
           <div class="pricing-plans-preview">
             <div class="plan-preview" onclick="window.location.href='pricing.html'" style="cursor: pointer;">
-              <div class="plan-badge free">Р‘РµСЃРїР»Р°С‚РЅРѕ</div>
-              <h4>Р‘Р°Р·РѕРІС‹Р№</h4>
-              <p>РџРѕР»РЅС‹Р№ РґРѕСЃС‚СѓРї Рє С‚РµРѕСЂРёРё РєСѓСЂСЃР°</p>
+              <div class="plan-badge free">Бесплатно</div>
+              <h4>Базовый</h4>
+              <p>Полный доступ к теории курса</p>
             </div>
 
             <div class="plan-preview featured" onclick="window.location.href='pricing.html'" style="cursor: pointer;">
-              <div class="plan-badge pro">РџРѕРїСѓР»СЏСЂРЅС‹Р№</div>
-              <h4>РџСЂРѕ</h4>
-              <p>Р’РµСЃСЊ С„СѓРЅРєС†РёРѕРЅР°Р»: СЃРёРјСѓР»СЏС‚РѕСЂС‹, С‚РµСЃС‚С‹, AI-С‡Р°С‚</p>
+              <div class="plan-badge pro">Популярный</div>
+              <h4>Про</h4>
+              <p>Весь функционал: симуляторы, тесты, AI-чат</p>
             </div>
 
             <div class="plan-preview" onclick="window.location.href='pricing.html'" style="cursor: pointer;">
-              <div class="plan-badge premium">РџСЂРµРјРёСѓРј</div>
-              <h4>Р­РєСЃРїРµСЂС‚</h4>
-              <p>РџРѕРґРґРµСЂР¶РєР° 24/7 Рё РїРѕРјРѕС‰СЊ РІ С‚СЂСѓРґРѕСѓСЃС‚СЂРѕР№СЃС‚РІРµ</p>
+              <div class="plan-badge premium">Премиум</div>
+              <h4>Эксперт</h4>
+              <p>Поддержка 24/7 и помощь в трудоустройстве</p>
             </div>
           </div>
         </div>
@@ -6785,27 +7683,27 @@
   <section class="load-stats-section">
     <div class="container">
       <div class="stats-hero">
-        <h2>рџ“Љ РЎС‚Р°С‚РёСЃС‚РёРєР° РіСЂСѓР·РѕРІ РїРѕ РЎРЁРђ РІ СЂРµР°Р»СЊРЅРѕРј РІСЂРµРјРµРЅРё</h2>
-        <p class="stats-subtitle">РђРєС‚СѓР°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ Рѕ РґРѕСЃС‚СѓРїРЅС‹С… РіСЂСѓР·Р°С… Рё С†РµРЅР°С… РЅР° С‚РѕРїР»РёРІРѕ</p>
+        <h2>?? Статистика грузов по США в реальном времени</h2>
+        <p class="stats-subtitle">Актуальные данные о доступных грузах и ценах на топливо</p>
       </div>
 
       <div class="chart-container">
-        <h3>рџ“€ РўРѕРї-10 С€С‚Р°С‚РѕРІ РїРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ РіСЂСѓР·РѕРІ <span
-            style="font-size: 11px; color: #94a3b8; font-weight: 500;">(РЅР°РІРµРґРёС‚Рµ РґР»СЏ С†РµРЅС‹ РЅР° РґРёР·РµР»СЊ)</span></h3>
+        <h3>?? Топ-10 штатов по количеству грузов <span
+            style="font-size: 11px; color: #94a3b8; font-weight: 500;">(наведите для цены на дизель)</span></h3>
 
-        <!-- Р›РµРіРµРЅРґР° -->
+        <!-- Легенда -->
         <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; font-size: 12px;">
           <div style="display: flex; align-items: center; gap: 6px;">
             <div
               style="width: 20px; height: 12px; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 3px;">
             </div>
-            <span style="color: #94a3b8;">РљРѕР»РёС‡РµСЃС‚РІРѕ РіСЂСѓР·РѕРІ</span>
+            <span style="color: #94a3b8;">Количество грузов</span>
           </div>
           <div style="display: flex; align-items: center; gap: 6px;">
             <div
               style="width: 20px; height: 12px; background: linear-gradient(90deg, #f59e0b, #ef4444); border-radius: 3px;">
             </div>
-            <span style="color: #94a3b8;">Р¦РµРЅР° РґРёР·РµР»СЏ ($1-$10/gal)</span>
+            <span style="color: #94a3b8;">Цена дизеля ($1-$10/gal)</span>
           </div>
         </div>
 
@@ -6817,7 +7715,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЊґ</span>
+              <span class="state-flag">??</span>
               <span class="state-name" data-full="Californ." data-short="CA"></span>
             </div>
           </div>
@@ -6828,7 +7726,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">в­ђ</span>
+              <span class="state-flag">?</span>
               <span class="state-name" data-full="Texas" data-short="TX"></span>
             </div>
           </div>
@@ -6839,7 +7737,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЊЉ</span>
+              <span class="state-flag">??</span>
               <span class="state-name" data-full="Florida" data-short="FL"></span>
             </div>
           </div>
@@ -6850,7 +7748,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЏ™пёЏ</span>
+              <span class="state-flag">???</span>
               <span class="state-name" data-full="Illinois" data-short="IL"></span>
             </div>
           </div>
@@ -6861,7 +7759,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЌ‘</span>
+              <span class="state-flag">??</span>
               <span class="state-name" data-full="Georgia" data-short="GA"></span>
             </div>
           </div>
@@ -6872,7 +7770,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЊІ</span>
+              <span class="state-flag">??</span>
               <span class="state-name" data-full="Pennsylv." data-short="PA"></span>
             </div>
           </div>
@@ -6883,7 +7781,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџ—Ѕ</span>
+              <span class="state-flag">??</span>
               <span class="state-name" data-full="New York" data-short="NY"></span>
             </div>
           </div>
@@ -6894,7 +7792,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЊѕ</span>
+              <span class="state-flag">??</span>
               <span class="state-name" data-full="Ohio" data-short="OH"></span>
             </div>
           </div>
@@ -6905,7 +7803,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЊІ</span>
+              <span class="state-flag">??</span>
               <span class="state-name" data-full="N.Carolin." data-short="NC"></span>
             </div>
           </div>
@@ -6916,7 +7814,7 @@
               </div>
             </div>
             <div class="chart-bar-label">
-              <span class="state-flag">рџЏ”пёЏ</span>
+              <span class="state-flag">???</span>
               <span class="state-name" data-full="Arizona" data-short="AZ"></span>
             </div>
           </div>
@@ -6925,28 +7823,28 @@
 
       <div class="stats-container">
         <div class="stat-card">
-          <div class="stat-icon">рџљ›</div>
+          <div class="stat-icon">??</div>
           <div class="stat-number" id="totalLoads">15,847</div>
-          <div class="stat-label">РђРєС‚РёРІРЅС‹С… РіСЂСѓР·РѕРІ</div>
-          <div class="stat-trend positive">в†‘ 12% Р·Р° РЅРµРґРµР»СЋ</div>
+          <div class="stat-label">Активных грузов</div>
+          <div class="stat-trend positive">^ 12% за неделю</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">рџЏў</div>
+          <div class="stat-icon">??</div>
           <div class="stat-number">50+</div>
-          <div class="stat-label">Р‘СЂРѕРєРµСЂРѕРІ</div>
+          <div class="stat-label">Брокеров</div>
           <div class="stat-trend">TQL, C.H. Robinson, Arrive...</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">вљЎ</div>
+          <div class="stat-icon">?</div>
           <div class="stat-number" id="newLoads">5,247</div>
-          <div class="stat-label">РќРѕРІС‹С… Р·Р° С‡Р°СЃ</div>
-          <div class="stat-trend positive">в†‘ РћР±РЅРѕРІР»СЏРµС‚СЃСЏ РєР°Р¶РґСѓСЋ СЃРµРєСѓРЅРґСѓ</div>
+          <div class="stat-label">Новых за час</div>
+          <div class="stat-trend positive">^ Обновляется каждую секунду</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">рџ—єпёЏ</div>
+          <div class="stat-icon">???</div>
           <div class="stat-number">50</div>
-          <div class="stat-label">РЁС‚Р°С‚РѕРІ РЎРЁРђ</div>
-          <div class="stat-trend">РџРѕР»РЅРѕРµ РїРѕРєСЂС‹С‚РёРµ</div>
+          <div class="stat-label">Штатов США</div>
+          <div class="stat-trend">Полное покрытие</div>
         </div>
       </div>
     </div>
@@ -6959,18 +7857,18 @@
       <div class="curriculum-number">01</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџ“‹</span>
-          <h3 class="curriculum-title">РћСЃРЅРѕРІС‹ РёРЅРґСѓСЃС‚СЂРёРё</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Основы индустрии</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 2-3 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 2-3 дня</div>
         <p class="curriculum-description">
-          Р’РІРµРґРµРЅРёРµ РІ РіСЂСѓР·РѕРїРµСЂРµРІРѕР·РєРё, СЂРѕР»СЊ РґРёСЃРїРµС‚С‡РµСЂР°, СЃС‚СЂСѓРєС‚СѓСЂР° РёРЅРґСѓСЃС‚СЂРёРё Рё РѕСЃРЅРѕРІРЅС‹Рµ С‚РµСЂРјРёРЅС‹.
+          Введение в грузоперевозки, роль диспетчера, структура индустрии и основные термины.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">FMCSA</span>
           <span class="curriculum-topic">DOT</span>
-          <span class="curriculum-topic">РўРµСЂРјРёРЅРѕР»РѕРіРёСЏ</span>
-          <span class="curriculum-topic">РўРёРїС‹ РіСЂСѓР·РѕРІ</span>
+          <span class="curriculum-topic">Терминология</span>
+          <span class="curriculum-topic">Типы грузов</span>
         </div>
       </div>
     </div>
@@ -6980,18 +7878,18 @@
       <div class="curriculum-number">02</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџ“±</span>
-          <h3 class="curriculum-title">Load Boards Рё РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Load Boards и инструменты</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 2-3 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 2-3 дня</div>
         <p class="curriculum-description">
-          Р Р°Р±РѕС‚Р° СЃ DAT, Truckstop, TruckerPath. РџРѕРёСЃРє РіСЂСѓР·РѕРІ, Р°РЅР°Р»РёР· СЂС‹РЅРєР°, РѕС†РµРЅРєР° РјР°СЂС€СЂСѓС‚РѕРІ.
+          Работа с DAT, Truckstop, TruckerPath. Поиск грузов, анализ рынка, оценка маршрутов.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">DAT</span>
           <span class="curriculum-topic">Truckstop</span>
           <span class="curriculum-topic">TruckerPath</span>
-          <span class="curriculum-topic">РђРЅР°Р»РёР· СЂС‹РЅРєР°</span>
+          <span class="curriculum-topic">Анализ рынка</span>
         </div>
       </div>
     </div>
@@ -7001,12 +7899,12 @@
       <div class="curriculum-number">03</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџ’ј</span>
-          <h3 class="curriculum-title">Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ Рё compliance</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Документация и compliance</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 2 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 2 дня</div>
         <p class="curriculum-description">
-          Rate confirmations, BOL, POD, insurance certificates. РџСЂР°РІРёР»Р° РѕС„РѕСЂРјР»РµРЅРёСЏ РґРѕРєСѓРјРµРЅС‚РѕРІ.
+          Rate confirmations, BOL, POD, insurance certificates. Правила оформления документов.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">Rate Con</span>
@@ -7022,12 +7920,12 @@
       <div class="curriculum-number">04</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџ“ћ</span>
-          <h3 class="curriculum-title">РџРµСЂРµРіРѕРІРѕСЂС‹ СЃ Р±СЂРѕРєРµСЂР°РјРё</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Переговоры с брокерами</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 3-4 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 3-4 дня</div>
         <p class="curriculum-description">
-          РўРµС…РЅРёРєРё РїРµСЂРµРіРѕРІРѕСЂРѕРІ, СЂР°Р±РѕС‚Р° СЃ РІРѕР·СЂР°Р¶РµРЅРёСЏРјРё, РїРѕСЃС‚СЂРѕРµРЅРёРµ РґРѕР»РіРѕСЃСЂРѕС‡РЅС‹С… РѕС‚РЅРѕС€РµРЅРёР№.
+          Техники переговоров, работа с возражениями, построение долгосрочных отношений.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">Cold calling</span>
@@ -7043,12 +7941,12 @@
       <div class="curriculum-number">05</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџ—єпёЏ</span>
-          <h3 class="curriculum-title">РџР»Р°РЅРёСЂРѕРІР°РЅРёРµ РјР°СЂС€СЂСѓС‚РѕРІ</h3>
+          <span class="curriculum-icon">???</span>
+          <h3 class="curriculum-title">Планирование маршрутов</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 2 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 2 дня</div>
         <p class="curriculum-description">
-          РћРїС‚РёРјРёР·Р°С†РёСЏ РјР°СЂС€СЂСѓС‚РѕРІ, СЂР°СЃС‡РµС‚ РІСЂРµРјРµРЅРё, СѓС‡РµС‚ HOS, РїР»Р°РЅРёСЂРѕРІР°РЅРёРµ backhaul.
+          Оптимизация маршрутов, расчет времени, учет HOS, планирование backhaul.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">Route planning</span>
@@ -7064,12 +7962,12 @@
       <div class="curriculum-number">06</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџљ›</span>
-          <h3 class="curriculum-title">Р Р°Р±РѕС‚Р° СЃ РІРѕРґРёС‚РµР»СЏРјРё</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Работа с водителями</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 2 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 2 дня</div>
         <p class="curriculum-description">
-          РљРѕРјРјСѓРЅРёРєР°С†РёСЏ СЃ РІРѕРґРёС‚РµР»СЏРјРё, СЂРµС€РµРЅРёРµ РїСЂРѕР±Р»РµРј РЅР° РґРѕСЂРѕРіРµ, РјРѕС‚РёРІР°С†РёСЏ Рё СѓРґРµСЂР¶Р°РЅРёРµ.
+          Коммуникация с водителями, решение проблем на дороге, мотивация и удержание.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">Communication</span>
@@ -7085,12 +7983,12 @@
       <div class="curriculum-number">07</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">вљ пёЏ</span>
-          <h3 class="curriculum-title">РљСЂРёР·РёСЃРЅС‹Рµ СЃРёС‚СѓР°С†РёРё</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Кризисные ситуации</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 2 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 2 дня</div>
         <p class="curriculum-description">
-          РџРѕР»РѕРјРєРё, Р°РІР°СЂРёРё, Р·Р°РґРµСЂР¶РєРё, РѕС‚РєР°Р·С‹ РѕС‚ РіСЂСѓР·Р°. РџСЂРѕС‚РѕРєРѕР»С‹ РґРµР№СЃС‚РІРёР№ РІ СЌРєСЃС‚СЂРµРЅРЅС‹С… СЃРёС‚СѓР°С†РёСЏС….
+          Поломки, аварии, задержки, отказы от груза. Протоколы действий в экстренных ситуациях.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">Breakdowns</span>
@@ -7106,12 +8004,12 @@
       <div class="curriculum-number">08</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџ’°</span>
-          <h3 class="curriculum-title">Р¤РёРЅР°РЅСЃС‹ Рё СѓС‡РµС‚</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Финансы и учет</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 2 РґРЅСЏ</div>
+        <div class="curriculum-duration">?? 2 дня</div>
         <p class="curriculum-description">
-          Р Р°СЃС‡РµС‚ РїСЂРёР±С‹Р»СЊРЅРѕСЃС‚Рё, С„Р°РєС‚РѕСЂРёРЅРі, invoicing, СЂР°Р±РѕС‚Р° СЃ QuickBooks Рё accounting software.
+          Расчет прибыльности, факторинг, invoicing, работа с QuickBooks и accounting software.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">Profit calculation</span>
@@ -7127,12 +8025,12 @@
       <div class="curriculum-number">09</div>
       <div class="curriculum-content">
         <div class="curriculum-header">
-          <span class="curriculum-icon">рџЋЇ</span>
-          <h3 class="curriculum-title">РџСЂР°РєС‚РёРєР° Рё СЃРёРјСѓР»СЏС†РёРё</h3>
+          <span class="curriculum-icon">??</span>
+          <h3 class="curriculum-title">Практика и симуляции</h3>
         </div>
-        <div class="curriculum-duration">вЏ±пёЏ 3-5 РґРЅРµР№</div>
+        <div class="curriculum-duration">?? 3-5 дней</div>
         <p class="curriculum-description">
-          Р РµР°Р»СЊРЅС‹Рµ РєРµР№СЃС‹, СЃРёРјСѓР»СЏС‚РѕСЂ РґРёСЃРїРµС‚С‡РµСЂР°, СЂРѕР»РµРІС‹Рµ РёРіСЂС‹ Рё С„РёРЅР°Р»СЊРЅС‹Р№ СЌРєР·Р°РјРµРЅ.
+          Реальные кейсы, симулятор диспетчера, ролевые игры и финальный экзамен.
         </p>
         <div class="curriculum-topics">
           <span class="curriculum-topic">Real cases</span>
@@ -7152,16 +8050,16 @@
   <section class="final-cta-hero" style="display: none;">
     <div class="container">
       <div class="final-cta-box">
-        <h2 class="final-cta-title">Р“РѕС‚РѕРІС‹ РЅР°С‡Р°С‚СЊ РєР°СЂСЊРµСЂСѓ РґРёСЃРїРµС‚С‡РµСЂР°?</h2>
-        <p class="final-cta-subtitle">РџСЂРёСЃРѕРµРґРёРЅСЏР№С‚РµСЃСЊ Рє <span id="graduates-count">175</span>+ СѓСЃРїРµС€РЅС‹С… РІС‹РїСѓСЃРєРЅРёРєРѕРІ.
-          РќР°С‡РЅРёС‚Рµ РѕР±СѓС‡РµРЅРёРµ Р±РµСЃРїР»Р°С‚РЅРѕ!</p>
+        <h2 class="final-cta-title">Готовы начать карьеру диспетчера?</h2>
+        <p class="final-cta-subtitle">Присоединяйтесь к <span id="graduates-count">175</span>+ успешных выпускников.
+          Начните обучение бесплатно!</p>
         <div class="final-cta-buttons">
           <a href="courses.html" class="btn btn-primary btn-large">
-            <span>РќР°С‡Р°С‚СЊ РѕР±СѓС‡РµРЅРёРµ Р±РµСЃРїР»Р°С‚РЅРѕ</span>
-            <span class="arrow">в†’</span>
+            <span>Начать обучение бесплатно</span>
+            <span class="arrow">></span>
           </a>
           <a href="pricing.html" class="btn btn-secondary btn-large">
-            <span>РџРѕСЃРјРѕС‚СЂРµС‚СЊ С‚Р°СЂРёС„С‹</span>
+            <span>Посмотреть тарифы</span>
           </a>
         </div>
       </div>
@@ -7172,15 +8070,15 @@
   <section class="cta-section" style="display: none;">
     <div class="container">
       <div class="cta-content">
-        <h2 class="cta-title">Р“РѕС‚РѕРІС‹ РЅР°С‡Р°С‚СЊ РѕР±СѓС‡РµРЅРёРµ?</h2>
-        <p class="cta-subtitle">РџСЂРёСЃРѕРµРґРёРЅСЏР№С‚РµСЃСЊ Рє С‚С‹СЃСЏС‡Р°Рј СѓСЃРїРµС€РЅС‹С… РґРёСЃРїРµС‚С‡РµСЂРѕРІ</p>
+        <h2 class="cta-title">Готовы начать обучение?</h2>
+        <p class="cta-subtitle">Присоединяйтесь к тысячам успешных диспетчеров</p>
         <div class="cta-buttons">
           <a href="course.html" class="btn btn-primary btn-large">
-            <span>РќР°С‡Р°С‚СЊ Р±РµСЃРїР»Р°С‚РЅРѕ</span>
-            <span class="arrow">в†’</span>
+            <span>Начать бесплатно</span>
+            <span class="arrow">></span>
           </a>
           <a href="pricing.html" class="btn btn-secondary btn-large">
-            <span>РџРѕСЃРјРѕС‚СЂРµС‚СЊ С‚Р°СЂРёС„С‹</span>
+            <span>Посмотреть тарифы</span>
           </a>
         </div>
       </div>
@@ -7192,32 +8090,32 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h4>РљСѓСЂСЃС‹ Р”РёСЃРїРµС‚С‡РµСЂР°</h4>
-          <p>РџСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅРѕРµ РѕР±СѓС‡РµРЅРёРµ РґРёСЃРїРµС‚С‡РµСЂРѕРІ РіСЂСѓР·РѕРїРµСЂРµРІРѕР·РѕРє</p>
+          <h4>Курсы Диспетчера</h4>
+          <p>Профессиональное обучение диспетчеров грузоперевозок</p>
         </div>
 
         <div class="footer-section">
-          <h4>РћР±СѓС‡РµРЅРёРµ</h4>
-          <a href="courses.html">РљСѓСЂСЃС‹</a>
+          <h4>Обучение</h4>
+          <a href="courses.html">Курсы</a>
         </div>
 
         <div class="footer-section">
-          <h4>РџРѕРґРґРµСЂР¶РєР°</h4>
+          <h4>Поддержка</h4>
           <a href="faq.html">FAQ</a>
-          <a href="contacts.html">РљРѕРЅС‚Р°РєС‚С‹</a>
-          <a href="help.html">РџРѕРјРѕС‰СЊ</a>
+          <a href="contacts.html">Контакты</a>
+          <a href="help.html">Помощь</a>
         </div>
 
         <div class="footer-section">
-          <h4>РљРѕРјРїР°РЅРёСЏ</h4>
-          <a href="about.html">Рћ РЅР°СЃ</a>
-          <a href="blog.html">Р‘Р»РѕРі</a>
-          <a href="career.html">РљР°СЂСЊРµСЂР°</a>
+          <h4>Компания</h4>
+          <a href="about.html">О нас</a>
+          <a href="blog.html">Блог</a>
+          <a href="career.html">Карьера</a>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2024 РљСѓСЂСЃС‹ Р”РёСЃРїРµС‚С‡РµСЂР°. Р’СЃРµ РїСЂР°РІР° Р·Р°С‰РёС‰РµРЅС‹.</p>
+        <p>&copy; 2024 Курсы Диспетчера. Все права защищены.</p>
       </div>
     </div>
   </footer>
@@ -7302,7 +8200,7 @@
       let height = window.innerHeight;
       let animationFrameId;
       let particles = [];
-      const particleCount = 40; // РЈРјРµРЅСЊС€РµРЅРѕ РґР»СЏ РјРµРЅРµРµ Р·Р°РјРµС‚РЅРѕРіРѕ СЌС„С„РµРєС‚Р°
+      const particleCount = 40; // Уменьшено для менее заметного эффекта
       const connectionDistance = 180;
       const mouse = { x: null, y: null, radius: 200 };
       let scrollOffset = 0;
@@ -7311,56 +8209,37 @@
         constructor() {
           this.x = Math.random() * width;
           this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 1.5; // Р‘С‹СЃС‚СЂРµРµ РґРІРёР¶РµРЅРёРµ
-          this.vy = (Math.random() - 0.5) * 1.5;
-          this.radius = Math.random() * 1.5 + 0.5;
-          this.opacity = (Math.random() * 0.15 + 0.1) * 0.5;
+          this.vx = (Math.random() - 0.5) * 0.3; // Медленнее движение
+          this.vy = (Math.random() - 0.5) * 0.3;
+          this.radius = Math.random() * 1.5 + 0.5; // Меньше размер
+          this.opacity = (Math.random() * 0.15 + 0.1) * 0.5; // Еще слабее
           this.pulseSpeed = Math.random() * 0.01 + 0.005;
           this.pulsePhase = Math.random() * Math.PI * 2;
           this.baseY = this.y;
           this.baseX = this.x;
-          // РҐР°РѕС‚РёС‡РЅРѕРµ РґРІРёР¶РµРЅРёРµ
-          this.chaosX = Math.random() * Math.PI * 2;
-          this.chaosY = Math.random() * Math.PI * 2;
-          this.chaosSpeedX = (Math.random() - 0.5) * 0.08;
-          this.chaosSpeedY = (Math.random() - 0.5) * 0.08;
-          this.chaosAmplitudeX = Math.random() * 40 + 20;
-          this.chaosAmplitudeY = Math.random() * 40 + 20;
-          // РЎР»СѓС‡Р°Р№РЅРѕРµ РёР·РјРµРЅРµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
-          this.directionChangeTimer = Math.random() * 200 + 100;
-          this.directionChangeCounter = 0;
+          // Добавляем плавное волнообразное движение
+          this.waveSpeed = Math.random() * 0.02 + 0.01;
+          this.waveAmplitude = Math.random() * 20 + 10;
+          this.wavePhase = Math.random() * Math.PI * 2;
         }
 
         update() {
-          // РҐР°РѕС‚РёС‡РЅРѕРµ РґРІРёР¶РµРЅРёРµ
-          this.chaosX += this.chaosSpeedX;
-          this.chaosY += this.chaosSpeedY;
-
-          const chaosOffsetX = Math.sin(this.chaosX) * this.chaosAmplitudeX;
-          const chaosOffsetY = Math.cos(this.chaosY) * this.chaosAmplitudeY;
-
-          // РЎР»СѓС‡Р°Р№РЅРѕРµ РёР·РјРµРЅРµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
-          this.directionChangeCounter++;
-          if (this.directionChangeCounter > this.directionChangeTimer) {
-            this.vx += (Math.random() - 0.5) * 0.5;
-            this.vy += (Math.random() - 0.5) * 0.5;
-            this.vx = Math.max(-2, Math.min(2, this.vx));
-            this.vy = Math.max(-2, Math.min(2, this.vy));
-            this.directionChangeCounter = 0;
-            this.directionChangeTimer = Math.random() * 200 + 100;
-          }
+          // Волнообразное движение
+          this.wavePhase += this.waveSpeed;
+          const waveX = Math.sin(this.wavePhase) * this.waveAmplitude;
+          const waveY = Math.cos(this.wavePhase * 0.5) * (this.waveAmplitude * 0.5);
 
           this.baseX += this.vx;
           this.baseY += this.vy;
 
-          // РџСЂРёРјРµРЅСЏРµРј С…Р°РѕСЃ Рё СЃРєСЂРѕР»Р»РёРЅРі
-          this.x = this.baseX + chaosOffsetX;
-          this.y = this.baseY + chaosOffsetY + scrollOffset * 0.08;
+          // Применяем волну и скроллинг
+          this.x = this.baseX + waveX;
+          this.y = this.baseY + waveY + scrollOffset * 0.08;
 
-          // РџСѓР»СЊСЃР°С†РёСЏ
+          // Пульсация
           this.pulsePhase += this.pulseSpeed;
 
-          // РћС‚С‚Р°Р»РєРёРІР°РЅРёРµ РѕС‚ РјС‹С€Рё (Р±РѕР»РµРµ СЃРёР»СЊРЅРѕРµ)
+          // Отталкивание от мыши (более плавное)
           if (mouse.x !== null && mouse.y !== null) {
             const dx = this.x - mouse.x;
             const dy = this.y - mouse.y;
@@ -7368,20 +8247,14 @@
 
             if (distance < mouse.radius) {
               const force = (mouse.radius - distance) / mouse.radius;
-              this.baseX += dx * force * 0.15;
-              this.baseY += dy * force * 0.15;
+              this.baseX += dx * force * 0.05;
+              this.baseY += dy * force * 0.05;
             }
           }
 
-          // РћС‚СЃРєРѕРє РѕС‚ РіСЂР°РЅРёС† СЃ РёР·РјРµРЅРµРЅРёРµРј РЅР°РїСЂР°РІР»РµРЅРёСЏ
-          if (this.baseX < -50 || this.baseX > width + 50) {
-            this.vx *= -1;
-            this.vx += (Math.random() - 0.5) * 0.3;
-          }
-          if (this.baseY < -50 || this.baseY > height + 50) {
-            this.vy *= -1;
-            this.vy += (Math.random() - 0.5) * 0.3;
-          }
+          // Плавный отскок от границ
+          if (this.baseX < -50 || this.baseX > width + 50) this.vx *= -1;
+          if (this.baseY < -50 || this.baseY > height + 50) this.vy *= -1;
 
           this.baseX = Math.max(-50, Math.min(width + 50, this.baseX));
           this.baseY = Math.max(-50, Math.min(height + 50, this.baseY));
@@ -7391,7 +8264,7 @@
           const pulse = Math.sin(this.pulsePhase) * 0.2 + 1;
           const currentRadius = this.radius * pulse;
 
-          // РџСЂРѕСЃС‚РѕРµ Р±РµР»РѕРµ СЃРІРµС‡РµРЅРёРµ
+          // Простое белое свечение
           const gradient = ctx.createRadialGradient(
             this.x, this.y, 0,
             this.x, this.y, currentRadius * 2.5
@@ -7405,7 +8278,7 @@
           ctx.fillStyle = gradient;
           ctx.fill();
 
-          // РЇСЂРєРѕРµ СЏРґСЂРѕ
+          // Яркое ядро
           ctx.beginPath();
           ctx.arc(this.x, this.y, currentRadius, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.8})`;
@@ -7435,9 +8308,9 @@
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < connectionDistance) {
-              const opacity = (1 - distance / connectionDistance) * 0.08; // Р•С‰Рµ СЃР»Р°Р±РµРµ
+              const opacity = (1 - distance / connectionDistance) * 0.08; // Еще слабее
 
-              // РџСЂРѕСЃС‚Р°СЏ Р±РµР»Р°СЏ Р»РёРЅРёСЏ
+              // Простая белая линия
               ctx.beginPath();
               ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
               ctx.lineWidth = 0.8;
@@ -7457,10 +8330,10 @@
 
         ctx.clearRect(0, 0, width, height);
 
-        // Р РёСЃСѓРµРј СЃРѕРµРґРёРЅРµРЅРёСЏ
+        // Рисуем соединения
         connectParticles();
 
-        // РћР±РЅРѕРІР»СЏРµРј Рё СЂРёСЃСѓРµРј С‡Р°СЃС‚РёС†С‹
+        // Обновляем и рисуем частицы
         particles.forEach(particle => {
           particle.update();
           particle.draw();
@@ -7598,7 +8471,7 @@
 
   <!-- Load Statistics Chart Script -->
   <script>
-    // РђРЅРёРјР°С†РёСЏ СЃС‡РµС‚С‡РёРєР° РЅРѕРІС‹С… РіСЂСѓР·РѕРІ
+    // Анимация счетчика новых грузов
     let currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
     const newLoadsElement = document.getElementById('newLoads');
 
@@ -7606,42 +8479,42 @@
       function updateLoadsCounter() {
         const random = Math.random();
 
-        // 65% РІСЂРµРјРµРЅРё - СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ РЅР° +12
+        // 65% времени - увеличивается на +12
         if (random < 0.65) {
           currentLoads += 12;
         }
-        // 15% РІСЂРµРјРµРЅРё - СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР° -85
+        // 15% времени - уменьшается на -85
         else if (random < 0.80) {
           currentLoads -= 85;
         }
-        // 10% РІСЂРµРјРµРЅРё - СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР° -65
+        // 10% времени - уменьшается на -65
         else if (random < 0.90) {
           currentLoads -= 65;
         }
-        // 10% РІСЂРµРјРµРЅРё - СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР° -45
+        // 10% времени - уменьшается на -45
         else {
           currentLoads -= 45;
         }
 
-        // Р•СЃР»Рё РґРѕСЃС‚РёРіР»Рё РјР°РєСЃРёРјСѓРјР°, РІРѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє СЃР»СѓС‡Р°Р№РЅРѕРјСѓ С‡РёСЃР»Сѓ РІ РґРёР°РїР°Р·РѕРЅРµ
+        // Если достигли максимума, возвращаемся к случайному числу в диапазоне
         if (currentLoads > 7000) {
           currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
         }
 
-        // Р•СЃР»Рё СѓРїР°Р»Рё РЅРёР¶Рµ РјРёРЅРёРјСѓРјР°, РІРѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє СЃР»СѓС‡Р°Р№РЅРѕРјСѓ С‡РёСЃР»Сѓ РІ РґРёР°РїР°Р·РѕРЅРµ
+        // Если упали ниже минимума, возвращаемся к случайному числу в диапазоне
         if (currentLoads < 5000) {
           currentLoads = Math.floor(Math.random() * (5700 - 5140 + 1)) + 5140;
         }
 
-        // Р¤РѕСЂРјР°С‚РёСЂСѓРµРј С‡РёСЃР»Рѕ СЃ Р·Р°РїСЏС‚РѕР№
+        // Форматируем число с запятой
         newLoadsElement.textContent = currentLoads.toLocaleString('ru-RU');
       }
 
-      // РћР±РЅРѕРІР»СЏРµРј РєР°Р¶РґСѓСЋ СЃРµРєСѓРЅРґСѓ
+      // Обновляем каждую секунду
       setInterval(updateLoadsCounter, 1000);
     }
 
-    // РђРЅРёРјР°С†РёСЏ СЃС‡РµС‚С‡РёРєР° Р°РєС‚РёРІРЅС‹С… РіСЂСѓР·РѕРІ
+    // Анимация счетчика активных грузов
     let totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
     const totalLoadsElement = document.getElementById('totalLoads');
 
@@ -7649,42 +8522,42 @@
       function updateTotalLoadsCounter() {
         const random = Math.random();
 
-        // 70% РІСЂРµРјРµРЅРё - СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ РЅР° +18
+        // 70% времени - увеличивается на +18
         if (random < 0.70) {
           totalLoads += 18;
         }
-        // 10% РІСЂРµРјРµРЅРё - СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР° -15
+        // 10% времени - уменьшается на -15
         else if (random < 0.80) {
           totalLoads -= 15;
         }
-        // 10% РІСЂРµРјРµРЅРё - СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР° -5
+        // 10% времени - уменьшается на -5
         else if (random < 0.90) {
           totalLoads -= 5;
         }
-        // 10% РІСЂРµРјРµРЅРё - СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР° -25
+        // 10% времени - уменьшается на -25
         else {
           totalLoads -= 25;
         }
 
-        // Р•СЃР»Рё РґРѕСЃС‚РёРіР»Рё РјР°РєСЃРёРјСѓРјР°, РІРѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє СЃР»СѓС‡Р°Р№РЅРѕРјСѓ С‡РёСЃР»Сѓ РІ РґРёР°РїР°Р·РѕРЅРµ
+        // Если достигли максимума, возвращаемся к случайному числу в диапазоне
         if (totalLoads > 2245) {
           totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
         }
 
-        // Р•СЃР»Рё СѓРїР°Р»Рё РЅРёР¶Рµ РјРёРЅРёРјСѓРјР°, РІРѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє СЃР»СѓС‡Р°Р№РЅРѕРјСѓ С‡РёСЃР»Сѓ РІ РґРёР°РїР°Р·РѕРЅРµ
+        // Если упали ниже минимума, возвращаемся к случайному числу в диапазоне
         if (totalLoads < 1485) {
           totalLoads = Math.floor(Math.random() * (2245 - 1485 + 1)) + 1485;
         }
 
-        // Р¤РѕСЂРјР°С‚РёСЂСѓРµРј С‡РёСЃР»Рѕ СЃ Р·Р°РїСЏС‚РѕР№
+        // Форматируем число с запятой
         totalLoadsElement.textContent = totalLoads.toLocaleString('ru-RU');
       }
 
-      // РћР±РЅРѕРІР»СЏРµРј РєР°Р¶РґСѓСЋ СЃРµРєСѓРЅРґСѓ
+      // Обновляем каждую секунду
       setInterval(updateTotalLoadsCounter, 1000);
     }
 
-    // РђРЅРёРјР°С†РёСЏ РїРѕСЏРІР»РµРЅРёСЏ Р±Р°СЂРѕРІ РіСЂР°С„РёРєР° РїСЂРё Р·Р°РіСЂСѓР·РєРµ
+    // Анимация появления баров графика при загрузке
     window.addEventListener('load', () => {
       const bars = document.querySelectorAll('.chart-bar');
       bars.forEach((bar, index) => {
@@ -7694,7 +8567,7 @@
           bar.style.transition = 'height 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
           bar.style.height = currentHeight;
 
-          // РЎРѕС…СЂР°РЅСЏРµРј РѕСЂРёРіРёРЅР°Р»СЊРЅСѓСЋ РІС‹СЃРѕС‚Сѓ РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё
+          // Сохраняем оригинальную высоту после завершения анимации
           setTimeout(() => {
             if (stateData[index]) {
               stateData[index].originalHeight = currentHeight;
@@ -7704,21 +8577,21 @@
       });
     });
 
-    // Р РµР°Р»РёСЃС‚РёС‡РЅР°СЏ Р°РЅРёРјР°С†РёСЏ РёР·РјРµРЅРµРЅРёСЏ РґР°РЅРЅС‹С… РІ РіСЂР°С„РёРєРµ
+    // Реалистичная анимация изменения данных в графике
     const stateData = [
-      { name: 'California', flag: 'рџЊґ', baseValue: 3247, dieselPrice: 4.89, element: null, bar: null },
-      { name: 'Texas', flag: 'в­ђ', baseValue: 2891, dieselPrice: 3.45, element: null, bar: null },
-      { name: 'Florida', flag: 'рџЊЉ', baseValue: 2156, dieselPrice: 3.78, element: null, bar: null },
-      { name: 'Illinois', flag: 'рџЏ™пёЏ', baseValue: 1923, dieselPrice: 4.12, element: null, bar: null },
-      { name: 'Georgia', flag: 'рџЌ‘', baseValue: 1687, dieselPrice: 3.65, element: null, bar: null },
-      { name: 'Pennsylvania', flag: 'рџЊІ', baseValue: 1534, dieselPrice: 4.23, element: null, bar: null },
-      { name: 'New York', flag: 'рџ—Ѕ', baseValue: 1421, dieselPrice: 4.56, element: null, bar: null },
-      { name: 'Ohio', flag: 'рџЊѕ', baseValue: 1298, dieselPrice: 3.92, element: null, bar: null },
-      { name: 'North Carolina', flag: 'рџЊІ', baseValue: 1147, dieselPrice: 3.71, element: null, bar: null },
-      { name: 'Arizona', flag: 'рџЏ”пёЏ', baseValue: 987, dieselPrice: 3.98, element: null, bar: null }
+      { name: 'California', flag: '??', baseValue: 3247, dieselPrice: 4.89, element: null, bar: null },
+      { name: 'Texas', flag: '?', baseValue: 2891, dieselPrice: 3.45, element: null, bar: null },
+      { name: 'Florida', flag: '??', baseValue: 2156, dieselPrice: 3.78, element: null, bar: null },
+      { name: 'Illinois', flag: '???', baseValue: 1923, dieselPrice: 4.12, element: null, bar: null },
+      { name: 'Georgia', flag: '??', baseValue: 1687, dieselPrice: 3.65, element: null, bar: null },
+      { name: 'Pennsylvania', flag: '??', baseValue: 1534, dieselPrice: 4.23, element: null, bar: null },
+      { name: 'New York', flag: '??', baseValue: 1421, dieselPrice: 4.56, element: null, bar: null },
+      { name: 'Ohio', flag: '??', baseValue: 1298, dieselPrice: 3.92, element: null, bar: null },
+      { name: 'North Carolina', flag: '??', baseValue: 1147, dieselPrice: 3.71, element: null, bar: null },
+      { name: 'Arizona', flag: '???', baseValue: 987, dieselPrice: 3.98, element: null, bar: null }
     ];
 
-    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЌР»РµРјРµРЅС‚РѕРІ РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё
+    // Инициализация элементов после загрузки
     setTimeout(() => {
       const chartItems = document.querySelectorAll('.chart-bar-item');
 
@@ -7728,18 +8601,18 @@
           stateData[index].bar = item.querySelector('.chart-bar');
           stateData[index].currentValue = stateData[index].baseValue;
           stateData[index].showingDiesel = false;
-          // originalHeight Р±СѓРґРµС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅ РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ Р°РЅРёРјР°С†РёРё Р·Р°РіСЂСѓР·РєРё
+          // originalHeight будет установлен после завершения анимации загрузки
           stateData[index].originalHeight = stateData[index].bar.style.height;
 
-          // Р”РѕР±Р°РІР»СЏРµРј С‚РµРєСЃС‚РѕРІСѓСЋ РїРѕРґСЃРєР°Р·РєСѓ РЅР° Р±Р°СЂ
+          // Добавляем текстовую подсказку на бар
           const barLabel = document.createElement('span');
           barLabel.className = 'bar-mode-label';
-          barLabel.textContent = 'Р”РѕСЃС‚СѓРїРЅС‹Рµ РіСЂСѓР·С‹';
+          barLabel.textContent = 'Доступные грузы';
           barLabel.style.cssText = 'position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 10px; color: rgba(255,255,255,0.08); font-weight: 600; z-index: 2; pointer-events: none; text-shadow: none; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; transition: all 0.4s ease; opacity: 0.3;';
           stateData[index].bar.appendChild(barLabel);
           stateData[index].barLabel = barLabel;
 
-          // Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїРѕР·РёС†РёРѕРЅРёСЂРѕРІР°РЅРёСЏ Р»РµР№Р±Р»Р° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С€РёСЂРёРЅС‹ Р±Р°СЂР°
+          // Функция для позиционирования лейбла в зависимости от ширины бара
           stateData[index].updateLabelPosition = function () {
             const barWidth = parseFloat(this.bar.style.width);
             if (barWidth < 20) {
@@ -7749,7 +8622,7 @@
             }
           };
 
-          // Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЃР»СѓС‡Р°Р№РЅРѕРіРѕ РёСЃС‡РµР·РЅРѕРІРµРЅРёСЏ Рё РїРѕСЏРІР»РµРЅРёСЏ РЅР°РґРїРёСЃРё
+          // Функция для случайного исчезновения и появления надписи
           stateData[index].animateLabel = function () {
             if (!this.barLabel) return;
 
@@ -7783,33 +8656,33 @@
           stateData[index].updateLabelPosition();
           setTimeout(() => stateData[index].animateLabel(), Math.random() * 2000);
 
-          // Р”РѕР±Р°РІР»СЏРµРј РѕР±СЂР°Р±РѕС‚С‡РёРєРё РґР»СЏ РїРѕРєР°Р·Р° С†РµРЅС‹ РЅР° РґРёР·РµР»СЊ
+          // Добавляем обработчики для показа цены на дизель
           const barWrapper = item.querySelector('.chart-bar-wrapper');
           const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
           if (!isMobile) {
-            // РќР° РґРµСЃРєС‚РѕРїРµ: РїСЂРё РЅР°РІРµРґРµРЅРёРё РїРѕРєР°Р·С‹РІР°РµРј С†РµРЅСѓ РЅР° РґРёР·РµР»СЊ
+            // На десктопе: при наведении показываем цену на дизель
             barWrapper.addEventListener('mouseenter', () => {
               if (!stateData[index].showingDiesel) {
                 stateData[index].showingDiesel = true;
 
-                // Р”РѕР±Р°РІР»СЏРµРј РїР»Р°РІРЅСѓСЋ Р°РЅРёРјР°С†РёСЋ
+                // Добавляем плавную анимацию
                 stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
 
-                // РњРµРЅСЏРµРј С†РІРµС‚ Р±Р°СЂР° РЅР° РѕСЂР°РЅР¶РµРІРѕ-РєСЂР°СЃРЅС‹Р№ РіСЂР°РґРёРµРЅС‚
+                // Меняем цвет бара на оранжево-красный градиент
                 stateData[index].bar.style.background = 'linear-gradient(180deg, #f59e0b, #ef4444)';
                 stateData[index].bar.style.backgroundSize = '100% 200%';
 
-                // РњРµРЅСЏРµРј С‚РµРєСЃС‚ РЅР° С†РµРЅСѓ РґРёР·РµР»СЏ
+                // Меняем текст на цену дизеля
                 stateData[index].element.textContent = '$' + stateData[index].dieselPrice.toFixed(2);
 
-                // РњРµРЅСЏРµРј РЅР°РґРїРёСЃСЊ РЅР° Р±Р°СЂРµ
+                // Меняем надпись на баре
                 if (stateData[index].barLabel) {
-                  stateData[index].barLabel.textContent = 'Р¦РµРЅС‹ РЅР° С‚РѕРїР»РёРІРѕ';
+                  stateData[index].barLabel.textContent = 'Цены на топливо';
                   stateData[index].barLabel.style.opacity = '0.08';
                 }
 
-                // РњРµРЅСЏРµРј РІС‹СЃРѕС‚Сѓ Р±Р°СЂР° РїСЂРѕРїРѕСЂС†РёРѕРЅР°Р»СЊРЅРѕ С†РµРЅРµ (РѕС‚ $1 РґРѕ $10)
+                // Меняем высоту бара пропорционально цене (от $1 до $10)
                 const dieselPercentage = (stateData[index].dieselPrice / 10) * 100;
                 stateData[index].bar.style.height = dieselPercentage + '%';
               }
@@ -7819,30 +8692,30 @@
               if (stateData[index].showingDiesel) {
                 stateData[index].showingDiesel = false;
 
-                // Р”РѕР±Р°РІР»СЏРµРј РїР»Р°РІРЅСѓСЋ Р°РЅРёРјР°С†РёСЋ
+                // Добавляем плавную анимацию
                 stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
 
-                // Р’РѕР·РІСЂР°С‰Р°РµРј РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ РіСЂР°РґРёРµРЅС‚
+                // Возвращаем оригинальный градиент
                 stateData[index].bar.style.background = 'linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1)';
                 stateData[index].bar.style.backgroundSize = '100% 200%';
 
-                // Р’РѕР·РІСЂР°С‰Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РіСЂСѓР·РѕРІ
+                // Возвращаем количество грузов
                 stateData[index].element.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
 
-                // Р’РѕР·РІСЂР°С‰Р°РµРј РЅР°РґРїРёСЃСЊ РЅР° Р±Р°СЂРµ
+                // Возвращаем надпись на баре
                 if (stateData[index].barLabel) {
-                  stateData[index].barLabel.textContent = 'Р”РѕСЃС‚СѓРїРЅС‹Рµ РіСЂСѓР·С‹';
+                  stateData[index].barLabel.textContent = 'Доступные грузы';
                   stateData[index].barLabel.style.opacity = '0.3';
                 }
 
-                // Р’РѕР·РІСЂР°С‰Р°РµРј РѕСЂРёРіРёРЅР°Р»СЊРЅСѓСЋ РІС‹СЃРѕС‚Сѓ
+                // Возвращаем оригинальную высоту
                 stateData[index].bar.style.height = stateData[index].originalHeight;
               }
             });
           } else {
-            // РќР° РјРѕР±РёР»СЊРЅС‹С…: РїСЂРё РєР»РёРєРµ РїРѕРєР°Р·С‹РІР°РµРј РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№
+            // На мобильных: при клике показываем модальное окно с информацией
             barWrapper.addEventListener('click', (e) => {
-              e.stopPropagation(); // РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІСЃРїР»С‹С‚РёРµ СЃРѕР±С‹С‚РёСЏ
+              e.stopPropagation(); // Останавливаем всплытие события
 
               const modal = document.getElementById('stateModal');
               const overlay = document.getElementById('stateModalOverlay');
@@ -7852,26 +8725,26 @@
               const modalRatePerMile = document.getElementById('modalRatePerMile');
               const modalDieselPrice = document.getElementById('modalDieselPrice');
 
-              // Р—Р°РїРѕР»РЅСЏРµРј РґР°РЅРЅС‹Рµ
+              // Заполняем данные
               modalStateFlag.textContent = stateData[index].flag;
               modalStateName.textContent = stateData[index].name;
               modalLoadsCount.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
 
-              // Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј rate per mile (РїСЂРёРјРµСЂРЅР°СЏ С„РѕСЂРјСѓР»Р° РЅР° РѕСЃРЅРѕРІРµ РєРѕР»РёС‡РµСЃС‚РІР° РіСЂСѓР·РѕРІ)
+              // Рассчитываем rate per mile (примерная формула на основе количества грузов)
               const ratePerMile = (2.0 + (stateData[index].baseValue / 1000) * 0.15).toFixed(2);
               modalRatePerMile.textContent = '$' + ratePerMile;
 
               modalDieselPrice.textContent = '$' + stateData[index].dieselPrice.toFixed(2);
 
-              // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„Р»Р°Рі С‡С‚Рѕ РјРѕРґР°Р»РєР° С‚РѕР»СЊРєРѕ С‡С‚Рѕ РѕС‚РєСЂС‹Р»Р°СЃСЊ
+              // Устанавливаем флаг что модалка только что открылась
               modalJustOpened = true;
 
-              // РџРѕРєР°Р·С‹РІР°РµРј РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ СЃ РЅРµР±РѕР»СЊС€РѕР№ Р·Р°РґРµСЂР¶РєРѕР№
+              // Показываем модальное окно с небольшой задержкой
               setTimeout(() => {
                 modal.classList.add('active');
                 overlay.classList.add('active');
 
-                // РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°Рі С‡РµСЂРµР· 500ms (СѓРІРµР»РёС‡РµРЅРѕ РґР»СЏ РЅР°РґРµР¶РЅРѕСЃС‚Рё)
+                // Сбрасываем флаг через 500ms (увеличено для надежности)
                 setTimeout(() => {
                   modalJustOpened = false;
                 }, 500);
@@ -7882,7 +8755,7 @@
       });
     }, 1000);
 
-    // Р—Р°РєСЂС‹С‚РёРµ РјРѕРґР°Р»СЊРЅРѕРіРѕ РѕРєРЅР° - РІС‹РЅРµСЃРµРЅРѕ Р·Р° РїСЂРµРґРµР»С‹ setTimeout
+    // Закрытие модального окна - вынесено за пределы setTimeout
     let modalJustOpened = false;
 
     function closeModal() {
@@ -7895,13 +8768,13 @@
       modalJustOpened = false;
     }
 
-    // Р¤СѓРЅРєС†РёСЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РѕР±СЂР°Р±РѕС‚С‡РёРєРѕРІ Р·Р°РєСЂС‹С‚РёСЏ РјРѕРґР°Р»РєРё
+    // Функция инициализации обработчиков закрытия модалки
     function initModalHandlers() {
       const modalClose = document.getElementById('modalClose');
       const overlay = document.getElementById('stateModalOverlay');
       const modal = document.getElementById('stateModal');
 
-      // Р—Р°РєСЂС‹С‚РёРµ РїРѕ РєР»РёРєСѓ РЅР° РєСЂРµСЃС‚РёРє
+      // Закрытие по клику на крестик
       if (modalClose) {
         modalClose.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -7913,7 +8786,7 @@
         }, { passive: true });
       }
 
-      // Р—Р°РєСЂС‹С‚РёРµ РїРѕ РєР»РёРєСѓ РЅР° overlay (С„РѕРЅ)
+      // Закрытие по клику на overlay (фон)
       if (overlay) {
         overlay.addEventListener('click', () => {
           if (!modalJustOpened) {
@@ -7927,7 +8800,7 @@
         }, { passive: true });
       }
 
-      // Р—Р°РєСЂС‹С‚РёРµ РїРѕ РєР»РёРєСѓ РЅР° СЃР°РјРѕ РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ
+      // Закрытие по клику на само модальное окно
       if (modal) {
         modal.addEventListener('click', () => {
           if (!modalJustOpened) {
@@ -7941,7 +8814,7 @@
         }, { passive: true });
       }
 
-      // Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ РѕР±СЂР°Р±РѕС‚С‡РёРє РЅР° document РєР°Рє Р·Р°РїР°СЃРЅРѕР№ РІР°СЂРёР°РЅС‚
+      // Глобальный обработчик на document как запасной вариант
       document.addEventListener('click', (e) => {
         if (!modalJustOpened && modal && modal.classList.contains('active')) {
           closeModal();
@@ -7954,7 +8827,7 @@
       }, { passive: true });
     }
 
-    // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РѕР±СЂР°Р±РѕС‚С‡РёРєРё СЃСЂР°Р·Сѓ РёР»Рё РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё DOM
+    // Инициализируем обработчики сразу или после загрузки DOM
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initModalHandlers);
     } else {
@@ -7967,14 +8840,14 @@
   <div class="state-modal" id="stateModal">
     <div class="modal-header">
       <div class="modal-title">
-        <span id="modalStateFlag">рџЊґ</span>
+        <span id="modalStateFlag">??</span>
         <span id="modalStateName">California</span>
       </div>
-      <button class="modal-close" id="modalClose">Г—</button>
+      <button class="modal-close" id="modalClose">?</button>
     </div>
     <div class="modal-body">
       <div class="modal-info-item">
-        <span class="modal-info-label">РљРѕР»РёС‡РµСЃС‚РІРѕ РіСЂСѓР·РѕРІ</span>
+        <span class="modal-info-label">Количество грузов</span>
         <span class="modal-info-value highlight" id="modalLoadsCount">3,247</span>
       </div>
       <div class="modal-info-item">
@@ -7982,7 +8855,7 @@
         <span class="modal-info-value" id="modalRatePerMile">$2.45</span>
       </div>
       <div class="modal-info-item">
-        <span class="modal-info-label">Р¦РµРЅР° РЅР° РґРёР·РµР»СЊ</span>
+        <span class="modal-info-label">Цена на дизель</span>
         <span class="modal-info-value" id="modalDieselPrice">$4.89</span>
       </div>
     </div>
@@ -7993,3 +8866,6 @@
 </body>
 
 </html>
+
+<!-- React Hero Scroll Video Script -->
+<script src="hero-scroll-section/hero-scroll.js"></script>
