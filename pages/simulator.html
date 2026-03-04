@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0a0e1a">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>🎯 Dispatch Simulator - Dispatcher Training</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <style>
@@ -1955,7 +1958,7 @@
     </div>
 
     <!-- Scenarios Data -->
-    <script src="scenarios-data-test.js"></script>
+    <script src="scenarios-data-test.js?v=4.0"></script>
 
     <script>
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -2143,62 +2146,273 @@
             const oldSuggestions = document.getElementById('suggestions');
             if (oldSuggestions) oldSuggestions.remove();
 
-            const container = document.createElement('div');
-            container.className = 'chat-suggestions';
-            container.id = 'suggestions';
+            // Create a button in chat to open suggestions modal
+            const buttonContainer = document.createElement('div');
+            buttonContainer.className = 'chat-suggestions';
+            buttonContainer.id = 'suggestions';
+            buttonContainer.style.cssText = 'display: flex; justify-content: center; padding: 15px; margin: 10px 0;';
+
+            const openModalBtn = document.createElement('button');
+            openModalBtn.className = 'open-suggestions-modal-btn';
+            openModalBtn.innerHTML = '💬 Выбрать ответ';
+            openModalBtn.style.cssText = `
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                padding: 12px 30px;
+                border-radius: 25px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                transition: all 0.3s ease;
+            `;
+
+            openModalBtn.onmouseover = () => {
+                openModalBtn.style.transform = 'translateY(-2px)';
+                openModalBtn.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.6)';
+            };
+
+            openModalBtn.onmouseout = () => {
+                openModalBtn.style.transform = 'translateY(0)';
+                openModalBtn.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+            };
+
+            openModalBtn.onclick = () => openSuggestionsModal(suggestions);
+
+            buttonContainer.appendChild(openModalBtn);
+            messagesContainer.appendChild(buttonContainer);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function openSuggestionsModal(suggestions) {
+            // Create modal overlay
+            const modalOverlay = document.createElement('div');
+            modalOverlay.id = 'suggestions-modal-overlay';
+            modalOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                border-radius: 16px;
+                padding: 20px;
+                max-width: 500px;
+                width: 90%;
+                max-height: 70vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                animation: slideUp 0.3s ease;
+            `;
+
+            // Modal header
+            const header = document.createElement('div');
+            header.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;';
+
+            const title = document.createElement('h3');
+            title.textContent = '💡 Выберите ответ';
+            title.style.cssText = 'color: #e2e8f0; font-size: 18px; margin: 0; font-weight: 700;';
+
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '✕';
+            closeBtn.style.cssText = `
+                background: rgba(239, 68, 68, 0.2);
+                color: #ef4444;
+                border: none;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            `;
+            closeBtn.onmouseover = () => {
+                closeBtn.style.background = 'rgba(239, 68, 68, 0.3)';
+                closeBtn.style.transform = 'rotate(90deg)';
+            };
+            closeBtn.onmouseout = () => {
+                closeBtn.style.background = 'rgba(239, 68, 68, 0.2)';
+                closeBtn.style.transform = 'rotate(0deg)';
+            };
+            closeBtn.onclick = () => modalOverlay.remove();
+
+            header.appendChild(title);
+            header.appendChild(closeBtn);
+            modalContent.appendChild(header);
+
+            // Suggestions container
+            const suggestionsContainer = document.createElement('div');
+            suggestionsContainer.style.cssText = 'display: flex; flex-direction: column; gap: 10px;';
 
             suggestions.forEach((suggestion, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'suggestion-btn';
+                btn.className = 'suggestion-modal-btn';
 
                 const text = typeof suggestion === 'string' ? suggestion : suggestion.text;
                 const quality = typeof suggestion === 'object' ? suggestion.quality : 'normal';
                 const analytics = typeof suggestion === 'object' ? suggestion.analytics : '';
                 const path = typeof suggestion === 'object' ? suggestion.path : null;
 
-                // Create suggestion card with badge
-                const badge = document.createElement('span');
-                badge.className = 'suggestion-badge';
+                // Create suggestion card
+                btn.style.cssText = `
+                    background: rgba(30, 41, 59, 0.6);
+                    border: 2px solid rgba(100, 116, 139, 0.3);
+                    border-radius: 10px;
+                    padding: 12px 15px;
+                    text-align: left;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
+                `;
 
-                // Set badge text and color based on quality
+                // Quality badge
+                const badge = document.createElement('div');
+                badge.style.cssText = `
+                    display: inline-block;
+                    padding: 3px 10px;
+                    border-radius: 10px;
+                    font-size: 11px;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    text-transform: uppercase;
+                `;
+
+                // Set colors based on quality
+                let borderColor = 'rgba(100, 116, 139, 0.5)';
+                let badgeColor = '#64748b';
+                let badgeBg = 'rgba(100, 116, 139, 0.2)';
+
                 if (quality === 'master' || quality === 'excellent') {
-                    badge.textContent = '💎 МАСТЕР';
-                    badge.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                    borderColor = 'rgba(34, 197, 94, 0.6)';
+                    badgeColor = '#22c55e';
+                    badgeBg = 'rgba(34, 197, 94, 0.2)';
+                    badge.textContent = '💎 Мастер';
                 } else if (quality === 'good') {
-                    badge.textContent = '✅ ХОРОШО';
-                    badge.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+                    borderColor = 'rgba(34, 197, 94, 0.4)';
+                    badgeColor = '#22c55e';
+                    badgeBg = 'rgba(34, 197, 94, 0.15)';
+                    badge.textContent = '✅ Хорошо';
                 } else if (quality === 'normal') {
-                    badge.textContent = '⚪ НОРМАЛЬНО';
-                    badge.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+                    borderColor = 'rgba(59, 130, 246, 0.4)';
+                    badgeColor = '#3b82f6';
+                    badgeBg = 'rgba(59, 130, 246, 0.15)';
+                    badge.textContent = '⚪ Нормально';
                 } else if (quality === 'weak') {
-                    badge.textContent = '⚠️ СЛАБО';
-                    badge.style.background = 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)';
+                    borderColor = 'rgba(156, 163, 175, 0.5)';
+                    badgeColor = '#9ca3af';
+                    badgeBg = 'rgba(156, 163, 175, 0.15)';
+                    badge.textContent = '⚠️ Слабо';
                 } else if (quality === 'aggressive') {
-                    badge.textContent = '⚠️ АГРЕССИВНО';
-                    badge.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+                    borderColor = 'rgba(251, 191, 36, 0.5)';
+                    badgeColor = '#fbbf24';
+                    badgeBg = 'rgba(251, 191, 36, 0.15)';
+                    badge.textContent = '⚠️ Агрессивно';
                 } else if (quality === 'bad' || quality === 'reject' || quality === 'fail') {
-                    badge.textContent = '❌ ПРОВАЛ';
-                    badge.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                    borderColor = 'rgba(239, 68, 68, 0.5)';
+                    badgeColor = '#ef4444';
+                    badgeBg = 'rgba(239, 68, 68, 0.15)';
+                    badge.textContent = '❌ Провал';
                 }
 
-                const messageText = document.createElement('div');
-                messageText.className = 'suggestion-text';
-                messageText.textContent = text;
+                btn.style.borderColor = borderColor;
+                badge.style.color = badgeColor;
+                badge.style.background = badgeBg;
 
+                // Message text
+                const messageText = document.createElement('div');
+                messageText.textContent = text;
+                messageText.style.cssText = `
+                    color: #e2e8f0;
+                    font-size: 13px;
+                    line-height: 1.5;
+                    margin-bottom: 8px;
+                    white-space: pre-wrap;
+                `;
+
+                // Analytics text
                 const analyticsText = document.createElement('div');
-                analyticsText.className = 'suggestion-analytics';
-                analyticsText.textContent = analytics;
+                if (analytics) {
+                    analyticsText.textContent = analytics;
+                    analyticsText.style.cssText = `
+                        color: #94a3b8;
+                        font-size: 11px;
+                        font-style: italic;
+                        margin-top: 8px;
+                        padding-top: 8px;
+                        border-top: 1px solid rgba(100, 116, 139, 0.3);
+                    `;
+                }
 
                 btn.appendChild(badge);
                 btn.appendChild(messageText);
                 if (analytics) btn.appendChild(analyticsText);
 
-                btn.onclick = () => selectSuggestion(text, quality, path);
-                container.appendChild(btn);
+                // Hover effects
+                btn.onmouseover = () => {
+                    btn.style.borderColor = borderColor.replace('0.3', '0.8').replace('0.4', '0.8').replace('0.5', '0.8').replace('0.6', '0.9');
+                    btn.style.background = 'rgba(30, 41, 59, 0.9)';
+                    btn.style.transform = 'translateX(5px)';
+                    btn.style.boxShadow = `0 4px 20px ${borderColor}`;
+                };
+
+                btn.onmouseout = () => {
+                    btn.style.borderColor = borderColor;
+                    btn.style.background = 'rgba(30, 41, 59, 0.6)';
+                    btn.style.transform = 'translateX(0)';
+                    btn.style.boxShadow = 'none';
+                };
+
+                btn.onclick = () => {
+                    modalOverlay.remove();
+                    selectSuggestion(text, quality, path);
+                };
+
+                suggestionsContainer.appendChild(btn);
             });
 
-            messagesContainer.appendChild(container);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            modalContent.appendChild(suggestionsContainer);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+
+            // Close on overlay click
+            modalOverlay.onclick = (e) => {
+                if (e.target === modalOverlay) {
+                    modalOverlay.remove();
+                }
+            };
+
+            // Add animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
         }
 
         function selectSuggestion(text, quality, suggestedPath) {
@@ -2246,35 +2460,36 @@
                 setTimeout(() => {
                     hideTypingIndicator();
 
-                    // Show broker's response (only if it exists and not empty)
-                    if (currentStep.brokerResponse && currentStep.brokerResponse.trim() !== '') {
-                        addMessage(currentStep.brokerResponse, 'broker');
-                    }
+                    // Move to next step first
+                    conversationStep++;
 
-                    // Check if this is the end of conversation (has outcome object)
-                    if (currentStep.outcome) {
-                        // Conversation ended - show outcome feedback
-                        setTimeout(() => {
-                            const outcome = currentStep.outcome;
-                            let outcomeMsg = `\n📊 РЕЗУЛЬТАТ ДИАЛОГА\n\n`;
-                            outcomeMsg += `Качество: ${outcome.quality.toUpperCase()} \n`;
-                            outcomeMsg += `Ставка: ${outcome.rate} (${outcome.ratePerMile}) \n`;
-                            outcomeMsg += `Отношения: ${outcome.relationship} \n`;
-                            outcomeMsg += `Время диалога: ${outcome.dialogueTime} \n`;
-                            outcomeMsg += `Вопросов задано: ${outcome.questionsAsked} \n`;
-                            outcomeMsg += `Будущие грузы: ${outcome.weeklyLoads} \n\n`;
-                            outcomeMsg += `${outcome.feedback} `;
+                    if (conversationStep < pathSteps.length) {
+                        const nextStep = pathSteps[conversationStep];
 
-                            addMessage(outcomeMsg, 'broker');
-                        }, 1000);
-                    } else {
-                        // Continue conversation
-                        conversationStep++;
+                        // Show broker's response (only if it exists and not empty)
+                        if (nextStep.brokerResponse && nextStep.brokerResponse.trim() !== '') {
+                            addMessage(nextStep.brokerResponse, 'broker');
+                        }
 
-                        if (conversationStep < pathSteps.length) {
+                        // Check if this is the end of conversation (has outcome object)
+                        if (nextStep.outcome) {
+                            // Conversation ended - show outcome feedback
                             setTimeout(() => {
-                                const nextStep = pathSteps[conversationStep];
+                                const outcome = nextStep.outcome;
+                                let outcomeMsg = `\n📊 РЕЗУЛЬТАТ ДИАЛОГА\n\n`;
+                                outcomeMsg += `Качество: ${outcome.quality.toUpperCase()} \n`;
+                                outcomeMsg += `Ставка: ${outcome.rate} (${outcome.ratePerMile}) \n`;
+                                outcomeMsg += `Отношения: ${outcome.relationship} \n`;
+                                outcomeMsg += `Время диалога: ${outcome.dialogueTime} \n`;
+                                outcomeMsg += `Вопросов задано: ${outcome.questionsAsked} \n`;
+                                outcomeMsg += `Будущие грузы: ${outcome.weeklyLoads} \n\n`;
+                                outcomeMsg += `${outcome.feedback} `;
 
+                                addMessage(outcomeMsg, 'broker');
+                            }, 1000);
+                        } else {
+                            // Continue conversation
+                            setTimeout(() => {
                                 // Show dispatcher prompt if available
                                 if (nextStep.dispatcherPrompt) {
                                     const promptDiv = document.createElement('div');
