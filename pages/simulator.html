@@ -2106,36 +2106,38 @@
                 if (!backBtn) {
                     backBtn = document.createElement('button');
                     backBtn.id = 'backButton';
-                    backBtn.innerHTML = '↩️ Вернуться назад';
+                    backBtn.innerHTML = '↩️';
+                    backBtn.title = 'Вернуться назад';
                     backBtn.style.cssText = `
-                        position: fixed;
-                        bottom: 100px;
-                        right: 20px;
-                        background: rgba(99, 102, 241, 0.9);
-                        color: white;
+                        background: rgba(100, 116, 139, 0.3);
+                        color: #94a3b8;
                         border: none;
-                        padding: 12px 20px;
-                        border-radius: 25px;
-                        font-size: 14px;
-                        font-weight: 600;
+                        padding: 0;
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 8px;
+                        font-size: 16px;
                         cursor: pointer;
-                        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
                         transition: all 0.3s ease;
-                        z-index: 1000;
-                        animation: fadeIn 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 8px;
                     `;
                     backBtn.onmouseover = () => {
-                        backBtn.style.transform = 'translateY(-2px)';
-                        backBtn.style.boxShadow = '0 6px 20px rgba(99, 102, 241, 0.6)';
+                        backBtn.style.background = 'rgba(100, 116, 139, 0.5)';
                     };
                     backBtn.onmouseout = () => {
-                        backBtn.style.transform = 'translateY(0)';
-                        backBtn.style.boxShadow = '0 4px 15px rgba(99, 102, 241, 0.4)';
+                        backBtn.style.background = 'rgba(100, 116, 139, 0.3)';
                     };
                     backBtn.onclick = goBackOneStep;
-                    document.body.appendChild(backBtn);
+
+                    // Добавляем кнопку в input-area перед кнопкой режима
+                    const inputArea = document.querySelector('.input-area');
+                    const modeBtn = document.getElementById('modeButton');
+                    inputArea.insertBefore(backBtn, modeBtn);
                 }
-                backBtn.style.display = 'block';
+                backBtn.style.display = 'flex';
             } else if (backBtn) {
                 backBtn.style.display = 'none';
             }
@@ -2287,34 +2289,45 @@
             const modeBtn = document.createElement('button');
             modeBtn.id = 'modeButton';
             modeBtn.style.cssText = `
-                position: fixed;
-                top: 80px;
-                right: 20px;
-                background: ${currentMode === 'training' ? 'rgba(34, 197, 94, 0.9)' : 'rgba(239, 68, 68, 0.9)'};
-                color: white;
+                background: rgba(100, 116, 139, 0.3);
+                color: #94a3b8;
                 border: none;
-                padding: 10px 18px;
-                border-radius: 20px;
-                font-size: 13px;
-                font-weight: 600;
+                padding: 0;
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+                font-size: 16px;
                 cursor: pointer;
-                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
                 transition: all 0.3s ease;
-                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 8px;
             `;
-            modeBtn.innerHTML = currentMode === 'training' ? '📚 Обучение' : '🎯 Тестирование';
+            modeBtn.innerHTML = currentMode === 'training' ? '📚' : '🎯';
+            modeBtn.title = currentMode === 'training' ? 'Режим обучения' : 'Режим тестирования';
+            modeBtn.onmouseover = () => {
+                modeBtn.style.background = 'rgba(100, 116, 139, 0.5)';
+            };
+            modeBtn.onmouseout = () => {
+                modeBtn.style.background = 'rgba(100, 116, 139, 0.3)';
+            };
             modeBtn.onclick = () => {
                 currentMode = currentMode === 'training' ? 'testing' : 'training';
                 localStorage.setItem('simulatorMode', currentMode);
-                modeBtn.innerHTML = currentMode === 'training' ? '📚 Обучение' : '🎯 Тестирование';
-                modeBtn.style.background = currentMode === 'training' ? 'rgba(34, 197, 94, 0.9)' : 'rgba(239, 68, 68, 0.9)';
+                modeBtn.innerHTML = currentMode === 'training' ? '📚' : '🎯';
+                modeBtn.title = currentMode === 'training' ? 'Режим обучения' : 'Режим тестирования';
                 updateBackButton();
 
                 const modeText = currentMode === 'training' ? '📚 Режим обучения' : '🎯 Режим тестирования';
                 const modeDesc = currentMode === 'training' ? 'Подсказки включены, можно вернуться назад' : 'Без подсказок, нельзя вернуться назад';
                 alert(`${modeText}\n${modeDesc}`);
             };
-            document.body.appendChild(modeBtn);
+
+            // Добавляем кнопку в input-area перед кнопкой отправки
+            const inputArea = document.querySelector('.input-area');
+            const sendBtn = document.getElementById('sendBtn');
+            inputArea.insertBefore(modeBtn, sendBtn);
         }
 
         function showRandomBubbles() {
@@ -2379,7 +2392,12 @@
                     const firstPath = Object.keys(currentScenario.paths)[0];
                     const firstStep = currentScenario.paths[firstPath][0];
 
-                    // Show dispatcher prompt if available
+                    // Show broker's question (only if it exists and not empty)
+                    if (firstStep.brokerQuestion && firstStep.brokerQuestion.trim() !== '') {
+                        addMessage(firstStep.brokerQuestion, 'broker');
+                    }
+
+                    // Show dispatcher prompt if available (AFTER broker's message)
                     if (firstStep.dispatcherPrompt) {
                         const promptDiv = document.createElement('div');
                         promptDiv.className = 'dispatcher-prompt';
@@ -2389,10 +2407,6 @@
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     }
 
-                    // Show broker's question (only if it exists and not empty)
-                    if (firstStep.brokerQuestion && firstStep.brokerQuestion.trim() !== '') {
-                        addMessage(firstStep.brokerQuestion, 'broker');
-                    }
                     showSuggestions(firstStep.suggestions);
                 }, 1500);
             }, 500);
@@ -2480,29 +2494,176 @@
             openModalBtn.className = 'open-suggestions-modal-btn';
             openModalBtn.innerHTML = '💬 Выбрать ответ';
             openModalBtn.style.cssText = `
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
+                background: rgba(15, 23, 42, 0.6);
+                backdrop-filter: blur(10px);
+                color: #c4b5fd;
                 border: none;
-                padding: 12px 30px;
-                border-radius: 25px;
+                padding: 14px 35px;
+                border-radius: 30px;
                 font-size: 16px;
-                font-weight: 600;
+                font-weight: 700;
                 cursor: pointer;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 0 30px rgba(167, 139, 250, 0.4),
+                            0 0 60px rgba(129, 140, 248, 0.2),
+                            inset 0 0 20px rgba(167, 139, 250, 0.1);
+                text-shadow: 0 0 10px rgba(196, 181, 253, 0.5);
+                letter-spacing: 0.5px;
             `;
 
+            // Добавляем CSS анимации только для частиц
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes particleFloat {
+                    0%, 100% {
+                        transform: translateY(0) translateX(0);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                    }
+                    90% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(-100px) translateX(20px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            if (!document.getElementById('suggestions-btn-animation-enhanced')) {
+                style.id = 'suggestions-btn-animation-enhanced';
+                document.head.appendChild(style);
+            }
+
+            // Создаем частицы света
+            const createParticles = () => {
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        if (!document.body.contains(openModalBtn)) return;
+
+                        const particle = document.createElement('div');
+                        particle.style.cssText = `
+                            position: absolute;
+                            width: 4px;
+                            height: 4px;
+                            background: radial-gradient(circle, #c4b5fd, transparent);
+                            border-radius: 50%;
+                            bottom: 20%;
+                            left: ${20 + Math.random() * 60}%;
+                            pointer-events: none;
+                            animation: particleFloat 3s ease-out forwards;
+                            box-shadow: 0 0 10px rgba(196, 181, 253, 0.8);
+                        `;
+                        openModalBtn.appendChild(particle);
+
+                        setTimeout(() => {
+                            if (particle.parentNode) particle.remove();
+                        }, 3000);
+                    }, i * 1000);
+                }
+            };
+
+            // Запускаем создание частиц
+            const particleInterval = setInterval(() => {
+                if (!document.body.contains(openModalBtn)) {
+                    clearInterval(particleInterval);
+                    return;
+                }
+                createParticles();
+            }, 3000);
+            createParticles(); // Первый запуск сразу
+
             openModalBtn.onmouseover = () => {
-                openModalBtn.style.transform = 'translateY(-2px)';
-                openModalBtn.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.6)';
+                openModalBtn.style.transform = 'translateY(-3px) scale(1.08)';
+                openModalBtn.style.color = '#e0e7ff';
+                openModalBtn.style.boxShadow = `
+                    0 0 60px rgba(167, 139, 250, 0.8),
+                    0 0 120px rgba(129, 140, 248, 0.6),
+                    inset 0 0 40px rgba(167, 139, 250, 0.3)
+                `;
+                openModalBtn.style.textShadow = '0 0 20px rgba(196, 181, 253, 0.9)';
+
+                // Создаем взрыв частиц при наведении
+                for (let i = 0; i < 8; i++) {
+                    const burstParticle = document.createElement('div');
+                    const angle = (i / 8) * Math.PI * 2;
+                    const distance = 50;
+                    burstParticle.style.cssText = `
+                        position: absolute;
+                        width: 6px;
+                        height: 6px;
+                        background: radial-gradient(circle, #c4b5fd, transparent);
+                        border-radius: 50%;
+                        top: 50%;
+                        left: 50%;
+                        pointer-events: none;
+                        box-shadow: 0 0 15px rgba(196, 181, 253, 1);
+                        animation: none;
+                    `;
+                    openModalBtn.appendChild(burstParticle);
+
+                    setTimeout(() => {
+                        burstParticle.style.transition = 'all 0.6s ease-out';
+                        burstParticle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+                        burstParticle.style.opacity = '0';
+                    }, 10);
+
+                    setTimeout(() => {
+                        if (burstParticle.parentNode) burstParticle.remove();
+                    }, 600);
+                }
             };
 
             openModalBtn.onmouseout = () => {
-                openModalBtn.style.transform = 'translateY(0)';
-                openModalBtn.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+                openModalBtn.style.transform = 'translateY(0) scale(1)';
+                openModalBtn.style.color = '#c4b5fd';
+                openModalBtn.style.boxShadow = `
+                    0 0 30px rgba(167, 139, 250, 0.4),
+                    0 0 60px rgba(129, 140, 248, 0.2),
+                    inset 0 0 20px rgba(167, 139, 250, 0.1)
+                `;
+                openModalBtn.style.textShadow = '0 0 10px rgba(196, 181, 253, 0.5)';
             };
 
-            openModalBtn.onclick = () => openSuggestionsModal(suggestions);
+            openModalBtn.onclick = () => {
+                // Анимация клика - волна света
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 0;
+                    height: 0;
+                    border-radius: 50%;
+                    background: radial-gradient(circle, rgba(196, 181, 253, 0.6), transparent);
+                    transform: translate(-50%, -50%);
+                    pointer-events: none;
+                    animation: rippleExpand 0.6s ease-out;
+                `;
+
+                const rippleStyle = document.createElement('style');
+                rippleStyle.textContent = `
+                    @keyframes rippleExpand {
+                        to {
+                            width: 200px;
+                            height: 200px;
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(rippleStyle);
+
+                openModalBtn.appendChild(ripple);
+                setTimeout(() => {
+                    if (ripple.parentNode) ripple.remove();
+                    rippleStyle.remove();
+                }, 600);
+
+                openSuggestionsModal(suggestions);
+            };
 
             buttonContainer.appendChild(openModalBtn);
             messagesContainer.appendChild(buttonContainer);
@@ -2868,7 +3029,12 @@
                         } else {
                             // Continue conversation
                             setTimeout(() => {
-                                // Show dispatcher prompt if available
+                                // Show broker's question (only if it exists and not empty)
+                                if (nextStep.brokerQuestion && nextStep.brokerQuestion.trim() !== '') {
+                                    addMessage(nextStep.brokerQuestion, 'broker');
+                                }
+
+                                // Show dispatcher prompt if available (AFTER broker's message)
                                 if (nextStep.dispatcherPrompt) {
                                     const promptDiv = document.createElement('div');
                                     promptDiv.className = 'dispatcher-prompt';
@@ -2878,10 +3044,6 @@
                                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                                 }
 
-                                // Show broker's question (only if it exists and not empty)
-                                if (nextStep.brokerQuestion && nextStep.brokerQuestion.trim() !== '') {
-                                    addMessage(nextStep.brokerQuestion, 'broker');
-                                }
                                 showSuggestions(nextStep.suggestions);
                             }, 1000);
                         }

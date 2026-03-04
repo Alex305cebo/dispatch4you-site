@@ -1146,5 +1146,242 @@ const allScenarios = [
                 }
             ]
         }
+    },
+
+    // ============================================
+    // ДИАЛОГ #1000: Seattle WA → Miami FL (REEFER)
+    // Стиль: 🎓 Опытный но под давлением
+    // Расстояние: 3,334 миль (LONG HAUL)
+    // СЛОЖНАЯ СИТУАЦИЯ: Погода + Tight timeline + High-value pharma + Множественные требования
+    // 10 ШАГОВ ДЛЯ МАСТЕР ПУТИ
+    // ============================================
+    {
+        id: 1000,
+        route: "Seattle WA → Miami FL",
+        distance: 3334,
+        equipment: "Reefer",
+        brokerStyle: "Опытный но под давлением",
+        difficulty: "expert",
+
+        initialMessage: "Good morning!\nThis is Sarah from MedLogistics Express.\nI'm calling about your Seattle to Miami reefer load.\nIs this still available?",
+
+        paths: {
+            master: [
+                {
+                    brokerQuestion: "Morning Sarah! Yes, still available but I need to move fast.\nThis is time-sensitive pharmaceutical shipment.\nMC number and current driver location?",
+                    dispatcherPrompt: "💎 Брокер торопится. Дайте полную информацию быстро и профессионально.",
+                    suggestions: [
+                        {
+                            text: "MC 334455, pharmaceutical specialist, 8 years experience.\nTeam drivers empty in Portland OR, 175 miles from Seattle.\nBoth HAZMAT certified, TSA approved.\n2023 Volvo with 2022 Carrier reefer, real-time monitoring.",
+                            quality: "master",
+                            path: "master",
+                            analytics: "Отлично! Показали специализацию и team drivers."
+                        },
+                        {
+                            text: "MC 334455, reefer specialist, 5 years in business.\nTeam drivers in Portland area, 175 miles away.\nExperienced with pharma loads.\n2023 Volvo with 2022 Carrier reefer unit.",
+                            quality: "good",
+                            path: "master",
+                            analytics: "Хорошо, но нет сертификатов."
+                        },
+                        {
+                            text: "MC 334455, reefer team available in Oregon.\nCurrently in Portland, can be there tomorrow.\nExperienced drivers, equipment ready.\nTruck and reefer in good condition.",
+                            quality: "weak",
+                            path: "master",
+                            analytics: "Мало информации для срочного груза."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "Perfect! Verified MC 334455 - excellent record.\nThis is 38,000 lbs pharmaceuticals, must maintain 2-8°C constant.\nPickup tomorrow 6 AM Seattle, delivery Miami in 4 days max.\nWeather alert: snow expected in Rockies next 48 hours.",
+                    brokerQuestion: "Can your team handle this timeline with weather issues?",
+                    dispatcherPrompt: "🚨 Tight timeline + погода! Покажите что у вас есть план.",
+                    suggestions: [
+                        {
+                            text: "Absolutely, we can handle this.\nTeam runs 1,100+ miles/day, 3,334 in 4 days is manageable.\nWe monitor weather real-time, have chains ready.\nIf I-90 closes, reroute via I-84 through Nevada.",
+                            quality: "master",
+                            analytics: "Отлично! Математика + план B для погоды."
+                        },
+                        {
+                            text: "Yes, team drivers can make it in 4 days.\nWe have winter driving experience.\nMonitor weather and adjust routes as needed.\nTemperature maintained regardless of conditions.",
+                            quality: "good",
+                            analytics: "Хорошо, но нет конкретного плана."
+                        },
+                        {
+                            text: "Should be fine, we'll do our best.\nDrivers are experienced with routes.\nWe'll watch weather and drive carefully.\nTemperature will be maintained.",
+                            quality: "weak",
+                            analytics: "Слишком неуверенно для критического груза."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "Excellent planning! I like the backup route idea.\nNow, this is high-value cargo, $2.5 million worth.\nI need proof of temperature monitoring system.\nWhat system do you use?",
+                    dispatcherPrompt: "💎 Брокер проверяет технологии. Покажите профессиональную систему.",
+                    suggestions: [
+                        {
+                            text: "Carrier Lynx Fleet with real-time monitoring.\nAutomated alerts if temp goes outside 2-8°C.\nData logs every 5 minutes, web portal 24/7.\nI'll add you after booking, PDF reports every 6 hours.",
+                            quality: "master",
+                            analytics: "Отлично! Конкретная система + доступ."
+                        },
+                        {
+                            text: "Digital temperature monitoring on reefer unit.\nTracks temp continuously, sends alerts if issues.\nCan send temperature logs via email.\nFull visibility throughout journey.",
+                            quality: "good",
+                            analytics: "Хорошо, но нет конкретной системы."
+                        },
+                        {
+                            text: "Yes, we monitor temperature constantly.\nReefer has digital display and tracking.\nCheck temperature regularly, report issues.\nYou'll get updates during transit.",
+                            quality: "weak",
+                            analytics: "Расплывчато для $2.5M груза."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "Perfect! Carrier Lynx is exactly what we need.\nNow let's talk rate. This is premium load with tight timeline.\nWhat's your rate for this?",
+                    dispatcherPrompt: "💎 Премиум груз + срочность. Обоснуйте высокую ставку.",
+                    suggestions: [
+                        {
+                            text: "For 3,509 miles including deadhead: $10,500 all-in.\nThat's $2.99/mile for pharma-grade service.\nIncludes team drivers, real-time monitoring,\nguaranteed on-time delivery, $2.5M insurance.",
+                            quality: "master",
+                            analytics: "Отлично! Высокая ставка с обоснованием."
+                        },
+                        {
+                            text: "$9,800 all-in, that's $2.79/mile.\nIncludes team drivers for fast delivery,\ntemperature monitoring throughout,\nfull insurance for high-value cargo.",
+                            quality: "good",
+                            analytics: "Хорошо, но можно лучше обосновать."
+                        },
+                        {
+                            text: "$11,000 all-in for cross-country reefer.\nThat's what we need for team and pharma.\nIncludes monitoring and insurance.\nOur standard rate for this distance.",
+                            quality: "weak",
+                            analytics: "Слишком высоко без объяснения."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "$10,500 is higher than budget.\nI was thinking $9,200, that's $2.76/mile.\nStill good money for cross-country.",
+                    brokerQuestion: "Can you work with $9,200?",
+                    dispatcherPrompt: "💎 Первый раунд. Ставка низкая для премиум сервиса. Торгуйтесь.",
+                    suggestions: [
+                        {
+                            text: "I understand budget, let me explain value:\nSolo takes 6-7 days, team saves 2-3 days.\nPharma monitoring prevents $2.5M claim risk.\n$9,200 doesn't cover team costs ($400/day).\nI can do $10,000 - $2.85/mile premium service.",
+                            quality: "master",
+                            analytics: "Отлично! Показали ценность через риски."
+                        },
+                        {
+                            text: "$9,200 too low for team and pharma load.\nTeam costs significantly more than solo.\nNeed at least $9,800 to cover costs.\nIncludes monitoring and insurance.",
+                            quality: "good",
+                            analytics: "Хорошо, но без детального объяснения."
+                        },
+                        {
+                            text: "No, can't accept $9,200 for this.\n$10,500 is my final offer.\nPremium pharma service with team.\nCan't go lower for this distance.",
+                            quality: "weak",
+                            analytics: "Слишком жестко, нет гибкости."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "You make excellent points about risk mitigation.\nLet me check with customer... Okay, they approved $9,600.\nBut I need absolute guarantee on 4-day delivery.",
+                    brokerQuestion: "Can you guarantee delivery by day 4, or I need backup plan?",
+                    dispatcherPrompt: "💎 Второй раунд. Брокер нужна гарантия. Предложите компромисс с гарантией.",
+                    suggestions: [
+                        {
+                            text: "Here's my proposal: $9,800 with guarantee.\nOn time (4 days): $9,800 as agreed.\nLate without weather: you pay only $9,200.\nShows confidence in our team.\nPlus my personal cell for 24/7 updates.",
+                            quality: "master",
+                            analytics: "Гениально! Гарантия с финансовым риском."
+                        },
+                        {
+                            text: "I guarantee 4-day delivery, $9,700 final.\nNever missed pharma deadline in 8 years.\nYou can count on us for on-time.\nWe'll update you throughout journey.",
+                            quality: "good",
+                            analytics: "Хорошо, но нет финансовой гарантии."
+                        },
+                        {
+                            text: "Can't guarantee with weather, but we'll try.\n$9,800 is what I need for this.\nWe'll do best for 4-day timeline.\nWeather might cause delays though.",
+                            quality: "weak",
+                            analytics: "Неуверенность убивает доверие."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "Wow, that's a bold guarantee! I respect that.\nYou know what? $9,800 with your performance guarantee is fair.\nYou're clearly confident and professional.\nLet's book it!",
+                    brokerQuestion: "I need your cargo insurance details and factoring info.",
+                    dispatcherPrompt: "💎 Груз забукирован! Дайте все документы быстро.",
+                    suggestions: [
+                        {
+                            text: "Excellent! Here are details:\nCargo: $250K through Northland Insurance.\nPolicy NL-334455-2026, expires Nov 2026.\nFactoring: RTS Financial, NOA ready.\nSending COI, W9, agreement in 10 minutes.",
+                            quality: "master",
+                            analytics: "Отлично! Все документы + проактивность."
+                        },
+                        {
+                            text: "$250K cargo through Northland, current.\nFactoring through RTS, NOA ready.\nCan email all documents today.\nWhat's shipper contact and pickup details?",
+                            quality: "good",
+                            analytics: "Хорошо, базовая информация."
+                        },
+                        {
+                            text: "Have insurance and factoring, all current.\nWill send documents later today.\nWhat's the shipper information?\nNeed pickup and delivery details.",
+                            quality: "weak",
+                            analytics: "Расплывчато и не срочно."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "Perfect! Send everything to sarah@medlogistics.com.\nShipper: PharmaCold Storage, 2345 Harbor Ave, Seattle WA 98101.\nContact: David Chen, 206-555-0188, dock 3.\nPickup window: 6 AM - 8 AM tomorrow, appointment required.",
+                    brokerQuestion: "What time should I schedule the appointment?",
+                    dispatcherPrompt: "💎 Получили shipper детали. Выберите оптимальное время и задайте вопросы.",
+                    suggestions: [
+                        {
+                            text: "Schedule 6 AM - maximum daylight first day.\nTeam departs Portland tonight, arrives 5:45 AM.\nGate code? Loading time? Special handling?\nPre-cool to 2-8°C before arrival?\nDelivery address and receiver in Miami?",
+                            quality: "master",
+                            analytics: "Отлично! Стратегия + все вопросы."
+                        },
+                        {
+                            text: "6 AM appointment works perfectly.\nHow long does loading take?\nAny special requirements or gate codes?\nWhat's delivery address and receiver?\nNeed to plan route and timeline.",
+                            quality: "good",
+                            analytics: "Хорошо, базовые вопросы."
+                        },
+                        {
+                            text: "6 AM is fine, we'll be on time.\nSend delivery information and address.\nWhat's receiver contact number?\nAny other details I should know?",
+                            quality: "weak",
+                            analytics: "Упустили важные детали."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "Gate code 4782, loading takes 2 hours (careful handling).\nYes, pre-cool to 5°C before arrival.\nSpecial: Need photos of seal, temp display, and BOL.\nDelivery: Miami MedCenter, 7890 Medical Plaza, Miami FL 33101.\nReceiver: Dr. Rodriguez, 305-555-0199, receiving dock B.\nDelivery window: Day 4, 8 AM - 6 PM, appointment required.",
+                    brokerQuestion: "Your team will call receiver 4 hours before arrival, correct?",
+                    dispatcherPrompt: "💎 Все детали получены. Подтвердите процедуры и финализируйте.",
+                    suggestions: [
+                        {
+                            text: "Absolutely! Complete protocol:\nCall Dr. Rodriguez 4hrs before: 305-555-0199\nGPS tracking + temp monitoring access today\nPhotos: seal, temp, BOL at pickup\nTemp reports every 6hrs, immediate alerts\nConfirming all: Pickup 6AM Seattle, Delivery Day 4 Miami\nRate $9,800 with guarantee",
+                            quality: "master",
+                            analytics: "Идеально! Полный протокол + резюме."
+                        },
+                        {
+                            text: "Yes, call receiver 4 hours before.\nSend GPS tracking and temp monitoring.\nPhotos of seal and BOL at pickup.\nSend rate confirmation to my email.\nReady to start tomorrow morning.",
+                            quality: "good",
+                            analytics: "Хорошо, но не подтвердили детали."
+                        },
+                        {
+                            text: "Sure, driver calls 4 hours before.\nWe'll send tracking and temp updates.\nSend rate confirmation and paperwork.\nReady to pickup tomorrow morning.",
+                            quality: "weak",
+                            analytics: "Слишком коротко для критического груза."
+                        }
+                    ]
+                },
+                {
+                    brokerResponse: "Sarah, you are EXCEPTIONAL! This is the most professional setup I've had.\nSending rate con and BOL to your email right now.\nI'm adding you to our preferred pharma carrier list.\nWe have 2-3 similar loads per week on various lanes.\nYou just earned yourself a long-term partnership!",
+                    outcome: {
+                        type: "success",
+                        quality: "master",
+                        rate: "$9,800",
+                        ratePerMile: "$2.79/mile",
+                        relationship: "Preferred Pharma Carrier - Partnership Level",
+                        dialogueTime: "10-12 minutes",
+                        questionsAsked: "15+ questions",
+                        detailLevel: "exceptional",
+                        futureOpportunity: "2-3 pharma loads per week",
+                        weeklyLoads: "2-3 high-value loads/week",
+                        feedback: "🏆 МАСТЕР - ИСКЛЮЧИТЕЛЬНЫЙ ДИАЛОГ!\n\n✅ ЧТО СДЕЛАНО ПРАВИЛЬНО:\n- Показали специализацию в pharma с первого ответа (team drivers, HAZMAT, TSA)\n- Проактивно предложили план для погодных условий (backup route)\n- Назвали конкретную систему мониторинга (Carrier Lynx Fleet)\n- Обосновали высокую ставку через risk mitigation ($2.5M груз)\n- Предложили ГЕНИАЛЬНУЮ гарантию с финансовым риском на себя\n- Дали все документы быстро и проактивно\n- Подтвердили ВСЕ детали с полным протоколом\n- Показали исключительный профессионализм на каждом шаге\n\n💡 КЛЮЧЕВОЙ УРОК:\nДля премиум грузов (pharma, high-value) важны не только возможности, но и УВЕРЕННОСТЬ.\nПредложение performance guarantee показывает что вы не просто говорите - вы ГАРАНТИРУЕТЕ.\n\n🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:\nPharma loads требуют:\n- Temperature range 2-8°C (36-46°F)\n- Real-time monitoring systems\n- Team drivers для tight timelines\n- Higher insurance ($250K+)\n- Photo documentation\n- Proactive communication\n\nЭти грузы платят $2.50-$3.50/mile, но требуют exceptional service.\nОдин успешный pharma load = долгосрочный контракт на 2-3 груза в неделю!"
+                    }
+                }
+            ]
+        }
     }
 ];
