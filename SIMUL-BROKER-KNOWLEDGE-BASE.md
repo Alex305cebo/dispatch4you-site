@@ -58,18 +58,142 @@ What's your rate?"
 ```
 
 ### 4. ЛОГИЧНОЕ РАЗВИТИЕ СОБЫТИЙ
-Диалог должен идти в правильной последовательности:
+Диалог должен идти в правильной последовательности.
 
-**ШАГ 1:** Диспетчер звонит → Брокер подтверждает груз доступен
-**ШАГ 2:** Брокер спрашивает MC + местоположение/оборудование → Диспетчер отвечает
-**ШАГ 3:** Брокер ДАЕТ детали груза (вес, температура, pickup/delivery) → Диспетчер спрашивает о ставке или деталях
-**ШАГ 4:** Переговоры о ставке (брокер называет или спрашивает)
-**ШАГ 5:** Торговля (если нужно)
-**ШАГ 6:** Согласие на ставку → Брокер спрашивает factoring
-**ШАГ 7:** Диспетчер дает factoring → Брокер дает адреса pickup/delivery
-**ШАГ 8:** Диспетчер уточняет детали (время, dock, lumper)
-**ШАГ 9:** Брокер отвечает на детали
-**ШАГ 10:** Финальное подтверждение и контакты
+**МАСТЕР путь:** минимум 18 шагов, рекомендуется 18-30+
+**ХОРОШИЙ путь:** 14-22 шагов
+**НОРМАЛЬНЫЙ путь:** 12-17 шагов
+
+Базовая структура реального диалога для МАСТЕР пути:
+
+**ШАГ 1: Первый контакт**
+- Диспетчер звонит профессионально (Good morning, имя, компания, маршрут, оборудование)
+- Брокер подтверждает груз доступен
+- Брокер спрашивает MC + местоположение/оборудование
+
+**ШАГ 2: Проверка перевозчика и местоположение**
+- Диспетчер дает MC номер
+- Диспетчер дает местоположение водителя (empty in [city], deadhead distance)
+- Брокер проверяет MC
+
+**ШАГ 3: Детали оборудования**
+- Диспетчер дает детали трейлера (год, марка, тип дверей для dry van, reefer unit для reefer)
+- Диспетчер дает детали трака (год, марка)
+- Брокер подтверждает и дает ПЕРВЫЕ детали груза
+
+**ШАГ 4: Опыт и сертификаты**
+- Диспетчер показывает опыт компании (years in business, специализация)
+- Диспетчер показывает опыт водителя (years OTR, сертификаты)
+- Брокер впечатлен и дает больше деталей груза
+
+**ШАГ 5: Детали груза - вес и commodity**
+- Брокер дает полные детали: точный вес, commodity, количество паллет
+- Брокер дает специальные требования (температура для reefer, handling для хрупкого)
+- Диспетчер подтверждает возможности или задает уточняющие вопросы
+
+**ШАГ 6: Pickup время и адрес**
+- Брокер дает pickup дату, время, окно загрузки
+- Брокер дает адрес, город, штат
+- Диспетчер спрашивает про dock number, gate code, appointment
+
+**ШАГ 7: Pickup детали и процесс**
+- Брокер дает dock number, gate code (если есть)
+- Брокер объясняет процесс загрузки (FCFS или appointment, сколько часов)
+- Диспетчер спрашивает про lumper fee, кто загружает, special instructions
+
+**ШАГ 8: Delivery адрес и окно**
+- Брокер дает delivery адрес, город, штат
+- Брокер дает delivery window (дата, время, или "X days from pickup")
+- Диспетчер спрашивает про appointment requirement, receiver contact
+
+**ШАГ 9: Delivery детали и процесс**
+- Брокер дает receiver contact, appointment details
+- Брокер объясняет процесс разгрузки (сколько часов, FCFS или appointment)
+- Диспетчер спрашивает про detention policy, unloading process
+
+**ШАГ 10: HOS и timeline**
+- Брокер уточняет timeline (can you make it in X days?)
+- Диспетчер объясняет HOS situation (hours available, team или solo)
+- Диспетчер подтверждает возможность доставки в срок
+
+**ШАГ 11: Обсуждение ставки**
+- Брокер называет posted rate ИЛИ спрашивает "what's your rate?"
+- Диспетчер называет свою ставку с детальным обоснованием ($/mile, fuel, опыт, сервис)
+- Брокер реагирует на предложение
+
+**ШАГ 12: Торговля раунд 1**
+- Брокер дает контр-предложение с объяснением (budget, customer constraints)
+- Диспетчер обосновывает свою ценность (опыт, надежность, специальный сервис)
+- Брокер рассматривает
+
+**ШАГ 13: Торговля раунд 2 (опционально)**
+- Брокер говорит что позвонит клиенту или проверит budget
+- Диспетчер добавляет дополнительные гарантии (updates, photos, special care)
+- Компромисс найден
+
+**ШАГ 14: Согласие на ставку**
+- Финальная ставка согласована
+- Брокер подтверждает и спрашивает про factoring
+- Диспетчер радуется сделке
+
+**ШАГ 15: Factoring и документы**
+- Диспетчер дает factoring company name
+- Диспетчер говорит что отправит NOA немедленно
+- Брокер подтверждает, говорит что отправит rate con
+
+**ШАГ 16: Shipper контакт**
+- Брокер дает shipper contact (имя, телефон)
+- Диспетчер говорит что свяжется с shipper
+- Диспетчер спрашивает дополнительные детали
+
+**ШАГ 17: Специальное оборудование**
+- Диспетчер спрашивает про load locks, straps, blankets (кто предоставляет?)
+- Брокер объясняет что нужно принести
+- Диспетчер подтверждает наличие оборудования
+
+**ШАГ 18: Routing и ограничения**
+- Диспетчер спрашивает про routing restrictions, preferred route
+- Брокер дает рекомендации (avoid certain roads, best route)
+- Диспетчер подтверждает маршрут
+
+**ШАГ 19: Технологии и отслеживание**
+- Брокер спрашивает про GPS tracking, updates frequency
+- Диспетчер объясняет систему отслеживания (Macropoint, check calls, photos)
+- Брокер доволен уровнем коммуникации
+
+**ШАГ 20: Специальные требования**
+- Брокер требует seal photos, securement photos, temperature logs (для reefer)
+- Диспетчер подтверждает и обещает отправить все фото
+- Брокер дает свой email и 24/7 contact
+
+**ШАГ 21: Weather и delays protocol**
+- Диспетчер спрашивает про weather delays protocol, что делать если проблемы
+- Брокер дает 24/7 contact и объясняет процедуру
+- Диспетчер сохраняет контакты
+
+**ШАГ 22: Финальное подтверждение**
+- Диспетчер подтверждает ВСЕ детали (pickup, delivery, rate, requirements)
+- Диспетчер показывает проактивность (позвоню shipper сегодня, pre-cool unit, и т.д.)
+- Брокер впечатлен организованностью
+
+**ШАГ 23: Построение отношений**
+- Брокер выражает благодарность за профессионализм
+- Брокер обещает будущие грузы (preferred carrier status)
+- Диспетчер благодарит за возможность
+
+**ШАГ 24-25+: Дополнительные детали (опционально)**
+- Вопросы про detention rates
+- Вопросы про TONU policy
+- Вопросы про layover pay
+- Вопросы про accessorial charges
+- Любые другие реалистичные детали
+
+**ВАЖНО:** 
+- Это базовая структура из 23+ шагов для ДЕТАЛЬНОГО МАСТЕР диалога
+- Можно добавлять еще больше шагов с дополнительными вопросами
+- Каждый шаг должен давать новую информацию и развивать диалог
+- Брокер всегда реагирует на ответы диспетчера
+- Нет пустых вопросов - каждый вопрос имеет цель
 
 ### 5. БРОКЕР НЕ ЗАДАЕТ ПУСТЫЕ ВОПРОСЫ
 - Каждый вопрос брокера имеет цель
@@ -147,35 +271,147 @@ suggestions: [
 Минимум 3 пути, рекомендуется 5-6:
 
 ### МАСТЕР/EXCELLENT (💎)
-- 10-15 шагов
+- Минимум 18 шагов, рекомендуется 18-30+
 - Максимальный результат
 - Детальная информация
 - Проактивность
+- Все возможные вопросы и уточнения
+- Построение долгосрочных отношений
 
 ### ХОРОШИЙ/GOOD (✅)
-- 6-8 шагов
+- 14-22 шагов
 - Стандартный успех
 - Профессионализм
+- Основные вопросы
+- Хорошая ставка
 
 ### НОРМАЛЬНЫЙ/NORMAL (⚪)
-- 3-5 шагов
+- 12-17 шагов
 - Базовый успех
 - Минимум информации
+- Средняя ставка
 
 ### АГРЕССИВНЫЙ/AGGRESSIVE (⚠️)
 - 3-4 шага
 - Испорченные отношения
 - Высокие требования
+- Обучение: что НЕ надо делать
 
 ### СЛАБЫЙ/WEAK (⚠️)
 - 3-4 шага
 - Низкая ставка
 - Неуверенность
+- Обучение: потеря денег
 
 ### ОТКАЗ/FAIL (❌)
 - 1-2 шага
 - Потеря груза
 - Непрофессионализм
+- Обучение: критические ошибки
+
+---
+
+## 📈 МЕТРИКИ УСПЕХА В OUTCOME
+
+Каждый outcome должен содержать детальную информацию:
+
+### Основные метрики:
+```javascript
+outcome: {
+    type: "success" / "fail" / "partial",
+    quality: "master" / "good" / "normal" / "weak" / "aggressive" / "fail",
+    rate: "$X,XXX",
+    ratePerMile: "$X.XX/mile",
+    relationship: "описание отношений с брокером",
+    
+    // Новые метрики:
+    dialogueTime: "Примерное время диалога (5-15 минут)",
+    questionsAsked: "Количество заданных вопросов диспетчером",
+    detailLevel: "high / medium / low",
+    futureOpportunity: "one-time / repeat / preferred / partnership",
+    weeklyLoads: "0 / 1-2 / 3-5 / 5-10",
+    
+    feedback: "Детальная обратная связь"
+}
+```
+
+### Примеры relationship статусов:
+- **One-time carrier:** Разовый груз, нет гарантий на будущее
+- **Repeat carrier:** Брокер позвонит снова при наличии грузов
+- **Preferred carrier:** Первый в списке, 3-5 грузов в неделю
+- **Partnership:** Долгосрочное сотрудничество, 5-10+ грузов в неделю
+- **Blacklisted:** Больше никогда не позвонит
+
+---
+
+## 🎓 ОБУЧАЮЩИЕ МОМЕНТЫ
+
+После каждого outcome добавлять детальный разбор:
+
+### Структура обучения:
+```javascript
+outcome: {
+    // ... основные данные ...
+    
+    feedback: `
+🏆 РЕЗУЛЬТАТ: [Master/Good/Normal/Weak/Fail]
+
+✅ ЧТО СДЕЛАНО ПРАВИЛЬНО:
+- Пункт 1: конкретное действие и почему это хорошо
+- Пункт 2: конкретное действие и почему это хорошо
+- Пункт 3: конкретное действие и почему это хорошо
+
+⚠️ ЧТО МОЖНО УЛУЧШИТЬ:
+- Пункт 1: что упущено и как это исправить
+- Пункт 2: что упущено и как это исправить
+
+💡 КЛЮЧЕВОЙ УРОК:
+Одна главная мысль, которую нужно запомнить из этого диалога
+
+🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
+Как использовать эти навыки в реальных переговорах с брокерами
+    `
+}
+```
+
+### Пример для MASTER outcome:
+```
+✅ ЧТО СДЕЛАНО ПРАВИЛЬНО:
+- Показали специализацию и опыт с первого ответа - это сразу повысило доверие брокера
+- Обосновали ставку через market rate и ценность сервиса - брокер понял за что платит
+- Задали все критические вопросы о pickup, delivery, routing - показали профессионализм
+- Проактивно предложили дополнительные сервисы - выделились среди конкурентов
+- Построили долгосрочные отношения - обеспечили будущие грузы
+
+⚠️ ЧТО МОЖНО УЛУЧШИТЬ:
+- Можно было спросить про backhaul возможности для максимизации прибыли
+- Можно было уточнить про другие lanes которые есть у брокера
+
+💡 КЛЮЧЕВОЙ УРОК:
+Профессионализм и детальная коммуникация = высокие ставки и долгосрочные отношения
+
+🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
+Всегда показывайте свою экспертизу, обосновывайте ставки, задавайте детальные вопросы
+```
+
+### Пример для WEAK outcome:
+```
+✅ ЧТО СДЕЛАНО ПРАВИЛЬНО:
+- Получили груз - это лучше чем ничего
+- Коммуникация была вежливой
+
+⚠️ ЧТО МОЖНО УЛУЧШИТЬ:
+- Сдались на ставке слишком быстро - потеряли $300-500
+- Не показали свою ценность и опыт - брокер не понял за что платить больше
+- Не задали важные вопросы - могут быть проблемы на pickup/delivery
+- Не построили отношения - брокер не запомнит вас для будущих грузов
+
+💡 КЛЮЧЕВОЙ УРОК:
+Низкая ставка = низкая прибыль. Всегда обосновывайте свою ценность.
+
+🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
+Не бойтесь торговаться и объяснять почему вы стоите больше. Брокеры уважают уверенных диспетчеров.
+```
 
 ---
 
@@ -568,6 +804,78 @@ Thank you for your time."
 
 ---
 
+## 🔧 ДОПОЛНИТЕЛЬНЫЕ КАТЕГОРИИ ВОПРОСОВ БРОКЕРА
+
+### 14. 📋 INSURANCE COVERAGE
+
+**Cargo Insurance:**
+- $100,000 coverage (standard)
+- $250,000 coverage (high value loads)
+- ❌ НЕ $1,000,000 (слишком высоко для обычных грузов)
+
+**Liability Insurance:**
+- $1,000,000 minimum required
+- Certificate of Insurance available?
+- How fast can you send COI?
+
+**Proof of Insurance:**
+- Can you email COI right now?
+- Is your insurance current?
+- Any claims in last 2 years?
+
+### 15. ⚖️ SCALE TICKETS И WEIGH STATIONS
+
+**Scale Tickets:**
+- Who pays for scale ticket? (обычно carrier)
+- Scale ticket required before delivery?
+- Cost: $10-$15 per ticket
+
+**Weigh Stations:**
+- Will you stop at weigh stations?
+- PrePass or bypass system?
+- Overweight procedures if needed
+
+**Weight Verification:**
+- Shipper provides weight ticket?
+- Need certified weight?
+- Reweigh at destination?
+
+### 16. ⛽ FUEL SURCHARGE
+
+**Fuel Surcharge Questions:**
+- Is fuel surcharge included in rate?
+- Separate FSC calculation?
+- Based on DOE average?
+
+**Typical Structure:**
+- Usually included in all-in rate
+- Rarely separate for spot market
+- Contract loads may have separate FSC
+
+### 17. 🎯 ТИПЫ APPOINTMENT
+
+**FCFS (First Come First Served):**
+- No appointment needed
+- Show up anytime during hours
+- May wait in line
+
+**Scheduled Appointment:**
+- Exact time (e.g., 10:00 AM sharp)
+- Must be on time
+- Late = reschedule
+
+**Window Appointment:**
+- Time range (e.g., 8 AM - 12 PM)
+- Arrive anytime in window
+- More flexible
+
+**Live Load vs Drop and Hook:**
+- Live load: wait while loading/unloading
+- Drop and hook: drop trailer, pick up loaded one
+- Drop and hook faster but needs empty trailer
+
+---
+
 ## 🎯 ВОПРОСЫ КОТОРЫЕ ДИСПЕТЧЕР МОЖЕТ ЗАДАВАТЬ БРОКЕРУ
 
 ### 📍 О PICKUP LOCATION:
@@ -686,6 +994,249 @@ Thank you for your time."
 - Which factoring company?
 - How fast can you send rate con?
 - NOA required?
+
+---
+
+## 💼 ДОПОЛНИТЕЛЬНЫЕ СБОРЫ (ACCESSORIALS)
+
+### Detention Time:
+- **Ставка:** $75-$100/hour
+- **Free time:** Обычно 2 часа
+- **Когда начинается:** После истечения free time
+- **Документация:** Требуется signed detention receipt
+
+### Layover Pay:
+- **Ставка:** $200-$300/day
+- **Когда:** Если водитель ждет более 24 часов
+- **Причины:** Receiver не готов, weekend delay, holiday
+
+### TONU (Truck Ordered Not Used):
+- **Ставка:** $200-$400
+- **Когда:** Груз отменен после того как водитель в пути
+- **Покрывает:** Deadhead, потерянное время, упущенные возможности
+
+### Lumper Fees:
+- **Ставка:** $100-$300
+- **Кто платит:** Обычно shipper или receiver
+- **Процесс:** Carrier платит, потом reimbursement
+- **Документация:** Lumper receipt required
+
+### Scale Tickets:
+- **Стоимость:** $10-$15
+- **Кто платит:** Обычно carrier
+- **Когда нужен:** Certified weight required
+
+### Pallet Exchange:
+- **CHEP pallets:** $15-$20 each
+- **Standard pallets:** $10-$15 each
+- **Кто платит:** Зависит от договоренности
+
+---
+
+## 🌍 РЕГИОНАЛЬНЫЕ ОСОБЕННОСТИ
+
+### California Loads:
+- **CARB Compliance:** Truck must be CARB compliant (2011+ engine)
+- **Strict regulations:** Emissions, idle time limits
+- **Weigh stations:** Very strict, always open
+- **Routing:** Avoid certain roads for trucks
+
+### New York City Deliveries:
+- **Time restrictions:** Often early morning only (5-7 AM)
+- **Parking:** Very limited, tight spaces
+- **Traffic:** Plan extra time
+- **Tolls:** Expensive ($50-$100+)
+
+### Canadian Border Crossings:
+- **FAST card:** Expedited clearance
+- **Passport:** Required for driver
+- **Customs paperwork:** BOL, commercial invoice, packing list
+- **Delays:** Can be 2-4 hours at border
+
+### Hazmat Loads:
+- **Placards:** Required, carrier provides
+- **Routing restrictions:** Avoid certain tunnels, bridges
+- **Endorsement:** Driver must have Hazmat endorsement
+- **Documentation:** Emergency response info required
+
+---
+
+## 📦 ТИПЫ ГРУЗОВ С ОСОБЕННОСТЯМИ
+
+### Produce (Фрукты/Овощи):
+- **Temperature critical:** Must maintain exact temp
+- **Time sensitive:** Spoils quickly
+- **HACCP certified:** Driver certification preferred
+- **Pulp temp checks:** At pickup and delivery
+- **Reefer fuel:** Must be full, continuous run
+
+### Electronics (High Value):
+- **Insurance:** $250K coverage required
+- **Careful handling:** No rough roads
+- **Security:** GPS tracking mandatory
+- **Documentation:** Photos at pickup/delivery
+- **Securement:** Extra straps, blankets
+
+### Automotive Parts (JIT - Just In Time):
+- **No delays allowed:** Production line stops if late
+- **Appointment critical:** Must be on time
+- **Penalties:** $500-$1000 per hour late
+- **Communication:** Updates every 4 hours
+
+### Furniture:
+- **Blankets required:** Carrier provides (20-30 blankets)
+- **White glove service:** Sometimes required
+- **Careful handling:** Scratches = claims
+- **Residential delivery:** May need liftgate
+
+### Beverages (Beer, Soda, Water):
+- **Heavy:** 44,000-45,000 lbs typical
+- **Pallet configuration:** Important for weight distribution
+- **Floor loaded:** Sometimes, takes longer
+- **Breakage risk:** Careful handling
+
+### Paper Products:
+- **Light but bulky:** "Cube out" before "weight out"
+- **Volume:** Takes full trailer space
+- **Easy to handle:** Less risk
+- **Lower rates:** Because of low weight
+
+---
+
+## 🌦️ СЕЗОННЫЕ ФАКТОРЫ
+
+### Зима (Декабрь - Февраль):
+- **Snow/Ice delays:** Add 20-30% extra time
+- **Chain requirements:** Mountain passes
+- **Road closures:** I-80, I-90 often closed
+- **Higher rates:** Winter premium $0.10-$0.20/mile
+
+### Лето (Июнь - Август):
+- **Heat:** Reefer challenges, more fuel
+- **Construction:** Road work delays
+- **Vacation season:** Some facilities closed
+- **Produce season:** High demand for reefers
+
+### Праздники:
+- **Thanksgiving week:** Many receivers closed Thursday-Sunday
+- **Christmas/New Year:** Limited hours, 2-3 days closed
+- **July 4th:** Many facilities closed
+- **Plan ahead:** Book early, confirm hours
+
+### Peak Season (Q4):
+- **Higher rates:** October-December
+- **Retail freight:** Black Friday, Christmas rush
+- **Capacity tight:** Hard to find trucks
+- **Premium rates:** +$0.20-$0.40/mile
+
+---
+
+## 🎯 ПРОАКТИВНЫЕ ПРЕДЛОЖЕНИЯ ДИСПЕТЧЕРА
+
+### Показать гибкость:
+- "I can have driver there 2 hours early if that helps"
+- "Driver can wait for evening delivery if needed"
+- "We're flexible on pickup time within your window"
+
+### Дополнительные возможности:
+- "We have another truck in that area if you need backup"
+- "Our team can handle multi-stop loads efficiently"
+- "We can do temperature-controlled and dry van loads"
+
+### Backhaul предложения:
+- "We're looking for backhaul from [delivery city]"
+- "Any loads returning to [home base]?"
+- "Willing to deadhead 100 miles for good backhaul"
+
+### Построение отношений:
+- "We run this lane weekly, would love to be your regular carrier"
+- "Happy to provide references from other brokers"
+- "We're looking for long-term partnerships"
+
+---
+
+## 📊 ВАРИАНТЫ РАЗВИТИЯ СОБЫТИЙ
+
+### Брокер отказывается от Factoring:
+**Диспетчер:**
+```
+"I understand, but we work exclusively through factoring for cash flow.
+We can't accept direct payment or quick pay.
+If you change your mind or have other loads that work with factoring, please call us.
+Thank you for your time!"
+```
+**Outcome:** Вежливый отказ, дверь открыта для будущего
+
+### Ставка слишком низкая:
+**Диспетчер:**
+```
+"I appreciate the offer, but $X is below our operating costs for this lane.
+Market rate is $X.XX/mile, and we need at least $X to cover fuel and expenses.
+If budget opens up, we'd love to work with you.
+Thanks for considering us!"
+```
+**Outcome:** Профессиональный отказ с объяснением
+
+### Груз уже забронирован:
+**Брокер:**
+```
+"Sorry, just booked it 2 minutes ago!
+But I have another [route] [equipment] load, [distance] miles, pickup [date].
+Interested?"
+```
+**Outcome:** Возможность получить другой груз
+
+### Водитель слишком далеко:
+**Диспетчер:**
+```
+"Driver is 200 miles away, that's 4 hours deadhead.
+Can you add $200 for deadhead to make it work?
+Or we can pickup tomorrow instead of today?"
+```
+**Outcome:** Переговоры о deadhead pay или timing
+
+---
+
+## 🚨 РЕАЛИСТИЧНЫЕ ПРОБЛЕМЫ И РЕШЕНИЯ
+
+### Водитель опаздывает на pickup:
+**Правильная коммуникация:**
+```
+"Hi [broker], this is [dispatcher].
+Driver is running 30 minutes late due to traffic on I-95.
+New ETA is 8:30 AM instead of 8:00 AM.
+I've already called shipper to notify them.
+Will this cause any issues?"
+```
+
+### Поломка в пути:
+**Правильная коммуникация:**
+```
+"[Broker], we have a situation - truck broke down in [city].
+Mechanic is on the way, estimated 3-4 hours for repair.
+This will delay delivery by 4-5 hours.
+Should I arrange backup truck or can receiver accept late delivery?
+I'll update you every hour."
+```
+
+### Погодные задержки:
+**Правильная коммуникация:**
+```
+"[Broker], I-80 is closed due to blizzard in Wyoming.
+DOT says road will reopen in 6-8 hours.
+Driver is safe at truck stop waiting.
+This will delay delivery by approximately 8 hours.
+Can you notify receiver and get new appointment?"
+```
+
+### Receiver закрыт / отказ принять груз:
+**Правильная коммуникация:**
+```
+"[Broker], driver arrived at receiver but they're closed (holiday).
+No one answered phone, gate is locked.
+What should driver do? Wait for tomorrow or return to shipper?
+We'll need detention pay for waiting time."
+```
 
 ---
 
@@ -848,10 +1399,30 @@ Send rate con with all details?"
 
 ## 📚 ВЕРСИЯ ДОКУМЕНТА
 
-**Версия:** 1.0
+**Версия:** 2.0
 **Дата:** 2026-03-03
+**Обновление:** Добавлены дополнительные категории, региональные особенности, типы грузов, сезонные факторы, проблемы и решения, метрики успеха, обучающие моменты
 **Проект:** Симуль - Dispatch Simulator
 **Цель:** База знаний для создания реалистичных диалогов обучения диспетчеров
+
+---
+
+## 📋 НОВЫЕ ДОПОЛНЕНИЯ В ВЕРСИИ 2.0
+
+### Добавлено:
+1. ✅ Insurance coverage (cargo $100K/$250K, liability)
+2. ✅ Scale tickets и weigh stations
+3. ✅ Fuel surcharge
+4. ✅ Типы appointment (FCFS, scheduled, window, live load vs drop and hook)
+5. ✅ Дополнительные сборы (detention, layover, TONU, lumper, scale tickets, pallet exchange)
+6. ✅ Региональные особенности (California, NYC, Canada, Hazmat)
+7. ✅ Типы грузов с особенностями (produce, electronics, automotive, furniture, beverages, paper)
+8. ✅ Сезонные факторы (зима, лето, праздники, peak season)
+9. ✅ Проактивные предложения диспетчера
+10. ✅ Варианты развития событий (отказ от factoring, низкая ставка, груз забронирован, deadhead)
+11. ✅ Реалистичные проблемы и решения (опоздание, поломка, погода, receiver проблемы)
+12. ✅ Метрики успеха в outcome (время, вопросы, детализация, будущие возможности)
+13. ✅ Обучающие моменты (что правильно, что улучшить, ключевой урок, применение)
 
 ---
 
