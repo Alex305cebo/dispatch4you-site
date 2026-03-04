@@ -1981,12 +1981,20 @@
 
         // Массив готов для новых диалогов
         const greetingOptions = [
-            { lines: ["Chicago IL to Miami FL reefer.", "1,380 miles fresh produce."], fullText: "Good morning!\nThis is David from Midwest Cold Chain Logistics.\nI'm calling about your Chicago to Miami reefer load.\nIs this still available?", scenarioIndex: 0 },
-            { lines: ["Los Angeles CA to New York NY dry van.", "2,790 miles cross-country."], fullText: "Good afternoon!\nThis is Marcus from Coast to Coast Transport.\nI'm calling about your Los Angeles to New York dry van load.\nIs this still available?", scenarioIndex: 1 }
+            { lines: ["Phoenix AZ to Denver CO dry van.", "820 miles paper products."], fullText: "Good morning!\nThis is Carlos from Southwest Transport Solutions.\nI'm calling about your Phoenix to Denver dry van load.\nIs this still available?", scenarioIndex: 0 }
         ];
 
 
         function init() {
+            console.log('Initializing simulator...');
+            console.log('allScenarios available:', typeof allScenarios !== 'undefined');
+            if (typeof allScenarios !== 'undefined') {
+                console.log('allScenarios length:', allScenarios.length);
+                console.log('allScenarios:', allScenarios);
+            } else {
+                console.error('ERROR: allScenarios is not defined!');
+                alert('Ошибка: файл scenarios-data-test.js не загружен или содержит ошибки. Откройте консоль браузера (F12) для деталей.');
+            }
             showRandomBubbles();
             setupEventListeners();
         }
@@ -2006,11 +2014,21 @@
         }
 
         function startConversation(greeting, scenarioIndex) {
+            console.log('startConversation called with:', greeting, scenarioIndex);
+            console.log('allScenarios:', allScenarios);
+            console.log('currentScenario will be:', allScenarios[scenarioIndex]);
+
             conversationActive = true;
             conversationStep = 0;
             currentScenario = allScenarios[scenarioIndex];
             currentPath = null;
             qualityScore = 0;
+
+            if (!currentScenario) {
+                console.error('ERROR: currentScenario is undefined! scenarioIndex:', scenarioIndex);
+                alert('Ошибка: сценарий не найден. Проверьте консоль.');
+                return;
+            }
 
             // Generate random names for this conversation
             dispatcherName = dispatcherNames[Math.floor(Math.random() * dispatcherNames.length)];
@@ -2044,7 +2062,10 @@
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     }
 
-                    addMessage(firstStep.brokerQuestion, 'broker');
+                    // Show broker's question (only if it exists and not empty)
+                    if (firstStep.brokerQuestion && firstStep.brokerQuestion.trim() !== '') {
+                        addMessage(firstStep.brokerQuestion, 'broker');
+                    }
                     showSuggestions(firstStep.suggestions);
                 }, 1500);
             }, 500);
@@ -2118,45 +2139,59 @@
         }
 
         function showSuggestions(suggestions) {
+            // Remove old suggestions if any
+            const oldSuggestions = document.getElementById('suggestions');
+            if (oldSuggestions) oldSuggestions.remove();
+
             const container = document.createElement('div');
             container.className = 'chat-suggestions';
             container.id = 'suggestions';
 
-            const hint = document.createElement('div');
-            hint.className = 'suggestion-hint';
-            hint.innerHTML = '💡 Выберите подходящий ответ';
-            container.appendChild(hint);
-
-            suggestions.forEach(suggestion => {
+            suggestions.forEach((suggestion, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'suggestion-btn';
 
                 const text = typeof suggestion === 'string' ? suggestion : suggestion.text;
                 const quality = typeof suggestion === 'object' ? suggestion.quality : 'normal';
+                const analytics = typeof suggestion === 'object' ? suggestion.analytics : '';
                 const path = typeof suggestion === 'object' ? suggestion.path : null;
 
-                btn.textContent = text;
-                btn.dataset.quality = quality;
-                if (path) btn.dataset.path = path;
+                // Create suggestion card with badge
+                const badge = document.createElement('span');
+                badge.className = 'suggestion-badge';
 
-                // Add quality indicator styling
-                if (quality === 'excellent') {
-                    btn.style.borderColor = 'rgba(34, 197, 94, 0.6)';
-                    btn.style.background = 'rgba(34, 197, 94, 0.1)';
-                    btn.style.fontWeight = '600';
+                // Set badge text and color based on quality
+                if (quality === 'master' || quality === 'excellent') {
+                    badge.textContent = '💎 МАСТЕР';
+                    badge.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
                 } else if (quality === 'good') {
-                    btn.style.borderColor = 'rgba(34, 197, 94, 0.4)';
-                    btn.style.background = 'rgba(34, 197, 94, 0.05)';
-                } else if (quality === 'aggressive') {
-                    btn.style.borderColor = 'rgba(251, 191, 36, 0.5)';
-                    btn.style.background = 'rgba(251, 191, 36, 0.08)';
+                    badge.textContent = '✅ ХОРОШО';
+                    badge.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+                } else if (quality === 'normal') {
+                    badge.textContent = '⚪ НОРМАЛЬНО';
+                    badge.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
                 } else if (quality === 'weak') {
-                    btn.style.borderColor = 'rgba(156, 163, 175, 0.5)';
-                    btn.style.background = 'rgba(156, 163, 175, 0.08)';
-                } else if (quality === 'bad' || quality === 'reject') {
-                    btn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
-                    btn.style.background = 'rgba(239, 68, 68, 0.05)';
+                    badge.textContent = '⚠️ СЛАБО';
+                    badge.style.background = 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)';
+                } else if (quality === 'aggressive') {
+                    badge.textContent = '⚠️ АГРЕССИВНО';
+                    badge.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+                } else if (quality === 'bad' || quality === 'reject' || quality === 'fail') {
+                    badge.textContent = '❌ ПРОВАЛ';
+                    badge.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
                 }
+
+                const messageText = document.createElement('div');
+                messageText.className = 'suggestion-text';
+                messageText.textContent = text;
+
+                const analyticsText = document.createElement('div');
+                analyticsText.className = 'suggestion-analytics';
+                analyticsText.textContent = analytics;
+
+                btn.appendChild(badge);
+                btn.appendChild(messageText);
+                if (analytics) btn.appendChild(analyticsText);
 
                 btn.onclick = () => selectSuggestion(text, quality, path);
                 container.appendChild(btn);
@@ -2180,15 +2215,15 @@
 
                 if (clickedSuggestion && clickedSuggestion.path) {
                     currentPath = clickedSuggestion.path;
-                } else if (quality === 'excellent') {
-                    currentPath = 'excellent';
+                } else if (quality === 'excellent' || quality === 'master') {
+                    currentPath = 'master';
                 } else if (quality === 'good') {
                     currentPath = 'good';
                 } else if (quality === 'aggressive') {
                     currentPath = 'aggressive';
                 } else if (quality === 'weak') {
                     currentPath = 'weak';
-                } else if (quality === 'bad') {
+                } else if (quality === 'bad' || quality === 'fail') {
                     currentPath = currentScenario.paths.unprofessional_fail ? 'unprofessional_fail' : 'bad';
                 } else {
                     currentPath = 'normal';
@@ -2211,20 +2246,26 @@
                 setTimeout(() => {
                     hideTypingIndicator();
 
-                    // Show broker's response
-                    addMessage(currentStep.brokerResponse, 'broker');
+                    // Show broker's response (only if it exists and not empty)
+                    if (currentStep.brokerResponse && currentStep.brokerResponse.trim() !== '') {
+                        addMessage(currentStep.brokerResponse, 'broker');
+                    }
 
-                    // Check if this is the end of conversation
-                    if (currentStep.isSuccess !== undefined) {
-                        // Conversation ended
+                    // Check if this is the end of conversation (has outcome object)
+                    if (currentStep.outcome) {
+                        // Conversation ended - show outcome feedback
                         setTimeout(() => {
-                            if (currentStep.isSuccess) {
-                                const outcomeMsg = currentStep.outcome || "✅ Load booked successfully! Great job!";
-                                addMessage(outcomeMsg, 'broker');
-                            } else {
-                                const outcomeMsg = currentStep.outcome || "❌ Load not booked. Better luck next time.";
-                                addMessage(outcomeMsg, 'broker');
-                            }
+                            const outcome = currentStep.outcome;
+                            let outcomeMsg = `\n📊 РЕЗУЛЬТАТ ДИАЛОГА\n\n`;
+                            outcomeMsg += `Качество: ${outcome.quality.toUpperCase()} \n`;
+                            outcomeMsg += `Ставка: ${outcome.rate} (${outcome.ratePerMile}) \n`;
+                            outcomeMsg += `Отношения: ${outcome.relationship} \n`;
+                            outcomeMsg += `Время диалога: ${outcome.dialogueTime} \n`;
+                            outcomeMsg += `Вопросов задано: ${outcome.questionsAsked} \n`;
+                            outcomeMsg += `Будущие грузы: ${outcome.weeklyLoads} \n\n`;
+                            outcomeMsg += `${outcome.feedback} `;
+
+                            addMessage(outcomeMsg, 'broker');
                         }, 1000);
                     } else {
                         // Continue conversation
@@ -2244,7 +2285,10 @@
                                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                                 }
 
-                                addMessage(nextStep.brokerQuestion, 'broker');
+                                // Show broker's question (only if it exists and not empty)
+                                if (nextStep.brokerQuestion && nextStep.brokerQuestion.trim() !== '') {
+                                    addMessage(nextStep.brokerQuestion, 'broker');
+                                }
                                 showSuggestions(nextStep.suggestions);
                             }, 1000);
                         }
