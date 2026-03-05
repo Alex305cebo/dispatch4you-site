@@ -650,6 +650,139 @@
                 min-height: 120px;
             }
         }
+
+        /* State Info Modal */
+        .state-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            z-index: 999999;
+            min-width: 280px;
+            max-width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.3s ease;
+            pointer-events: auto;
+            touch-action: auto;
+        }
+
+        .state-modal.active {
+            display: block;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999998;
+            animation: overlayFadeIn 0.3s ease;
+            pointer-events: auto;
+            touch-action: auto;
+        }
+
+        .modal-overlay.active {
+            display: block;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .modal-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .modal-info-label {
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .modal-info-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .modal-info-value.highlight {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -45%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @keyframes overlayFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
@@ -889,7 +1022,232 @@
                 }
             });
         });
+
+        // Реалистичная анимация изменения данных в графике
+        const stateData = [
+            { name: 'California', flag: '🌴', baseValue: 3247, dieselPrice: 4.89, element: null, bar: null },
+            { name: 'Texas', flag: '⭐', baseValue: 2891, dieselPrice: 3.45, element: null, bar: null },
+            { name: 'Florida', flag: '🌊', baseValue: 2156, dieselPrice: 3.78, element: null, bar: null },
+            { name: 'Illinois', flag: '🏙️', baseValue: 1923, dieselPrice: 4.12, element: null, bar: null },
+            { name: 'Georgia', flag: '🍑', baseValue: 1687, dieselPrice: 3.65, element: null, bar: null },
+            { name: 'Pennsylvania', flag: '🌲', baseValue: 1534, dieselPrice: 4.23, element: null, bar: null },
+            { name: 'New York', flag: '🗽', baseValue: 1421, dieselPrice: 4.56, element: null, bar: null },
+            { name: 'Ohio', flag: '🌾', baseValue: 1298, dieselPrice: 3.92, element: null, bar: null },
+            { name: 'North Carolina', flag: '🌲', baseValue: 1147, dieselPrice: 3.71, element: null, bar: null },
+            { name: 'Arizona', flag: '🏔️', baseValue: 987, dieselPrice: 3.98, element: null, bar: null }
+        ];
+
+        // Инициализация элементов после загрузки
+        setTimeout(() => {
+            const chartItems = document.querySelectorAll('.chart-bar-item');
+
+            chartItems.forEach((item, index) => {
+                if (stateData[index]) {
+                    stateData[index].element = item.querySelector('.chart-bar-value');
+                    stateData[index].bar = item.querySelector('.chart-bar');
+                    stateData[index].currentValue = stateData[index].baseValue;
+                    stateData[index].showingDiesel = false;
+                    stateData[index].originalHeight = stateData[index].bar.style.height;
+
+                    // Добавляем текстовую подсказку на бар
+                    const barLabel = document.createElement('span');
+                    barLabel.className = 'bar-mode-label';
+                    barLabel.textContent = 'Доступные грузы';
+                    barLabel.style.cssText = 'position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 10px; color: rgba(255,255,255,0.08); font-weight: 600; z-index: 2; pointer-events: none; text-shadow: none; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; transition: all 0.4s ease; opacity: 0.3;';
+                    stateData[index].bar.appendChild(barLabel);
+                    stateData[index].barLabel = barLabel;
+
+                    // Добавляем обработчики для показа цены на дизель
+                    const barWrapper = item.querySelector('.chart-bar-wrapper');
+                    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+                    if (!isMobile) {
+                        // На десктопе: при наведении показываем цену на дизель
+                        barWrapper.addEventListener('mouseenter', () => {
+                            if (!stateData[index].showingDiesel) {
+                                stateData[index].showingDiesel = true;
+
+                                // Добавляем плавную анимацию
+                                stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+                                // Меняем цвет бара на оранжево-красный градиент
+                                stateData[index].bar.style.background = 'linear-gradient(180deg, #f59e0b, #ef4444)';
+                                stateData[index].bar.style.backgroundSize = '100% 200%';
+
+                                // Меняем текст на цену дизеля
+                                stateData[index].element.textContent = '$' + stateData[index].dieselPrice.toFixed(2);
+
+                                // Меняем надпись на баре
+                                if (stateData[index].barLabel) {
+                                    stateData[index].barLabel.textContent = 'Цены на топливо';
+                                    stateData[index].barLabel.style.opacity = '0.08';
+                                }
+
+                                // Меняем высоту бара пропорционально цене (от $1 до $10)
+                                const dieselPercentage = (stateData[index].dieselPrice / 10) * 100;
+                                stateData[index].bar.style.height = dieselPercentage + '%';
+                            }
+                        });
+
+                        barWrapper.addEventListener('mouseleave', () => {
+                            if (stateData[index].showingDiesel) {
+                                stateData[index].showingDiesel = false;
+
+                                // Добавляем плавную анимацию
+                                stateData[index].bar.style.transition = 'height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), background-size 1.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+                                // Возвращаем оригинальный градиент
+                                stateData[index].bar.style.background = 'linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1)';
+                                stateData[index].bar.style.backgroundSize = '100% 200%';
+
+                                // Возвращаем количество грузов
+                                stateData[index].element.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
+
+                                // Возвращаем надпись на баре
+                                if (stateData[index].barLabel) {
+                                    stateData[index].barLabel.textContent = 'Доступные грузы';
+                                    stateData[index].barLabel.style.opacity = '0.3';
+                                }
+
+                                // Возвращаем оригинальную высоту
+                                stateData[index].bar.style.height = stateData[index].originalHeight;
+                            }
+                        });
+                    } else {
+                        // На мобильных: при клике показываем модальное окно с информацией
+                        barWrapper.addEventListener('click', (e) => {
+                            e.stopPropagation();
+
+                            const modal = document.getElementById('stateModal');
+                            const overlay = document.getElementById('stateModalOverlay');
+                            const modalStateFlag = document.getElementById('modalStateFlag');
+                            const modalStateName = document.getElementById('modalStateName');
+                            const modalLoadsCount = document.getElementById('modalLoadsCount');
+                            const modalRatePerMile = document.getElementById('modalRatePerMile');
+                            const modalDieselPrice = document.getElementById('modalDieselPrice');
+
+                            // Заполняем данные
+                            modalStateFlag.textContent = stateData[index].flag;
+                            modalStateName.textContent = stateData[index].name;
+                            modalLoadsCount.textContent = stateData[index].currentValue.toLocaleString('ru-RU');
+
+                            // Рассчитываем rate per mile
+                            const ratePerMile = (2.0 + (stateData[index].baseValue / 1000) * 0.15).toFixed(2);
+                            modalRatePerMile.textContent = '$' + ratePerMile;
+
+                            modalDieselPrice.textContent = '$' + stateData[index].dieselPrice.toFixed(2);
+
+                            // Устанавливаем флаг что модалка только что открылась
+                            modalJustOpened = true;
+
+                            // Показываем модальное окно
+                            setTimeout(() => {
+                                modal.classList.add('active');
+                                overlay.classList.add('active');
+
+                                setTimeout(() => {
+                                    modalJustOpened = false;
+                                }, 500);
+                            }, 100);
+                        });
+                    }
+                }
+            });
+        }, 1000);
+
+        // Закрытие модального окна
+        let modalJustOpened = false;
+
+        function closeModal() {
+            const modal = document.getElementById('stateModal');
+            const overlay = document.getElementById('stateModalOverlay');
+            if (modal && overlay) {
+                modal.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+            modalJustOpened = false;
+        }
+
+        // Функция инициализации обработчиков закрытия модалки
+        function initModalHandlers() {
+            const modalClose = document.getElementById('modalClose');
+            const overlay = document.getElementById('stateModalOverlay');
+            const modal = document.getElementById('stateModal');
+
+            // Закрытие по клику на крестик
+            if (modalClose) {
+                modalClose.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeModal();
+                });
+                modalClose.addEventListener('touchend', (e) => {
+                    e.stopPropagation();
+                    closeModal();
+                }, { passive: true });
+            }
+
+            // Закрытие по клику на overlay
+            if (overlay) {
+                overlay.addEventListener('click', () => {
+                    if (!modalJustOpened) {
+                        closeModal();
+                    }
+                });
+                overlay.addEventListener('touchend', () => {
+                    if (!modalJustOpened) {
+                        closeModal();
+                    }
+                }, { passive: true });
+            }
+
+            // Закрытие по клику на модальное окно
+            if (modal) {
+                modal.addEventListener('click', () => {
+                    if (!modalJustOpened) {
+                        closeModal();
+                    }
+                });
+                modal.addEventListener('touchend', () => {
+                    if (!modalJustOpened) {
+                        closeModal();
+                    }
+                }, { passive: true });
+            }
+        }
+
+        // Инициализируем обработчики
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initModalHandlers);
+        } else {
+            initModalHandlers();
+        }
     </script>
+
+    <!-- State Info Modal -->
+    <div class="modal-overlay" id="stateModalOverlay"></div>
+    <div class="state-modal" id="stateModal">
+        <div class="modal-header">
+            <div class="modal-title">
+                <span id="modalStateFlag">🌴</span>
+                <span id="modalStateName">California</span>
+            </div>
+            <button class="modal-close" id="modalClose">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-info-item">
+                <span class="modal-info-label">Количество грузов</span>
+                <span class="modal-info-value highlight" id="modalLoadsCount">3,247</span>
+            </div>
+            <div class="modal-info-item">
+                <span class="modal-info-label">Rate per mile</span>
+                <span class="modal-info-value" id="modalRatePerMile">$2.45</span>
+            </div>
+            <div class="modal-info-item">
+                <span class="modal-info-label">Цена на дизель</span>
+                <span class="modal-info-value" id="modalDieselPrice">$4.89</span>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
