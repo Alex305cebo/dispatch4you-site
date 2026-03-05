@@ -1,0 +1,29 @@
+[
+    {
+        "id": "lesson-1",
+        "slug": "introduction",
+        "title": "Введение в курс",
+        "description": "Первый урок - знакомство с платформой",
+        "audioUrl": "/audio/lesson-1.mp3",
+        "duration": "5:30",
+        "content": "Добро пожаловать на платформу обучения! В этом уроке мы познакомимся с основами..."
+    },
+    {
+        "id": "lesson-2",
+        "slug": "basics",
+        "title": "Основы работы",
+        "description": "Изучаем базовые концепции",
+        "audioUrl": "/audio/lesson-2.mp3",
+        "duration": "8:15",
+        "content": "В этом уроке мы рассмотрим основные принципы работы..."
+    },
+    {
+        "id": "lesson-3",
+        "slug": "advanced",
+        "title": "Продвинутые техники",
+        "description": "Углубленное изучение материала",
+        "audioUrl": "/audio/lesson-3.mp3",
+        "duration": "12:45",
+        "content": "Теперь перейдем к более сложным темам и техникам..."
+    }
+]

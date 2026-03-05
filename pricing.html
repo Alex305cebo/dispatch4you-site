@@ -194,12 +194,15 @@
         /* Pricing Cards */
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
             margin-bottom: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .pricing-grid {
                 grid-template-columns: 1fr;
                 gap: 24px;
@@ -386,6 +389,150 @@
             }
         }
 
+        /* Plan Details Section */
+        .plan-details-section {
+            padding: 80px 0;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .plan-detail-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            transition: all 0.3s;
+        }
+
+        .plan-detail-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.15);
+        }
+
+        .plan-detail-card.featured {
+            border-color: rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .plan-detail-card.premium {
+            border-color: rgba(236, 72, 153, 0.4);
+            background: rgba(236, 72, 153, 0.05);
+        }
+
+        .plan-detail-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plan-detail-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .plan-detail-badge.free {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .plan-detail-badge.pro {
+            background: rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+        }
+
+        .plan-detail-badge.premium {
+            background: rgba(236, 72, 153, 0.2);
+            color: #ec4899;
+        }
+
+        .plan-detail-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .plan-detail-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .plan-detail-content h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .detail-features-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+
+        .detail-features-list li {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .detail-features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .detail-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .plan-detail-note {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 3px solid #6366f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .plan-detail-guarantee {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 3px solid #22c55e;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .plan-details-section {
+                padding: 60px 0;
+            }
+
+            .plan-detail-card {
+                padding: 24px;
+            }
+
+            .plan-detail-title {
+                font-size: 24px;
+            }
+        }
+
         /* FAQ Section */
         .faq-section {
             padding: 80px 0;
@@ -547,6 +694,418 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Load Statistics Section */
+        .load-stats-section {
+            padding: 80px 0;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .stats-hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-hero h2 {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .stats-subtitle {
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-trend {
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        .stat-trend.positive {
+            color: #22c55e;
+        }
+
+        .chart-container {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 12px 20px 20px 20px;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);
+        }
+
+        .chart-container h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .chart-bars {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 0px;
+            height: 410px;
+            padding: 20px 10px;
+        }
+
+        .chart-bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            width: 70px;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .chart-bar-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .chart-bar-item:nth-child(1) .chart-bar {
+            animation-delay: 0.1s, 0.1s;
+        }
+
+        .chart-bar-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .chart-bar-item:nth-child(2) .chart-bar {
+            animation-delay: 0.2s, 0.2s;
+        }
+
+        .chart-bar-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .chart-bar-item:nth-child(3) .chart-bar {
+            animation-delay: 0.3s, 0.3s;
+        }
+
+        .chart-bar-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .chart-bar-item:nth-child(4) .chart-bar {
+            animation-delay: 0.4s, 0.4s;
+        }
+
+        .chart-bar-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .chart-bar-item:nth-child(5) .chart-bar {
+            animation-delay: 0.5s, 0.5s;
+        }
+
+        .chart-bar-item:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .chart-bar-item:nth-child(6) .chart-bar {
+            animation-delay: 0.6s, 0.6s;
+        }
+
+        .chart-bar-item:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        .chart-bar-item:nth-child(7) .chart-bar {
+            animation-delay: 0.7s, 0.7s;
+        }
+
+        .chart-bar-item:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+
+        .chart-bar-item:nth-child(8) .chart-bar {
+            animation-delay: 0.8s, 0.8s;
+        }
+
+        .chart-bar-item:nth-child(9) {
+            animation-delay: 0.9s;
+        }
+
+        .chart-bar-item:nth-child(9) .chart-bar {
+            animation-delay: 0.9s, 0.9s;
+        }
+
+        .chart-bar-item:nth-child(10) {
+            animation-delay: 1s;
+        }
+
+        .chart-bar-item:nth-child(10) .chart-bar {
+            animation-delay: 1s, 1s;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chart-bar-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            height: 50px;
+        }
+
+        .state-name {
+            font-size: inherit;
+            color: inherit;
+        }
+
+        .state-name::before {
+            content: attr(data-full);
+        }
+
+        @media (max-width: 640px) {
+            .state-name::before {
+                content: attr(data-short);
+            }
+        }
+
+        .chart-bar-item:hover .chart-bar-label {
+            transform: translateY(5px);
+            color: #8b5cf6;
+        }
+
+        .state-flag {
+            font-size: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .chart-bar-item:hover .state-flag {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        .chart-bar-wrapper {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 350px;
+        }
+
+        .chart-bar-wrapper:hover {
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(99, 102, 241, 0.3);
+        }
+
+        .chart-bar {
+            width: 100%;
+            background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1);
+            background-size: 100% 200%;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 -4px 12px rgba(99, 102, 241, 0.4);
+            animation: gradientShift 3s ease infinite, fillVertical 1.5s ease-out forwards;
+            transition: all 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transform-origin: bottom;
+        }
+
+        @keyframes fillVertical {
+            from {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 50% 0%;
+            }
+
+            50% {
+                background-position: 50% 100%;
+            }
+        }
+
+        .chart-bar-item:hover .chart-bar {
+            transform: scaleX(1.1);
+            box-shadow: 0 -6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .chart-bar::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                top: -100%;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .chart-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .chart-bar-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-bar-item {
+                width: 50px;
+            }
+
+            .chart-bar-wrapper {
+                min-height: 210px;
+            }
+
+            .chart-bar-value {
+                font-size: 11px;
+            }
+
+            .chart-container h3 {
+                font-size: 14px;
+            }
+
+            .stats-hero h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .chart-bar-item {
+                width: 40px;
+            }
+
+            .chart-bar-wrapper {
+                min-height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chart-bar-item {
+                width: 30px;
+            }
+
+            .chart-bar-wrapper {
+                min-height: 150px;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
     <link rel="stylesheet" href="shared-nav.css">
 </head>
@@ -624,15 +1183,15 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-nav-links">
-      <div class="mobile-nav-actions">
-        <a href="login.html" class="btn-login">Войти</a>
-        <a href="register.html" class="btn-signup">Регистрация</a>
-      </div>
+        <div class="mobile-nav-links">
+            <div class="mobile-nav-actions">
+                <a href="login.html" class="btn-login">Войти</a>
+                <a href="register.html" class="btn-signup">Регистрация</a>
+            </div>
 
-      <div class="mobile-menu-divider"></div>
+            <div class="mobile-menu-divider"></div>
 
-      <a href="index.html" class="nav-link">🏠 Главная</a>
+            <a href="index.html" class="nav-link">🏠 Главная</a>
 
             <div class="mobile-nav-section">
                 <div class="mobile-section-title">📚 КУРСЫ</div>
@@ -662,12 +1221,12 @@
                 <a href="help.html" class="nav-link nav-link-sub">Помощь</a>
                 <a href="contacts.html" class="nav-link nav-link-sub">Контакты</a>
             </div>
-      <a href="pages/documentation.html" class="nav-link">📄 Документация</a>
+            <a href="pages/documentation.html" class="nav-link">📄 Документация</a>
             <a href="pricing.html" class="nav-link active">💰 Тарифы</a>
             <a href="dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">👤 Личный
                 кабинет</a>
         </div>
-  </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="pricing-hero">
@@ -678,14 +1237,6 @@
                 <p class="pricing-subtitle">
                     Гибкие планы для начинающих и профессионалов. Начните бесплатно или выберите подходящий тариф.
                 </p>
-
-                <!-- Pricing Toggle -->
-                <div class="pricing-toggle">
-                    <span class="toggle-label active" id="monthlyLabel">Ежемесячно</span>
-                    <div class="toggle-switch" id="pricingToggle"></div>
-                    <span class="toggle-label" id="yearlyLabel">Ежегодно</span>
-                    <span class="save-badge">Экономия 20%</span>
-                </div>
             </div>
         </div>
     </section>
@@ -698,66 +1249,192 @@
                 <!-- Free Plan -->
                 <div class="pricing-card">
                     <h3 class="plan-name">Базовый</h3>
-                    <p class="plan-description">Идеально для знакомства с профессией диспетчера</p>
+                    <p class="plan-description">Демо версия всех функций + постоянный доступ ко всей теории</p>
                     <div class="plan-price">
                         <span class="price-currency">$</span>
-                        <span class="price-amount" data-monthly="0" data-yearly="0">0</span>
+                        <span class="price-amount">0</span>
                     </div>
                     <p class="price-note">Навсегда бесплатно</p>
                     <ul class="plan-features">
-                        <li><span class="feature-icon">✓</span> Доступ к 3 базовым модулям</li>
-                        <li><span class="feature-icon">✓</span> 10 практических кейсов</li>
+                        <li><span class="feature-icon">✓</span> Демо версия всех функций</li>
+                        <li><span class="feature-icon">✓</span> Постоянный доступ ко всей теории</li>
                         <li><span class="feature-icon">✓</span> Базовые материалы и шаблоны</li>
                         <li><span class="feature-icon">✓</span> Доступ к сообществу</li>
                     </ul>
                     <a href="course.html" class="btn btn-secondary plan-cta">Начать бесплатно</a>
                 </div>
 
-                <!-- Pro Plan -->
+                <!-- Dispatcher Plan -->
                 <div class="pricing-card featured">
                     <div class="popular-badge">Популярный</div>
-                    <h3 class="plan-name">Профессиональный</h3>
-                    <p class="plan-description">Полный курс для серьезного старта карьеры</p>
+                    <h3 class="plan-name">Диспетчер</h3>
+                    <p class="plan-description">Полный доступ ко всем инструментам и материалам проекта</p>
                     <div class="plan-price">
                         <span class="price-currency">$</span>
-                        <span class="price-amount" data-monthly="49" data-yearly="470">49</span>
-                        <span class="price-period">/месяц</span>
+                        <span class="price-amount">750</span>
                     </div>
-                    <p class="price-note">Оплата ежемесячно или ежегодно</p>
+                    <p class="price-note">Единоразовая оплата</p>
                     <ul class="plan-features">
-                        <li><span class="feature-icon">✓</span> Все 9 модулей обучения</li>
+                        <li><span class="feature-icon">✓</span> Все 12 модулей обучения</li>
                         <li><span class="feature-icon">✓</span> 50+ практических кейсов</li>
-                        <li><span class="feature-icon">✓</span> Персональный ментор</li>
-                        <li><span class="feature-icon">✓</span> Симулятор диспетчера</li>
-                        <li><span class="feature-icon">✓</span> Помощь в трудоустройстве</li>
-                        <li><span class="feature-icon">✓</span> Доступ к закрытым вебинарам</li>
-                        <li><span class="feature-icon">✓</span> Пожизненные обновления</li>
+                        <li><span class="feature-icon">✓</span> Симулятор переговоров</li>
+                        <li><span class="feature-icon">✓</span> Все инструменты и приложения</li>
+                        <li><span class="feature-icon">✓</span> Полный доступ к материалам</li>
+                        <li><span class="feature-icon">✓</span> Тесты и проверка знаний</li>
+                        <li><span class="feature-icon">✓</span> Пожизненный доступ</li>
                     </ul>
-                    <a href="course.html" class="btn btn-primary plan-cta">Выбрать план</a>
+                    <a href="course.html" class="btn btn-primary plan-cta">Купить курс</a>
                 </div>
 
-                <!-- Enterprise Plan -->
+                <!-- Professional Plan -->
                 <div class="pricing-card">
-                    <h3 class="plan-name">Корпоративный</h3>
-                    <p class="plan-description">Для компаний и команд от 5 человек</p>
+                    <h3 class="plan-name">Профессионал</h3>
+                    <p class="plan-description">Всё + аудио курс, личный ментор 24/7 и помощь в трудоустройстве</p>
                     <div class="plan-price">
                         <span class="price-currency">$</span>
-                        <span class="price-amount" data-monthly="199" data-yearly="1910">199</span>
-                        <span class="price-period">/месяц</span>
+                        <span class="price-amount">1,200</span>
                     </div>
-                    <p class="price-note">До 10 пользователей включено</p>
+                    <p class="price-note">Единоразовая оплата</p>
                     <ul class="plan-features">
-                        <li><span class="feature-icon">✓</span> Все возможности Pro плана</li>
-                        <li><span class="feature-icon">✓</span> Корпоративная панель управления</li>
-                        <li><span class="feature-icon">✓</span> Индивидуальная программа обучения</li>
-                        <li><span class="feature-icon">✓</span> Приоритетная поддержка 24/7</li>
-                        <li><span class="feature-icon">✓</span> Выделенный менеджер аккаунта</li>
-                        <li><span class="feature-icon">✓</span> API интеграция</li>
-                        <li><span class="feature-icon">✓</span> Аналитика и отчеты</li>
+                        <li><span class="feature-icon">✓</span> Всё из тарифа "Диспетчер"</li>
+                        <li><span class="feature-icon">✓</span> 🎧 Аудио версия всего курса</li>
+                        <li><span class="feature-icon">✓</span> Личный ментор 24/7</li>
+                        <li><span class="feature-icon">✓</span> Доступ к закрытому чату</li>
+                        <li><span class="feature-icon">✓</span> Помощь в трудоустройстве</li>
+                        <li><span class="feature-icon">✓</span> Работа на живом примере</li>
+                        <li><span class="feature-icon">✓</span> Финальный экзамен и сертификат</li>
                     </ul>
-                    <a href="contacts.html" class="btn btn-primary plan-cta">Связаться с нами</a>
+                    <a href="contacts.html" class="btn btn-primary plan-cta">Купить курс</a>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Plan Descriptions -->
+    <section class="plan-details-section">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: 60px;">
+                <h2 class="section-title">Подробное описание тарифов</h2>
+                <p class="section-subtitle">Узнайте всё о возможностях каждого плана</p>
+            </div>
+
+            <!-- Базовый Plan Details -->
+            <div class="plan-detail-card">
+                <div class="plan-detail-header">
+                    <div class="plan-detail-badge free">Бесплатно</div>
+                    <h3 class="plan-detail-title">Базовый</h3>
+                    <p class="plan-detail-subtitle">Идеально для знакомства с профессией диспетчера</p>
+                </div>
+                <div class="plan-detail-content">
+                    <h4>Что входит:</h4>
+                    <ul class="detail-features-list">
+                        <li><span class="detail-icon">📚</span> <strong>Демо версия всех функций</strong> - попробуйте
+                            все инструменты платформы</li>
+                        <li><span class="detail-icon">📖</span> <strong>Постоянный доступ ко всей теории</strong> -
+                            изучайте материалы в любое время</li>
+                        <li><span class="detail-icon">📝</span> <strong>Базовые материалы</strong> - шаблоны документов
+                            и чек-листы</li>
+                        <li><span class="detail-icon">👥</span> <strong>Доступ к сообществу</strong> - общайтесь с
+                            другими студентами</li>
+                        <li><span class="detail-icon">🎯</span> <strong>10 практических кейсов</strong> - решайте
+                            реальные задачи диспетчера</li>
+                        <li><span class="detail-icon">💬</span> <strong>Демо симулятор</strong> - попробуйте переговоры
+                            с брокерами</li>
+                        <li><span class="detail-icon">📊</span> <strong>Базовая аналитика</strong> - отслеживайте свой
+                            прогресс</li>
+                    </ul>
+                    <div class="plan-detail-note">
+                        <strong>Идеально для:</strong> Тех, кто хочет понять, подходит ли им профессия диспетчера,
+                        прежде чем инвестировать в полный курс.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Диспетчер Plan Details -->
+            <div class="plan-detail-card featured">
+                <div class="plan-detail-header">
+                    <div class="plan-detail-badge pro">Популярный</div>
+                    <h3 class="plan-detail-title">Диспетчер - $750</h3>
+                    <p class="plan-detail-subtitle">Полный курс для серьезного старта карьеры</p>
+                </div>
+                <div class="plan-detail-content">
+                    <h4>Что входит:</h4>
+                    <ul class="detail-features-list">
+                        <li><span class="detail-icon">📚</span> <strong>Все 12 модулей обучения</strong> - полная
+                            программа от основ до экспертного уровня</li>
+                        <li><span class="detail-icon">🎯</span> <strong>50+ практических кейсов</strong> - реальные
+                            ситуации из практики диспетчеров</li>
+                        <li><span class="detail-icon">💬</span> <strong>Полный симулятор переговоров</strong> - 15+
+                            сценариев с брокерами и водителями</li>
+                        <li><span class="detail-icon">🛠️</span> <strong>Все инструменты и приложения</strong> - Load
+                            Board, Load Finder, Dispatcher Cards</li>
+                        <li><span class="detail-icon">📖</span> <strong>Полный доступ к материалам</strong> - документы,
+                            шаблоны, чек-листы, инструкции</li>
+                        <li><span class="detail-icon">✅</span> <strong>Тесты и проверка знаний</strong> - после каждого
+                            модуля с детальной обратной связью</li>
+                        <li><span class="detail-icon">📊</span> <strong>Продвинутая аналитика</strong> - детальная
+                            статистика вашего прогресса</li>
+                        <li><span class="detail-icon">🗺️</span> <strong>База знаний по штатам</strong> - особенности
+                            работы в каждом штате США</li>
+                        <li><span class="detail-icon">💰</span> <strong>Калькуляторы и инструменты</strong> - расчет
+                            ставок, маржи, расстояний</li>
+                        <li><span class="detail-icon">📞</span> <strong>Примеры реальных звонков</strong> - слушайте и
+                            анализируйте успешные переговоры</li>
+                        <li><span class="detail-icon">🔄</span> <strong>Пожизненный доступ</strong> - учитесь в своем
+                            темпе без ограничений по времени</li>
+                        <li><span class="detail-icon">🆕</span> <strong>Все обновления бесплатно</strong> - получайте
+                            новые материалы и функции</li>
+                    </ul>
+                    <div class="plan-detail-note">
+                        <strong>Идеально для:</strong> Тех, кто серьезно настроен начать карьеру диспетчера и хочет
+                        получить все необходимые знания и инструменты для успешного старта.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Профессионал Plan Details -->
+            <div class="plan-detail-card premium">
+                <div class="plan-detail-header">
+                    <div class="plan-detail-badge premium">Премиум</div>
+                    <h3 class="plan-detail-title">Профессионал - $1,200</h3>
+                    <p class="plan-detail-subtitle">Максимальная поддержка и гарантия трудоустройства</p>
+                </div>
+                <div class="plan-detail-content">
+                    <h4>Всё из тарифа "Диспетчер" +</h4>
+                    <ul class="detail-features-list">
+                        <li><span class="detail-icon">🎧</span> <strong>Аудио версия всего курса</strong> - слушайте
+                            материалы в дороге, на прогулке или дома</li>
+                        <li><span class="detail-icon">👨‍🏫</span> <strong>Личный ментор 24/7</strong> - опытный
+                            диспетчер всегда на связи для ответов на вопросы</li>
+                        <li><span class="detail-icon">💬</span> <strong>Доступ к закрытому чату</strong> - премиум
+                            сообщество с экспертами и успешными диспетчерами</li>
+                        <li><span class="detail-icon">🎥</span> <strong>Работа на живом примере</strong> - ментор
+                            показывает реальную работу в режиме реального времени</li>
+                        <li><span class="detail-icon">💼</span> <strong>Помощь в трудоустройстве</strong> - составление
+                            резюме, подготовка к собеседованиям</li>
+                        <li><span class="detail-icon">🤝</span> <strong>Рекомендации работодателям</strong> - прямые
+                            контакты с компаниями-партнерами</li>
+                        <li><span class="detail-icon">📋</span> <strong>Финальный экзамен</strong> - проверка знаний с
+                            детальным разбором</li>
+                        <li><span class="detail-icon">📞</span> <strong>Индивидуальные консультации</strong> - разбор
+                            ваших конкретных ситуаций</li>
+                        <li><span class="detail-icon">🎯</span> <strong>Персональный план развития</strong> -
+                            индивидуальная программа обучения</li>
+                        <li><span class="detail-icon">⚡</span> <strong>Приоритетная поддержка</strong> - ответы на
+                            вопросы в течение 1 часа</li>
+                        <li><span class="detail-icon">🔥</span> <strong>Эксклюзивные материалы</strong> - продвинутые
+                            стратегии и секреты профессионалов</li>
+                    </ul>
+                    <div class="plan-detail-note">
+                        <strong>Идеально для:</strong> Тех, кто хочет максимально быстро и эффективно освоить профессию
+                        с гарантией трудоустройства и постоянной поддержкой эксперта.
+                    </div>
+                    <div class="plan-detail-guarantee">
+                        <strong>🎯 Гарантия:</strong> После прохождения финального экзамена мы гарантируем помощь в
+                        трудоустройстве.
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -776,14 +1453,6 @@
                     <p class="faq-answer">
                         Да, вы можете в любой момент обновить свой план. Все ваши достижения и прогресс сохранятся,
                         и вы получите доступ ко всем дополнительным материалам и функциям.
-                    </p>
-                </div>
-
-                <div class="faq-item">
-                    <h3 class="faq-question">Есть ли гарантия возврата денег?</h3>
-                    <p class="faq-answer">
-                        Да, мы предлагаем 14-дневную гарантию возврата денег. Если курс вам не подойдет,
-                        мы вернем полную стоимость без лишних вопросов.
                     </p>
                 </div>
 
@@ -814,9 +1483,192 @@
                 <div class="faq-item">
                     <h3 class="faq-question">Сколько длится доступ к курсу?</h3>
                     <p class="faq-answer">
-                        При покупке Pro плана вы получаете пожизненный доступ ко всем материалам курса,
+                        При покупке тарифа "Диспетчер" или "Профессионал" вы получаете пожизненный доступ ко всем
+                        материалам курса,
                         включая все будущие обновления и новые модули.
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Load Statistics Section -->
+    <section class="load-stats-section" style="padding: 80px 0; background: rgba(15, 23, 42, 0.5);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2
+                    style="font-size: 36px; font-weight: 900; background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px;">
+                    📊 Статистика грузов по США в реальном времени
+                </h2>
+                <p style="font-size: 16px; color: #94a3b8;">Актуальные данные о доступных грузах и ценах на топливо</p>
+            </div>
+
+            <div
+                style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 16px; padding: 30px; max-width: 900px; margin: 0 auto 40px;">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #ffffff; text-align: center;">
+                    📈 Топ-10 штатов по количеству грузов
+                </h3>
+
+                <div
+                    style="display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; font-size: 12px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div
+                            style="width: 20px; height: 12px; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 3px;">
+                        </div>
+                        <span style="color: #94a3b8;">Количество грузов</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div
+                            style="width: 20px; height: 12px; background: linear-gradient(90deg, #f59e0b, #ef4444); border-radius: 3px;">
+                        </div>
+                        <span style="color: #94a3b8;">Цена дизеля ($1-$10/gal)</span>
+                    </div>
+                </div>
+
+                <div
+                    style="display: flex; align-items: flex-end; justify-content: center; gap: 8px; height: 300px; padding: 20px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 100%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">3,247</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🌴</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">CA</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 89%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">2,891</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">⭐</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">TX</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 66%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">2,156</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🌊</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">FL</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 59%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">1,923</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🏙️</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">IL</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 52%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">1,687</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🍑</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">GA</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 47%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">1,534</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🌲</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">PA</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 44%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">1,421</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🗽</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">NY</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 40%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">1,298</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🌾</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">OH</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 35%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">1,147</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🌲</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">NC</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 70px;">
+                        <div
+                            style="width: 100%; background: linear-gradient(180deg, #ec4899, #8b5cf6, #6366f1); border-radius: 8px 8px 0 0; height: 30%; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;">
+                            <span style="color: white; font-weight: 700; font-size: 12px;">987</span>
+                        </div>
+                        <div style="margin-top: 8px; text-align: center;">
+                            <div style="font-size: 20px;">🏔️</div>
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">AZ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
+                <div
+                    style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 24px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">🚛</div>
+                    <div
+                        style="font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">
+                        15,847</div>
+                    <div style="font-size: 14px; color: #94a3b8; font-weight: 600; margin-bottom: 8px;">Активных грузов
+                    </div>
+                    <div style="font-size: 12px; color: #22c55e;">↑ 12% за неделю</div>
+                </div>
+                <div
+                    style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 24px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">🏢</div>
+                    <div
+                        style="font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">
+                        50+</div>
+                    <div style="font-size: 14px; color: #94a3b8; font-weight: 600; margin-bottom: 8px;">Брокеров</div>
+                    <div style="font-size: 12px; color: #64748b;">TQL, C.H. Robinson...</div>
+                </div>
+                <div
+                    style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 24px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+                    <div
+                        style="font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">
+                        5,247</div>
+                    <div style="font-size: 14px; color: #94a3b8; font-weight: 600; margin-bottom: 8px;">Новых за час
+                    </div>
+                    <div style="font-size: 12px; color: #22c55e;">↑ Обновляется</div>
+                </div>
+                <div
+                    style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 24px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">🗺️</div>
+                    <div
+                        style="font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">
+                        50</div>
+                    <div style="font-size: 14px; color: #94a3b8; font-weight: 600; margin-bottom: 8px;">Штатов США</div>
+                    <div style="font-size: 12px; color: #64748b;">Полное покрытие</div>
                 </div>
             </div>
         </div>
@@ -830,7 +1682,7 @@
                     <div class="footer-logo">🚛 Курсы Диспетчера</div>
                     <p class="footer-description">
                         Профессиональное обучение диспетчеров грузоперевозок.
-                        Станьте востребованным специалистом за 3-4 недели.
+                        Станьте востребованным специалистом.
                     </p>
                 </div>
 
