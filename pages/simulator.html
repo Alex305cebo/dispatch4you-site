@@ -2243,9 +2243,16 @@
     </div>
 
     <!-- Scenarios Data -->
+    <script>
+        // Initialize global scenarios array
+        window.allScenarios = [];
+        console.log('✅ Initialized allScenarios array');
+    </script>
+    <!-- Load scenario data -->
+    <script src="scenarios-data-v2.js"></script>
     <!-- <script src="scenarios-data-v3.js"></script> OLD dialogs #1-3 disabled -->
-    <script src="scenarios-data-v4.js"></script>
-    <script src="scenarios-data-v5.js"></script>
+    <!-- <script src="scenarios-data-v4.js"></script> DISABLED: incorrect format -->
+    <!-- <script src="scenarios-data-v5.js"></script> DISABLED: incorrect format -->
 
     <script>
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -2521,7 +2528,19 @@
         // Функция для автоматического создания карточек из всех диалогов
         function generateGreetingOptions() {
             if (typeof allScenarios === 'undefined' || !allScenarios || allScenarios.length === 0) {
-                console.error('allScenarios is not available');
+                console.error('❌ allScenarios is not available or empty');
+                console.error('Please check that scenario files are loaded correctly');
+
+                // Показываем сообщение пользователю
+                if (bubblesContainer) {
+                    bubblesContainer.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #ff6b6b;">
+                            <h3>⚠️ Ошибка загрузки диалогов</h3>
+                            <p>Не удалось загрузить сценарии диалогов.</p>
+                            <p>Пожалуйста, обновите страницу (F5)</p>
+                        </div>
+                    `;
+                }
                 return [];
             }
 
@@ -3217,7 +3236,36 @@
 
             // Функция создания кнопок с вариантами
             function createSuggestionButtons() {
-                suggestions.forEach((suggestion, index) => {
+                // Умная логика выбора 3 вариантов:
+                // 1. Всегда показываем лучший ответ (excellent/good/master)
+                // 2. Остальные 2 варианта выбираем случайно из оставшихся (normal, weak, bad)
+
+                let limitedSuggestions = [];
+
+                // Находим лучший ответ (excellent, good или master)
+                const bestAnswer = suggestions.find(s =>
+                    (typeof s === 'object' && (s.quality === 'excellent' || s.quality === 'good' || s.quality === 'master'))
+                );
+
+                // Если есть лучший ответ, добавляем его первым
+                if (bestAnswer) {
+                    limitedSuggestions.push(bestAnswer);
+                }
+
+                // Остальные варианты (без лучшего)
+                const otherSuggestions = suggestions.filter(s => s !== bestAnswer);
+
+                // Перемешиваем остальные варианты
+                const shuffled = otherSuggestions.sort(() => Math.random() - 0.5);
+
+                // Берём 2 случайных из оставшихся
+                const randomTwo = shuffled.slice(0, 2);
+                limitedSuggestions = limitedSuggestions.concat(randomTwo);
+
+                // Перемешиваем все 3 варианта, чтобы лучший не был всегда первым
+                limitedSuggestions = limitedSuggestions.sort(() => Math.random() - 0.5);
+
+                limitedSuggestions.forEach((suggestion, index) => {
                     const btn = document.createElement('button');
                     btn.className = 'suggestion-modal-btn';
 
