@@ -2012,7 +2012,7 @@
     </div>
 
     <!-- Scenarios Data -->
-    <script src="scenarios-data-v3.js"></script>
+    <script src="scenarios-data-v2.js"></script>
 
     <script>
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -2029,12 +2029,8 @@
         let currentPath = null; // 'good', 'normal', or 'bad'
         let qualityScore = 0; // Track user's response quality
 
-        // История диалога для навигации назад/вперед
+        // История для возможности вернуться назад
         let conversationHistory = [];
-        let historyIndex = -1;
-
-        // Таймер для автоскроллинга
-        let autoScrollTimer = null;
 
         // Режим: 'training' или 'testing'
         let currentMode = localStorage.getItem('simulatorMode') || 'training';
@@ -2072,64 +2068,31 @@
 
         // СИСТЕМА ВОЗВРАТА НАЗАД
         function saveConversationState() {
-            // Если мы не в конце истории, удаляем все шаги после текущего
-            if (historyIndex < conversationHistory.length - 1) {
-                conversationHistory = conversationHistory.slice(0, historyIndex + 1);
-            }
-
             conversationHistory.push({
                 step: conversationStep,
                 path: currentPath,
                 messagesHTML: messagesContainer.innerHTML
             });
 
-            historyIndex = conversationHistory.length - 1;
-
-            // Ограничиваем историю последними 20 шагами
-            if (conversationHistory.length > 20) {
+            // Ограничиваем историю последними 10 шагами
+            if (conversationHistory.length > 10) {
                 conversationHistory.shift();
-                historyIndex--;
             }
 
             updateBackButton();
         }
 
         function goBackOneStep() {
-            if (historyIndex <= 0) {
+            if (conversationHistory.length === 0) {
                 console.log('Нет истории для возврата');
                 return;
             }
 
-            historyIndex--;
-            const previousState = conversationHistory[historyIndex];
+            const previousState = conversationHistory.pop();
             conversationStep = previousState.step;
             currentPath = previousState.path;
             messagesContainer.innerHTML = previousState.messagesHTML;
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
-
-            updateBackButton();
-
-            // Показать текущие suggestions
-            if (conversationStep < currentScenario.paths[currentPath].length) {
-                const currentStepData = currentScenario.paths[currentPath][conversationStep];
-                if (currentStepData.suggestions) {
-                    showSuggestions(currentStepData.suggestions);
-                }
-            }
-        }
-
-        function goForwardOneStep() {
-            if (historyIndex >= conversationHistory.length - 1) {
-                console.log('Нет истории для перехода вперед');
-                return;
-            }
-
-            historyIndex++;
-            const nextState = conversationHistory[historyIndex];
-            conversationStep = nextState.step;
-            currentPath = nextState.path;
-            messagesContainer.innerHTML = nextState.messagesHTML;
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
             updateBackButton();
 
@@ -2413,24 +2376,14 @@
             currentPath = null;
             qualityScore = 0;
 
-            // Сбрасываем историю диалога
-            conversationHistory = [];
-            historyIndex = -1;
-
             if (!currentScenario) {
                 console.error('ERROR: currentScenario is undefined! scenarioIndex:', scenarioIndex);
                 alert('Ошибка: сценарий не найден. Проверьте консоль.');
                 return;
             }
 
-            // Extract names from initialMessage
-            // Format: "This is [Name] from [Company]"
-            const nameMatch = greeting.match(/This is ([A-Z][a-z]+(?: [A-Z][a-z]+)?)/);
-            if (nameMatch && nameMatch[1]) {
-                dispatcherName = nameMatch[1].split(' ')[0]; // Get first name only
-            } else {
-                dispatcherName = dispatcherNames[Math.floor(Math.random() * dispatcherNames.length)];
-            }
+            // Generate random names for this conversation
+            dispatcherName = dispatcherNames[Math.floor(Math.random() * dispatcherNames.length)];
             brokerName = brokerNames[Math.floor(Math.random() * brokerNames.length)];
 
             welcomeScreen.style.display = 'none';
@@ -2463,7 +2416,7 @@
                         promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
                         promptDiv.textContent = firstStep.dispatcherPrompt;
                         messagesContainer.appendChild(promptDiv);
-                        // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     }
 
                     showSuggestions(firstStep.suggestions);
@@ -2511,10 +2464,7 @@
             message.appendChild(avatar);
             message.appendChild(content);
             messagesContainer.appendChild(message);
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
-
-            // Запускаем отложенный автоскроллинг
-            scheduleAutoScroll();
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         function showTypingIndicator() {
@@ -2533,56 +2483,12 @@
             indicator.appendChild(avatar);
             indicator.appendChild(content);
             messagesContainer.appendChild(indicator);
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         function hideTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
             if (indicator) indicator.remove();
-        }
-
-        // Функция плавного скроллинга с ускорением
-        function smoothScrollToBottom() {
-            const start = messagesContainer.scrollTop;
-            const end = messagesContainer.scrollHeight - messagesContainer.clientHeight;
-            const distance = end - start;
-
-            if (distance <= 0) return; // Уже внизу
-
-            const duration = 1500; // 1.5 секунды
-            const startTime = performance.now();
-
-            function easeInOutQuad(t) {
-                // Начинаем медленно, ускоряемся в середине, замедляемся в конце
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-            }
-
-            function animate(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = easeInOutQuad(progress);
-
-                messagesContainer.scrollTop = start + (distance * easeProgress);
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        // Функция для запуска автоскроллинга через 3 секунды
-        function scheduleAutoScroll() {
-            // Отменяем предыдущий таймер если есть
-            if (autoScrollTimer) {
-                clearTimeout(autoScrollTimer);
-            }
-
-            // Запускаем новый таймер на 3 секунды
-            autoScrollTimer = setTimeout(() => {
-                smoothScrollToBottom();
-            }, 3000);
         }
 
         function showSuggestions(suggestions) {
@@ -2594,7 +2500,7 @@
             const buttonContainer = document.createElement('div');
             buttonContainer.className = 'chat-suggestions';
             buttonContainer.id = 'suggestions';
-            buttonContainer.style.cssText = 'display: flex; justify-content: center; align-items: center; padding: 15px; margin: 10px 0;';
+            buttonContainer.style.cssText = 'display: flex; justify-content: center; padding: 15px; margin: 10px 0;';
 
             const openModalBtn = document.createElement('button');
             openModalBtn.className = 'open-suggestions-modal-btn';
@@ -2683,16 +2589,44 @@
             createParticles(); // Первый запуск сразу
 
             openModalBtn.onmouseover = () => {
-                openModalBtn.style.transform = 'translateY(-2px) scale(1.03)';
-                openModalBtn.style.color = '#d4c5fd';
+                openModalBtn.style.transform = 'translateY(-3px) scale(1.08)';
+                openModalBtn.style.color = '#e0e7ff';
                 openModalBtn.style.boxShadow = `
-                    0 0 25px rgba(167, 139, 250, 0.3),
-                    0 0 50px rgba(129, 140, 248, 0.2),
-                    inset 0 0 20px rgba(167, 139, 250, 0.15)
+                    0 0 60px rgba(167, 139, 250, 0.8),
+                    0 0 120px rgba(129, 140, 248, 0.6),
+                    inset 0 0 40px rgba(167, 139, 250, 0.3)
                 `;
-                openModalBtn.style.textShadow = '0 0 10px rgba(196, 181, 253, 0.4)';
+                openModalBtn.style.textShadow = '0 0 20px rgba(196, 181, 253, 0.9)';
 
-                // Убираем взрыв частиц при наведении для менее яркого эффекта
+                // Создаем взрыв частиц при наведении
+                for (let i = 0; i < 8; i++) {
+                    const burstParticle = document.createElement('div');
+                    const angle = (i / 8) * Math.PI * 2;
+                    const distance = 50;
+                    burstParticle.style.cssText = `
+                        position: absolute;
+                        width: 6px;
+                        height: 6px;
+                        background: radial-gradient(circle, #c4b5fd, transparent);
+                        border-radius: 50%;
+                        top: 50%;
+                        left: 50%;
+                        pointer-events: none;
+                        box-shadow: 0 0 15px rgba(196, 181, 253, 1);
+                        animation: none;
+                    `;
+                    openModalBtn.appendChild(burstParticle);
+
+                    setTimeout(() => {
+                        burstParticle.style.transition = 'all 0.6s ease-out';
+                        burstParticle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+                        burstParticle.style.opacity = '0';
+                    }, 10);
+
+                    setTimeout(() => {
+                        if (burstParticle.parentNode) burstParticle.remove();
+                    }, 600);
+                }
             };
 
             openModalBtn.onmouseout = () => {
@@ -2743,123 +2677,9 @@
                 openSuggestionsModal(suggestions);
             };
 
-            // Создаем wrapper для всех кнопок (Назад - "Выбрать ответ" - Вперед)
-            const buttonsWrapper = document.createElement('div');
-            buttonsWrapper.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 15px;';
-
-            // Кнопка "Назад" (слева)
-            const backBtn = document.createElement('button');
-            backBtn.innerHTML = '←';
-            backBtn.title = 'Вернуться на предыдущий шаг';
-            backBtn.style.cssText = `
-                background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
-                color: #94a3b8;
-                border: 1px solid rgba(148, 163, 184, 0.3);
-                padding: 10px 15px;
-                border-radius: 50%;
-                font-size: 18px;
-                font-weight: 700;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                width: 45px;
-                height: 45px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            `;
-
-            backBtn.onmouseover = () => {
-                if (!backBtn.disabled) {
-                    backBtn.style.background = 'rgba(99, 102, 241, 0.2)';
-                    backBtn.style.color = '#6366f1';
-                    backBtn.style.borderColor = 'rgba(99, 102, 241, 0.5)';
-                    backBtn.style.transform = 'scale(1.1)';
-                }
-            };
-
-            backBtn.onmouseout = () => {
-                backBtn.style.background = 'rgba(15, 23, 42, 0.6)';
-                backBtn.style.color = '#94a3b8';
-                backBtn.style.borderColor = 'rgba(148, 163, 184, 0.3)';
-                backBtn.style.transform = 'scale(1)';
-            };
-
-            backBtn.onclick = () => {
-                if (!backBtn.disabled) {
-                    goBackOneStep();
-                }
-            };
-
-            // Кнопка "Вперед" (справа)
-            const forwardBtn = document.createElement('button');
-            forwardBtn.innerHTML = '→';
-            forwardBtn.title = 'Перейти на следующий шаг';
-            forwardBtn.style.cssText = `
-                background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
-                color: #94a3b8;
-                border: 1px solid rgba(148, 163, 184, 0.3);
-                padding: 10px 15px;
-                border-radius: 50%;
-                font-size: 18px;
-                font-weight: 700;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                width: 45px;
-                height: 45px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            `;
-
-            forwardBtn.onmouseover = () => {
-                if (!forwardBtn.disabled) {
-                    forwardBtn.style.background = 'rgba(99, 102, 241, 0.2)';
-                    forwardBtn.style.color = '#6366f1';
-                    forwardBtn.style.borderColor = 'rgba(99, 102, 241, 0.5)';
-                    forwardBtn.style.transform = 'scale(1.1)';
-                }
-            };
-
-            forwardBtn.onmouseout = () => {
-                forwardBtn.style.background = 'rgba(15, 23, 42, 0.6)';
-                forwardBtn.style.color = '#94a3b8';
-                forwardBtn.style.borderColor = 'rgba(148, 163, 184, 0.3)';
-                forwardBtn.style.transform = 'scale(1)';
-            };
-
-            forwardBtn.onclick = () => {
-                if (!forwardBtn.disabled) {
-                    goForwardOneStep();
-                }
-            };
-
-            // Проверяем доступность кнопок
-            if (conversationHistory.length === 0 || historyIndex === 0) {
-                backBtn.style.opacity = '0.3';
-                backBtn.style.cursor = 'not-allowed';
-                backBtn.disabled = true;
-            }
-
-            if (historyIndex === conversationHistory.length - 1) {
-                forwardBtn.style.opacity = '0.3';
-                forwardBtn.style.cursor = 'not-allowed';
-                forwardBtn.disabled = true;
-            }
-
-            // Добавляем кнопки в правильном порядке: Назад - "Выбрать ответ" - Вперед
-            buttonsWrapper.appendChild(backBtn);
-            buttonsWrapper.appendChild(openModalBtn);
-            buttonsWrapper.appendChild(forwardBtn);
-
-            buttonContainer.appendChild(buttonsWrapper);
-
+            buttonContainer.appendChild(openModalBtn);
             messagesContainer.appendChild(buttonContainer);
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
-
-            // Запускаем отложенный автоскроллинг
-            scheduleAutoScroll();
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         function openSuggestionsModal(suggestions) {
@@ -3154,7 +2974,7 @@
                 `;
                 pathIndicatorDiv.textContent = `${pathInfo.icon} ${pathInfo.text}`;
                 messagesContainer.appendChild(pathIndicatorDiv);
-                // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
 
             // Get current step from the selected path
@@ -3194,7 +3014,7 @@
                 `;
                 fallbackNotice.textContent = `⚠️ Путь "${oldPath}" не найден, переключено на "${currentPath}"`;
                 messagesContainer.appendChild(fallbackNotice);
-                // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
 
             const currentStep = pathSteps[conversationStep];
@@ -3246,7 +3066,7 @@
                                     promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
                                     promptDiv.textContent = nextStep.dispatcherPrompt;
                                     messagesContainer.appendChild(promptDiv);
-                                    // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
                                 }
 
                                 showSuggestions(nextStep.suggestions);

@@ -2033,9 +2033,6 @@
         let conversationHistory = [];
         let historyIndex = -1;
 
-        // Таймер для автоскроллинга
-        let autoScrollTimer = null;
-
         // Режим: 'training' или 'testing'
         let currentMode = localStorage.getItem('simulatorMode') || 'training';
 
@@ -2105,7 +2102,7 @@
             conversationStep = previousState.step;
             currentPath = previousState.path;
             messagesContainer.innerHTML = previousState.messagesHTML;
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
             updateBackButton();
 
@@ -2129,7 +2126,7 @@
             conversationStep = nextState.step;
             currentPath = nextState.path;
             messagesContainer.innerHTML = nextState.messagesHTML;
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
             updateBackButton();
 
@@ -2463,7 +2460,7 @@
                         promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
                         promptDiv.textContent = firstStep.dispatcherPrompt;
                         messagesContainer.appendChild(promptDiv);
-                        // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     }
 
                     showSuggestions(firstStep.suggestions);
@@ -2511,10 +2508,7 @@
             message.appendChild(avatar);
             message.appendChild(content);
             messagesContainer.appendChild(message);
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
-
-            // Запускаем отложенный автоскроллинг
-            scheduleAutoScroll();
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         function showTypingIndicator() {
@@ -2533,56 +2527,12 @@
             indicator.appendChild(avatar);
             indicator.appendChild(content);
             messagesContainer.appendChild(indicator);
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         function hideTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
             if (indicator) indicator.remove();
-        }
-
-        // Функция плавного скроллинга с ускорением
-        function smoothScrollToBottom() {
-            const start = messagesContainer.scrollTop;
-            const end = messagesContainer.scrollHeight - messagesContainer.clientHeight;
-            const distance = end - start;
-
-            if (distance <= 0) return; // Уже внизу
-
-            const duration = 1500; // 1.5 секунды
-            const startTime = performance.now();
-
-            function easeInOutQuad(t) {
-                // Начинаем медленно, ускоряемся в середине, замедляемся в конце
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-            }
-
-            function animate(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = easeInOutQuad(progress);
-
-                messagesContainer.scrollTop = start + (distance * easeProgress);
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        // Функция для запуска автоскроллинга через 3 секунды
-        function scheduleAutoScroll() {
-            // Отменяем предыдущий таймер если есть
-            if (autoScrollTimer) {
-                clearTimeout(autoScrollTimer);
-            }
-
-            // Запускаем новый таймер на 3 секунды
-            autoScrollTimer = setTimeout(() => {
-                smoothScrollToBottom();
-            }, 3000);
         }
 
         function showSuggestions(suggestions) {
@@ -2856,10 +2806,7 @@
             buttonContainer.appendChild(buttonsWrapper);
 
             messagesContainer.appendChild(buttonContainer);
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
-
-            // Запускаем отложенный автоскроллинг
-            scheduleAutoScroll();
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         function openSuggestionsModal(suggestions) {
@@ -3154,7 +3101,7 @@
                 `;
                 pathIndicatorDiv.textContent = `${pathInfo.icon} ${pathInfo.text}`;
                 messagesContainer.appendChild(pathIndicatorDiv);
-                // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
 
             // Get current step from the selected path
@@ -3194,7 +3141,7 @@
                 `;
                 fallbackNotice.textContent = `⚠️ Путь "${oldPath}" не найден, переключено на "${currentPath}"`;
                 messagesContainer.appendChild(fallbackNotice);
-                // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
 
             const currentStep = pathSteps[conversationStep];
@@ -3246,7 +3193,7 @@
                                     promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
                                     promptDiv.textContent = nextStep.dispatcherPrompt;
                                     messagesContainer.appendChild(promptDiv);
-                                    // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+                                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
                                 }
 
                                 showSuggestions(nextStep.suggestions);
