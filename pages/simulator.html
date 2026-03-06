@@ -728,6 +728,19 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
+        .old-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);
+        }
+
         @keyframes pulse {
 
             0%,
@@ -744,6 +757,8 @@
 
         .chat-view {
             display: none;
+            visibility: hidden;
+            opacity: 0;
             flex-direction: column;
             min-height: calc(100vh - 80px);
             max-height: calc(100vh - 80px);
@@ -756,6 +771,8 @@
 
         .chat-view.active {
             display: flex;
+            visibility: visible;
+            opacity: 1;
         }
 
         .messages-container {
@@ -863,6 +880,16 @@
             animation: fadeInUp 0.4s ease-out;
         }
 
+        .dispatcher-prompt {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 3px solid #6366f1;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #818cf8;
+        }
+
         .suggestion-hint {
             font-size: 12px;
             color: #94a3b8;
@@ -959,8 +986,15 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 16px;
-                height: calc(100vh - 56px);
+                padding: 0;
+                height: 100vh;
+            }
+
+            /* Блокируем скролл body когда чат активен */
+            body:has(.chat-view.active) {
+                overflow: hidden !important;
+                position: fixed;
+                width: 100%;
             }
 
             .nav-links,
@@ -991,77 +1025,221 @@
                 padding: 18px;
             }
 
+            /* Чат на весь экран без отступов */
             .chat-view {
-                padding: 0;
+                display: none !important;
+                /* Полностью скрыт по умолчанию */
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+                padding: 0 !important;
+                margin: 0 !important;
                 min-height: 100vh;
                 max-height: 100vh;
-                max-width: 100%;
+                height: 100vh;
+                width: 100vw;
+                max-width: 100vw;
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                z-index: 1000;
-                background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+                z-index: -1;
+                /* Под контентом когда не активен */
+                background: #0a0e1a;
+                flex-direction: column;
+                overflow: hidden;
             }
 
+            /* Показываем только когда активен */
+            .chat-view.active {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 9999 !important;
+                /* Над всем когда активен */
+            }
+
+            /* Скрываем навигацию когда чат активен */
+            body:has(.chat-view.active) .navbar {
+                display: none !important;
+            }
+
+            /* Скрываем главную страницу когда чат активен */
+            body:has(.chat-view.active) .welcome-screen {
+                display: none !important;
+            }
+
+            /* Контейнер сообщений - оставляем место для input снизу */
             .messages-container {
-                padding: 12px;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 80px !important;
+                /* Оставляем место для плавающего input */
+                padding: 12px !important;
+                margin: 0 !important;
                 gap: 12px;
                 border-radius: 0;
                 border: none;
-                margin: 0;
-                flex: 1;
+                width: 100vw !important;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
             }
 
-            .message {
-                max-width: 90%;
-            }
-
-            .message-avatar {
-                width: 36px;
-                height: 36px;
-                font-size: 18px;
+            /* Плавающая строка ввода внизу */
+            .input-area {
+                display: flex !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100vw !important;
+                height: auto !important;
+                padding: 12px !important;
+                margin: 0 !important;
+                background: rgba(10, 14, 26, 0.95) !important;
+                backdrop-filter: blur(20px) !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                border-radius: 0 !important;
+                z-index: 10000 !important;
+                visibility: visible !important;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
             }
 
             .input-container {
-                padding: 12px;
-                padding-bottom: 30px;
-                /* Поднимаем выше для iPhone */
+                display: flex !important;
+                visibility: visible !important;
+                height: auto !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Сообщения с нормальным размером */
+            .message {
+                max-width: 95%;
                 margin: 0;
-                border-radius: 0;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                background: rgba(10, 14, 26, 0.95);
             }
 
-            .input-field {
+            .message-avatar {
+                width: 32px;
+                height: 32px;
                 font-size: 16px;
-                padding: 12px 16px;
             }
 
-            .send-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
+            .message-content {
+                padding: 10px 14px;
+                font-size: 15px;
+                line-height: 1.5;
+            }
+
+            /* Подсказки с нормальным размером */
+            .chat-suggestions {
+                gap: 10px;
+                margin: 12px 0 !important;
+                padding: 0 !important;
+            }
+
+            .dispatcher-prompt {
+                padding: 10px !important;
+                margin: 8px 0 !important;
+                font-size: 13px !important;
+            }
+
+            .suggestion-hint {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .suggestion-btn {
+                padding: 12px 16px;
+                font-size: 15px;
+                line-height: 1.4;
             }
         }
 
         /* Дополнительные стили для iPhone и узких экранов */
         @media (max-width: 430px) {
-            .input-container {
-                padding-bottom: 40px !important;
-                /* Еще выше для iPhone 15 и подобных */
+            .messages-container {
+                padding: 10px !important;
+                bottom: 70px !important;
+                /* Меньше места для input */
             }
 
-            .chat-view {
-                padding-bottom: 20px;
+            .message-content {
+                font-size: 15px;
+            }
+
+            .suggestion-btn {
+                padding: 12px 14px;
+                font-size: 15px;
+            }
+
+            .dispatcher-prompt {
+                padding: 8px !important;
+                margin: 6px 0 !important;
+                font-size: 13px !important;
+            }
+
+            .input-area {
+                padding: 10px !important;
+            }
+
+            .input-field {
+                font-size: 15px !important;
+            }
+
+            .send-btn {
+                width: 34px !important;
+                height: 34px !important;
+                font-size: 15px !important;
             }
         }
 
         /* Для очень узких экранов (iPhone SE и подобные) */
         @media (max-width: 375px) {
-            .input-container {
-                padding-bottom: 50px !important;
+            .messages-container {
+                padding: 8px !important;
+                bottom: 65px !important;
+            }
+
+            .message-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 15px;
+            }
+
+            .message-content {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .suggestion-btn {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .dispatcher-prompt {
+                padding: 8px !important;
+                margin: 6px 0 !important;
+                font-size: 12px !important;
+            }
+
+            .input-area {
+                padding: 8px !important;
+            }
+
+            .input-field {
+                font-size: 14px !important;
+            }
+
+            .send-btn {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 14px !important;
             }
         }
 
@@ -2013,6 +2191,7 @@
 
     <!-- Scenarios Data -->
     <script src="scenarios-data-v3.js"></script>
+    <script src="scenarios-data-v4.js"></script>
 
     <script>
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -2293,17 +2472,42 @@
             }
 
             return allScenarios.map((scenario, index) => {
-                // Создаем краткое описание для карточки
-                const line1 = `${scenario.route} ${scenario.equipment.toLowerCase()}.`;
-                let line2 = `${scenario.distance} miles`;
+                // Определяем значок по типу оборудования
+                let equipmentIcon = '🚛';
+                const equipmentLower = scenario.equipment.toLowerCase();
+
+                if (equipmentLower.includes('reefer')) {
+                    equipmentIcon = '❄️';
+                } else if (equipmentLower.includes('flatbed')) {
+                    equipmentIcon = '📦';
+                } else if (equipmentLower.includes('tanker')) {
+                    equipmentIcon = '🛢️';
+                } else if (equipmentLower.includes('car carrier')) {
+                    equipmentIcon = '🚗';
+                } else if (equipmentLower.includes('van')) {
+                    equipmentIcon = '🚛';
+                } else if (equipmentLower.includes('livestock')) {
+                    equipmentIcon = '🐄';
+                } else if (equipmentLower.includes('sprinter')) {
+                    equipmentIcon = '🚐';
+                } else if (equipmentLower.includes('chassis') || equipmentLower.includes('container')) {
+                    equipmentIcon = '📦';
+                }
+
+                // Используем ID из диалога (от 1 до 100 по дате создания)
+                const dialogNumber = `#${scenario.id}`;
+                const line1 = `${dialogNumber} ${equipmentIcon} ${scenario.route}`;
+                let line2 = `${scenario.equipment} • ${scenario.distance} miles`;
 
                 // Добавляем метку сложности если есть
                 if (scenario.difficulty === 'expert') {
-                    line2 += ' 🧪 EXPERT TEST';
+                    line2 += ' 🧪 EXPERT';
                 } else if (scenario.difficulty === 'hard') {
                     line2 += ' 🔥 HARD';
                 } else if (scenario.difficulty === 'medium') {
                     line2 += ' ⚡ MEDIUM';
+                } else if (scenario.difficulty === 'easy') {
+                    line2 += ' ✅ EASY';
                 }
 
                 return {
@@ -2396,9 +2600,25 @@
             // Или с перемешиванием: const shuffled = greetingOptions.sort(() => 0.5 - Math.random());
             greetingOptions.forEach(option => {
                 const bubble = document.createElement('div');
-                bubble.className = 'bubble';
+
+                // Определяем класс для bubble: старые диалоги (#1-3) или новые (#4+)
+                const scenarioId = allScenarios[option.scenarioIndex].id;
+                if (scenarioId >= 4) {
+                    bubble.className = 'bubble new-dialog';
+                } else {
+                    bubble.className = 'bubble';
+                }
+
+                // Добавляем бейдж для новых диалогов
+                let badgeHTML = '';
+                if (scenarioId >= 4) {
+                    badgeHTML = '<span class="new-badge">NEW</span>';
+                } else if (scenarioId <= 3) {
+                    badgeHTML = '<span class="old-badge">OLD</span>';
+                }
+
                 const linesHTML = option.lines.map(line => `<span>${line}</span>`).join('');
-                bubble.innerHTML = `<div class="bubble-text">${linesHTML}</div>`;
+                bubble.innerHTML = `<div class="bubble-text">${badgeHTML}${linesHTML}</div>`;
                 bubble.onclick = () => startConversation(option.fullText, option.scenarioIndex);
                 bubblesContainer.appendChild(bubble);
             });
@@ -2438,6 +2658,12 @@
             welcomeScreen.style.display = 'none';
             chatView.classList.add('active');
 
+            // Hide navbar on mobile when chat is active
+            const navbar = document.querySelector('.navbar');
+            if (navbar && window.innerWidth <= 768) {
+                navbar.style.display = 'none';
+            }
+
             // Hide info sections when chat starts
             if (infoSections) {
                 infoSections.classList.add('hidden');
@@ -2462,7 +2688,6 @@
                     if (firstStep.dispatcherPrompt) {
                         const promptDiv = document.createElement('div');
                         promptDiv.className = 'dispatcher-prompt';
-                        promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
                         promptDiv.textContent = firstStep.dispatcherPrompt;
                         messagesContainer.appendChild(promptDiv);
                         // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
@@ -2596,7 +2821,7 @@
             const buttonContainer = document.createElement('div');
             buttonContainer.className = 'chat-suggestions';
             buttonContainer.id = 'suggestions';
-            buttonContainer.style.cssText = 'display: flex; justify-content: center; align-items: center; padding: 15px; margin: 10px 0;';
+            buttonContainer.style.cssText = 'display: flex; justify-content: center; align-items: center;';
 
             const openModalBtn = document.createElement('button');
             openModalBtn.className = 'open-suggestions-modal-btn';
@@ -3245,7 +3470,6 @@
                                 if (nextStep.dispatcherPrompt) {
                                     const promptDiv = document.createElement('div');
                                     promptDiv.className = 'dispatcher-prompt';
-                                    promptDiv.style.cssText = 'background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; padding: 12px; margin: 10px 0; border-radius: 8px; font-size: 14px; color: #818cf8;';
                                     promptDiv.textContent = nextStep.dispatcherPrompt;
                                     messagesContainer.appendChild(promptDiv);
                                     // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
@@ -3305,6 +3529,12 @@
             messagesContainer.innerHTML = '';
             chatView.classList.remove('active');
             welcomeScreen.style.display = 'flex';
+
+            // Show navbar again
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                navbar.style.display = '';
+            }
 
             // Show info sections when resetting
             if (infoSections) {
