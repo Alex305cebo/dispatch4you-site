@@ -16,6 +16,26 @@
 - Feedback в отдельном блоке без подписи "(Broker)"
 - Брокер НЕ пишет длинные сообщения со статистикой
 
+### ВАЖНО: Имена персонажей
+
+**Имена ОБЯЗАТЕЛЬНО должны совпадать в тексте и в UI!**
+
+- Имя диспетчера извлекается из `initialMessage`
+- Имя брокера извлекается из первого `brokerQuestion`
+- Формат: "This is [NAME] from [COMPANY]"
+- Имя должно быть в ПЕРВОМ сообщении брокера!
+
+**Пример:**
+```javascript
+initialMessage: "Good morning! This is Maria Garcia from Texas Freight..."
+// UI покажет: Maria (Dispatcher)
+
+paths: {
+    master: [
+        { brokerQuestion: "Good afternoon! This is Rachel from FurnitureFreight Brokers..."
+        // UI покажет: Rachel (Broker) ✅
+```
+
 ### 1. Структура диалога
 
 **14 ШАГОВ (или 10 для сложных грузов):**

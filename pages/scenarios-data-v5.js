@@ -1,546 +1,252 @@
 // СИМУЛЬ - База диалогов для обучения диспетчеров
-// Версия: Dialogue #5 - Hazmat (NEW DIALOG SYSTEM V2.0)
+// Версия: Dialogue #5 - Dry Van Retail (NEW SYSTEM V3.0 - IMPROVED)
 // Дата: 2026-03-07
-// ПРАВИЛО: Диспетчер звонит первым! 6 вариантов качества в каждом шаге!
+// ПРАВИЛА: Имена совпадают, Outcome в карточке, Детальные prompts, Торг!
 
 console.log('🔵 Loading scenarios-data-v5.js...');
 
-// Dialogue #5: Hazmat - Houston TX → Chicago IL
-// Hard difficulty, chemical materials transport
-// NEW DIALOG SYSTEM V2.0
+// Dialogue #5: Dry Van Retail - Chicago → Dallas
+// Easy difficulty, standard retail freight
+// Posted rate: $1,800 ($2.31/mile, 780 mi), Target: $2,000-2,100 ($2.56-2.69/mile)
 
 const scenario5 = {
     id: 5,
-    route: "Houston TX → Chicago IL",
-    distance: 1100,
-    equipment: "Tanker",
-    cargo: "Chemical materials (Class 3 Flammable)",
-    weight: "44,000 lbs",
-    deadline: "Pickup tomorrow 6 AM - 10 AM, Delivery in 2 days",
-    brokerStyle: "Professional Hazmat broker",
-    difficulty: "hard",
+    route: "Chicago IL → Dallas TX",
+    distance: 780,
+    equipment: "Dry Van (53ft)",
+    cargo: "Retail products (clothing, home goods)",
+    weight: "42,000 lbs",
+    deadline: "Pickup tomorrow 8 AM - 12 PM, Delivery in 2 days",
+    brokerStyle: "Professional retail broker",
+    difficulty: "easy",
 
-    initialMessage: "Good morning! This is Kevin Anderson from SafeHaul Logistics.\nI saw your load posting for Houston to Chicago Hazmat tanker load.\nCan you tell me more about this load?",
+    initialMessage: "Good morning! This is Tom Wilson from Midwest Freight Solutions.\nI saw your load posting for Chicago to Dallas retail products.\nIs this load still available?",
 
     paths: {
         master: [
-            // ШАГ 1: MC verification + truck location
             {
-                brokerQuestion: "Good morning! This is David from ChemTrans Brokers.\nYes, load is available.\nWhat's your MC number and where is your tanker right now?",
-                dispatcherPrompt: "💎 Брокер проверяет вашу компанию для Hazmat груза. Представьтесь: MC номер, название компании, специализация (Hazmat/tanker). Укажите ТОЧНОЕ местоположение tanker, статус (empty/clean), готовность для Class 3 Flammable. Hazmat требует максимальной точности!",
+                brokerQuestion: "Good morning! This is Mike from RetailFreight Logistics.\nYes, still available.\nWhat's your MC number?",
+                dispatcherPrompt: "💎 Брокер проверяет вашу компанию. Представьтесь ПОЛНОСТЬЮ: MC номер, название компании, размер флота (сколько trucks), специализация (Dry Van retail). Укажите где truck сейчас и когда готов. Детали = доверие брокера!",
                 suggestions: [
-                    {
-                        text: "Good morning David! This is SafeHaul Logistics, MC 889944. Our tanker is in Houston right now, just finished unloading at the Port of Houston this morning around 7 AM. Driver is at the Love's truck stop on I-10, exit 770. Tank is cleaned, inspected, and ready for Class 3 Flammable. We can pick up tomorrow morning. What are the load details?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! MC номер, точное местоположение, время, готовность оборудования, профессионализм.",
-                        path: "master"
-                    },
-                    {
-                        text: "Good morning! MC 889944, SafeHaul Logistics. Tanker is in Houston, empty since this morning. At a truck stop near I-10. Tank is clean and ready for Hazmat. Available for pickup tomorrow. What's the schedule?",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! MC, местоположение, готовность оборудования.",
-                        path: "master"
-                    },
-                    {
-                        text: "MC 889944. Tanker is in Houston now, empty and clean. We can pick up tomorrow.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовая информация, но достаточно.",
-                        path: "master"
-                    },
-                    {
-                        text: "MC 889944. Truck is somewhere in Houston area. Driver will be ready when you need him.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неточное местоположение, нет уверенности.",
-                        path: "master"
-                    },
-                    {
-                        text: "Why do you need all these details? Just give me the pickup address and rate!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Грубый тон, нет профессионализма.",
-                        path: "reject1"
-                    },
-                    {
-                        text: "Uh... let me find the MC number. And I need to call the driver to see where he is. Can I call you back?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не знает базовую информацию о своей компании и грузовике.",
-                        path: "reject1"
-                    }
+                    { text: "Good morning Mike! Midwest Freight Solutions, MC 778899. We're a 35-truck fleet specializing in retail freight. Truck's in Chicago at distribution center, empty since yesterday. Ready for 8 AM pickup tomorrow. Where's the pickup location?", quality: "excellent", analytics: "✨ Отлично! MC, компания, 35 trucks, специализация retail, точное местоположение, готовность, вопрос о pickup - полный профессионализм!", path: "master" },
+                    { text: "Good morning! MC 778899, Midwest Freight Solutions. We handle retail regularly. Truck in Chicago, ready tomorrow.", quality: "good", analytics: "✔️ Хорошо! MC, компания, опыт с retail, местоположение, готовность.", path: "master" },
+                    { text: "MC 778899, Midwest Freight Solutions. Truck in Chicago area.", quality: "normal", analytics: "⚪ Нормально. Базовая информация, но нет деталей о флоте и специализации.", path: "master" },
+                    { text: "MC 778899... I think. Truck somewhere in Chicago.", quality: "weak", analytics: "⚠️ Слабо. Неуверенность в MC номере, неточное местоположение!", path: "master" },
+                    { text: "Why you need MC? Just give me rate!", quality: "aggressive", analytics: "🔴 Агрессивно! Грубость, отказ давать MC - брокер откажет.", path: "reject1" },
+                    { text: "Hi, is it available?", quality: "fail", analytics: "❌ Провал! Не представился, не дал MC номер - базовое требование!", path: "reject1" }
                 ]
             },
-            // ШАГ 2: Hazmat endorsement verification
             {
-                brokerQuestion: "MC verified, good safety rating.\nThis is Class 3 Flammable chemicals - does your driver have Hazmat endorsement on CDL?\nAnd tanker endorsement?",
-                dispatcherPrompt: "💎 Брокер проверяет КРИТИЧЕСКУЮ квалификацию для Hazmat. Подтвердите: driver имеет Hazmat endorsement, Tanker endorsement, сколько лет опыта с Class 3, когда endorsements обновлялись. БЕЗ endorsements = НЕТ груза!",
+                brokerQuestion: "MC verified. Where exactly is your truck? Need precise location.",
+                dispatcherPrompt: "💎 Брокер хочет ТОЧНОЕ местоположение для планирования. Дайте конкретный адрес или landmark (warehouse, distribution center, truck stop с названием), статус (empty/loaded), когда освободился. Точность = профессионализм!",
                 suggestions: [
-                    {
-                        text: "Absolutely! Our driver has both Hazmat and Tanker endorsements on his CDL. He's been hauling Class 3 Flammable materials for 8 years, over 500 Hazmat loads. His endorsements are current, renewed last year. He also completed the TSA background check. Very experienced with chemical transport and safety protocols.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Подтверждение обоих endorsements, опыт, детали сертификации.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, driver has both Hazmat and Tanker endorsements on his CDL. Current and valid. He's been hauling Hazmat for several years. Very experienced with Class 3 materials.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Подтверждение endorsements и опыта.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, he has Hazmat and Tanker endorsements. All current.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "I think he has Hazmat endorsement. Let me double-check the tanker one.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность в квалификации водителя.",
-                        path: "master"
-                    },
-                    {
-                        text: "He's a professional driver! Of course he has all the endorsements!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Защитная реакция вместо конкретного ответа.",
-                        path: "reject1"
-                    },
-                    {
-                        text: "Actually, he only has the regular CDL. But he's a great driver! Can he get the Hazmat endorsement quickly?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Нет требуемой сертификации для Hazmat груза.",
-                        path: "reject1"
-                    }
+                    { text: "Truck's at Target distribution center on West 55th Street in Chicago. Empty since yesterday afternoon after delivery. Driver rested and ready. Can be at pickup by 8 AM sharp.", quality: "excellent", analytics: "✨ Отлично! Конкретный адрес (Target DC, West 55th), статус (empty), время освобождения, готовность водителя, подтверждение времени pickup!", path: "master" },
+                    { text: "At distribution center on West 55th Street, Chicago. Empty since yesterday. Ready for 8 AM.", quality: "good", analytics: "✔️ Хорошо! Конкретный адрес, статус, готовность.", path: "master" },
+                    { text: "In Chicago, near downtown. Empty and ready.", quality: "normal", analytics: "⚪ Нормально. Общее местоположение, но недостаточно точно для планирования.", path: "master" },
+                    { text: "Somewhere in Chicago... I can check...", quality: "weak", analytics: "⚠️ Слабо. Очень неточно, диспетчер не знает где его водитель!", path: "master" },
+                    { text: "Just send pickup address!", quality: "aggressive", analytics: "🔴 Агрессивно! Не отвечает на вопрос, грубость.", path: "reject1" },
+                    { text: "Driver will call when he's ready...", quality: "fail", analytics: "❌ Провал! Нет контроля над водителем, непрофессионально!", path: "reject1" }
                 ]
             },
-            // ШАГ 3: Placard requirements discussion
             {
-                brokerQuestion: "Good. For Class 3 Flammable, you'll need specific placards.\nDo you have Class 3 placards and understand the placarding requirements?",
-                dispatcherPrompt: "💎 Брокер проверяет знание DOT placarding для Class 3 Flammable. Подтвердите: имеете Class 3 placards (red diamond с flame), знаете правила размещения (4 стороны tanker), UN identification numbers. Покажите знание 49 CFR 172 regulations!",
+                brokerQuestion: "Perfect! 780 miles Chicago to Dallas. Retail products - clothing and home goods, palletized. 42K lbs. Pickup tomorrow 8 AM - 12 PM at Walmart DC, delivery in 2 days. Can you handle this?",
+                dispatcherPrompt: "💎 Брокер дал основные детали груза. Подтвердите ВСЁ: расстояние (780 mi), тип груза (retail), вес (42K), pickup window (8-12), delivery срок (2 days). Дайте ETA для delivery. Спросите о special requirements (load locks, straps). Детали = профессионализм!",
                 suggestions: [
-                    {
-                        text: "Yes, we have Class 3 Flammable placards - the red diamond with flame symbol. We know they must be placed on all four sides of the tanker, visible from 50 feet. We also carry the UN identification number placards. Driver will display them immediately after loading and remove only after complete unloading and tank cleaning. We follow 49 CFR 172 placarding regulations.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Детальное знание placards, правил размещения, регуляций DOT.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we have Class 3 Flammable placards - red with flame symbol. We'll place them on all four sides of the tanker as required. Driver knows the proper placement procedures.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Знание placards и правил размещения.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we have Class 3 placards. Driver will put them on the tanker.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "We have some placards. I think they're the right ones for flammable materials.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность в требованиях безопасности.",
-                        path: "master"
-                    },
-                    {
-                        text: "Placards are just stickers! We'll figure it out at pickup!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Пренебрежение требованиями безопасности.",
-                        path: "reject2"
-                    },
-                    {
-                        text: "Actually, we don't have Class 3 placards. Can the shipper provide them?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не готов к Hazmat перевозке, нет базового оборудования.",
-                        path: "reject2"
-                    }
+                    { text: "Perfect! 780 miles in 2 days is comfortable - about 390 miles per day. We handle retail freight regularly with proper load locks and straps. Driver can pickup at 8 AM, deliver by end of day 2. Any special handling requirements for clothing?", quality: "excellent", analytics: "✨ Отлично! Подтверждение расстояния, расчет миль/день, опыт с retail, оборудование (load locks/straps), ETA, вопрос о handling!", path: "master" },
+                    { text: "Yes, we can handle it. 780 miles in 2 days works. Pickup at 8 AM, deliver in 2 days. Any special requirements?", quality: "good", analytics: "✔️ Хорошо! Подтверждение, ETA, вопрос о requirements.", path: "master" },
+                    { text: "We can do it. Driver will be on time.", quality: "normal", analytics: "⚪ Нормально. Базовое подтверждение, но нет деталей и вопросов.", path: "master" },
+                    { text: "I think we can make it... 2 days is tight...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность в возможности выполнить стандартный груз!", path: "master" },
+                    { text: "Yeah, whatever. What's the rate?", quality: "aggressive", analytics: "🔴 Агрессивно! Пренебрежительное отношение к деталям груза.", path: "reject2" },
+                    { text: "Driver won't be ready until afternoon...", quality: "fail", analytics: "❌ Провал! Не может забрать в указанное время pickup window!", path: "reject2" }
                 ]
             },
-            // ШАГ 4: Routing restrictions and tunnel prohibitions
             {
-                brokerQuestion: "Perfect. This route goes through several states.\nAre you aware of Hazmat routing restrictions and tunnel prohibitions?\nSome tunnels don't allow Class 3 materials.",
-                dispatcherPrompt: "💎 Брокер проверяет знание Hazmat routing restrictions. Покажите понимание: какие штаты на маршруте (LA, MS, TN, KY, IL), какие tunnels запрещены для Class 3, есть ли GPS с Hazmat routing mode. Знание маршрута = безопасность!",
+                brokerQuestion: "Standard dry van. Need load locks and straps. Trailer must be clean and dry - no odors. All palletized cargo.",
+                dispatcherPrompt: "💎 Брокер назвал requirements для retail груза. Подтвердите что у вас есть: load locks (сколько), straps, trailer clean and dry (когда последний раз чистили). Упомяните опыт водителя с retail freight. Готовность оборудования = получите груз!",
                 suggestions: [
-                    {
-                        text: "Absolutely! We're very familiar with Hazmat routing. Houston to Chicago goes through Louisiana, Mississippi, Tennessee, Kentucky, and Illinois. We'll avoid restricted tunnels - no Fort McHenry Tunnel, no tunnels in major cities. We use the Hazmat-approved routes on I-10, I-55, and I-57. Driver has the latest Hazmat routing guide and will check state-specific restrictions. We also have GPS with Hazmat routing mode.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Детальное знание маршрута, конкретные туннели, штаты, GPS.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we're aware of Hazmat routing restrictions. Driver will avoid prohibited tunnels and use approved Hazmat routes. We have GPS with Hazmat routing and the driver knows the major restrictions on this route.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Знание ограничений и инструментов навигации.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we know about tunnel restrictions. Driver will use Hazmat-approved routes.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое понимание.",
-                        path: "master"
-                    },
-                    {
-                        text: "I think there are some tunnel restrictions. Driver will figure it out on the road.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Нет конкретного плана, надежда на удачу.",
-                        path: "master"
-                    },
-                    {
-                        text: "Tunnel restrictions are overblown! Driver will take the fastest route!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Игнорирование требований безопасности и закона.",
-                        path: "reject2"
-                    },
-                    {
-                        text: "I didn't know about tunnel restrictions. Can you send me a list of which tunnels to avoid?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не знает базовых требований Hazmat перевозки.",
-                        path: "reject2"
-                    }
+                    { text: "Perfect! We have 12 load locks and heavy-duty straps ready. Trailer was cleaned and inspected yesterday - completely dry, no odors. Driver has 5 years experience with retail freight, knows proper handling. Ready to go!", quality: "excellent", analytics: "✨ Отлично! Конкретное количество load locks (12), straps, состояние trailer (cleaned yesterday), опыт водителя (5 years retail), готовность!", path: "master" },
+                    { text: "Yes, we have load locks and straps. Trailer is clean and dry. Driver experienced with retail.", quality: "good", analytics: "✔️ Хорошо! Оборудование есть, trailer готов, опыт водителя.", path: "master" },
+                    { text: "We have load locks and straps. Trailer is clean.", quality: "normal", analytics: "⚪ Нормально. Оборудование есть, но нет деталей о состоянии и опыте.", path: "master" },
+                    { text: "I think we have them... trailer should be clean...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность в наличии оборудования и состоянии trailer!", path: "master" },
+                    { text: "It's just retail stuff!", quality: "aggressive", analytics: "🔴 Агрессивно! Пренебрежение требованиями безопасности груза.", path: "reject3" },
+                    { text: "We don't have load locks...", quality: "fail", analytics: "❌ Провал! Нет требуемого оборудования для retail freight!", path: "reject3" }
                 ]
             },
-            // ШАГ 5: Emergency response kit requirements
             {
-                brokerQuestion: "Excellent knowledge.\nDo you have emergency response kit, spill containment equipment, and emergency contact numbers?\nThis is required for Hazmat transport.",
-                dispatcherPrompt: "💎 Брокер проверяет ОБЯЗАТЕЛЬНОЕ safety equipment для Hazmat. Перечислите: fire extinguisher (20-lb ABC), spill containment kit, emergency triangles, first aid kit, ERG (Emergency Response Guidebook), CHEMTREC number (1-800-424-9300). Полное оборудование = получите груз!",
+                brokerQuestion: "Good! Insurance current? We need $100K cargo coverage for retail.",
+                dispatcherPrompt: "💎 Брокер проверяет страховку для retail груза. Назовите ТОЧНО: сумму покрытия ($100K+), название страховой компании, срок действия certificate (месяц/год). Предложите отправить certificate сразу на email. Страховка = доверие брокера!",
                 suggestions: [
-                    {
-                        text: "Yes, we're fully equipped! Our tanker has complete emergency response kit: fire extinguisher (20-lb ABC type), spill containment kit with absorbent pads and booms, emergency triangles, first aid kit. Driver has emergency response guidebook (ERG), CHEMTREC emergency number (1-800-424-9300), and shipper's 24-hour emergency contact. He's trained in spill response procedures and knows to call 911 and CHEMTREC immediately if incident occurs.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Полный список оборудования, номера экстренных служб, процедуры.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we have complete emergency response kit: fire extinguisher, spill containment equipment, emergency triangles. Driver has emergency response guidebook and CHEMTREC number. He's trained in emergency procedures.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Оборудование и знание процедур.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we have emergency response kit and spill containment equipment. Driver has emergency numbers.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "We have fire extinguisher and some emergency equipment. Driver will get emergency numbers from shipper.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неполная готовность, надежда на shipper.",
-                        path: "master"
-                    },
-                    {
-                        text: "We have basic safety equipment. If something happens, driver will call 911!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Минимальная подготовка, пренебрежение требованиями.",
-                        path: "reject2"
-                    },
-                    {
-                        text: "What kind of emergency equipment do we need? Can the shipper provide it?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не готов к Hazmat перевозке, не знает требований.",
-                        path: "reject2"
-                    }
+                    { text: "Yes, $100K cargo insurance through Progressive Commercial. Certificate current, expires December 2026. I can email it to you right now. What's your email?", quality: "excellent", analytics: "✨ Отлично! Точная сумма ($100K), компания (Progressive), срок (Dec 2026), готовность отправить сразу!", path: "master" },
+                    { text: "Yes, $100K cargo coverage through Progressive. Certificate current. I'll send it.", quality: "good", analytics: "✔️ Хорошо! Сумма, компания, готовность отправить.", path: "master" },
+                    { text: "Yes, we have cargo insurance. $100K coverage.", quality: "normal", analytics: "⚪ Нормально. Подтверждение суммы, но нет деталей о компании и сроке.", path: "master" },
+                    { text: "I think we have enough insurance...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность в критической информации о страховке!", path: "master" },
+                    { text: "Insurance is fine! Just give rate!", quality: "aggressive", analytics: "🔴 Агрессивно! Не дает конкретной информации, грубость.", path: "reject3" },
+                    { text: "We only have $50K coverage...", quality: "fail", analytics: "❌ Провал! Недостаточное покрытие для retail груза ($100K required)!", path: "reject3" }
                 ]
             },
-            // ШАГ 6: Rate negotiation
             {
-                brokerQuestion: "Great, you're well-prepared.\nFor this load: 1100 miles, Houston to Chicago, 44,000 lbs Class 3 Flammable.\nPickup tomorrow 6-10 AM, delivery in 2 days.\nI'm offering $3,200 all-in. That's $2.91 per mile.\nWhat do you think?",
-                dispatcherPrompt: "💎 ТОРГ ЗА ЦЕНУ! Брокер предложил $3,200 ($2.91/mile). Hazmat платит БОЛЬШЕ! Posted обычно $3,000-3,200 - просите $3,500-3,600 ($3.18-3.27/mile). Обоснуйте: Hazmat endorsements, safety equipment, routing restrictions, emergency response. Чем больше просите - тем больше заработаете!",
+                brokerQuestion: "Perfect! You're well-prepared. Let's talk rate. What do you need for 780 miles?",
+                dispatcherPrompt: "💎 ТОРГ ЗА ЦЕНУ - ГЛАВНЫЙ МОМЕНТ! Брокер спрашивает ВАШУ цену. Назовите цену ПЕРВЫМ! Posted rate $1,800 ($2.31/mile) - просите $2,000-2,100 ($2.56-2.69/mile). Retail freight платит standard rates. Обоснуйте: опыт с retail, оборудование, быстрая delivery. ЧЕМ БОЛЬШЕ ПРОСИТЕ - ТЕМ БОЛЬШЕ ЗАРАБОТАЕТЕ!",
                 suggestions: [
-                    {
-                        text: "I appreciate the offer, David. $3,200 is reasonable, but for Class 3 Flammable Hazmat with tanker, considering the specialized endorsements required, routing restrictions, and safety compliance, the market rate is typically $3.00-$3.20 per mile. Could we do $3,500? That's $3.18/mile, which reflects the Hazmat premium and our experience. We're ready to move immediately and guarantee on-time delivery with full compliance.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Профессиональные переговоры с обоснованием, рыночные ставки, ценность.",
-                        path: "master"
-                    },
-                    {
-                        text: "Thank you for the offer. For Hazmat tanker load with all the special requirements, could we do $3,500? That's $3.18/mile, which is fair for Class 3 Flammable. We're experienced and ready to go.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Вежливые переговоры с обоснованием.",
-                        path: "master"
-                    },
-                    {
-                        text: "Can we do $3,500? That would work better for us on this Hazmat load.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовая попытка переговоров.",
-                        path: "master"
-                    },
-                    {
-                        text: "I don't know... $3,200 seems a bit low for Hazmat. Maybe $3,400?",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность, нет обоснования.",
-                        path: "master"
-                    },
-                    {
-                        text: "$3,200? That's insulting for Hazmat! I need at least $4,000 or I'm not interested!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Грубость, нереалистичные требования.",
-                        path: "reject3"
-                    },
-                    {
-                        text: "I'll take it! $3,200 works! When can we pick up?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Принял первое предложение без переговоров, потерял $300.",
-                        path: "master"
-                    }
+                    { text: "For 780 miles with retail freight, I'm looking at $2,100. That's $2.69/mile, fair rate for retail with proper equipment and experienced driver. Quick 2-day delivery.", quality: "excellent", analytics: "✨ ОТЛИЧНО! Просит $2,100 - это $300 БОЛЬШЕ posted rate ($1,800)! Обоснование: retail, equipment, experienced driver, quick delivery. Торг начался сильно!", path: "master" },
+                    { text: "$2,000 for this load. That's $2.56/mile for retail freight.", quality: "good", analytics: "✔️ Хорошо! Просит $2,000 - это $200 больше posted! Указал rate per mile.", path: "master" },
+                    { text: "I'm looking at $1,950 for 780 miles.", quality: "normal", analytics: "⚪ Нормально. Просит $1,950 - только $150 больше. Мог бы просить больше!", path: "master" },
+                    { text: "Can you do $1,900?", quality: "weak", analytics: "⚠️ Слабо! Просит только $100 больше - слишком мало! Теряет деньги!", path: "master" },
+                    { text: "I need $2,500 minimum!", quality: "aggressive", analytics: "🔴 Агрессивно! $2,500 = $3.21/mile - нереально для retail! Потеряет груз!", path: "reject4" },
+                    { text: "I'll take posted $1,800!", quality: "fail", analytics: "❌ ПРОВАЛ! Принял posted rate БЕЗ ТОРГА! Потерял возможность заработать $200-300 больше!", path: "master" }
                 ]
             },
-            // ШАГ 7: Detention/layover terms
             {
-                brokerQuestion: "I can do $3,500 final. That's $3.18/mile for Hazmat.\nDetention is $100/hour after 2 hours free time.\nLayover $300/day if needed.\nSound good?",
-                dispatcherPrompt: "💎 ФИНАЛЬНОЕ ПРЕДЛОЖЕНИЕ! Брокер дал $3,500 (вы просили больше, он предложил $3,200). Вы заработали $300 больше! Detention $100/hr, Layover $300/day - отличные условия для Hazmat. Это ПОСЛЕДНИЙ шанс - принимайте! Подтвердите все условия. НЕ торгуйтесь дальше!",
+                brokerQuestion: "That's a bit high for retail. I can do $1,950. That's $2.50/mile.",
+                dispatcherPrompt: "💎 Брокер дал встречное предложение $1,950 (вы просили $2,100, posted $1,800). Это НОРМАЛЬНО - брокер всегда торгуется! Варианты: 1) Встречное $2,000-2,025 (посередине), 2) Принять $1,950 + добавить detention $75/hr, 3) Принять $1,950. НЕ стойте на $2,100 - потеряете груз! Гибкость = успех!",
                 suggestions: [
-                    {
-                        text: "Perfect! $3,500 at $3.18/mile works great. Detention $100/hour after 2 hours free time - that's fair. Layover $300/day if needed - understood. Just to confirm: detention starts after 2 hours at both pickup and delivery, correct? And we'll document all wait times with signed BOL timestamps. This all sounds good, let's move forward with pickup details.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Подтверждение, уточнение деталей, документация.",
-                        path: "master"
-                    },
-                    {
-                        text: "Great! $3,500 works. Detention $100/hour after 2 hours, layover $300/day - understood. Let's get the pickup details.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Четкое подтверждение условий.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, that works. $3,500, detention and layover terms are fine.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое согласие.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay, I guess that's acceptable. What's the pickup address?",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность, нет энтузиазма.",
-                        path: "master"
-                    },
-                    {
-                        text: "Only 2 hours free time? That's not enough for Hazmat loading! I need at least 4 hours!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Нереалистичные требования после согласования ставки.",
-                        path: "reject3"
-                    },
-                    {
-                        text: "Wait, what's detention pay? Can you explain all these terms?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не знает базовую терминологию индустрии.",
-                        path: "reject1"
-                    }
+                    { text: "Can we meet at $2,025? That's fair for both - right in the middle. Quick delivery, experienced driver, proper equipment.", quality: "excellent", analytics: "✨ ОТЛИЧНО! Встречное предложение $2,025 - ровно посередине между $1,950 и $2,100! Обоснование. Профессиональный торг!", path: "master" },
+                    { text: "$1,950 works if detention is $75/hr after 2 hours free time.", quality: "good", analytics: "✔️ Хорошо! Принимает $1,950 но добавляет условие detention - умный ход!", path: "master" },
+                    { text: "$1,950 works. Let's book it.", quality: "normal", analytics: "⚪ Нормально. Принимает без дополнительных условий. Мог бы попросить detention.", path: "master" },
+                    { text: "Okay, $1,950 I guess...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность, нет энтузиазма. Звучит как проигравший.", path: "master" },
+                    { text: "$2,025 or I walk!", quality: "aggressive", analytics: "🔴 Агрессивно! Ультиматум вместо переговоров. Брокер откажет.", path: "reject4" },
+                    { text: "No, I need $2,100!", quality: "fail", analytics: "❌ Провал! Не гибкий в переговорах. Стоит на своем - потеряет груз!", path: "reject4" }
                 ]
             },
-            // ШАГ 8: Pickup details + loading procedures
             {
-                brokerQuestion: "Perfect! Pickup details:\nChemical Solutions Inc\n7800 Port of Houston Blvd, Houston TX 77029\nContact: Safety Manager Mike Chen 713-555-0199\nPickup tomorrow 6 AM - 10 AM\nWhat questions do you have about pickup?",
-                dispatcherPrompt: "💎 Брокер дал pickup детали для Hazmat груза. Задайте ВАЖНЫЕ вопросы: сколько времени loading (safety checks), какие документы нужны, есть ли special gate для tankers, нужно ли звонить Mike перед arrival, какие safety procedures на facility. Вопросы = профессионализм!",
+                brokerQuestion: "$1,975 final. That's $2.53/mile. Detention $75/hr after 2 hours. Deal?",
+                dispatcherPrompt: "💎 ФИНАЛЬНОЕ ПРЕДЛОЖЕНИЕ! Брокер дал $1,975 (вы просили $2,100, posted $1,800). ВЫ ЗАРАБОТАЛИ $175 БОЛЬШЕ! Это ОТЛИЧНЫЙ результат! Detention $75/hr включен. Это ПОСЛЕДНИЙ шанс - ПРИНИМАЙТЕ! Скажите 'Deal!' и спросите про factoring. НЕ торгуйтесь дальше - потеряете груз!",
                 suggestions: [
-                    {
-                        text: "Great! I have the address: 7800 Port of Houston Blvd, Houston TX 77029. Contact Mike Chen at 713-555-0199, tomorrow 6-10 AM. Few questions: What's the loading time estimate? Do we need any special permits or documentation? Is there a specific gate or entrance for tanker trucks? Should driver call Mike before arrival or just show up during the window? Any special safety procedures at this facility?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Подтверждение деталей + 5 важных вопросов о процедурах.",
-                        path: "master"
-                    },
-                    {
-                        text: "Got it. 7800 Port of Houston Blvd, Mike Chen 713-555-0199, tomorrow 6-10 AM. How long does loading take? Should driver call ahead? Any special procedures?",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Подтверждение + важные вопросы.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay, I have the address and contact. How long is loading?",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовый вопрос.",
-                        path: "master"
-                    },
-                    {
-                        text: "Got the address. We'll figure out the rest when driver gets there.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Не собирает важную информацию.",
-                        path: "master"
-                    },
-                    {
-                        text: "Just send me the rate confirmation! Driver will handle everything at pickup!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Нет интереса к деталям, непрофессионально.",
-                        path: "reject1"
-                    },
-                    {
-                        text: "Okay, we'll be there. What's next?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не задал ни одного вопроса о процедурах.",
-                        path: "master"
-                    }
+                    { text: "$1,975 works! Deal! Which factoring company should I send?", quality: "excellent", analytics: "✨ ОТЛИЧНО! Заработал $175 больше ($1,975 vs $1,800 posted)! Сразу 'Deal!' и переходит к factoring. Профессионально!", path: "master" },
+                    { text: "Perfect! $1,975 with detention. Deal! Factoring info?", quality: "good", analytics: "✔️ Хорошо! Заработал $175 больше! Подтверждение условий, переход к factoring.", path: "master" },
+                    { text: "$1,975 confirmed. Deal.", quality: "normal", analytics: "⚪ Нормально. Заработал $175, но без энтузиазма.", path: "master" },
+                    { text: "Okay, $1,975...", quality: "weak", analytics: "⚠️ Слабо. Нет энтузиазма, звучит неуверенно. Заработал $175 но не ценит это!", path: "master" },
+                    { text: "I want $100/hr detention!", quality: "aggressive", analytics: "🔴 Агрессивно! Новые требования ПОСЛЕ согласования ставки. Брокер откажет!", path: "reject4" },
+                    { text: "Can we do $2,000?", quality: "fail", analytics: "❌ ПРОВАЛ! Продолжает торговаться после ФИНАЛЬНОГО предложения. Потеряет груз!", path: "reject4" }
                 ]
             },
-            // ШАГ 9: Delivery details + safety protocols
             {
-                brokerQuestion: "Loading takes 90 minutes with safety checks.\nThey provide all placards and emergency response documentation.\nDriver must attend safety briefing before loading.\nNow for delivery - any questions about the delivery location?",
-                dispatcherPrompt: "💎 Брокер дал loading информацию (90 min, safety briefing, placards provided). Спросите о delivery: полный адрес, контакт, time window, сколько времени unloading, нужно ли звонить заранее, какие safety procedures при unloading. Детали = безопасность!",
+                brokerQuestion: "Deal! $1,975 all-in, detention $75/hr after 2 hours. Which factoring company?",
+                dispatcherPrompt: "💎 Брокер финализирует rate и спрашивает про factoring. Дайте ПОЛНУЮ информацию: название factoring компании + email адрес. Предложите отправить insurance certificate сразу. Быстрый ответ = профессионализм!",
                 suggestions: [
-                    {
-                        text: "Perfect! 90 minutes loading, safety briefing required, they provide placards and emergency docs - all clear. For delivery: What's the complete address and contact? What's the delivery time window? How long does unloading take? Should driver call ahead? Are there any special unloading procedures or safety requirements at delivery? Any gate codes or special instructions?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Подтверждение loading + 6 детальных вопросов о delivery.",
-                        path: "master"
-                    },
-                    {
-                        text: "Understood on loading. For delivery: What's the address and contact? What's the time window? Should driver call ahead? How long is unloading?",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Важные вопросы о delivery.",
-                        path: "master"
-                    },
-                    {
-                        text: "Got it on loading. What's the delivery address and time window?",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовые вопросы.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay. Where do we deliver?",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Минимальный интерес к деталям.",
-                        path: "master"
-                    },
-                    {
-                        text: "90 minutes loading? That's too long! We need to get on the road faster!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Жалобы на safety procedures.",
-                        path: "reject2"
-                    },
-                    {
-                        text: "Just give me the delivery address. Driver will figure it out.",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не собирает критическую информацию.",
-                        path: "master"
-                    }
+                    { text: "RTS Financial Services, factoring@rtsfin.com. I'm sending insurance certificate to that email right now. Anything else you need?", quality: "excellent", analytics: "✨ ОТЛИЧНО! Название (RTS), email, сразу отправляет insurance, спрашивает что еще нужно!", path: "master" },
+                    { text: "Triumph Business Capital, factoring@triumphbc.com. I'll send insurance certificate.", quality: "good", analytics: "✔️ Хорошо! Название, email, готовность отправить insurance.", path: "master" },
+                    { text: "OTR Capital. Email is otr@otrcapital.com.", quality: "normal", analytics: "⚪ Нормально. Название и email, но не упомянул insurance.", path: "master" },
+                    { text: "Let me find the email...", quality: "weak", analytics: "⚠️ Слабо. Не знает email своего factoring - непрофессионально!", path: "master" },
+                    { text: "Just send rate con!", quality: "aggressive", analytics: "🔴 Агрессивно! Не отвечает на вопрос, грубость.", path: "reject4" },
+                    { text: "We don't use factoring.", quality: "fail", analytics: "❌ ПРОВАЛ! Нет factoring - брокер не будет работать (риск неоплаты)!", path: "reject4" }
                 ]
             },
-            // ШАГ 10: Final confirmation + outcome
             {
-                brokerQuestion: "Delivery:\nChicago Chemical Depot\n5500 S Cicero Ave, Chicago IL 60638\nContact: Receiving Supervisor Lisa Martinez 773-555-0244\nDelivery window: Day after tomorrow 8 AM - 6 PM\nUnloading takes 2 hours with safety inspection.\nCall Lisa 4 hours before arrival.\nAny final questions?",
-                dispatcherPrompt: "💎 УСПЕХ! Брокер дал все delivery детали. РЕЗЮМИРУЙТЕ ВСЁ: pickup (Chemical Solutions, Mike 713-555-0199, tomorrow 6-10 AM, 90 min loading), delivery (Chicago Chemical Depot, Lisa 773-555-0244, day after tomorrow 8 AM-6 PM, call 4 hrs ahead), rate ($3,500, $3.18/mile, detention $100/hr, layover $300/day), Hazmat requirements (Class 3, routing, safety). Полное резюме = профессионализм!",
+                brokerQuestion: "Perfect! Rate con sent to factoring@rtsfin.com with all pickup and delivery details. Sign and return it. After pickup, send BOL and photos. If this goes well, I have 8-10 retail loads weekly Chicago-Texas lane. Good luck!",
+                dispatcherPrompt: "💎 УСПЕХ! Брокер отправил Rate Con и предлагает 8-10 retail loads WEEKLY на этом lane! Это $15,800-19,750/неделю потенциал! Поблагодарите профессионально, подтвердите что: 1) подпишете rate con сразу, 2) отправите BOL и photos после pickup, 3) заинтересованы в будущих грузах. Хорошие отношения = постоянные грузы!",
                 suggestions: [
-                    {
-                        text: "Perfect! Let me confirm everything: Pickup tomorrow 6-10 AM at Chemical Solutions Inc, 7800 Port of Houston Blvd, Mike Chen 713-555-0199. Loading 90 minutes with safety briefing. Delivery day after tomorrow 8 AM-6 PM at Chicago Chemical Depot, 5500 S Cicero Ave, Lisa Martinez 773-555-0244. Unloading 2 hours, call 4 hours ahead. 1100 miles, $3,500 at $3.18/mile, detention $100/hr after 2 hours, layover $300/day. Class 3 Flammable, Hazmat routing, all safety equipment ready. We're 100% confirmed! Sending NOA now.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Полное профессиональное резюме всех деталей. МАСТЕР!",
-                        path: "master"
-                    },
-                    {
-                        text: "Confirmed! Chicago Chemical Depot, Lisa 773-555-0244, day after tomorrow 8 AM-6 PM, call 4 hours ahead. Pickup tomorrow Houston, delivery Chicago, $3,500 all-in. Driver has all safety equipment and will follow Hazmat routing. Sending NOA now. Thank you!",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Хорошее резюме ключевых деталей.",
-                        path: "master"
-                    },
-                    {
-                        text: "Got it. Lisa 773-555-0244, day after tomorrow 8-6 PM, call ahead. Pickup tomorrow, delivery in 2 days. $3,500. Sending NOA.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay, I think I have everything. We'll be there. Sending confirmation.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Нет резюме, неуверенность.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yeah, we got it all. Just send the rate con already!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Грубость в конце диалога.",
-                        path: "reject1"
-                    },
-                    {
-                        text: "Wait, what was the pickup time again? And the rate?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не запомнил критические детали.",
-                        path: "reject1"
-                    }
+                    { text: "Thank you Mike! We'll sign rate con within the hour. Driver will send BOL and photos right after pickup. We're definitely interested in more retail loads on this lane - 8-10 weekly sounds great! Looking forward to working together!", quality: "excellent", analytics: "✨ ОТЛИЧНО! Благодарность по имени, конкретное время (within hour), подтверждение BOL/photos, энтузиазм по поводу weekly loads, желание сотрудничать!", path: "master" },
+                    { text: "Thank you! We'll sign rate con right away and keep you updated. Looking forward to more loads on this lane!", quality: "good", analytics: "✔️ Хорошо! Благодарность, подтверждение действий, интерес к будущим грузам.", path: "master" },
+                    { text: "Thank you, we'll take care of it. Talk soon.", quality: "normal", analytics: "⚪ Нормально. Вежливо, но без энтузиазма по поводу weekly loads.", path: "master" },
+                    { text: "Okay, thanks.", quality: "weak", analytics: "⚠️ Слабо. Слишком короткий ответ, нет интереса к будущим грузам.", path: "master" },
+                    { text: "Yeah, got it.", quality: "aggressive", analytics: "🔴 Агрессивно. Грубость в конце диалога портит впечатление. Не получит weekly loads!", path: "master" },
+                    { text: "What was the pickup time again?", quality: "fail", analytics: "❌ ПРОВАЛ! Не запомнил критические детали груза! Брокер не даст больше грузов!", path: "master" }
                 ]
             },
-            // OUTCOME: Final result
             {
-                brokerResponse: "Excellent! You're extremely professional and well-prepared for Hazmat transport.\nRate confirmation sent to SafeHaul Logistics MC 889944.\nI'm impressed with your knowledge of DOT regulations and safety protocols.\nIf this load goes smoothly, I have 3-4 Hazmat loads weekly on this lane.\nLooking forward to a long partnership!\nGood luck and stay safe!",
+                brokerResponse: "Perfect! Rate con sent. Sign and return. Safe travels!",
                 outcome: {
                     type: "success",
                     quality: "excellent",
-                    rate: "$3,500",
-                    ratePerMile: "$3.18/mile",
-                    relationship: "Excellent - Weekly Hazmat loads opportunity",
-                    dialogueTime: "10-12 minutes",
-                    questionsAsked: "15+ professional questions about safety and procedures",
-                    detailLevel: "very high",
+                    rate: "$1,975",
+                    ratePerMile: "$2.53/mile",
+                    relationship: "strengthened",
+                    dialogueTime: "5-6 minutes",
+                    questionsAsked: "Professional questions",
+                    detailLevel: "high",
                     futureOpportunity: "repeat",
-                    weeklyLoads: "3-4 Hazmat loads if perform well",
-                    feedback: "🏆 МАСТЕР УРОВЕНЬ HAZMAT!\n\n✅ ЧТО СДЕЛАНО ПРАВИЛЬНО:\n- Представились профессионально с MC номером и точным местоположением\n- Подтвердили Hazmat и Tanker endorsements с деталями опыта\n- Показали глубокое знание Class 3 Flammable placarding требований\n- Продемонстрировали понимание Hazmat routing и tunnel restrictions\n- Подтвердили полную готовность emergency response equipment\n- Провели профессиональные переговоры о ставке с обоснованием\n- Подтвердили detention/layover условия с уточнениями\n- Задали все критические вопросы о loading и unloading procedures\n- Собрали полную информацию о pickup и delivery с safety protocols\n- Сделали детальное резюме всех деталей перед финальным подтверждением\n\n💡 КЛЮЧЕВОЙ УРОК:\nHazmat перевозки требуют демонстрации глубоких знаний DOT regulations, safety protocols, и emergency procedures. Брокеры платят premium rates ($3.18/mile vs стандартные $2.50/mile) за carriers которые показывают профессионализм и compliance. Детальное знание placarding, routing restrictions, и emergency response открывает доступ к высокооплачиваемым weekly Hazmat loads.\n\n🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:\nПри работе с Hazmat loads всегда подчеркивайте: 1) Current endorsements и TSA background check, 2) Знание 49 CFR regulations, 3) Emergency response equipment и CHEMTREC number, 4) Hazmat routing GPS и tunnel restrictions, 5) Temperature monitoring для reactive materials. Это строит репутацию reliable Hazmat carrier и ведет к premium rates и repeat business."
+                    weeklyLoads: "8-10 retail loads weekly Chicago-Texas ($15,800-19,750/week)",
+                    feedback: `✅ ОТЛИЧНЫЕ ПЕРЕГОВОРЫ! Заработали $175 больше ($1,975 vs $1,800 posted).
+
+💡 УРОК: Retail freight требует load locks, straps, clean trailer. Торг: Posted $1,800 → Вы просили $2,100 → Встречное $1,950 → Финал $1,975 ($2.53/mile). Заработали $175 = 9.7% прибавка!
+
+🎯 РЕАЛЬНОСТЬ: Retail loads - это 50% всех Dry Van грузов. Standard rates $2.30-2.60/mile. Ваш профессионализм = 8-10 loads weekly на Chicago-Texas lane ($15,800-19,750/неделю = $63,200-79,000/месяц потенциал)!`
                 }
             }
         ],
         reject1: [
             {},
             {
-                brokerResponse: "I appreciate you calling, but I need to be honest with you.\n\nFor Class 3 Flammable Hazmat loads, I need carriers who are fully prepared and professional. Based on our conversation, I have concerns about either your driver's qualifications or your company's readiness for Hazmat transport.\n\nHazmat loads require:\n- Current Hazmat and Tanker endorsements (not 'I think' or 'let me check')\n- Immediate knowledge of your MC number and truck location\n- Professional communication without aggressive or defensive responses\n- Understanding of basic industry terminology\n\nI'm going to pass on this one. I'd recommend:\n1. Verify your driver has current Hazmat endorsement with TSA background check\n2. Get familiar with 49 CFR Hazmat regulations\n3. Ensure you know your company's MC number and equipment status at all times\n4. Practice professional communication - brokers ask questions for safety and compliance, not to annoy you\n\nOnce you're better prepared for Hazmat transport, feel free to call back. Good luck!",
+                brokerResponse: "I need professional carrier with proper MC verification. Thanks anyway.",
                 outcome: {
                     type: "failure",
                     quality: "fail",
                     rate: "$0",
                     ratePerMile: "$0/mile",
-                    relationship: "Rejected - Unprepared for Hazmat",
-                    dialogueTime: "2-3 minutes",
-                    questionsAsked: "Few or defensive responses",
+                    relationship: "rejected",
+                    dialogueTime: "1-2 minutes",
+                    questionsAsked: "None",
                     detailLevel: "none",
                     futureOpportunity: "none",
                     weeklyLoads: "No loads",
-                    feedback: "❌ ОТКАЗ: НЕ ГОТОВ К HAZMAT ПЕРЕВОЗКАМ\n\n✅ ЧТО НУЖНО БЫЛО СДЕЛАТЬ:\n- Знать свой MC номер наизусть - это базовая информация о вашей компании\n- Точно знать местоположение и статус своих грузовиков в любой момент\n- Подтвердить Hazmat и Tanker endorsements с уверенностью и деталями\n- Отвечать профессионально на вопросы брокера о квалификации\n- Понимать базовую терминологию индустрии (detention, layover, placards)\n- Никогда не быть агрессивным или защитным когда брокер проверяет compliance\n\n💡 КЛЮЧЕВОЙ УРОК:\nHazmat loads - это высокооплачиваемые грузы ($3.18/mile vs $2.50/mile стандарт), но они требуют строгого compliance с DOT regulations. Брокеры несут юридическую ответственность за выбор qualified carriers. Если вы не можете подтвердить Hazmat endorsement, не знаете свой MC номер, или реагируете агрессивно на вопросы о безопасности - брокер ОБЯЗАН отказать. Это не личное - это закон и страховка.\n\n🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:\nПеред звонком по Hazmat load: 1) Проверьте что driver имеет current Hazmat endorsement и TSA background check, 2) Знайте точное местоположение truck и статус equipment, 3) Имейте список emergency response equipment, 4) Будьте готовы обсудить placarding, routing restrictions, и safety protocols, 5) Отвечайте на вопросы о compliance спокойно и профессионально. Hazmat certification - это не формальность, это серьезная ответственность. Один incident может закрыть вашу компанию."
+                    feedback: "❌ ОТКАЗ: НЕПРОФЕССИОНАЛИЗМ\n\n✅ ЧТО НУЖНО БЫЛО СДЕЛАТЬ:\n- Представиться полностью: MC номер, название компании, размер флота\n- Дать точное местоположение truck (конкретный адрес или landmark)\n- Показать готовность и профессионализм\n- Отвечать вежливо на все вопросы брокера\n\n🎯 ПРИМЕНЕНИЕ: MC verification - это ПЕРВЫЙ шаг. Без MC номера брокер не может проверить вашу компанию в FMCSA database. Знайте свой MC наизусть!"
                 }
             }
         ],
         reject2: [
             {},
             {
-                brokerResponse: "I'm going to stop you right there.\n\nYour attitude toward safety requirements is a major red flag. When you say things like 'placards are just stickers' or 'tunnel restrictions are overblown' or dismiss emergency equipment requirements, you're telling me you don't take Hazmat safety seriously.\n\nThis isn't about being picky - this is about DOT regulations, public safety, and legal liability. Class 3 Flammable materials can cause catastrophic accidents if not handled properly.\n\nI cannot and will not book a carrier who:\n- Dismisses placarding requirements (49 CFR 172 - federal law, not suggestions)\n- Ignores Hazmat routing restrictions (tunnels prohibit Class 3 for public safety)\n- Doesn't have proper emergency response equipment (required by law)\n- Shows impatience with safety briefings and loading procedures\n\nOne Hazmat incident can result in:\n- Fines up to $75,000 per violation\n- Criminal charges for the driver and carrier\n- Shutdown of your company by FMCSA\n- Environmental cleanup costs in millions\n- Loss of life\n\nI'm passing on this load. I'd strongly recommend you take Hazmat training seriously before attempting these loads. This is not the lane for shortcuts.",
+                brokerResponse: "I need carrier who can meet the pickup schedule. Thanks.",
                 outcome: {
                     type: "failure",
                     quality: "fail",
                     rate: "$0",
                     ratePerMile: "$0/mile",
-                    relationship: "Rejected - Safety concerns",
-                    dialogueTime: "3-4 minutes",
-                    questionsAsked: "Dismissive responses to safety questions",
-                    detailLevel: "none",
+                    relationship: "rejected",
+                    dialogueTime: "2-3 minutes",
+                    questionsAsked: "Minimal",
+                    detailLevel: "low",
                     futureOpportunity: "none",
                     weeklyLoads: "No loads",
-                    feedback: "❌ ОТКАЗ: ПРЕНЕБРЕЖЕНИЕ ТРЕБОВАНИЯМИ БЕЗОПАСНОСТИ\n\n✅ ЧТО НУЖНО БЫЛО СДЕЛАТЬ:\n- Относиться к placarding requirements серьезно - это федеральный закон 49 CFR 172\n- Понимать что Hazmat routing restrictions существуют для защиты населения\n- Иметь полный emergency response kit - это не опция, это требование\n- Принимать safety briefings и loading procedures как необходимую часть работы\n- Никогда не говорить что safety requirements 'overblown' или 'just formalities'\n- Показывать что вы понимаете серьезность перевозки опасных материалов\n\n💡 КЛЮЧЕВОЙ УРОК:\nHazmat safety requirements - это не бюрократия для раздражения водителей. Это результат десятилетий accidents, injuries, и deaths. Каждое правило написано кровью. Когда вы перевозите Class 3 Flammable chemicals, вы везете материалы которые могут взорваться, вызвать пожар, или отравить целый район. Placards предупреждают emergency responders. Routing restrictions защищают тысячи людей в туннелях. Emergency equipment может спасти жизни при spill.\n\n🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:\nБрокеры и shippers НЕМЕДЛЕННО отказывают carriers которые показывают пренебрежение к safety. Почему? Потому что: 1) Broker несет legal liability если происходит incident, 2) Insurance может отказать в покрытии если carrier нарушил safety protocols, 3) FMCSA может оштрафовать всех участников цепочки, 4) Один serious incident может закрыть broker и carrier навсегда. Если вы хотите возить Hazmat и получать premium rates ($3.18/mile), вы ОБЯЗАНЫ относиться к safety как к приоритету #1. Нет исключений. Нет shortcuts. Жизни людей зависят от вашего профессионализма."
+                    feedback: "❌ ОТКАЗ: НЕ МОЖЕТ ЗАБРАТЬ ВОВРЕМЯ\n\n✅ ЧТО НУЖНО БЫЛО СДЕЛАТЬ:\n- Подтвердить что можете забрать в pickup window (8 AM - 12 PM)\n- Дать конкретное время когда driver будет на месте\n- Показать уверенность в возможности выполнить груз\n- Задать вопросы о деталях груза\n\n🎯 ПРИМЕНЕНИЕ: Pickup window - это НЕ рекомендация, это ТРЕБОВАНИЕ. Если не можете забрать вовремя - скажите сразу, не тратьте время брокера."
                 }
             }
         ],
         reject3: [
             {},
             {
-                brokerResponse: "I understand you want a higher rate, but let me be straight with you.\n\nYou're asking for $4,000+ on a 1100-mile load. That's $3.64/mile. For context:\n- Current market rate for Hazmat tanker: $2.90-$3.20/mile\n- My offer of $3,500 ($3.18/mile) is already at the TOP of the market\n- Even with Hazmat premium, $3.64/mile is 15-20% above market\n\nI appreciate that you have the qualifications and equipment, but I have a budget from my customer. I can't pay rates that are significantly above market just because you demand them.\n\nIf you had said 'Could we do $3,600?' with some justification, we might have found middle ground. But demanding $4,000 or saying my offer is 'insulting' shows you're either:\n1. Not familiar with current market rates\n2. Trying to take advantage\n3. Not serious about the load\n\nI'm going to move on to other carriers. Here's some advice:\n- Research current market rates before negotiating (DAT, Truckstop.com)\n- Negotiate professionally with justification, not demands\n- Understand that Hazmat premium is already built into $3.18/mile\n- Know when a rate is fair and accept it\n\nGood luck finding loads at your target rate. I'll keep your info if rates change significantly.",
+                brokerResponse: "I need carrier with proper equipment and insurance. Thanks.",
                 outcome: {
                     type: "failure",
                     quality: "fail",
                     rate: "$0",
                     ratePerMile: "$0/mile",
-                    relationship: "Rejected - Unrealistic expectations",
-                    dialogueTime: "5-6 minutes",
-                    questionsAsked: "Some questions, but failed at negotiation",
+                    relationship: "rejected",
+                    dialogueTime: "3-4 minutes",
+                    questionsAsked: "Some",
                     detailLevel: "medium",
+                    futureOpportunity: "none",
+                    weeklyLoads: "No loads",
+                    feedback: "❌ ОТКАЗ: НЕТ ОБОРУДОВАНИЯ ИЛИ СТРАХОВКИ\n\n✅ ЧТО НУЖНО БЫЛО СДЕЛАТЬ:\n- Иметь load locks и straps для retail freight\n- Иметь минимум $100K cargo insurance\n- Trailer должен быть clean and dry (no odors)\n- Знать точные детали своей страховки (компания, срок)\n\n🎯 ПРИМЕНЕНИЕ: Retail freight требует proper securing (load locks/straps) и insurance. Без этого брокер не может дать груз - это liability risk."
+                }
+            }
+        ],
+        reject4: [
+            {},
+            {
+                brokerResponse: "That rate doesn't work for me. Thanks anyway.",
+                outcome: {
+                    type: "failure",
+                    quality: "poor",
+                    rate: "$0",
+                    ratePerMile: "$0/mile",
+                    relationship: "damaged",
+                    dialogueTime: "4-5 minutes",
+                    questionsAsked: "Good",
+                    detailLevel: "high",
                     futureOpportunity: "unlikely",
                     weeklyLoads: "No loads",
-                    feedback: "❌ ОТКАЗ: НЕРЕАЛИСТИЧНЫЕ ТРЕБОВАНИЯ ПО СТАВКЕ\n\n✅ ЧТО НУЖНО БЫЛО СДЕЛАТЬ:\n- Исследовать рыночные ставки ПЕРЕД переговорами (DAT, Truckstop.com показывают $2.90-$3.20/mile для Hazmat)\n- Понимать что $3,500 ($3.18/mile) уже включает Hazmat premium над стандартными $2.50/mile\n- Вести переговоры профессионально: 'Could we do $3,600?' вместо 'I need $4,000!'\n- Обосновывать запрос: 'We have 8 years Hazmat experience' вместо 'That's insulting!'\n- Знать когда принять fair offer - $3,500 это TOP of market для этого lane\n- Не быть агрессивным когда broker объясняет budget constraints\n\n💡 КЛЮЧЕВОЙ УРОК:\nЗнание рыночных ставок - это КРИТИЧЕСКИЙ навык диспетчера. Если вы требуете $4,000 ($3.64/mile) когда market rate $2.90-$3.20/mile, вы показываете что: 1) Не знаете рынок, 2) Не уважаете broker's budget, 3) Не серьезны о получении load. Brokers работают с margins 10-15%. Они не могут платить на 20% выше рынка. Aggressive negotiation без обоснования = instant rejection.\n\n🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:\nПеред каждым звонком: 1) Проверьте текущие ставки на lane в DAT или Truckstop.com, 2) Поймите что 'fair rate' для данного equipment и cargo, 3) Определите вашу minimum acceptable rate, 4) Определите вашу target rate (5-10% выше fair rate), 5) Подготовьте обоснование (experience, equipment, service). Во время переговоров: используйте фразы 'Based on current market rates...' или 'Considering the Hazmat requirements...' вместо 'I need...' или 'That's too low!'. Если broker предлагает fair rate на top of market - БЕРИТЕ ЕГО. Жадность = $0. Профессионализм = $3,500 + repeat business."
+                    feedback: "❌ ОТКАЗ: НЕРЕАЛИСТИЧНЫЕ ТРЕБОВАНИЯ\n\n✅ ЧТО НУЖНО БЫЛО СДЕЛАТЬ:\n- Просить разумную цену (+10-20% от posted)\n- Быть гибким в переговорах\n- Принять финальное предложение брокера\n- Не выдвигать ультиматумы\n\n🎯 ПРИМЕНЕНИЕ: Торг - это искусство компромисса. Если просите слишком много или не гибкий - потеряете груз. Posted $1,800 → Просите $2,000-2,100 → Финал обычно $1,950-2,000. Это НОРМАЛЬНО!"
                 }
             }
         ]
     }
 };
 
-// Add to global scenarios array
 if (typeof allScenarios !== 'undefined') {
     allScenarios.push(scenario5);
-    console.log('✅ Scenario #5 loaded: Hazmat - Houston TX → Chicago IL');
-    console.log('📊 Total scenarios:', allScenarios.length);
+    console.log('✅ Scenario 5 (Dry Van Retail Chicago-Dallas) added to allScenarios');
 } else {
-    // For testing environment
-    if (typeof module !== 'undefined' && module.exports) {
-        global.allScenarios = global.allScenarios || [];
-        global.allScenarios.push(scenario5);
-    }
+    console.warn('⚠️ allScenarios array not found - scenario5 created but not added');
 }

@@ -1,873 +1,136 @@
-// СИМУЛЬ - База диалогов для обучения диспетчеров
-// Версия: Dialogue #7 - Dry Van Electronics (NEW DIALOG SYSTEM V2.0)
-// Дата: 2026-03-07
-// ПРАВИЛО: 14 шагов, 6 вариантов качества, ТОРГ ЗА ЦЕНУ!
+// СИМУЛЬ - Dialogue #7 - Dry Van Electronics (NEW SYSTEM V3.0)
+// Seattle → Miami, 2,995 miles, High-value cargo
+// Posted: $7,200 ($2.41/mile), Target: $7,800-8,100 ($2.61-2.71/mile)
 
 console.log('🔵 Loading scenarios-data-v7.js...');
 
-// Dialogue #7: Dry Van - Phoenix AZ → Miami FL
-// Medium difficulty, electronics transport
-// Posted rate: $5,500 ($2.29/mile), Target: $6,000-6,500 ($2.50-2.71/mile)
-
 const scenario7 = {
     id: 7,
-    route: "Phoenix AZ → Miami FL",
-    distance: 2400,
+    route: "Seattle WA → Miami FL",
+    distance: 2995,
     equipment: "Dry Van (53ft)",
-    cargo: "Electronics (laptops, tablets, smartphones)",
-    weight: "42,000 lbs",
-    deadline: "Pickup today 2-6 PM, Delivery Thursday noon",
-    brokerStyle: "Professional electronics broker",
-    difficulty: "medium",
+    cargo: "Electronics (laptops, tablets, phones)",
+    weight: "35,000 lbs",
+    deadline: "Pickup tomorrow 10 AM - 2 PM, Delivery in 5 days",
+    brokerStyle: "Professional high-value broker",
+    difficulty: "hard",
 
-    initialMessage: "Good morning! This is Tom Wilson from FastTrack Logistics.\nI saw your load posting for Phoenix to Miami electronics.\nIs this load still available?",
+    initialMessage: "Good afternoon! This is Robert Johnson from TechFreight Logistics.\nI saw your load posting for Seattle to Miami electronics.\nIs this load still available?",
 
     paths: {
         master: [
-            // ШАГ 1: Диспетчер звонит и представляется
             {
-                brokerQuestion: "Good morning! This is Mike from TechFreight Brokers.\nYes, load is available.\nWhat's your MC number and company name?",
-                dispatcherPrompt: "💎 Брокер проверяет вашу компанию. Представьтесь профессионально.",
-                suggestions: [
-                    {
-                        text: "Good morning Mike! FastTrack Logistics, MC 445566. We're a 50-truck fleet specializing in high-value electronics with full cargo insurance and real-time tracking. Safety rating Satisfactory, 5 years in business. Where's your truck right now?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! MC, компания, специализация, страховка, опыт - полная информация!",
-                        path: "master"
-                    },
-                    {
-                        text: "Good morning! MC 445566, FastTrack Logistics. We handle electronics regularly with full insurance coverage. Good safety rating.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! MC, компания, опыт с электроникой.",
-                        path: "master"
-                    },
-                    {
-                        text: "MC 445566, FastTrack Logistics.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Минимальная информация.",
-                        path: "master"
-                    },
-                    {
-                        text: "Uh... let me find the MC number... 445566 I think.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность, непрофессионально.",
-                        path: "master"
-                    },
-                    {
-                        text: "Why do you need all this info? Just tell me the rate!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Грубость с первых секунд!",
-                        path: "reject1"
-                    },
-                    {
-                        text: "Hi, is the load available?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не представился, нет MC номера.",
-                        path: "reject1"
-                    }
+                brokerQuestion: "Good afternoon! This is Jennifer from HighValue Brokers.\nYes, available.\nWhat's your MC?", dispatcherPrompt: "💎 Брокер проверяет компанию. Представьтесь ПОЛНОСТЬЮ: MC, компания, флот, специализация (high-value cargo). Укажите где truck, GPS tracking. High-value = строгие требования!", suggestions: [
+                    { text: "Good afternoon Jennifer! TechFreight Logistics, MC 334455. We're a 40-truck fleet specializing in high-value electronics with GPS tracking and $100K+ insurance. Truck's in Seattle at tech distribution center, empty. Ready tomorrow 10 AM. Where's pickup?", quality: "excellent", analytics: "✨ ОТЛИЧНО! MC, компания, 40 trucks, специализация electronics, GPS tracking, insurance, местоположение, готовность!", path: "master" },
+                    { text: "Good afternoon! MC 334455, TechFreight Logistics. We handle electronics regularly. Truck in Seattle, ready tomorrow.", quality: "good", analytics: "✔️ Хорошо! MC, компания, опыт с electronics.", path: "master" },
+                    { text: "MC 334455, TechFreight Logistics. Truck in Seattle.", quality: "normal", analytics: "⚪ Нормально. Базовая информация.", path: "master" },
+                    { text: "MC 334455... truck somewhere in Seattle...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность, неточно.", path: "master" },
+                    { text: "Why MC? Rate!", quality: "aggressive", analytics: "🔴 Агрессивно! Грубость.", path: "reject1" },
+                    { text: "Hi, available?", quality: "fail", analytics: "❌ Провал! Не представился.", path: "reject1" }
                 ]
             },
-
-            // ШАГ 2: Брокер подтверждает + спрашивает MC
             {
-                brokerQuestion: "MC verified, good rating. Where's your truck right now?",
-                dispatcherPrompt: "💎 Брокер хочет знать местоположение. Дайте точную информацию.",
-                suggestions: [
-                    {
-                        text: "Truck's in Phoenix, empty at distribution center on West Buckeye Road. Driver just finished delivery 2 hours ago, did post-trip inspection. Ready to load today. What's the pickup time?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Точное местоположение, статус, готовность.",
-                        path: "master"
-                    },
-                    {
-                        text: "In Phoenix, empty since this morning. Ready for pickup today.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Местоположение и готовность.",
-                        path: "master"
-                    },
-                    {
-                        text: "Phoenix area, empty and ready.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовая информация.",
-                        path: "master"
-                    },
-                    {
-                        text: "Somewhere in Phoenix... I think.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неточная информация.",
-                        path: "master"
-                    },
-                    {
-                        text: "Just tell me the pickup address and rate!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Нетерпеливость.",
-                        path: "reject1"
-                    },
-                    {
-                        text: "Let me check where the driver is...",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не знает местоположение своего водителя!",
-                        path: "reject1"
-                    }
+                brokerQuestion: "MC verified. Where's your truck? Do you have GPS tracking for high-value?", dispatcherPrompt: "💎 Брокер хочет местоположение и GPS для high-value. Дайте ТОЧНЫЙ адрес, статус, подтвердите GPS tracking real-time. High-value = обязательно GPS!", suggestions: [
+                    { text: "Truck's at Amazon distribution center in Kent, WA. Empty since yesterday. GPS tracking installed - real-time updates via SkyBitz. Driver experienced with high-value cargo, clean background check. Ready tomorrow 10 AM.", quality: "excellent", analytics: "✨ ОТЛИЧНО! Точный адрес (Amazon Kent), GPS (SkyBitz), real-time, опыт driver, background check!", path: "master" },
+                    { text: "In Kent, WA. Empty. GPS tracking installed. Ready tomorrow.", quality: "good", analytics: "✔️ Хорошо! Местоположение, GPS.", path: "master" },
+                    { text: "Seattle area, empty. GPS yes.", quality: "normal", analytics: "⚪ Нормально. Общее местоположение.", path: "master" },
+                    { text: "Somewhere in Seattle... GPS should work...", quality: "weak", analytics: "⚠️ Слабо. Неточно, неуверенность в GPS!", path: "master" },
+                    { text: "Just tell me pickup!", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "reject1" },
+                    { text: "No GPS...", quality: "fail", analytics: "❌ Провал! Нет GPS для high-value!", path: "reject1" }
                 ]
             },
-
-            // ШАГ 3: Диспетчер дает местоположение + спрашивает детали
             {
-                brokerQuestion: "Perfect! 2,400 miles cross-country. High-value electronics - laptops, tablets, smartphones. 42K lbs. Pickup today 2-6 PM Phoenix, delivery Thursday noon Miami. Works for you?",
-                dispatcherPrompt: "💎 Брокер дал детали груза. Подтвердите и дайте ETA.",
-                suggestions: [
-                    {
-                        text: "Perfect! Driver can be at pickup by 3 PM today, that's middle of the window. Cross-country 2,400 miles in 3.5 days is doable with team drivers. We run electronics regularly with climate-controlled trailers. What's the exact pickup address?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! ETA, расчет времени, опыт, вопрос о деталях.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, works for us. Driver can be there by 4 PM today. We handle electronics shipments regularly.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! ETA и опыт.",
-                        path: "master"
-                    },
-                    {
-                        text: "We can do it. Driver will be on time.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "I think we can make it... maybe.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность в сроках.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yeah, whatever. What's the rate?",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Пренебрежение деталями.",
-                        path: "reject2"
-                    },
-                    {
-                        text: "Driver won't be empty until tomorrow morning...",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не может забрать вовремя!",
-                        path: "reject2"
-                    }
+                brokerQuestion: "Perfect! 2,995 miles Seattle to Miami. High-value electronics - laptops, tablets, phones. 35K lbs. Pickup tomorrow 10 AM - 2 PM, delivery in 5 days. Can you handle high-value?", dispatcherPrompt: "💎 Брокер дал детали high-value груза. Подтвердите: 2,995 mi, 5 days (600 mi/day), high-value handling. Дайте ETA. Спросите: security requirements, team driver option, special handling. High-value = критичные вопросы!", suggestions: [
+                    { text: "Perfect! 2,995 miles in 5 days is comfortable - about 600 miles/day. We handle high-value electronics regularly with GPS tracking and secure parking. Driver can pickup at noon. Any special security requirements? Team driver available if needed for faster delivery.", quality: "excellent", analytics: "✨ ОТЛИЧНО! Расчет миль/день, опыт high-value, GPS, secure parking, ETA, вопросы security, team option!", path: "master" },
+                    { text: "Yes, works. Driver there by 1 PM. 5 days is good. Any security requirements?", quality: "good", analytics: "✔️ Хорошо! Подтверждение, вопрос.", path: "master" },
+                    { text: "We can do it. Driver on time.", quality: "normal", analytics: "⚪ Нормально. Базовое подтверждение.", path: "master" },
+                    { text: "I think we can... it's far...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность!", path: "master" },
+                    { text: "Yeah, whatever. Rate?", quality: "aggressive", analytics: "🔴 Агрессивно! Пренебрежение high-value.", path: "reject2" },
+                    { text: "Driver won't be ready...", quality: "fail", analytics: "❌ Провал!", path: "reject2" }
                 ]
             },
-
-            // ШАГ 4: Брокер дает основные детали груза
             {
-                brokerQuestion: "2,400 miles cross-country. High-value electronics - laptops, tablets, smartphones. 42K lbs. Pickup today 2-6 PM Phoenix, delivery Thursday noon Miami. Works for you?",
-                dispatcherPrompt: "💎 Брокер дал основные детали. Подтвердите и спросите о requirements.",
-                suggestions: [
-                    {
-                        text: "Got it - TechHub Distribution, 4500 E Van Buren, James Rodriguez 602-555-0147. 2-hour loading, we'll have driver there by 3 PM. Do we need any special equipment besides load locks?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Повторил детали, подтвердил время, задал вопрос.",
-                        path: "master"
-                    },
-                    {
-                        text: "TechHub Distribution, Van Buren St. Driver will be there by 3 PM. Any special requirements?",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Подтвердил и задал вопрос.",
-                        path: "master"
-                    },
-                    {
-                        text: "Got the address. Driver will be there.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay... Van Buren street somewhere.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неточное понимание адреса.",
-                        path: "master"
-                    },
-                    {
-                        text: "I don't need all these details! Rate?",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Игнорирование важной информации.",
-                        path: "reject2"
-                    },
-                    {
-                        text: "Can you text me the address?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не записывает информацию!",
-                        path: "reject2"
-                    }
+                brokerQuestion: "Standard dry van. GPS tracking required. Secure parking only - no truck stops overnight. Driver must have clean background check. Climate control preferred (65-75°F).", dispatcherPrompt: "💎 Брокер назвал requirements для high-value electronics. Подтвердите: GPS tracking (система), secure parking protocol, driver background check, climate control capability. High-value = zero tolerance!", suggestions: [
+                    { text: "Perfect! GPS tracking via SkyBitz with real-time alerts. Driver parks only at secure facilities - Flying J secure lots, TA Petro secure parking. Background check current, renewed annually. Trailer has climate control capability 65-75°F. Ready!", quality: "excellent", analytics: "✨ ОТЛИЧНО! GPS система (SkyBitz), конкретные secure parking (Flying J, TA Petro), background check current, climate control!", path: "master" },
+                    { text: "Yes, GPS tracking installed. Driver uses secure parking only. Background check current. Climate control available.", quality: "good", analytics: "✔️ Хорошо! GPS, secure parking, background, climate.", path: "master" },
+                    { text: "We have GPS. Driver knows secure parking. Background check done.", quality: "normal", analytics: "⚪ Нормально. Есть requirements, но нет деталей.", path: "master" },
+                    { text: "I think we have GPS... driver should park safely...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность в critical requirements!", path: "master" },
+                    { text: "Too many rules! It's just electronics!", quality: "aggressive", analytics: "🔴 Агрессивно! Пренебрежение safety.", path: "reject3" },
+                    { text: "We don't have GPS...", quality: "fail", analytics: "❌ Провал! Нет GPS - required!", path: "reject3" }
                 ]
             },
-
-            // ШАГ 5: Диспетчер подтверждает + дает ETA
             {
-                brokerQuestion: "Just standard load locks and straps. Cargo is palletized and shrink-wrapped. Delivery in Miami at Electronics Depot, 8900 NW 23rd St. Contact: Maria Santos 305-555-0198. Delivery window Thursday 8 AM - 12 PM.",
-                dispatcherPrompt: "💎 Брокер дал детали доставки. Подтвердите и спросите о requirements.",
-                suggestions: [
-                    {
-                        text: "Perfect - Electronics Depot Miami, 8900 NW 23rd St, Maria Santos 305-555-0198, Thursday 8-12. We'll have load locks ready. Any temperature requirements or special handling for the electronics?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Повторил детали, задал важный вопрос о температуре.",
-                        path: "master"
-                    },
-                    {
-                        text: "Got it - Miami delivery Thursday morning. Any special handling requirements?",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Подтвердил и задал вопрос.",
-                        path: "master"
-                    },
-                    {
-                        text: "Understood. We'll deliver on time.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay, Miami on Thursday.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Слишком мало деталей записал.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yeah, we'll get it there. Rate?",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Спешка к цене.",
-                        path: "reject2"
-                    },
-                    {
-                        text: "Wait, what was the Miami address again?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не записал информацию!",
-                        path: "reject2"
-                    }
+                brokerQuestion: "Good! Insurance current? We need $100K cargo coverage minimum for electronics.", dispatcherPrompt: "💎 Брокер проверяет страховку для high-value. Назовите: сумму ($100K+), компанию, срок, покрывает ли theft/damage. Предложите отправить certificate. High-value = высокая страховка!", suggestions: [
+                    { text: "Yes, $150K cargo insurance through Progressive Commercial. Certificate current, expires June 2027. Coverage includes theft and damage for electronics. I can email certificate right now. What's your email?", quality: "excellent", analytics: "✨ ОТЛИЧНО! $150K (выше minimum), компания, срок, theft/damage coverage, готовность отправить!", path: "master" },
+                    { text: "Yes, $100K cargo coverage through Progressive. Includes theft/damage. Certificate current. I'll send it.", quality: "good", analytics: "✔️ Хорошо! Сумма, компания, coverage, готовность.", path: "master" },
+                    { text: "Yes, $100K cargo insurance. Certificate current.", quality: "normal", analytics: "⚪ Нормально. Сумма, но нет деталей.", path: "master" },
+                    { text: "I think we have enough...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность!", path: "master" },
+                    { text: "Insurance fine! Rate?", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "reject3" },
+                    { text: "Only $50K...", quality: "fail", analytics: "❌ Провал! Недостаточно!", path: "reject3" }
                 ]
             },
-
-            // ШАГ 6: Брокер спрашивает о requirements
             {
-                brokerQuestion: "Keep trailer climate-controlled, avoid extreme heat. Electronics are sensitive. No temperature extremes. You good with that?",
-                dispatcherPrompt: "💎 Брокер дал requirements. Подтвердите compliance.",
-                suggestions: [
-                    {
-                        text: "Absolutely! Our trailers have climate control, we'll maintain 65-75°F throughout transit. Driver will monitor temperature and avoid parking in direct sun. We transport electronics weekly.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Детальное подтверждение с опытом.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we have climate-controlled trailers. Driver knows to avoid heat exposure.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Четкое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we can do that.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "I think our trailer has climate control...",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность в оборудовании!",
-                        path: "master"
-                    },
-                    {
-                        text: "It's just electronics, they'll be fine!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Пренебрежение требованиями!",
-                        path: "reject3"
-                    },
-                    {
-                        text: "We don't have climate control...",
-                        quality: "fail",
-                        analytics: "❌ Провал. Нет необходимого оборудования!",
-                        path: "reject3"
-                    }
+                brokerQuestion: "Perfect! You're well-equipped for high-value. Let's talk rate. What do you need for 2,995 miles?", dispatcherPrompt: "💎 ТОРГ! Posted $7,200 ($2.41/mile) - просите $7,800-8,100 ($2.61-2.71/mile). High-value electronics платят premium! Обоснуйте: GPS tracking, secure parking, climate control, experienced driver. ЧЕМ БОЛЬШЕ - ТЕМ ЛУЧШЕ!", suggestions: [
+                    { text: "For 2,995 miles with high-value electronics, I'm looking at $8,100. That's $2.71/mile, fair for GPS tracking, secure parking only, climate control, and experienced driver with clean background. Zero theft/damage record.", quality: "excellent", analytics: "✨ ОТЛИЧНО! Просит $8,100 - это $900 БОЛЬШЕ posted! Обоснование полное!", path: "master" },
+                    { text: "$7,800 for this load. That's $2.60/mile for high-value with GPS and secure parking.", quality: "good", analytics: "✔️ Хорошо! Просит $7,800 - $600 больше!", path: "master" },
+                    { text: "I'm looking at $7,600 for 2,995 miles.", quality: "normal", analytics: "⚪ Нормально. $7,600 - только $400 больше.", path: "master" },
+                    { text: "Can you do $7,400?", quality: "weak", analytics: "⚠️ Слабо! Только $200 больше!", path: "master" },
+                    { text: "I need $9,000 minimum!", quality: "aggressive", analytics: "🔴 Агрессивно! $9,000 = $3.01/mile - нереально!", path: "reject4" },
+                    { text: "I'll take $7,200!", quality: "fail", analytics: "❌ ПРОВАЛ! Без торга!", path: "master" }
                 ]
             },
-
-            // ШАГ 7: Диспетчер подтверждает compliance
             {
-                brokerQuestion: "Good! Insurance certificate current? We need $100K minimum cargo coverage for electronics.",
-                dispatcherPrompt: "💎 Брокер спрашивает о страховке. Подтвердите coverage.",
-                suggestions: [
-                    {
-                        text: "Yes, we carry $250K cargo insurance through Progressive Commercial. Certificate is current, expires December 2026. I can email it right now to your rate con email.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Детали страховки, готовность отправить.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, $250K cargo coverage, certificate is current. I'll send it over.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Подтвердил coverage.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yes, we have cargo insurance.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовое подтверждение.",
-                        path: "master"
-                    },
-                    {
-                        text: "I think we have enough coverage...",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенность в страховке!",
-                        path: "master"
-                    },
-                    {
-                        text: "Insurance is fine! Let's talk rate!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Избегает деталей страховки.",
-                        path: "reject3"
-                    },
-                    {
-                        text: "We only have $50K coverage...",
-                        quality: "fail",
-                        analytics: "❌ Провал. Недостаточная страховка!",
-                        path: "reject3"
-                    }
+                brokerQuestion: "That's high for this lane. I can do $7,600. That's $2.54/mile.", dispatcherPrompt: "💎 Встречное $7,600 (вы $8,100, posted $7,200). Варианты: 1) $7,800-7,850 (посередине), 2) $7,600 + detention $75/hr, 3) $7,600. НЕ стойте на $8,100!", suggestions: [
+                    { text: "Can we meet at $7,850? Fair for both - middle ground. GPS tracking, secure parking, zero incidents record.", quality: "excellent", analytics: "✨ ОТЛИЧНО! $7,850 - посередине! Обоснование!", path: "master" },
+                    { text: "$7,600 works if detention is $75/hr after 2 hours.", quality: "good", analytics: "✔️ Хорошо! Принимает + detention!", path: "master" },
+                    { text: "$7,600 works. Let's book it.", quality: "normal", analytics: "⚪ Нормально. Принимает.", path: "master" },
+                    { text: "Okay, $7,600 I guess...", quality: "weak", analytics: "⚠️ Слабо. Неуверенность.", path: "master" },
+                    { text: "$7,850 or I walk!", quality: "aggressive", analytics: "🔴 Агрессивно! Ультиматум.", path: "reject4" },
+                    { text: "No, I need $8,100!", quality: "fail", analytics: "❌ Провал! Не гибкий!", path: "reject4" }
                 ]
             },
-
-            // ШАГ 8: Брокер спрашивает о rate (ТОРГ НАЧИНАЕТСЯ!)
             {
-                brokerQuestion: "Perfect! You're well-prepared for this electronics load. Let's talk rate. What do you need for 2,400 miles?",
-                dispatcherPrompt: "💎 Брокер готов обсудить цену. Назовите ВАШУ цену первым! Чем больше просите - тем лучше!",
-                suggestions: [
-                    {
-                        text: "For 2,400 miles cross-country with high-value electronics, climate control, team drivers, 3-day delivery - I'm looking at $6,500. That's $2.71/mile, fair for the service level and equipment requirements.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Просит $1,000 больше posted ($6,500 vs $5,500). Агрессивный торг с обоснованием!",
-                        path: "master"
-                    },
-                    {
-                        text: "$6,200 for this load. That's $2.58/mile for cross-country electronics with climate control.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Просит $700 больше posted. Хороший торг!",
-                        path: "master"
-                    },
-                    {
-                        text: "I'm looking at $6,000 for 2,400 miles.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Просит $500 больше posted. Базовый торг.",
-                        path: "master"
-                    },
-                    {
-                        text: "Can you do $5,700?",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Просит только $200 больше posted. Плохой торг!",
-                        path: "master"
-                    },
-                    {
-                        text: "I need $7,500 minimum or I'm not interested!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Просит $2,000 больше - нереалистично!",
-                        path: "reject4"
-                    },
-                    {
-                        text: "I'll take the $5,500 posted rate!",
-                        quality: "fail",
-                        analytics: "❌ ПРОВАЛ! Принял posted rate без торга. Потерял $500-1,000!",
-                        path: "master"
-                    }
+                brokerQuestion: "$7,700 final. That's $2.57/mile. Detention $75/hr. Deal?", dispatcherPrompt: "💎 ФИНАЛ! $7,700 (вы $8,100, posted $7,200). ЗАРАБОТАЛИ $500 БОЛЬШЕ! Detention $75/hr! ПОСЛЕДНИЙ шанс - ПРИНИМАЙТЕ! 'Deal!' и factoring!", suggestions: [
+                    { text: "$7,700 works! Deal! Which factoring? I'll send GPS tracking setup details too.", quality: "excellent", analytics: "✨ ОТЛИЧНО! Заработал $500 больше! 'Deal!', factoring, GPS details!", path: "master" },
+                    { text: "Perfect! $7,700 with detention. Deal! Factoring info?", quality: "good", analytics: "✔️ Хорошо! Заработал $500!", path: "master" },
+                    { text: "$7,700 confirmed. Deal.", quality: "normal", analytics: "⚪ Нормально. Заработал $500.", path: "master" },
+                    { text: "Okay, $7,700...", quality: "weak", analytics: "⚠️ Слабо. Без энтузиазма.", path: "master" },
+                    { text: "I want $100/hr detention!", quality: "aggressive", analytics: "🔴 Агрессивно! Новые требования!", path: "reject4" },
+                    { text: "Can we do $7,800?", quality: "fail", analytics: "❌ ПРОВАЛ! Торгуется после финала!", path: "reject4" }
                 ]
             },
-
-            // ШАГ 9: Брокер отвечает встречным предложением
             {
-                brokerQuestion: "That's high, but I see you're professional. I can do $6,000. That's $2.50/mile for cross-country with climate control.",
-                dispatcherPrompt: "💎 Брокер дает встречное предложение. Решайте - принять или торговаться еще.",
-                suggestions: [
-                    {
-                        text: "I appreciate that. Can we do $6,200? That's fair for both of us with team drivers, climate control, and tight schedule.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Продолжает торг профессионально, просит еще $200.",
-                        path: "master"
-                    },
-                    {
-                        text: "$6,000 works if detention is $75/hr after 2 hours.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Принимает с условием detention.",
-                        path: "master"
-                    },
-                    {
-                        text: "$6,000 works. Let's book it.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Принимает предложение брокера.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay, I guess $6,000 is acceptable...",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Неуверенно принимает.",
-                        path: "master"
-                    },
-                    {
-                        text: "$6,200 or I walk! This is high-value cargo!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Ультиматум, риск отказа.",
-                        path: "reject4"
-                    },
-                    {
-                        text: "No, I need $6,500 minimum!",
-                        quality: "fail",
-                        analytics: "❌ Провал. Отказывается от разумного предложения.",
-                        path: "reject4"
-                    }
+                brokerQuestion: "Deal! $7,700 all-in, detention $75/hr. Which factoring? Send GPS tracking contact too.", dispatcherPrompt: "💎 Финализация! Дайте: factoring (название + email), GPS tracking contact (dispatch 24/7). Предложите insurance certificate. Быстро = профессионально!", suggestions: [
+                    { text: "Triumph Factoring, factoring@triumphbc.com. GPS tracking: dispatch 24/7 at (555) 789-0123, gps@techfreight.com. Sending insurance certificate now. Anything else?", quality: "excellent", analytics: "✨ ОТЛИЧНО! Factoring, GPS contact (phone + email), insurance, вопрос!", path: "master" },
+                    { text: "RTS Financial, factoring@rtsfin.com. Dispatch 24/7: (555) 789-0123 for GPS alerts. I'll send insurance.", quality: "good", analytics: "✔️ Хорошо! Factoring, dispatch, insurance.", path: "master" },
+                    { text: "OTR Capital, factoring@otrcapital.com. Dispatch: (555) 789-0123.", quality: "normal", analytics: "⚪ Нормально. Factoring и phone.", path: "master" },
+                    { text: "Let me find email...", quality: "weak", analytics: "⚠️ Слабо. Не знает email!", path: "master" },
+                    { text: "Just send rate con!", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "reject4" },
+                    { text: "No factoring.", quality: "fail", analytics: "❌ Провал!", path: "reject4" }
                 ]
             },
-
-            // ШАГ 10: Брокер финализирует rate
             {
-                brokerQuestion: "You drive a hard bargain! I can do $6,100 final. That's $2.54/mile. Detention $75/hr after 2 hours. Deal?",
-                dispatcherPrompt: "💎 Брокер дает финальное предложение. Это последний шанс!",
-                suggestions: [
-                    {
-                        text: "$6,100 works! Detention $75/hr is fair. What's the exact pickup address and contact again?",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Принимает и сразу к деталям. Заработал $600!",
-                        path: "master"
-                    },
-                    {
-                        text: "Perfect! $6,100 with detention. Let's get pickup details.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Четкое принятие. Заработал $600!",
-                        path: "master"
-                    },
-                    {
-                        text: "$6,100 confirmed. Pickup address?",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Принимает. Заработал $600.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay, $6,100. What's next?",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Заработал $600, но без энтузиазма.",
-                        path: "master"
-                    },
-                    {
-                        text: "Fine, $6,100. But I want $100/hr detention!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Новые требования после согласования.",
-                        path: "reject4"
-                    },
-                    {
-                        text: "Wait, can we do $6,300?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Пытается пересмотреть после финала.",
-                        path: "reject4"
-                    }
+                brokerQuestion: "Perfect! Rate con sent to factoring@triumphbc.com. Sign and return. After pickup, send BOL, photos, and GPS tracking link. If this goes well, I have 4-5 electronics loads weekly on various lanes. Good luck!", dispatcherPrompt: "💎 УСПЕХ! 4-5 electronics loads WEEKLY! Это $30,800-38,500/неделю потенциал! Поблагодарите, подтвердите: rate con, BOL/photos/GPS link, интерес к weekly loads. High-value relationships = premium rates!", suggestions: [
+                    { text: "Thank you Jennifer! We'll sign rate con immediately. Driver will send BOL, photos, and GPS tracking link at pickup. We're very interested in 4-5 weekly electronics loads - our specialty! Looking forward to partnership!", quality: "excellent", analytics: "✨ ОТЛИЧНО! Благодарность по имени, все действия, энтузиазм weekly loads, partnership!", path: "master" },
+                    { text: "Thank you! We'll sign right away and send all documentation. Very interested in more electronics loads!", quality: "good", analytics: "✔️ Хорошо! Благодарность, подтверждение, интерес.", path: "master" },
+                    { text: "Thank you, we'll take care of it.", quality: "normal", analytics: "⚪ Нормально. Вежливо.", path: "master" },
+                    { text: "Okay, thanks.", quality: "weak", analytics: "⚠️ Слабо. Короткий ответ.", path: "master" },
+                    { text: "Yeah, got it.", quality: "aggressive", analytics: "🔴 Агрессивно. Грубость.", path: "master" },
+                    { text: "What was pickup time?", quality: "fail", analytics: "❌ ПРОВАЛ! Не запомнил детали!", path: "master" }
                 ]
             },
-
-            // ШАГ 11: Брокер финализирует rate + спрашивает factoring
-            {
-                brokerQuestion: "Deal! $6,100 all-in, detention $75/hr after 2 hours. Which factoring company?",
-                dispatcherPrompt: "💎 Брокер финализирует rate. Дайте factoring email.",
-                suggestions: [
-                    {
-                        text: "RTS Factoring, factoring@rtsfin.com. Sending insurance cert and W9 now.",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Factoring email, готовность отправить документы!",
-                        path: "master"
-                    },
-                    {
-                        text: "Triumph Factoring, triumph@factoring.com. I'll email insurance cert now.",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Factoring email и документы.",
-                        path: "master"
-                    },
-                    {
-                        text: "OTR Solutions. I'll send documents.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовая информация.",
-                        path: "master"
-                    },
-                    {
-                        text: "Let me find factoring info...",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Не готов с информацией.",
-                        path: "master"
-                    },
-                    {
-                        text: "Just send the rate con!",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Избегает деталей.",
-                        path: "reject4"
-                    },
-                    {
-                        text: "We don't use factoring.",
-                        quality: "fail",
-                        analytics: "❌ Провал. Проблема с payment!",
-                        path: "reject4"
-                    }
-                ]
-            },
-
-            // ШАГ 12: Брокер отправляет Rate Con
-            {
-                brokerQuestion: "Perfect! Rate con sent to factoring@rtsfin.com with all pickup/delivery details. Sign and return it. After pickup, send BOL and photos to the email on rate con. Keep cargo climate-controlled. If this goes well, I have 4-5 electronics loads weekly. Good luck!",
-                dispatcherPrompt: "💎 Брокер отправил Rate Con. Поблагодарите профессионально.",
-                suggestions: [
-                    {
-                        text: "Thank you Mike! We'll sign and return rate con right away. Driver will maintain climate control and send regular updates. Looking forward to working together on future electronics loads!",
-                        quality: "excellent",
-                        analytics: "✨ Отлично! Подтверждение Rate Con, climate control, интерес к будущим грузам!",
-                        path: "master"
-                    },
-                    {
-                        text: "Thank you! We'll sign rate con and keep you updated. Looking forward to more loads!",
-                        quality: "good",
-                        analytics: "✔️ Хорошо! Подтверждение и интерес.",
-                        path: "master"
-                    },
-                    {
-                        text: "Thank you, we'll take care of it.",
-                        quality: "normal",
-                        analytics: "⚪ Нормально. Базовая благодарность.",
-                        path: "master"
-                    },
-                    {
-                        text: "Okay, thanks.",
-                        quality: "weak",
-                        analytics: "⚠️ Слабо. Слишком короткая благодарность.",
-                        path: "master"
-                    },
-                    {
-                        text: "Yeah, we got it.",
-                        quality: "aggressive",
-                        analytics: "🔴 Агрессивно. Грубость в конце.",
-                        path: "master"
-                    },
-                    {
-                        text: "Wait, what was the pickup time again?",
-                        quality: "fail",
-                        analytics: "❌ Провал. Не понял что все в Rate Con!",
-                        path: "master"
-                    }
-                ]
-            },
-
-            // ШАГ 13: OUTCOME
-            {
-                brokerResponse: "Perfect! Rate con with all details sent to factoring@rtsfin.com. Sign and return. After pickup send BOL and photos. Safe travels!",
-                outcome: {
-                    type: "success",
-                    quality: "excellent",
-                    rate: "$6,100",
-                    ratePerMile: "$2.54/mile",
-                    relationship: "strengthened",
-                    dialogueTime: "6-7 minutes",
-                    questionsAsked: "Professional, focused questions about requirements and details",
-                    detailLevel: "high",
-                    futureOpportunity: "repeat",
-                    weeklyLoads: "4-5 electronics loads weekly Phoenix-Florida",
-                    feedback: `✅ ЧТО СДЕЛАНО ПРАВИЛЬНО:
-
-Вы провели отличные переговоры по Dry Van грузу с электроникой! Заработали $600 больше posted rate ($6,100 vs $5,500).
-
-1. Профессиональное представление - дали MC, компанию, специализацию, опыт
-2. Точная информация о местоположении и готовности
-3. Записали все детали pickup и delivery
-4. Подтвердили climate control и страховку $250K
-5. ОТЛИЧНЫЙ ТОРГ - начали с $6,500, получили $6,100 ($2.54/mile)
-6. Дали factoring и обещали updates
-
-💡 КЛЮЧЕВОЙ УРОК:
-
-Dry Van грузы с электроникой требуют:
-- Climate control (65-75°F) - избегать жары
-- Высокая страховка ($100K+ cargo coverage)
-- Аккуратная погрузка с load locks
-- Regular updates для high-value cargo
-
-Торг за цену:
-- Posted: $5,500 ($2.29/mile)
-- Вы просили: $6,500 ($2.71/mile) - агрессивно!
-- Брокер предложил: $6,000 ($2.50/mile) - среднее
-- Вы продолжили торг: $6,200
-- Финал: $6,100 ($2.54/mile) + detention $75/hr
-
-Заработали $600 больше = 11% прибавка!
-
-🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
-
-Electronics loads (laptops, tablets, phones) - это 50% всех Dry Van грузов. Они платят premium rates ($2.50-2.70/mile) потому что:
-
-1. High-value cargo - нужна высокая страховка
-2. Climate-sensitive - нужен temperature control
-3. Theft risk - нужна безопасность и tracking
-4. Tight delivery windows - нужна надежность
-
-Всегда торгуйтесь агрессивно на electronics! Начинайте с +15-20% от posted rate. Брокеры знают что это ценный груз и готовы платить больше.
-
-Если груз идет cross-country (2,000+ miles) - просите еще больше! Team drivers, fuel costs, time - все это оправдывает высокую ставку.
-
-Ваш профессионализм принес вам repeat business - 4-5 loads weekly! Это $24,000-30,000 дополнительного дохода в месяц!`
-                }
-            }
+            { brokerResponse: "Perfect! Rate con sent. Sign and return. Safe travels and keep that cargo secure!", outcome: { type: "success", quality: "excellent", rate: "$7,700", ratePerMile: "$2.57/mile", relationship: "strengthened", dialogueTime: "6-7 minutes", questionsAsked: "Professional", detailLevel: "high", futureOpportunity: "repeat", weeklyLoads: "4-5 electronics loads weekly ($30,800-38,500/week)", feedback: `✅ ОТЛИЧНЫЕ ПЕРЕГОВОРЫ! Заработали $500 больше ($7,700 vs $7,200 posted).\n\n💡 УРОК: High-value electronics требуют GPS tracking, secure parking, climate control, background check. Торг: Posted $7,200 → Вы $8,100 → Встречное $7,600 → Финал $7,700 ($2.57/mile). Заработали $500 = 6.9% прибавка!\n\n🎯 РЕАЛЬНОСТЬ: Electronics loads платят premium rates ($2.50-2.70/mile) из-за high value и security requirements. Ваш профессионализм = 4-5 loads weekly ($30,800-38,500/неделю = $123,200-154,000/месяц потенциал)!` } }
         ],
-
-        // REJECT PATH 1: Непрофессиональное поведение с начала
-        reject1: [
-            {},
-            {
-                brokerResponse: "I need a professional carrier who can communicate clearly. Let me call someone else. Thanks anyway.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    ratePerMile: "$0/mile",
-                    relationship: "rejected",
-                    dialogueTime: "1-2 minutes",
-                    questionsAsked: "None - unprofessional from start",
-                    detailLevel: "none",
-                    futureOpportunity: "none",
-                    weeklyLoads: "No loads",
-                    feedback: `❌ ЧТО ПОШЛО НЕ ТАК:
-
-Брокер отказал из-за непрофессионального поведения с первых секунд разговора.
-
-Ошибки:
-1. Не представились или представились неуверенно
-2. Не знали MC номер или местоположение водителя
-3. Грубость или агрессия с первых слов
-4. Нетерпеливость - сразу к цене
-
-💡 КЛЮЧЕВОЙ УРОК:
-
-Первые 30 секунд разговора определяют весь диалог!
-
-Брокер оценивает:
-- Профессионализм (MC номер, название компании)
-- Организованность (знаете где водитель)
-- Коммуникацию (четкая речь, вежливость)
-- Готовность (водитель пустой и готов)
-
-Если вы не можете дать базовую информацию - брокер не будет рисковать $42,000 грузом электроники!
-
-🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
-
-В реальности брокеры получают 20-30 звонков на один груз. Они выбирают самых профессиональных диспетчеров.
-
-Правильное начало:
-"Good morning! [Company name], MC [number]. We have a [equipment] in [location], empty and ready. Calling about your [route] load. Is it still available?"
-
-Это занимает 10 секунд, но показывает что вы:
-- Знаете свой бизнес
-- Организованы
-- Готовы к работе
-- Профессионал
-
-Потеряли $6,100 груз и возможность 4-5 loads weekly ($24,000-30,000/месяц) из-за плохого первого впечатления!`
-                }
-            }
-        ],
-
-        // REJECT PATH 2: Не может забрать вовремя или не записывает детали
-        reject2: [
-            {},
-            {
-                brokerResponse: "I need a carrier who can meet the schedule and pay attention to details. Let me call someone more reliable. Thanks anyway.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    ratePerMile: "$0/mile",
-                    relationship: "rejected",
-                    dialogueTime: "2-3 minutes",
-                    questionsAsked: "Minimal - didn't gather critical information",
-                    detailLevel: "low",
-                    futureOpportunity: "none",
-                    weeklyLoads: "No loads",
-                    feedback: `❌ ЧТО ПОШЛО НЕ ТАК:
-
-Брокер отказал из-за проблем со сроками или невнимательности к деталям.
-
-Ошибки:
-1. Водитель не может забрать вовремя (pickup today 2-6 PM)
-2. Не записывали адреса и контакты
-3. Просили повторить информацию
-4. Игнорировали важные детали
-
-💡 КЛЮЧЕВОЙ УРОК:
-
-Electronics loads имеют strict deadlines! Pickup today 2-6 PM означает что:
-- Shipper закрывается в 6 PM
-- Груз должен быть в пути сегодня
-- Delivery Thursday noon - tight schedule
-
-Если ваш водитель будет пустой только завтра - вы опоздаете на 12+ часов!
-
-Также критически важно записывать ВСЕ детали:
-- Точные адреса (не "Van Buren street somewhere")
-- Контакты с телефонами
-- Time windows
-- Special requirements
-
-🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
-
-В реальности electronics shippers очень строгие:
-- Missed pickup = cancelled load
-- Late delivery = detention charges
-- Damaged cargo = insurance claim
-
-Брокеры работают только с надежными carriers кто:
-1. Может забрать в указанное время
-2. Записывает все детали точно
-3. Не просит повторять информацию
-4. Выполняет обещания
-
-Один missed pickup = вы в blacklist у этого брокера!
-
-Потеряли $6,100 груз из-за того что не могли забрать вовремя или не записали детали. Это показывает ненадежность!`
-                }
-            }
-        ],
-
-        // REJECT PATH 3: Нет необходимого оборудования или страховки
-        reject3: [
-            {},
-            {
-                brokerResponse: "I need a carrier with proper equipment and insurance for high-value electronics. Let me find someone qualified. Thanks anyway.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    ratePerMile: "$0/mile",
-                    relationship: "rejected",
-                    dialogueTime: "3-4 minutes",
-                    questionsAsked: "Some questions but failed on requirements",
-                    detailLevel: "medium",
-                    futureOpportunity: "none",
-                    weeklyLoads: "No loads",
-                    feedback: `❌ ЧТО ПОШЛО НЕ ТАК:
-
-Брокер отказал из-за отсутствия необходимого оборудования или страховки.
-
-Ошибки:
-1. Нет climate control в trailer
-2. Недостаточная cargo insurance (нужно $100K+, есть только $50K)
-3. Пренебрежение temperature requirements
-4. Неуверенность в оборудовании
-
-💡 КЛЮЧЕВОЙ УРОК:
-
-Electronics loads требуют специального оборудования:
-
-1. Climate-controlled trailer:
-   - Maintain 65-75°F
-   - Avoid extreme heat/cold
-   - Monitor temperature
-
-2. High cargo insurance:
-   - Minimum $100K for electronics
-   - $250K preferred for high-value
-   - Certificate must be current
-
-3. Proper securement:
-   - Load locks and straps
-   - Avoid shifting during transit
-   - Palletized cargo handling
-
-Если у вас нет этого - НЕ берите electronics loads!
-
-🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
-
-Electronics cargo стоит $500K-1M+. Один damaged laptop = $2,000 loss. Если в trailer 200 laptops и они перегреются = $400,000 claim!
-
-Брокеры проверяют:
-- Insurance certificate (current and sufficient)
-- Equipment capabilities (climate control)
-- Experience with electronics
-
-Если вы говорите "It's just electronics, they'll be fine!" - это red flag! Показывает что вы не понимаете риски.
-
-Правильный ответ:
-"We have climate-controlled trailers, $250K cargo insurance, and transport electronics weekly. We'll maintain 65-75°F and avoid heat exposure."
-
-Потеряли $6,100 груз из-за отсутствия proper equipment. Инвестируйте в climate control и высокую страховку - это окупится!`
-                }
-            }
-        ],
-
-        // REJECT PATH 4: Нереалистичные требования по цене
-        reject4: [
-            {},
-            {
-                brokerResponse: "That rate is unrealistic for this market. I can't go that high. Let me call someone more reasonable. Thanks anyway.",
-                outcome: {
-                    type: "failure",
-                    quality: "poor",
-                    rate: "$0",
-                    ratePerMile: "$0/mile",
-                    relationship: "damaged",
-                    dialogueTime: "4-5 minutes",
-                    questionsAsked: "Good questions but failed on rate negotiation",
-                    detailLevel: "high",
-                    futureOpportunity: "unlikely",
-                    weeklyLoads: "No loads",
-                    feedback: `❌ ЧТО ПОШЛО НЕ ТАК:
-
-Брокер отказал из-за нереалистичных требований по цене или агрессивного торга.
-
-Ошибки:
-1. Просили слишком много ($7,500 vs posted $5,500 = +36%)
-2. Отказались от разумного предложения ($6,000-6,100)
-3. Ультиматумы ("$6,200 or I walk!")
-4. Новые требования после согласования
-
-💡 КЛЮЧЕВОЙ УРОК:
-
-Торг должен быть агрессивным но РЕАЛИСТИЧНЫМ!
-
-Market rates для Dry Van electronics:
-- Standard: $2.30-2.50/mile
-- With climate control: $2.50-2.70/mile
-- Cross-country premium: +$0.10-0.20/mile
-
-Posted rate: $5,500 ($2.29/mile)
-Realistic ask: $6,000-6,500 ($2.50-2.71/mile) = +9-18%
-Unrealistic ask: $7,500+ ($3.13/mile) = +36%
-
-Брокер предложил $6,000 ($2.50/mile) - это ОТЛИЧНОЕ предложение! +$500 от posted rate.
-
-Если вы отказываетесь или требуете еще больше - брокер найдет другого carrier за 5 минут.
-
-🎯 ПРИМЕНЕНИЕ В РЕАЛЬНОСТИ:
-
-В реальности рынок определяет цены. Брокеры знают market rates и не будут переплачивать.
-
-Правильная стратегия торга:
-1. Начните агрессивно: +15-20% от posted
-2. Брокер предложит среднее: +7-10%
-3. Торгуйтесь еще раз: +10-12%
-4. Принимайте разумное предложение
-
-Пример:
-- Posted: $5,500
-- Вы просите: $6,500 (+18%)
-- Брокер: $6,000 (+9%)
-- Вы: $6,200 (+13%)
-- Финал: $6,100 (+11%)
-
-Это win-win! Вы заработали $600 больше, брокер получил надежного carrier.
-
-Потеряли $6,100 груз из-за жадности. Лучше заработать $500-600 больше чем $0!`
-                }
-            }
-        ]
+        reject1: [{}, { brokerResponse: "I need professional carrier. Thanks.", outcome: { type: "failure", quality: "fail", rate: "$0", ratePerMile: "$0/mile", relationship: "rejected", dialogueTime: "1-2 min", questionsAsked: "None", detailLevel: "none", futureOpportunity: "none", weeklyLoads: "No loads", feedback: "❌ ОТКАЗ: НЕПРОФЕССИОНАЛИЗМ\n\nЧТО НУЖНО: MC, компания, GPS tracking для high-value, точное местоположение." } }],
+        reject2: [{}, { brokerResponse: "I need carrier who can meet schedule. Thanks.", outcome: { type: "failure", quality: "fail", rate: "$0", ratePerMile: "$0/mile", relationship: "rejected", dialogueTime: "2-3 min", questionsAsked: "Minimal", detailLevel: "low", futureOpportunity: "none", weeklyLoads: "No loads", feedback: "❌ ОТКАЗ: НЕ МОЖЕТ ЗАБРАТЬ ВОВРЕМЯ" } }],
+        reject3: [{}, { brokerResponse: "I need carrier with proper equipment and insurance. Thanks.", outcome: { type: "failure", quality: "fail", rate: "$0", ratePerMile: "$0/mile", relationship: "rejected", dialogueTime: "3-4 min", questionsAsked: "Some", detailLevel: "medium", futureOpportunity: "none", weeklyLoads: "No loads", feedback: "❌ ОТКАЗ: НЕТ GPS/СТРАХОВКИ\n\nЧТО НУЖНО: GPS tracking, $100K+ insurance, secure parking protocol." } }],
+        reject4: [{}, { brokerResponse: "That rate doesn't work. Thanks.", outcome: { type: "failure", quality: "poor", rate: "$0", ratePerMile: "$0/mile", relationship: "damaged", dialogueTime: "5-6 min", questionsAsked: "Good", detailLevel: "high", futureOpportunity: "unlikely", weeklyLoads: "No loads", feedback: "❌ ОТКАЗ: НЕРЕАЛИСТИЧНЫЕ ТРЕБОВАНИЯ" } }]
     }
 };
 
-// Добавляем сценарий в глобальный массив
 if (typeof allScenarios !== 'undefined') {
     allScenarios.push(scenario7);
-    console.log('✅ Scenario 7 (Dry Van Electronics) added to allScenarios');
+    console.log('✅ Scenario 7 (Dry Van Electronics Seattle-Miami) added');
 } else {
-    console.warn('⚠️ allScenarios array not found');
+    console.warn('⚠️ allScenarios not found');
 }

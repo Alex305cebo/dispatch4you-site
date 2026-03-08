@@ -636,6 +636,413 @@
             opacity: 0;
         }
 
+        /* Random Selector Section */
+        .random-selector-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+            animation: fadeInUp 0.6s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .random-selector-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .random-selector-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .random-button-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .random-scenario-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 32px 48px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .random-scenario-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .random-scenario-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef, #6366f1);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .random-scenario-btn:hover::before {
+            left: 100%;
+        }
+
+        .random-scenario-btn:hover::after {
+            opacity: 1;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        .random-scenario-btn:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.6);
+        }
+
+        .random-scenario-btn:active {
+            transform: scale(0.98);
+        }
+
+        .random-scenario-btn.spinning {
+            animation: buttonPulse 0.6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .btn-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            transition: all 0.3s ease;
+        }
+
+        .random-scenario-btn:hover .btn-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+        }
+
+        .random-scenario-btn.spinning .btn-icon {
+            animation: iconShake 0.3s ease-in-out infinite;
+        }
+
+        .btn-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 4px;
+        }
+
+        .btn-subtext {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .slot-machine-display {
+            display: flex;
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            min-height: 80px;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .slot-machine-display.active {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .slot-item {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border: 2px solid rgba(99, 102, 241, 0.4);
+            border-radius: 12px;
+            padding: 16px 20px;
+            min-width: 120px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slot-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.3s;
+        }
+
+        .slot-item.spinning {
+            animation: slotSpinSmooth 0.15s ease-in-out infinite;
+        }
+
+        .slot-item.winning {
+            animation: slotWin 0.6s ease-out;
+        }
+
+        .promo-video-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-container {
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16/9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-container:hover {
+            border-color: rgba(99, 102, 241, 0.6);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            position: relative;
+        }
+
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none" stroke="rgba(99,102,241,0.1)" stroke-width="1"/></svg>');
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+
+        .play-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .video-container:hover .play-icon {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .video-duration {
+            font-size: 14px;
+            color: #94a3b8;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .video-description {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4), 0 0 0 0 rgba(99, 102, 241, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 10px 40px rgba(99, 102, 241, 0.6), 0 0 0 12px rgba(99, 102, 241, 0);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0) scale(1.05);
+            }
+
+            25% {
+                transform: translateX(-5px) scale(1.05);
+            }
+
+            75% {
+                transform: translateX(5px) scale(1.05);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes slotSpin {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slotSpinSmooth {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-5px) scale(0.98);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slotWin {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(0.95);
+            }
+
+            75% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes buttonPulse {
+
+            0%,
+            100% {
+                transform: scale(1.05) translateY(-5px);
+                box-shadow: 0 20px 60px rgba(99, 102, 241, 0.6);
+            }
+
+            50% {
+                transform: scale(1.08) translateY(-7px);
+                box-shadow: 0 25px 70px rgba(99, 102, 241, 0.8);
+            }
+        }
+
+        @keyframes iconShake {
+
+            0%,
+            100% {
+                transform: translateX(0) scale(1.1);
+            }
+
+            25% {
+                transform: translateX(-3px) scale(1.1) rotate(-5deg);
+            }
+
+            75% {
+                transform: translateX(3px) scale(1.1) rotate(5deg);
+            }
+        }
+
+        @keyframes borderRotate {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
         .bubble {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -729,6 +1136,139 @@
         }
 
         .old-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);
+        }
+
+        /* 10 Different Badge Types */
+        .badge-hot {
+            display: inline-block;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .badge-trending {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+        }
+
+        .badge-popular {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+        }
+
+        .badge-premium {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #78350f;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+        }
+
+        .badge-expert {
+            display: inline-block;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
+        }
+
+        .badge-updated {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+        }
+
+        .badge-beta {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .badge-featured {
+            display: inline-block;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .badge-recommended {
+            display: inline-block;
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.4);
+        }
+
+        .badge-classic {
             display: inline-block;
             background: linear-gradient(135deg, #64748b, #475569);
             color: white;
@@ -848,9 +1388,9 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
-            padding: 10px 14px;
-            font-size: clamp(13px, 2.5vw, 14px);
-            line-height: 1.5;
+            padding: 14px 18px;
+            font-size: clamp(16px, 2.5vw, 18px);
+            line-height: 1.7;
             color: #ffffff;
         }
 
@@ -892,17 +1432,18 @@
         .dispatcher-prompt {
             background: rgba(99, 102, 241, 0.1);
             border-left: 3px solid #6366f1;
-            padding: 12px;
+            padding: 14px;
             margin: 10px 0;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 16px;
+            line-height: 1.6;
             color: #818cf8;
         }
 
         .suggestion-hint {
-            font-size: 12px;
+            font-size: 14px;
             color: #94a3b8;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -913,14 +1454,17 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 14px 18px;
+            padding: 18px 22px;
             color: #ffffff;
-            font-size: clamp(13px, 2.5vw, 15px);
+            font-size: clamp(16px, 2.5vw, 18px);
             text-align: left;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: inherit;
-            line-height: 1.5;
+            line-height: 1.7;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .suggestion-btn:hover {
@@ -998,6 +1542,42 @@
                 padding: 0;
                 height: 100vh;
                 overflow: hidden;
+            }
+
+            /* Random Selector Section - Mobile */
+            .random-selector-container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 24px;
+            }
+
+            .random-button-area {
+                order: 1;
+            }
+
+            .promo-video-area {
+                order: 2;
+            }
+
+            .random-scenario-btn {
+                padding: 24px 36px;
+            }
+
+            .btn-icon {
+                font-size: 40px;
+            }
+
+            .btn-text {
+                font-size: 20px;
+            }
+
+            .slot-machine-display {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .slot-item {
+                min-width: 100%;
             }
 
             /* Блокируем скролл body когда чат активен */
@@ -2156,6 +2736,40 @@
             <h2 class="welcome-title">Начните практику с брокером</h2>
             <p class="welcome-subtitle">Выберите сценарий для начала тренировки переговоров</p>
 
+            <!-- Random Scenario Selector Section -->
+            <div class="random-selector-section">
+                <div class="random-selector-container">
+                    <!-- Left side: Random button -->
+                    <div class="random-button-area">
+                        <button class="random-scenario-btn" id="randomScenarioBtn">
+                            <div class="btn-icon">🎰</div>
+                            <div class="btn-text">Случайный диалог</div>
+                            <div class="btn-subtext">Испытай удачу!</div>
+                        </button>
+                        <div class="slot-machine-display" id="slotMachineDisplay">
+                            <div class="slot-item" id="slotItem1"></div>
+                            <div class="slot-item" id="slotItem2"></div>
+                            <div class="slot-item" id="slotItem3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right side: Promo video -->
+                    <div class="promo-video-area">
+                        <div class="video-container">
+                            <div class="video-placeholder">
+                                <div class="play-icon">▶</div>
+                                <div class="video-title">Как работает симулятор?</div>
+                                <div class="video-duration">2:30</div>
+                            </div>
+                        </div>
+                        <div class="video-description">
+                            <p>Посмотрите короткое видео о том, как эффективно использовать симулятор для тренировки
+                                навыков диспетчера</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="bubbles-container" id="bubblesContainer"></div>
 
             <!-- Info Sections -->
@@ -2253,6 +2867,7 @@
         // Initialize allScenarios array
         const allScenarios = [];
     </script>
+    <script src="scenarios-data-v1.js"></script>
     <script src="scenarios-data-v5.js"></script>
     <script src="scenarios-data-v6.js"></script>
     <script src="scenarios-data-v7.js"></script>
@@ -2262,6 +2877,9 @@
     <script src="scenarios-data-v11.js"></script>
     <script src="scenarios-data-v12.js"></script>
     <script src="scenarios-data-v13.js"></script>
+    <script src="scenarios-data-v14.js"></script>
+    <script src="scenarios-data-v15.js"></script>
+    <script src="scenarios-data-v16.js"></script>
 
     <script>
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -2277,6 +2895,7 @@
         let currentScenario = null;
         let currentPath = null; // 'good', 'normal', or 'bad'
         let qualityScore = 0; // Track user's response quality
+        let currentDispatcherScore = 0; // Track dispatcher's current score (0-100)
 
         // История диалога для навигации назад/вперед
         let conversationHistory = [];
@@ -2321,6 +2940,66 @@
             return indicators[path] || indicators.normal;
         }
 
+        // СИСТЕМА ОЦЕНКИ ДИСПЕТЧЕРА (0-100 баллов)
+        function getScoreInfo(score) {
+            if (score >= 90) {
+                return {
+                    label: '✨ Отлично',
+                    color: '#22c55e',
+                    bgColor: 'rgba(34, 197, 94, 0.2)',
+                    barColor: '#22c55e'
+                };
+            } else if (score >= 70) {
+                return {
+                    label: '✔️ Хорошо',
+                    color: '#84cc16',
+                    bgColor: 'rgba(132, 204, 22, 0.2)',
+                    barColor: '#84cc16'
+                };
+            } else if (score >= 50) {
+                return {
+                    label: '⚪ Нормально',
+                    color: '#eab308',
+                    bgColor: 'rgba(234, 179, 8, 0.2)',
+                    barColor: '#eab308'
+                };
+            } else if (score >= 30) {
+                return {
+                    label: '⚠️ Слабо',
+                    color: '#f97316',
+                    bgColor: 'rgba(249, 115, 22, 0.2)',
+                    barColor: '#f97316'
+                };
+            } else {
+                return {
+                    label: '❌ Провал',
+                    color: '#ef4444',
+                    bgColor: 'rgba(239, 68, 68, 0.2)',
+                    barColor: '#ef4444'
+                };
+            }
+        }
+
+        function calculateDispatcherScore(quality) {
+            // Система оценки на основе качества ответа:
+            // excellent: 100 баллов (20+20+20+20+20)
+            // good: 80 баллов (16+16+16+16+16)
+            // normal: 60 баллов (12+12+12+12+12)
+            // weak: 40 баллов (8+8+8+8+8)
+            // aggressive/fail: 10 баллов (2+2+2+2+2)
+
+            const scoreMap = {
+                'excellent': 100,
+                'good': 80,
+                'normal': 60,
+                'weak': 40,
+                'aggressive': 10,
+                'fail': 10
+            };
+
+            return scoreMap[quality] || 0;
+        }
+
         // СИСТЕМА ВОЗВРАТА НАЗАД
         function saveConversationState() {
             // Если мы не в конце истории, удаляем все шаги после текущего
@@ -2363,8 +3042,8 @@
             // Показать текущие suggestions
             if (conversationStep < currentScenario.paths[currentPath].length) {
                 const currentStepData = currentScenario.paths[currentPath][conversationStep];
-                if (currentStepData.suggestions) {
-                    showSuggestions(currentStepData.suggestions);
+                if (currentStepData.suggestions || currentStepData.responseComponents) {
+                    showSuggestions(currentStepData.responseComponents || currentStepData.suggestions);
                 }
             }
         }
@@ -2387,8 +3066,8 @@
             // Показать текущие suggestions
             if (conversationStep < currentScenario.paths[currentPath].length) {
                 const currentStepData = currentScenario.paths[currentPath][conversationStep];
-                if (currentStepData.suggestions) {
-                    showSuggestions(currentStepData.suggestions);
+                if (currentStepData.suggestions || currentStepData.responseComponents) {
+                    showSuggestions(currentStepData.responseComponents || currentStepData.suggestions);
                 }
             }
         }
@@ -2617,8 +3296,121 @@
             // Инициализация кнопки режима
             createModeToggleButton();
 
+            // Инициализация кнопок Reset и History
+            createActionButtons();
+
             showRandomBubbles();
             setupEventListeners();
+            setupRandomScenarioButton();
+        }
+
+        // Функция для случайного выбора диалога с эффектом казино
+        function setupRandomScenarioButton() {
+            const randomBtn = document.getElementById('randomScenarioBtn');
+            const slotDisplay = document.getElementById('slotMachineDisplay');
+            const slotItems = [
+                document.getElementById('slotItem1'),
+                document.getElementById('slotItem2'),
+                document.getElementById('slotItem3')
+            ];
+
+            if (!randomBtn) return;
+
+            randomBtn.addEventListener('click', () => {
+                if (randomBtn.classList.contains('spinning')) return;
+
+                // Начинаем вращение
+                randomBtn.classList.add('spinning');
+                slotDisplay.classList.add('active');
+
+                // Получаем все доступные сценарии
+                const greetingOptions = generateGreetingOptions();
+                if (greetingOptions.length === 0) {
+                    alert('Нет доступных сценариев');
+                    return;
+                }
+
+                // Анимация слотов
+                let spinCount = 0;
+                const maxSpins = 30; // Количество итераций
+                const spinInterval = 100; // Начальная скорость
+
+                const spinAnimation = setInterval(() => {
+                    spinCount++;
+
+                    // Показываем случайные сценарии в слотах
+                    slotItems.forEach((item, index) => {
+                        const randomOption = greetingOptions[Math.floor(Math.random() * greetingOptions.length)];
+                        const scenario = allScenarios[randomOption.scenarioIndex];
+
+                        item.classList.add('spinning');
+                        item.innerHTML = `
+                            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 4px;">
+                                ${scenario.route.split(' → ')[0]}
+                            </div>
+                            <div style="font-size: 13px; font-weight: 700;">
+                                ${scenario.distance} mi
+                            </div>
+                        `;
+
+                        setTimeout(() => {
+                            item.classList.remove('spinning');
+                        }, 50);
+                    });
+
+                    // Замедляем вращение к концу
+                    if (spinCount >= maxSpins - 10) {
+                        clearInterval(spinAnimation);
+
+                        // Финальная остановка
+                        setTimeout(() => {
+                            const finalOption = greetingOptions[Math.floor(Math.random() * greetingOptions.length)];
+                            const finalScenario = allScenarios[finalOption.scenarioIndex];
+
+                            // Показываем финальный выбор во всех слотах
+                            slotItems.forEach(item => {
+                                item.innerHTML = `
+                                    <div style="font-size: 11px; color: #94a3b8; margin-bottom: 4px;">
+                                        ${finalScenario.route.split(' → ')[0]}
+                                    </div>
+                                    <div style="font-size: 13px; font-weight: 700;">
+                                        ${finalScenario.distance} mi
+                                    </div>
+                                    <div style="font-size: 11px; color: #6366f1; margin-top: 4px;">
+                                        $${finalScenario.postedRate}
+                                    </div>
+                                `;
+                                item.style.background = 'linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(16, 185, 129, 0.3))';
+                                item.style.borderColor = 'rgba(34, 197, 94, 0.6)';
+                                item.style.boxShadow = '0 0 20px rgba(34, 197, 94, 0.4)';
+                            });
+
+                            // Эффект победы
+                            randomBtn.style.animation = 'none';
+                            setTimeout(() => {
+                                randomBtn.style.animation = '';
+                            }, 10);
+
+                            // Запускаем диалог через 1.5 секунды
+                            setTimeout(() => {
+                                randomBtn.classList.remove('spinning');
+                                slotDisplay.classList.remove('active');
+
+                                // Сбрасываем стили слотов
+                                slotItems.forEach(item => {
+                                    item.style.background = '';
+                                    item.style.borderColor = '';
+                                    item.style.boxShadow = '';
+                                    item.innerHTML = '';
+                                });
+
+                                // Запускаем выбранный диалог
+                                startConversation(finalOption.fullText, finalOption.scenarioIndex);
+                            }, 1500);
+                        }, 500);
+                    }
+                }, spinInterval);
+            });
         }
 
         // Создание кнопки переключения режима
@@ -2667,6 +3459,284 @@
             inputArea.insertBefore(modeBtn, sendBtn);
         }
 
+        // Создание кнопок действий (Reset и History)
+        function createActionButtons() {
+            const inputArea = document.querySelector('.input-area');
+            const sendBtn = document.getElementById('sendBtn');
+
+            // Кнопка Reset (сброс диалога)
+            const resetBtn = document.createElement('button');
+            resetBtn.id = 'resetButton';
+            resetBtn.style.cssText = `
+                background: rgba(239, 68, 68, 0.2);
+                color: #ef4444;
+                border: 1px solid rgba(239, 68, 68, 0.3);
+                padding: 0;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 18px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 8px;
+            `;
+            resetBtn.innerHTML = '🔄';
+            resetBtn.title = 'Сбросить диалог';
+
+            resetBtn.onmouseover = () => {
+                resetBtn.style.background = 'rgba(239, 68, 68, 0.3)';
+                resetBtn.style.transform = 'scale(1.1) rotate(90deg)';
+                resetBtn.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.3)';
+            };
+
+            resetBtn.onmouseout = () => {
+                resetBtn.style.background = 'rgba(239, 68, 68, 0.2)';
+                resetBtn.style.transform = 'scale(1) rotate(0deg)';
+                resetBtn.style.boxShadow = 'none';
+            };
+
+            resetBtn.onclick = () => {
+                if (conversationActive) {
+                    if (confirm('Вы уверены, что хотите сбросить текущий диалог?')) {
+                        resetConversation();
+                    }
+                } else {
+                    alert('Диалог не активен. Выберите сценарий для начала.');
+                }
+            };
+
+            // Кнопка History (показ истории сообщений)
+            const historyBtn = document.createElement('button');
+            historyBtn.id = 'historyButton';
+            historyBtn.style.cssText = `
+                background: rgba(99, 102, 241, 0.2);
+                color: #6366f1;
+                border: 1px solid rgba(99, 102, 241, 0.3);
+                padding: 0;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 18px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 8px;
+            `;
+            historyBtn.innerHTML = '📋';
+            historyBtn.title = 'Показать историю сообщений';
+
+            historyBtn.onmouseover = () => {
+                historyBtn.style.background = 'rgba(99, 102, 241, 0.3)';
+                historyBtn.style.transform = 'scale(1.1)';
+                historyBtn.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)';
+            };
+
+            historyBtn.onmouseout = () => {
+                historyBtn.style.background = 'rgba(99, 102, 241, 0.2)';
+                historyBtn.style.transform = 'scale(1)';
+                historyBtn.style.boxShadow = 'none';
+            };
+
+            historyBtn.onclick = () => {
+                showConversationHistory();
+            };
+
+            // Добавляем кнопки в input-area перед кнопкой отправки
+            inputArea.insertBefore(resetBtn, sendBtn);
+            inputArea.insertBefore(historyBtn, sendBtn);
+        }
+
+        // Функция показа истории сообщений
+        function showConversationHistory() {
+            if (!conversationActive && messagesContainer.innerHTML === '') {
+                alert('История пуста. Начните диалог, чтобы увидеть историю сообщений.');
+                return;
+            }
+
+            // Собираем все сообщения из messagesContainer
+            const messages = messagesContainer.querySelectorAll('.message');
+
+            if (messages.length === 0) {
+                alert('История сообщений пуста.');
+                return;
+            }
+
+            // Создаем модальное окно с историей
+            const modalOverlay = document.createElement('div');
+            modalOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(99, 102, 241, 0.3);
+                border-radius: 16px;
+                padding: 24px;
+                max-width: 700px;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                width: 90%;
+            `;
+
+            const title = document.createElement('h2');
+            title.style.cssText = `
+                color: #ffffff;
+                font-size: 24px;
+                margin-bottom: 20px;
+                text-align: center;
+                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            `;
+            title.textContent = '📋 История сообщений';
+
+            const historyContainer = document.createElement('div');
+            historyContainer.style.cssText = `
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            `;
+
+            // Добавляем каждое сообщение в историю
+            messages.forEach((message, index) => {
+                const isUser = message.classList.contains('user');
+                const messageText = message.querySelector('.message-content');
+
+                if (!messageText) return;
+
+                const historyItem = document.createElement('div');
+                historyItem.style.cssText = `
+                    background: ${isUser ? 'rgba(99, 102, 241, 0.1)' : 'rgba(139, 92, 246, 0.1)'};
+                    border-left: 3px solid ${isUser ? '#6366f1' : '#8b5cf6'};
+                    padding: 12px 16px;
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+                `;
+
+                const header = document.createElement('div');
+                header.style.cssText = `
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 8px;
+                `;
+
+                const avatar = document.createElement('span');
+                avatar.style.fontSize = '16px';
+                avatar.textContent = isUser ? '👤' : '💼';
+
+                const name = document.createElement('span');
+                name.style.cssText = `
+                    color: ${isUser ? '#818cf8' : '#a78bfa'};
+                    font-weight: 700;
+                    font-size: 13px;
+                `;
+                name.textContent = isUser ? `${dispatcherName} (Dispatcher)` : `${brokerName} (Broker)`;
+
+                const stepNumber = document.createElement('span');
+                stepNumber.style.cssText = `
+                    color: #64748b;
+                    font-size: 11px;
+                    margin-left: auto;
+                `;
+                stepNumber.textContent = `#${index + 1}`;
+
+                header.appendChild(avatar);
+                header.appendChild(name);
+                header.appendChild(stepNumber);
+
+                const content = document.createElement('div');
+                content.style.cssText = `
+                    color: #e2e8f0;
+                    font-size: 13px;
+                    line-height: 1.6;
+                    white-space: pre-wrap;
+                `;
+
+                // Получаем текст без HTML тегов для важных блоков
+                const textContent = messageText.textContent || messageText.innerText;
+                content.textContent = textContent;
+
+                historyItem.appendChild(header);
+                historyItem.appendChild(content);
+
+                // Hover эффект
+                historyItem.onmouseover = () => {
+                    historyItem.style.background = isUser ? 'rgba(99, 102, 241, 0.2)' : 'rgba(139, 92, 246, 0.2)';
+                    historyItem.style.transform = 'translateX(5px)';
+                };
+
+                historyItem.onmouseout = () => {
+                    historyItem.style.background = isUser ? 'rgba(99, 102, 241, 0.1)' : 'rgba(139, 92, 246, 0.1)';
+                    historyItem.style.transform = 'translateX(0)';
+                };
+
+                historyContainer.appendChild(historyItem);
+            });
+
+            const closeBtn = document.createElement('button');
+            closeBtn.style.cssText = `
+                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                color: #ffffff;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 20px;
+                width: 100%;
+                transition: all 0.3s ease;
+            `;
+            closeBtn.textContent = 'Закрыть';
+
+            closeBtn.onmouseover = () => {
+                closeBtn.style.transform = 'scale(1.05)';
+                closeBtn.style.boxShadow = '0 4px 20px rgba(99, 102, 241, 0.4)';
+            };
+
+            closeBtn.onmouseout = () => {
+                closeBtn.style.transform = 'scale(1)';
+                closeBtn.style.boxShadow = 'none';
+            };
+
+            closeBtn.onclick = () => {
+                modalOverlay.remove();
+            };
+
+            modalContent.appendChild(title);
+            modalContent.appendChild(historyContainer);
+            modalContent.appendChild(closeBtn);
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+
+            // Закрытие по клику на overlay
+            modalOverlay.onclick = (e) => {
+                if (e.target === modalOverlay) {
+                    modalOverlay.remove();
+                }
+            };
+        }
+
         function showRandomBubbles() {
             bubblesContainer.innerHTML = '';
 
@@ -2685,19 +3755,66 @@
 
                 // Определяем класс для bubble: старые диалоги (#1-3) или новые (#4+)
                 const scenarioId = allScenarios[option.scenarioIndex].id;
+                const scenario = allScenarios[option.scenarioIndex];
+
                 if (scenarioId >= 4) {
                     bubble.className = 'bubble new-dialog';
                 } else {
                     bubble.className = 'bubble';
                 }
 
-                // Добавляем бейдж для новых диалогов
+                // Добавляем бейдж на основе ID и характеристик диалога
                 let badgeHTML = '';
-                if (scenarioId >= 4) {
-                    badgeHTML = '<span class="new-badge">NEW</span>';
-                } else if (scenarioId <= 3) {
-                    badgeHTML = '<span class="old-badge">OLD</span>';
+                let badgeText = '';
+                let badgeClass = '';
+
+                // Определяем тип бейджа
+                // Проверяем, есть ли responseComponents в первом шаге
+                const hasCheckboxSystem = scenario.paths &&
+                    scenario.paths.master &&
+                    scenario.paths.master[0] &&
+                    scenario.paths.master[0].responseComponents;
+
+                if (hasCheckboxSystem) {
+                    // Новая система с чекбоксами
+                    badgeText = '🆕 BETA';
+                    badgeClass = 'badge-beta';
+                } else if (scenarioId === 1) {
+                    badgeText = '🔥 HOT';
+                    badgeClass = 'badge-hot';
+                } else if (scenarioId === 5) {
+                    badgeText = '⭐ FEATURED';
+                    badgeClass = 'badge-featured';
+                } else if (scenarioId === 6) {
+                    badgeText = '📈 TRENDING';
+                    badgeClass = 'badge-trending';
+                } else if (scenarioId === 7) {
+                    badgeText = '👑 POPULAR';
+                    badgeClass = 'badge-popular';
+                } else if (scenarioId === 8) {
+                    badgeText = '💎 PREMIUM';
+                    badgeClass = 'badge-premium';
+                } else if (scenarioId === 9) {
+                    badgeText = '🎓 EXPERT';
+                    badgeClass = 'badge-expert';
+                } else if (scenarioId === 10) {
+                    badgeText = '🔄 UPDATED';
+                    badgeClass = 'badge-updated';
+                } else if (scenarioId === 11) {
+                    badgeText = '✨ RECOMMENDED';
+                    badgeClass = 'badge-recommended';
+                } else if (scenarioId === 12) {
+                    badgeText = '📚 CLASSIC';
+                    badgeClass = 'badge-classic';
+                } else if (scenarioId >= 4) {
+                    badgeText = '✅ NEW';
+                    badgeClass = 'new-badge';
+                } else {
+                    badgeText = '📖 CLASSIC';
+                    badgeClass = 'old-badge';
                 }
+
+                badgeHTML = `<span class="${badgeClass}">${badgeText}</span>`;
 
                 const linesHTML = option.lines.map(line => `<span>${line}</span>`).join('');
                 bubble.innerHTML = `<div class="bubble-text">${badgeHTML}${linesHTML}</div>`;
@@ -2716,6 +3833,7 @@
             currentScenario = allScenarios[scenarioIndex];
             currentPath = null;
             qualityScore = 0;
+            currentDispatcherScore = 0; // Сбрасываем счет диспетчера
 
             // Сбрасываем историю диалога
             conversationHistory = [];
@@ -2727,7 +3845,7 @@
                 return;
             }
 
-            // Extract names from initialMessage
+            // Extract dispatcher name from initialMessage
             // Format: "This is [Name] from [Company]"
             const nameMatch = greeting.match(/This is ([A-Z][a-z]+(?: [A-Z][a-z]+)?)/);
             if (nameMatch && nameMatch[1]) {
@@ -2735,7 +3853,18 @@
             } else {
                 dispatcherName = dispatcherNames[Math.floor(Math.random() * dispatcherNames.length)];
             }
-            brokerName = brokerNames[Math.floor(Math.random() * brokerNames.length)];
+
+            // Extract broker name from first broker message
+            // Format: "This is [Name] from [Company]"
+            const firstPath = Object.keys(currentScenario.paths)[0];
+            const firstStep = currentScenario.paths[firstPath][0];
+            const brokerMessage = firstStep.brokerQuestion || '';
+            const brokerNameMatch = brokerMessage.match(/This is ([A-Z][a-z]+(?: [A-Z][a-z]+)?)/);
+            if (brokerNameMatch && brokerNameMatch[1]) {
+                brokerName = brokerNameMatch[1].split(' ')[0]; // Get first name only
+            } else {
+                brokerName = brokerNames[Math.floor(Math.random() * brokerNames.length)];
+            }
 
             welcomeScreen.style.display = 'none';
             chatView.classList.add('active');
@@ -2775,7 +3904,8 @@
                         // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
                     }
 
-                    showSuggestions(firstStep.suggestions);
+                    // Pass responseComponents if available (NEW SYSTEM), otherwise suggestions (OLD SYSTEM)
+                    showSuggestions(firstStep.responseComponents || firstStep.suggestions);
                 }, 1500);
             }, 500);
         }
@@ -2798,8 +3928,94 @@
                 nameLabel.style.fontSize = '14px';
                 nameLabel.style.marginBottom = '8px';
                 nameLabel.style.color = sender === 'user' ? '#818cf8' : '#a78bfa';
-                nameLabel.textContent = sender === 'user' ? `${dispatcherName} (Dispatcher)` : `${brokerName} (Broker)`;
-                content.appendChild(nameLabel);
+
+                // Для диспетчера добавляем прогресс-бар (только если уже есть оценка)
+                if (sender === 'user' && currentDispatcherScore > 0) {
+                    const nameContainer = document.createElement('div');
+                    nameContainer.style.display = 'flex';
+                    nameContainer.style.alignItems = 'center';
+                    nameContainer.style.gap = '12px';
+                    nameContainer.style.marginBottom = '8px';
+
+                    const nameText = document.createElement('span');
+                    nameText.style.fontWeight = '700';
+                    nameText.style.fontSize = '14px';
+                    nameText.style.color = '#818cf8';
+                    nameText.textContent = `${dispatcherName} (Dispatcher)`;
+
+                    const progressContainer = document.createElement('div');
+                    progressContainer.style.flex = '1';
+                    progressContainer.style.minWidth = '120px';
+                    progressContainer.style.maxWidth = '200px';
+                    progressContainer.style.height = '20px';
+                    progressContainer.style.background = 'rgba(255, 255, 255, 0.1)';
+                    progressContainer.style.borderRadius = '10px';
+                    progressContainer.style.overflow = 'hidden';
+                    progressContainer.style.position = 'relative';
+                    progressContainer.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+
+                    const scoreInfo = getScoreInfo(currentDispatcherScore);
+
+                    const progressBar = document.createElement('div');
+                    progressBar.style.width = `${currentDispatcherScore}%`;
+                    progressBar.style.height = '100%';
+                    progressBar.style.background = `linear-gradient(90deg, ${scoreInfo.barColor}, ${scoreInfo.barColor}dd)`;
+                    progressBar.style.transition = 'width 0.5s ease, background 0.5s ease';
+                    progressBar.style.boxShadow = `0 0 10px ${scoreInfo.barColor}88`;
+
+                    const scoreLabel = document.createElement('div');
+                    scoreLabel.style.position = 'absolute';
+                    scoreLabel.style.top = '50%';
+                    scoreLabel.style.left = '50%';
+                    scoreLabel.style.transform = 'translate(-50%, -50%)';
+                    scoreLabel.style.fontSize = '11px';
+                    scoreLabel.style.fontWeight = '700';
+                    scoreLabel.style.color = '#ffffff';
+                    scoreLabel.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.8)';
+                    scoreLabel.style.zIndex = '2';
+                    scoreLabel.textContent = `${currentDispatcherScore} / 100`;
+
+                    progressContainer.appendChild(progressBar);
+                    progressContainer.appendChild(scoreLabel);
+
+                    const qualityLabel = document.createElement('span');
+                    qualityLabel.style.fontSize = '12px';
+                    qualityLabel.style.fontWeight = '600';
+                    qualityLabel.style.color = scoreInfo.color;
+                    qualityLabel.style.whiteSpace = 'nowrap';
+                    qualityLabel.textContent = scoreInfo.label;
+
+                    nameContainer.appendChild(nameText);
+                    nameContainer.appendChild(progressContainer);
+                    nameContainer.appendChild(qualityLabel);
+
+                    content.appendChild(nameContainer);
+                } else if (sender === 'user') {
+                    // Для первого сообщения диспетчера (без оценки)
+                    nameLabel.textContent = `${dispatcherName} (Dispatcher)`;
+                    content.appendChild(nameLabel);
+                } else {
+                    // Для брокера просто имя
+                    nameLabel.textContent = `${brokerName} (Broker)`;
+                    content.appendChild(nameLabel);
+                }
+            }
+
+            // Функция для обработки важных блоков текста
+            function processImportantBlocks(text) {
+                // Заменяем [IMPORTANT]...[/IMPORTANT] на выделенные блоки
+                return text.replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gs, (match, content) => {
+                    return `<div style="
+                        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+                        border-left: 3px solid #6366f1;
+                        padding: 10px 14px;
+                        margin: 10px 0;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        box-shadow: 0 2px 12px rgba(99, 102, 241, 0.2);
+                        line-height: 1.6;
+                    ">⚡ ${content.trim()}</div>`;
+                });
             }
 
             // Support both string and array format
@@ -2808,12 +4024,22 @@
                 // Create separate spans for each line
                 text.forEach(line => {
                     const span = document.createElement('span');
-                    span.textContent = line;
+                    // Применяем обработку важных блоков только для брокера
+                    if (sender === 'broker') {
+                        span.innerHTML = processImportantBlocks(line);
+                    } else {
+                        span.textContent = line;
+                    }
                     span.style.display = 'block';
                     textContent.appendChild(span);
                 });
             } else {
-                textContent.textContent = text;
+                // Применяем обработку важных блоков только для брокера
+                if (sender === 'broker') {
+                    textContent.innerHTML = processImportantBlocks(text);
+                } else {
+                    textContent.textContent = text;
+                }
             }
             content.appendChild(textContent);
 
@@ -3198,7 +4424,13 @@
                     rippleStyle.remove();
                 }, 600);
 
-                openSuggestionsModal(suggestions);
+                // Check if this is a checkbox-based response (NEW SYSTEM)
+                if (suggestions && suggestions.responseComponents) {
+                    openCheckboxModal(suggestions.responseComponents);
+                } else {
+                    // Old system with text suggestions
+                    openSuggestionsModal(suggestions);
+                }
             };
 
             // Создаем wrapper для всех кнопок (Назад - "Выбрать ответ" - Вперед)
@@ -3320,6 +4552,288 @@
             scheduleAutoScroll();
         }
 
+        // NEW FUNCTION: Open checkbox-based response builder
+        function openCheckboxModal(responseComponents) {
+            // Create modal overlay
+            const modalOverlay = document.createElement('div');
+            modalOverlay.id = 'checkbox-modal-overlay';
+            modalOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.85);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                border: 2px solid rgba(99, 102, 241, 0.3);
+                border-radius: 20px;
+                padding: 28px;
+                max-width: 650px;
+                width: 92%;
+                max-height: 85vh;
+                overflow-y: auto;
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+                animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            `;
+
+            // Modal header
+            const header = document.createElement('div');
+            header.style.cssText = 'margin-bottom: 24px; text-align: center;';
+
+            const title = document.createElement('h2');
+            title.innerHTML = '🎯 Составьте ваш ответ';
+            title.style.cssText = `
+                color: #ffffff;
+                font-size: 24px;
+                margin: 0 0 8px 0;
+                font-weight: 700;
+                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            `;
+
+            const subtitle = document.createElement('p');
+            subtitle.textContent = 'Выберите элементы для включения в ответ';
+            subtitle.style.cssText = 'color: #94a3b8; font-size: 14px; margin: 0;';
+
+            header.appendChild(title);
+            header.appendChild(subtitle);
+            modalContent.appendChild(header);
+
+            // Score display
+            const scoreDisplay = document.createElement('div');
+            scoreDisplay.id = 'currentScore';
+            scoreDisplay.style.cssText = `
+                background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+                border: 2px solid rgba(99, 102, 241, 0.3);
+                border-radius: 12px;
+                padding: 16px;
+                margin-bottom: 20px;
+                text-align: center;
+            `;
+            scoreDisplay.innerHTML = `
+                <div style="font-size: 14px; color: #94a3b8; margin-bottom: 8px;">Текущий балл</div>
+                <div style="font-size: 32px; font-weight: 700; color: #6366f1;">0 / 100</div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Выберите элементы для увеличения балла</div>
+            `;
+            modalContent.appendChild(scoreDisplay);
+
+            // Components container
+            const componentsContainer = document.createElement('div');
+            componentsContainer.style.cssText = 'display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;';
+
+            let selectedComponents = {};
+            let totalScore = 0;
+
+            // Create checkbox for each component
+            Object.keys(responseComponents).forEach(componentKey => {
+                const component = responseComponents[componentKey];
+
+                const componentCard = document.createElement('div');
+                componentCard.className = 'component-card';
+                componentCard.style.cssText = `
+                    background: rgba(30, 41, 59, 0.6);
+                    border: 2px solid rgba(100, 116, 139, 0.3);
+                    border-radius: 12px;
+                    padding: 14px 16px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    position: relative;
+                `;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `component-${componentKey}`;
+                checkbox.style.cssText = `
+                    width: 20px;
+                    height: 20px;
+                    cursor: pointer;
+                    margin-right: 12px;
+                    accent-color: #6366f1;
+                `;
+
+                const label = document.createElement('label');
+                label.htmlFor = `component-${componentKey}`;
+                label.style.cssText = `
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    width: 100%;
+                `;
+
+                const iconSpan = document.createElement('span');
+                iconSpan.textContent = component.icon;
+                iconSpan.style.cssText = 'font-size: 24px; margin-right: 12px;';
+
+                const textContainer = document.createElement('div');
+                textContainer.style.flex = '1';
+
+                const labelText = document.createElement('div');
+                labelText.style.cssText = 'color: #e2e8f0; font-size: 15px; font-weight: 600; margin-bottom: 2px;';
+                labelText.textContent = component.label;
+
+                const pointsText = document.createElement('div');
+                pointsText.style.cssText = 'color: #6366f1; font-size: 12px; font-weight: 600;';
+                pointsText.textContent = `+${component.points} баллов`;
+
+                if (component.required) {
+                    const requiredBadge = document.createElement('span');
+                    requiredBadge.textContent = 'ОБЯЗАТЕЛЬНО';
+                    requiredBadge.style.cssText = `
+                        background: rgba(239, 68, 68, 0.2);
+                        color: #ef4444;
+                        padding: 2px 8px;
+                        border-radius: 4px;
+                        font-size: 10px;
+                        font-weight: 700;
+                        margin-left: 8px;
+                    `;
+                    labelText.appendChild(requiredBadge);
+                }
+
+                textContainer.appendChild(labelText);
+                textContainer.appendChild(pointsText);
+
+                label.appendChild(checkbox);
+                label.appendChild(iconSpan);
+                label.appendChild(textContainer);
+
+                componentCard.appendChild(label);
+
+                // Checkbox change handler
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        selectedComponents[componentKey] = component;
+                        totalScore += component.points;
+                        componentCard.style.borderColor = 'rgba(99, 102, 241, 0.6)';
+                        componentCard.style.background = 'rgba(99, 102, 241, 0.1)';
+                    } else {
+                        delete selectedComponents[componentKey];
+                        totalScore -= component.points;
+                        componentCard.style.borderColor = 'rgba(100, 116, 139, 0.3)';
+                        componentCard.style.background = 'rgba(30, 41, 59, 0.6)';
+                    }
+                    updateScoreDisplay();
+                });
+
+                // Card click handler
+                componentCard.addEventListener('click', (e) => {
+                    if (e.target !== checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                });
+
+                componentsContainer.appendChild(componentCard);
+            });
+
+            function updateScoreDisplay() {
+                const scoreInfo = getScoreInfo(totalScore);
+                scoreDisplay.innerHTML = `
+                    <div style="font-size: 14px; color: #94a3b8; margin-bottom: 8px;">Текущий балл</div>
+                    <div style="font-size: 32px; font-weight: 700; color: ${scoreInfo.color};">${totalScore} / 100</div>
+                    <div style="font-size: 13px; color: ${scoreInfo.color}; margin-top: 4px; font-weight: 600;">${scoreInfo.label}</div>
+                `;
+            }
+
+            modalContent.appendChild(componentsContainer);
+
+            // Submit button
+            const submitBtn = document.createElement('button');
+            submitBtn.innerHTML = '✅ Отправить ответ';
+            submitBtn.style.cssText = `
+                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                color: #ffffff;
+                border: none;
+                padding: 16px 32px;
+                border-radius: 12px;
+                font-size: 16px;
+                font-weight: 700;
+                cursor: pointer;
+                width: 100%;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            `;
+
+            submitBtn.onmouseover = () => {
+                submitBtn.style.transform = 'translateY(-2px)';
+                submitBtn.style.boxShadow = '0 6px 30px rgba(99, 102, 241, 0.6)';
+            };
+
+            submitBtn.onmouseout = () => {
+                submitBtn.style.transform = 'translateY(0)';
+                submitBtn.style.boxShadow = '0 4px 20px rgba(99, 102, 241, 0.4)';
+            };
+
+            submitBtn.onclick = () => {
+                // Check if required components are selected
+                const requiredComponents = Object.keys(responseComponents).filter(key => responseComponents[key].required);
+                const missingRequired = requiredComponents.filter(key => !selectedComponents[key]);
+
+                if (missingRequired.length > 0) {
+                    alert('Пожалуйста, выберите все обязательные элементы!');
+                    return;
+                }
+
+                if (Object.keys(selectedComponents).length === 0) {
+                    alert('Выберите хотя бы один элемент!');
+                    return;
+                }
+
+                // Generate response text based on selected components
+                let responseText = '';
+                let quality = 'normal';
+
+                // Determine quality based on score
+                if (totalScore >= 90) quality = 'excellent';
+                else if (totalScore >= 70) quality = 'good';
+                else if (totalScore >= 50) quality = 'normal';
+                else quality = 'weak';
+
+                // Build response from selected components
+                Object.keys(selectedComponents).forEach(key => {
+                    const component = selectedComponents[key];
+                    // Use the best quality option available
+                    const bestOption = component.options.find(opt => opt.quality === quality) || component.options[0];
+                    responseText += bestOption.text + ' ';
+                });
+
+                responseText = responseText.trim();
+
+                // Get analytics
+                const analytics = responseComponents[Object.keys(responseComponents)[0]].analytics || {};
+                const analyticsText = analytics[quality] || '';
+
+                modalOverlay.remove();
+                selectSuggestion(responseText, quality, null);
+            };
+
+            modalContent.appendChild(submitBtn);
+
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+
+            // Close on overlay click
+            modalOverlay.onclick = (e) => {
+                if (e.target === modalOverlay) {
+                    if (confirm('Вы уверены, что хотите закрыть без отправки ответа?')) {
+                        modalOverlay.remove();
+                    }
+                }
+            };
+        }
+
         function openSuggestionsModal(suggestions) {
             // Create modal overlay
             const modalOverlay = document.createElement('div');
@@ -3358,7 +4872,7 @@
 
             const title = document.createElement('h3');
             title.textContent = '💡 Выберите ответ';
-            title.style.cssText = 'color: #e2e8f0; font-size: 18px; margin: 0; font-weight: 700;';
+            title.style.cssText = 'color: #e2e8f0; font-size: 20px; margin: 0; font-weight: 700;';
 
             const closeBtn = document.createElement('button');
             closeBtn.innerHTML = '✕';
@@ -3392,41 +4906,16 @@
             const suggestionsContainer = document.createElement('div');
             suggestionsContainer.style.cssText = 'display: flex; flex-direction: column; gap: 10px;';
 
-            // Функция создания кнопок с вариантами
+            // Функция создания кнопок с вариантами - НОВАЯ СИСТЕМА V2.0
             function createSuggestionButtons() {
                 // Флаг для отслеживания выбора (общий для всех кнопок)
                 let isAnswerSelected = false;
+                let selectedButton = null;
 
-                // Умная логика выбора 3 вариантов:
-                // 1. Всегда показываем лучший ответ (excellent/good/master)
-                // 2. Остальные 2 варианта выбираем случайно из оставшихся (normal, weak, bad)
+                // НОВАЯ ЛОГИКА: Показываем ВСЕ варианты, перемешанные случайно
+                const allSuggestions = [...suggestions].sort(() => Math.random() - 0.5);
 
-                let limitedSuggestions = [];
-
-                // Находим лучший ответ (excellent, good или master)
-                const bestAnswer = suggestions.find(s =>
-                    (typeof s === 'object' && (s.quality === 'excellent' || s.quality === 'good' || s.quality === 'master'))
-                );
-
-                // Если есть лучший ответ, добавляем его первым
-                if (bestAnswer) {
-                    limitedSuggestions.push(bestAnswer);
-                }
-
-                // Остальные варианты (без лучшего)
-                const otherSuggestions = suggestions.filter(s => s !== bestAnswer);
-
-                // Перемешиваем остальные варианты
-                const shuffled = otherSuggestions.sort(() => Math.random() - 0.5);
-
-                // Берём 2 случайных из оставшихся
-                const randomTwo = shuffled.slice(0, 2);
-                limitedSuggestions = limitedSuggestions.concat(randomTwo);
-
-                // Перемешиваем все 3 варианта, чтобы лучший не был всегда первым
-                limitedSuggestions = limitedSuggestions.sort(() => Math.random() - 0.5);
-
-                limitedSuggestions.forEach((suggestion, index) => {
+                allSuggestions.forEach((suggestion, index) => {
                     const btn = document.createElement('button');
                     btn.className = 'suggestion-modal-btn';
 
@@ -3435,17 +4924,21 @@
                     const analytics = typeof suggestion === 'object' ? suggestion.analytics : '';
                     const path = typeof suggestion === 'object' ? suggestion.path : null;
 
-                    // Create suggestion card
+                    // Create suggestion card - ВСЕ ОДИНАКОВЫЕ до выбора
                     btn.style.cssText = `
                     background: rgba(30, 41, 59, 0.6);
                     border: 2px solid rgba(100, 116, 139, 0.3);
                     border-radius: 10px;
-                    padding: 12px 15px;
+                    padding: 16px 18px;
                     text-align: left;
                     cursor: pointer;
                     transition: all 0.3s ease;
                     position: relative;
                     overflow: hidden;
+                    margin-bottom: 8px;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    color: #e2e8f0;
                 `;
 
                     // Quality badge (скрыт до выбора)
@@ -3453,16 +4946,16 @@
                     badge.className = 'quality-badge-hidden';
                     badge.style.cssText = `
                     display: none;
-                    padding: 3px 10px;
+                    padding: 4px 12px;
                     border-radius: 10px;
-                    font-size: 11px;
+                    font-size: 12px;
                     font-weight: 600;
                     margin-bottom: 8px;
                     text-transform: uppercase;
                 `;
 
                     // Set colors based on quality (но не применяем до выбора)
-                    let borderColor = 'rgba(100, 116, 139, 0.3)'; // Нейтральный цвет
+                    let borderColor = 'rgba(100, 116, 139, 0.3)';
                     let badgeColor = '#eab308';
                     let badgeBg = 'rgba(234, 179, 8, 0.2)';
                     let badgeText = '';
@@ -3499,60 +4992,21 @@
                         badgeText = '❌ Провал';
                     }
 
-                    // Применяем только нейтральный цвет до выбора
-                    btn.style.borderColor = 'rgba(100, 116, 139, 0.3)';
                     badge.textContent = badgeText;
                     badge.style.color = badgeColor;
                     badge.style.background = badgeBg;
 
-                    // Message text with truncation
+                    // Message text (полный текст, без обрезки)
                     const messageText = document.createElement('div');
                     messageText.style.cssText = `
                     color: #e2e8f0;
-                    font-size: 13px;
-                    line-height: 1.5;
-                    margin-bottom: 8px;
+                    font-size: 16px;
+                    line-height: 1.6;
                     white-space: pre-wrap;
                 `;
+                    messageText.textContent = text;
 
-                    // Truncate to 3 sentences
-                    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-                    const firstTwoSentences = sentences.slice(0, 3).join(' ');
-                    const hasMore = sentences.length > 3;
-                    const remainingText = sentences.slice(3).join(' ');
-
-                    const truncatedText = document.createElement('span');
-                    truncatedText.textContent = firstTwoSentences;
-                    messageText.appendChild(truncatedText);
-
-                    if (hasMore) {
-                        const moreText = document.createElement('span');
-                        moreText.textContent = ' ' + remainingText;
-                        moreText.style.display = 'none';
-                        moreText.className = 'more-text';
-                        messageText.appendChild(moreText);
-
-                        const showMoreBtn = document.createElement('button');
-                        showMoreBtn.textContent = '...далее';
-                        showMoreBtn.style.cssText = `
-                            color: #60a5fa;
-                            background: none;
-                            border: none;
-                            cursor: pointer;
-                            font-size: 12px;
-                            padding: 0;
-                            margin-left: 4px;
-                            text-decoration: underline;
-                        `;
-                        showMoreBtn.onclick = (e) => {
-                            e.stopPropagation();
-                            moreText.style.display = 'inline';
-                            showMoreBtn.style.display = 'none';
-                        };
-                        messageText.appendChild(showMoreBtn);
-                    }
-
-                    // Analytics text
+                    // Analytics text (скрыт до выбора)
                     const analyticsText = document.createElement('div');
                     if (analytics) {
                         analyticsText.textContent = analytics;
@@ -3560,7 +5014,7 @@
                         analyticsText.style.cssText = `
                         display: none;
                         color: #94a3b8;
-                        font-size: 11px;
+                        font-size: 13px;
                         font-style: italic;
                         margin-top: 8px;
                         padding-top: 8px;
@@ -3570,65 +5024,43 @@
 
                     btn.appendChild(badge);
                     btn.appendChild(messageText);
-
-                    // Отображаем analytics внизу (скрыт до выбора)
                     if (analytics) {
                         btn.appendChild(analyticsText);
                     }
 
-                    // Hover effects (без цветов до выбора)
+                    // Hover effects (нейтральные до выбора)
                     btn.onmouseover = () => {
                         if (!isAnswerSelected) {
-                            // До выбора - только нейтральные эффекты
                             btn.style.borderColor = 'rgba(100, 116, 139, 0.6)';
                             btn.style.background = 'rgba(30, 41, 59, 0.9)';
                             btn.style.transform = 'translateX(5px)';
                             btn.style.boxShadow = '0 4px 20px rgba(100, 116, 139, 0.3)';
-                        } else {
-                            // После выбора - цветные эффекты
-                            btn.style.borderColor = borderColor.replace('0.3', '0.8').replace('0.4', '0.8').replace('0.5', '0.8').replace('0.6', '0.9');
-                            btn.style.background = 'rgba(30, 41, 59, 0.9)';
-                            btn.style.transform = 'translateX(5px)';
-                            btn.style.boxShadow = `0 4px 20px ${borderColor}`;
                         }
                     };
 
                     btn.onmouseout = () => {
                         if (!isAnswerSelected) {
-                            // До выбора - нейтральный цвет
                             btn.style.borderColor = 'rgba(100, 116, 139, 0.3)';
-                        } else {
-                            // После выбора - цветная граница
-                            btn.style.borderColor = borderColor;
+                            btn.style.background = 'rgba(30, 41, 59, 0.6)';
+                            btn.style.transform = 'translateX(0)';
+                            btn.style.boxShadow = 'none';
                         }
-                        btn.style.background = 'rgba(30, 41, 59, 0.6)';
-                        btn.style.transform = 'translateX(0)';
-                        btn.style.boxShadow = 'none';
                     };
 
                     btn.onclick = () => {
-                        isAnswerSelected = true;
+                        if (isAnswerSelected) return; // Предотвращаем повторный выбор
 
-                        // Показываем цвета и подсказки для ВСЕХ карточек после выбора
+                        isAnswerSelected = true;
+                        selectedButton = btn;
+
+                        // Показываем оценку для ВСЕХ карточек
                         const allButtons = suggestionsContainer.querySelectorAll('.suggestion-modal-btn');
                         allButtons.forEach((button, idx) => {
-                            // Показываем бейдж
-                            const badgeEl = button.querySelector('.quality-badge-hidden');
-                            if (badgeEl) {
-                                badgeEl.style.display = 'inline-block';
-                            }
-
-                            // Показываем подсказку
-                            const analyticsEl = button.querySelector('.analytics-hidden');
-                            if (analyticsEl) {
-                                analyticsEl.style.display = 'block';
-                            }
-
-                            // Применяем цвет границы к каждой кнопке на основе её quality
-                            const btnSuggestion = limitedSuggestions[idx];
+                            const btnSuggestion = allSuggestions[idx];
                             const btnQuality = typeof btnSuggestion === 'object' ? btnSuggestion.quality : 'normal';
-                            let btnBorderColor = 'rgba(100, 116, 139, 0.3)';
 
+                            // Определяем цвет границы
+                            let btnBorderColor = 'rgba(100, 116, 139, 0.3)';
                             if (btnQuality === 'master' || btnQuality === 'excellent') {
                                 btnBorderColor = 'rgba(34, 197, 94, 0.6)';
                             } else if (btnQuality === 'good') {
@@ -3643,14 +5075,34 @@
                                 btnBorderColor = 'rgba(220, 38, 38, 0.6)';
                             }
 
+                            // Применяем цвет границы
                             button.style.borderColor = btnBorderColor;
+                            button.style.cursor = 'default';
+
+                            // Показываем бейдж
+                            const badgeEl = button.querySelector('.quality-badge-hidden');
+                            if (badgeEl) {
+                                badgeEl.style.display = 'inline-block';
+                            }
+
+                            // Показываем подсказку
+                            const analyticsEl = button.querySelector('.analytics-hidden');
+                            if (analyticsEl) {
+                                analyticsEl.style.display = 'block';
+                            }
+
+                            // Подсвечиваем выбранную карточку
+                            if (button === selectedButton) {
+                                button.style.boxShadow = `0 0 20px ${btnBorderColor}`;
+                                button.style.transform = 'scale(1.02)';
+                            }
                         });
 
-                        // Небольшая задержка перед закрытием, чтобы пользователь увидел результат
+                        // Задержка перед закрытием - даем время изучить результаты
                         setTimeout(() => {
                             modalOverlay.remove();
                             selectSuggestion(text, quality, path);
-                        }, 1500);
+                        }, 3000); // 3 секунды чтобы изучить все варианты
                     };
 
                     suggestionsContainer.appendChild(btn);
@@ -3699,17 +5151,24 @@
             const suggestions = document.getElementById('suggestions');
             if (suggestions) suggestions.remove();
 
+            // Обновляем счет диспетчера на основе качества ответа
+            currentDispatcherScore = calculateDispatcherScore(quality);
+
             addMessage(text, 'user');
 
             // Determine path based on quality or explicit path
-            if (currentPath === null) {
-                // First response determines the path
-                // Check if suggestion has explicit path
-                const clickedSuggestion = currentScenario.paths[Object.keys(currentScenario.paths)[0]][conversationStep].suggestions.find(s => s.text === text);
+            // ВАЖНО: Проверяем explicit path ВСЕГДА, не только на первом шаге!
+            const currentPathSteps = currentPath ? currentScenario.paths[currentPath] : currentScenario.paths[Object.keys(currentScenario.paths)[0]];
+            const clickedSuggestion = currentPathSteps[conversationStep].suggestions?.find(s => s.text === text);
 
-                if (clickedSuggestion && clickedSuggestion.path) {
-                    currentPath = clickedSuggestion.path;
-                } else if (quality === 'excellent' || quality === 'master') {
+            // Если в suggestion указан explicit path, ВСЕГДА переключаемся на него
+            if (clickedSuggestion && clickedSuggestion.path && clickedSuggestion.path !== currentPath) {
+                const oldPath = currentPath;
+                currentPath = clickedSuggestion.path;
+                console.log(`🔄 Path changed: ${oldPath} → ${currentPath} (explicit path in suggestion)`);
+            } else if (currentPath === null) {
+                // First response determines the path (only if no explicit path)
+                if (quality === 'excellent' || quality === 'master') {
                     currentPath = 'master';
                 } else if (quality === 'good') {
                     currentPath = 'good';
@@ -3722,8 +5181,10 @@
                 } else {
                     currentPath = 'normal';
                 }
+            }
 
-                // Show path indicator when path is first determined
+            // Show path indicator when path is first determined or changed
+            if (currentPath && (clickedSuggestion?.path || conversationStep === 0)) {
                 const pathInfo = getPathIndicator(currentPath);
                 const pathIndicatorDiv = document.createElement('div');
                 pathIndicatorDiv.className = 'path-indicator';
@@ -3746,6 +5207,8 @@
 
             // Get current step from the selected path
             let pathSteps = currentScenario.paths[currentPath];
+
+            console.log(`📍 Current state: step=${conversationStep}, path=${currentPath}, pathSteps.length=${pathSteps?.length}`);
 
             // УЛУЧШЕННЫЙ FALLBACK - если путь не найден, ищем ближайший
             if (!pathSteps) {
@@ -3794,8 +5257,12 @@
                     // Move to next step first
                     conversationStep++;
 
+                    console.log(`➡️ Moving to step ${conversationStep}, pathSteps.length=${pathSteps.length}`);
+
                     if (conversationStep < pathSteps.length) {
                         const nextStep = pathSteps[conversationStep];
+
+                        console.log(`📋 Next step:`, nextStep);
 
                         // Show broker's response (only if it exists and not empty)
                         if (nextStep.brokerResponse && nextStep.brokerResponse.trim() !== '') {
@@ -3825,7 +5292,8 @@
                                     // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
                                 }
 
-                                showSuggestions(nextStep.suggestions);
+                                // Pass responseComponents if available (NEW SYSTEM), otherwise suggestions (OLD SYSTEM)
+                                showSuggestions(nextStep.responseComponents || nextStep.suggestions);
                             }, 1000);
                         }
                     }
@@ -3874,6 +5342,7 @@
             currentScenario = null;
             currentPath = null;
             qualityScore = 0;
+            currentDispatcherScore = 0; // Сбрасываем счет диспетчера
             conversationHistory = []; // Очистить историю
 
             messagesContainer.innerHTML = '';
