@@ -70,10 +70,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 24px;
-            max-width: 1000px;
+            gap: 12px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 0 16px;
         }
 
         .logo {
@@ -85,6 +85,8 @@
             font-weight: 700;
             color: #ffffff;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .logo:hover {
@@ -97,18 +99,21 @@
 
         .nav-links {
             display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: nowrap;
+            flex: 1;
+            justify-content: center;
         }
 
         .nav-link {
             text-decoration: none;
             color: #94a3b8;
             font-weight: 500;
-            font-size: clamp(11px, 1.1vw, 14px);
+            font-size: clamp(10px, 1vw, 13px);
             transition: all 0.3s ease;
             position: relative;
+            white-space: nowrap;
         }
 
         .nav-link::after {
@@ -212,21 +217,23 @@
 
         .nav-actions {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .btn-login {
-            padding: 6px 16px;
+            padding: 6px 12px;
             text-decoration: none;
             color: #ffffff;
             font-weight: 500;
-            font-size: 12px;
+            font-size: 11px;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .btn-login:hover {
@@ -235,16 +242,17 @@
         }
 
         .btn-signup {
-            padding: 6px 16px;
+            padding: 6px 12px;
             text-decoration: none;
             color: white;
             font-weight: 500;
-            font-size: 12px;
+            font-size: 11px;
             background: rgba(99, 102, 241, 0.15);
             border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 8px;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .btn-signup:hover {
@@ -2965,6 +2973,13 @@
     <script src="scenarios-data-v6.js"></script>
     <script src="scenarios-data-v7.js"></script>
     <script src="scenarios-data-v8.js"></script>
+    <script src="scenarios-data-v9.js"></script>
+    <script src="scenarios-data-v11.js"></script>
+    <script src="scenarios-data-v12.js"></script>
+    <script src="scenarios-data-v13.js"></script>
+    <script src="scenarios-data-v14.js"></script>
+    <script src="scenarios-data-v15.js"></script>
+    <script src="scenarios-data-v16.js"></script>
 
 
     <script>
@@ -5374,23 +5389,23 @@
                 if (newPath !== currentPath) {
                     currentPath = newPath;
 
-                    // ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ПУТЕЙ:
-                    // 1. Если переходим ИЗ master В warning/warning_strict - сохраняем позицию master
-                    if (oldPath === 'master' && (currentPath === 'warning' || currentPath === 'warning_strict')) {
-                        savedMasterStep = conversationStep; // Сохраняем текущую позицию в master
-                        conversationStep = -1; // Начинаем warning с шага 0
-                        console.log(`🔄 Path changed: ${oldPath} → ${currentPath} (saved master step: ${savedMasterStep}, starting warning from 0)`);
+                    // УПРОЩЕННАЯ ЛОГИКА:
+                    // 1. Если переходим В warning/warning_strict - НЕ меняем conversationStep, просто покажем warning сообщение
+                    if (currentPath === 'warning' || currentPath === 'warning_strict') {
+                        savedMasterStep = conversationStep; // Сохраняем позицию для возврата
+                        conversationStep = -1; // Покажем warning шаг 0
+                        console.log(`🔄 Path changed: ${oldPath} → ${currentPath} (showing warning, saved step: ${savedMasterStep})`);
                     }
-                    // 2. Если возвращаемся ИЗ warning/warning_strict В master - восстанавливаем позицию
-                    else if ((oldPath === 'warning' || oldPath === 'warning_strict') && currentPath === 'master') {
-                        conversationStep = savedMasterStep; // Возвращаемся на сохраненную позицию в master
-                        console.log(`🔄 Path changed: ${oldPath} → ${currentPath} (restored master step: ${conversationStep})`);
+                    // 2. Если возвращаемся В master из warning - восстанавливаем позицию
+                    else if (currentPath === 'master' && (oldPath === 'warning' || oldPath === 'warning_strict')) {
+                        conversationStep = savedMasterStep; // Возвращаемся на сохраненную позицию
+                        console.log(`🔄 Path changed: ${oldPath} → ${currentPath} (restored step: ${conversationStep})`);
                     }
-                    // 3. Первый шаг (oldPath === null) - просто устанавливаем путь, не меняем conversationStep
+                    // 3. Первый шаг (oldPath === null) - просто устанавливаем путь
                     else if (oldPath === null) {
                         console.log(`🔄 Initial path set: ${currentPath} (step: ${conversationStep})`);
                     }
-                    // 4. Для всех остальных переходов (например, в reject_final) - сбрасываем на 0
+                    // 4. Для reject путей - сбрасываем на 0
                     else {
                         conversationStep = -1;
                         console.log(`🔄 Path changed: ${oldPath} → ${currentPath} (reset to step 0)`);

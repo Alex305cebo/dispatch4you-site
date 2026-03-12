@@ -1,421 +1,308 @@
-// DIALOGUE #6 - Dry Van Automotive Parts (PREMIUM QUALITY V2)
-// Detroit MI → Phoenix AZ, 1,980 miles
-// Posted: $4,950 ($2.50/mile), Target: $5,200-5,400
+// DIALOGUE #6 - Reefer Seafood Fresh (HYBRID: Rules + Auction Urgency)
+// Seattle WA → Boston MA, 3,020 miles
+// Posted: $12,080 ($4.00/mile), Target: $13,500-15,000 + auction bonus
 // Created: March 9, 2026
-// STRUCTURE: 3-path with MULTI-STEP WARNING (11 warning steps - one per master step)
-// QUALITY: Premium V2 - улучшенная версия с индивидуальными warning на каждом шаге
+// STRUCTURE: ГИБРИД - следует правилам, но seafood auction emergency
+// QUALITY: Premium - fresh seafood с auction timing critical
 
 console.log('🔵 Loading scenarios-data-v6.js...');
 
 const scenario6 = {
     id: 6,
-    route: "Detroit MI → Phoenix AZ",
-    distance: 1980,
-    equipment: "Dry Van (53ft)",
-    cargo: "Automotive parts (engines, transmissions)",
-    weight: "43,000 lbs",
-    postedRate: "$4,950 ($2.50/mile)",
-    deadline: "Pickup tomorrow 9 AM, Delivery in 4 days",
-    brokerStyle: "Professional automotive broker - precision timing",
-    difficulty: "medium",
-    initialMessage: "Good morning! This is Alex from AutoFreight.\nI'm calling about your posted dry van load Detroit to Phoenix with automotive parts.\nIs this load still available?",
+    route: "Seattle WA → Boston MA",
+    distance: 3020,
+    equipment: "Reefer (53ft)",
+    cargo: "Fresh seafood (king crab, lobster, salmon, halibut)",
+    weight: "42,000 lbs",
+    postedRate: "$12,080 ($4.00/mile)",
+    deadline: "Pickup tomorrow 4 AM, Delivery in 3 days",
+    brokerStyle: "Professional standard broker - follows rules, but seafood auction timing critical",
+    difficulty: "hard",
+    initialMessage: "Good morning! This is Captain Mike from Pacific Seafood Logistics.\nI'm calling about your posted reefer load Seattle WA to Boston MA with fresh seafood.\nIs this load still available?",
 
     paths: {
         master: [
-            // ШАГ 1: MC, Company, Fleet
+            // ШАГ 1: MC, Company, Fleet (ПРАВИЛО)
             {
-                brokerQuestion: "Good morning! This is Kelly from MotorParts Logistics. Yes, available. What's your MC number, company name, and how many dry vans do you run?",
-                dispatcherPrompt: "💎 Брокер спрашивает MC, компанию и fleet!",
+                brokerQuestion: "Good morning! This is Captain Mike from Pacific Seafood Logistics. Yes, it's available. What's your MC number, company name, and how many reefers do you run?",
+                dispatcherPrompt: "💎 Стандартный вопрос: MC, компания, reefer fleet!",
                 suggestions: [
-                    { text: "Good morning Kelly! MC 445566, AutoHaul Express. We run 28 dry vans, all 53ft with air-ride and lift gates. Specialized in automotive parts for 6 years. What's the parts type?", quality: "excellent", analytics: "✨ MC, компания, 28 vans, специализация, вопрос!", path: "master" },
-                    { text: "Morning! MC 445566, AutoHaul Express. 28 dry vans. What parts?", quality: "good", analytics: "✔️ MC, компания, fleet.", path: "master" },
-                    { text: "MC 445566, AutoHaul Express.", quality: "normal", analytics: "⚪ Только MC и компания.", path: "warning" },
-                    { text: "MC 445566... have vans...", quality: "weak", analytics: "⚠️ Слабо!", path: "warning" },
-                    { text: "Just tell me the rate!", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "warning_strict" },
-                    { text: "Dry van available.", quality: "fail", analytics: "❌ Нет MC!", path: "warning_strict" }
+                    { text: "Good morning Captain Mike! MC 445566, OceanHaul Transport. We run 20 reefers, all 53ft with multi-temp zones. Specialized in fresh seafood for 9 years - king crab, lobster, salmon, halibut. Understand ocean-to-table timing. What's the temp requirement?", quality: "excellent", path: "master" },
+                    { text: "Morning Captain Mike! MC 445566, OceanHaul. 20 reefers. Seafood specialty. What temp?", quality: "good", path: "master" },
+                    { text: "MC 445566, OceanHaul Transport.", quality: "normal", path: "warning" },
+                    { text: "MC 445566... have reefers...", quality: "weak", path: "warning" },
+                    { text: "What's the rate first?", quality: "aggressive", path: "warning_strict" },
+                    { text: "Reefer available.", quality: "fail", path: "warning_strict" }
                 ]
             },
-            // ШАГ 2: Location, Equipment
+            // ШАГ 2: Location, Equipment (ПРАВИЛО)
             {
-                brokerQuestion: "Good! 1,980 miles Detroit to Phoenix. Automotive parts - engines and transmissions, 43,000 lbs. Need air-ride and lift gate. Where's your van and can you pick up tomorrow 9 AM?",
-                dispatcherPrompt: "💎 Местоположение + pickup tomorrow 9 AM!",
+                brokerQuestion: "Excellent! 3,020 miles Seattle WA to Boston MA. Fresh seafood - king crab, lobster, salmon, halibut, 42,000 lbs. Temp 28-32°F. Need multi-temp reefer. Where's your reefer and can you pick up tomorrow 4 AM?",
+                dispatcherPrompt: "💎 Местоположение + pickup 4 AM! Multi-temp 28-32°F!",
                 suggestions: [
-                    { text: "Perfect! Van in Detroit at auto plant, empty since yesterday. Air-ride suspension, hydraulic lift gate. Driver ready 9 AM tomorrow. Van inspected last week. What's pickup address?", quality: "excellent", analytics: "✨ ОТЛИЧНО!", path: "master" },
-                    { text: "Van in Detroit at auto plant, empty. Air-ride and lift gate ready. Driver ready 9 AM tomorrow.", quality: "good", analytics: "✔️ Хорошо!", path: "master" },
-                    { text: "Van in Detroit. Ready 9 AM.", quality: "normal", analytics: "⚪ Нормально.", path: "warning" },
-                    { text: "Should be in Detroit... ready soon...", quality: "weak", analytics: "⚠️ Слабо!", path: "warning" },
-                    { text: "Tell me rate first!", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "warning_strict" },
-                    { text: "Can't be there until 11 AM.", quality: "fail", analytics: "❌ Не вовремя!", path: "warning_strict" }
+                    { text: "Perfect! Reefer in Seattle WA at fish processing dock, empty since yesterday. Multi-temp zones: 28-32°F for seafood. Pre-cooled to 30°F ready for fresh catch. Driver ready 4 AM tomorrow. Reefer serviced last week. What's pickup address?", quality: "excellent", path: "master" },
+                    { text: "Reefer in Seattle WA at fish dock, empty. Multi-temp zones, pre-cooled to 30°F. Driver ready 4 AM tomorrow.", quality: "good", path: "master" },
+                    { text: "Reefer in Seattle WA. Ready 4 AM.", quality: "normal", path: "warning" },
+                    { text: "Should be in Seattle WA... ready soon...", quality: "weak", path: "warning" },
+                    { text: "Tell me rate first!", quality: "aggressive", path: "warning_strict" },
+                    { text: "Can't be there until 6 AM.", quality: "fail", path: "warning_strict" }
                 ]
             },
-            // ШАГ 3: Experience, DOT
+            // ШАГ 3: Experience, DOT (ПРАВИЛО)
             {
-                brokerQuestion: "Excellent! Driver's automotive parts experience? Clean DOT? This is precision cargo.",
-                dispatcherPrompt: "💎 Опыт с automotive parts + DOT!",
+                brokerQuestion: "Great! Driver's fresh seafood experience? Clean DOT? Seafood spoils fast - timing is everything.",
+                dispatcherPrompt: "💎 Опыт с fresh seafood + DOT! Timing critical!",
                 suggestions: [
-                    { text: "Driver has 7 years automotive parts experience - engines, transmissions, delicate components. Understands careful handling critical. Clean DOT - last inspection 3 weeks ago, zero violations. Safety rating Satisfactory.", quality: "excellent", analytics: "✨ ОТЛИЧНО!", path: "master" },
-                    { text: "Driver has 7 years automotive parts experience. Clean DOT, last inspection 3 weeks ago.", quality: "good", analytics: "✔️ Хорошо!", path: "master" },
-                    { text: "Driver experienced with automotive parts. DOT clean.", quality: "normal", analytics: "⚪ Нормально.", path: "warning" },
-                    { text: "Driver has some auto experience...", quality: "weak", analytics: "⚠️ Слабо!", path: "warning" },
-                    { text: "Driver knows dry van!", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "warning_strict" },
-                    { text: "Driver has CDL.", quality: "fail", analytics: "❌ Нет опыта!", path: "warning_strict" }
+                    { text: "Driver Carlos, 11 years seafood hauling - king crab, lobster, salmon, halibut. Understands ocean-to-table timing, temp monitoring, ice management. Clean DOT - last inspection 6 weeks ago, zero violations. Safety rating Satisfactory.", quality: "excellent", path: "master" },
+                    { text: "Driver Carlos, 11 years seafood experience. Ocean-to-table timing. Clean DOT, last inspection 6 weeks ago.", quality: "good", path: "master" },
+                    { text: "Driver experienced with seafood. DOT clean.", quality: "normal", path: "warning" },
+                    { text: "Driver has some seafood experience...", quality: "weak", path: "warning" },
+                    { text: "Driver knows reefer!", quality: "aggressive", path: "warning_strict" },
+                    { text: "Driver has CDL.", quality: "fail", path: "warning_strict" }
                 ]
             },
-            // ШАГ 4: Insurance
+            // ШАГ 4: Insurance (ПРАВИЛО)
             {
-                brokerQuestion: "Good! Insurance: $150K cargo coverage for automotive parts? Current certificates?",
-                dispatcherPrompt: "💎 Insurance $150K для automotive parts!",
+                brokerQuestion: "Perfect! Insurance: $200K cargo coverage for fresh seafood? Current certificates?",
+                dispatcherPrompt: "💎 Insurance $200K для fresh seafood!",
                 suggestions: [
-                    { text: "Yes! $150K cargo coverage through Allstate. $1M liability. Certificates current, expire November 2028. Covers automotive parts damage. I'll email after booking.", quality: "excellent", analytics: "✨ ОТЛИЧНО!", path: "master" },
-                    { text: "Yes, $150K cargo, $1M liability. Current certificates. Covers auto parts. Will send after booking.", quality: "good", analytics: "✔️ Хорошо!", path: "master" },
-                    { text: "$150K cargo, $1M liability. Current.", quality: "normal", analytics: "⚪ Нормально.", path: "warning" },
-                    { text: "Should have $150K...", quality: "weak", analytics: "⚠️ Слабо!", path: "warning" },
-                    { text: "Insurance is fine!", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "warning_strict" },
-                    { text: "$100K enough for auto parts?", quality: "fail", analytics: "❌ Недостаточно!", path: "warning_strict" }
+                    { text: "Yes! $200K cargo coverage through Travelers, specifically for fresh seafood. $1M liability. Certificates current, expire September 2027. Covers seafood spoilage. I'll email after booking.", quality: "excellent", path: "master" },
+                    { text: "Yes, $200K cargo for seafood, $1M liability. Current certificates. Will send after booking.", quality: "good", path: "master" },
+                    { text: "$200K cargo, $1M liability. Current.", quality: "normal", path: "warning" },
+                    { text: "Should have $200K...", quality: "weak", path: "warning" },
+                    { text: "Insurance is fine!", quality: "aggressive", path: "warning_strict" },
+                    { text: "$150K enough for seafood?", quality: "fail", path: "warning_strict" }
                 ]
             },
-            // ШАГ 5: Handling
+            // ШАГ 5: Seafood Handling (ПРАВИЛО)
             {
-                brokerQuestion: "Perfect! Handling: How will you secure automotive parts? What about lift gate operation?",
-                dispatcherPrompt: "💎 Handling для automotive parts!",
+                brokerQuestion: "Excellent! Seafood handling: How will you maintain 28-32°F for 3,020 miles? What if temp rises?",
+                dispatcherPrompt: "💎 Seafood handling для fresh catch!",
                 suggestions: [
-                    { text: "Automotive parts secured with straps and load bars. Heavy engines on bottom, transmissions properly braced. Lift gate certified, driver trained. If any issues, driver stops immediately, calls me. I notify you within 20 minutes.", quality: "excellent", analytics: "✨ ОТЛИЧНО!", path: "master" },
-                    { text: "Parts secured with straps and load bars. Engines on bottom. Lift gate certified. If issues, driver stops and calls. I notify you within 20 minutes.", quality: "good", analytics: "✔️ Хорошо!", path: "master" },
-                    { text: "Straps and load bars. Will notify if issues.", quality: "normal", analytics: "⚪ Нормально.", path: "warning" },
-                    { text: "Driver will secure properly...", quality: "weak", analytics: "⚠️ Слабо!", path: "warning" },
-                    { text: "Lift gate works fine!", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "warning_strict" },
-                    { text: "Driver secures when loading.", quality: "fail", analytics: "❌ Провал!", path: "warning_strict" }
+                    { text: "Seafood handling protocols: Multi-temp reefer maintains 28-32°F, driver checks temp every hour. If temp rises above 32°F, alarm sounds - driver stops immediately, calls me. I notify you within 5 minutes. We've never lost seafood to temp failure.", quality: "excellent", path: "master" },
+                    { text: "Multi-temp reefer 28-32°F. Driver checks hourly. If alarm, driver stops and calls. I notify you within 5 minutes.", quality: "good", path: "master" },
+                    { text: "Temp monitoring system. Will notify if issues.", quality: "normal", path: "warning" },
+                    { text: "Driver will monitor temp...", quality: "weak", path: "warning" },
+                    { text: "Reefer maintains temp automatically!", quality: "aggressive", path: "warning_strict" },
+                    { text: "Driver checks when he remembers.", quality: "fail", path: "warning_strict" }
                 ]
             },
-            // ШАГ 6: Commitment
+            // ШАГ 6: Commitment (ПРАВИЛО)
             {
-                brokerQuestion: "Excellent! Delivery: Appointment Friday 3 PM Phoenix auto warehouse. Strict timing for production line. Can you commit?",
-                dispatcherPrompt: "💎 Friday 3 PM commitment!",
+                brokerQuestion: "Perfect! Delivery: Appointment Thursday 5 AM Boston MA Fish Market. Auction starts 6 AM sharp. Can you commit?",
+                dispatcherPrompt: "💎 Thursday 5 AM commitment! Auction 6 AM sharp!",
                 suggestions: [
-                    { text: "Absolutely committed Friday 3 PM! Based on 1,980 miles, depart tomorrow 9 AM, arrive Thursday evening with 20-hour buffer. Backup route via I-40. Production timing critical - will call 12 hours ahead if any delay.", quality: "excellent", analytics: "✨ ОТЛИЧНО!", path: "master" },
-                    { text: "Yes, committed Friday 3 PM. Arrive Thursday evening with buffer. Have backup route.", quality: "good", analytics: "✔️ Хорошо!", path: "master" },
-                    { text: "Yes, Friday 3 PM works.", quality: "normal", analytics: "⚪ Нормально.", path: "warning" },
-                    { text: "We'll try for Friday 3 PM...", quality: "weak", analytics: "⚠️ Слабо!", path: "warning" },
-                    { text: "Traffic unpredictable with auto parts.", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "warning_strict" },
-                    { text: "Driver gets there when possible.", quality: "fail", analytics: "❌ Провал!", path: "warning_strict" }
+                    { text: "Absolutely committed Thursday 5 AM! Based on 3,020 miles, depart tomorrow 4 AM, arrive Wednesday evening with buffer. Auction timing is critical - will call 12 hours ahead if any delay.", quality: "excellent", path: "master" },
+                    { text: "Yes, committed Thursday 5 AM. Arrive Wednesday evening with buffer. Auction timing priority.", quality: "good", path: "master" },
+                    { text: "Yes, Thursday 5 AM works.", quality: "normal", path: "warning" },
+                    { text: "We'll try for Thursday 5 AM...", quality: "weak", path: "warning" },
+                    { text: "Auction timing is unpredictable.", quality: "aggressive", path: "warning_strict" },
+                    { text: "Driver gets there when possible.", quality: "fail", path: "warning_strict" }
                 ]
             },
-            // ШАГ 7: ТОРГ - Rate Question
+            // ШАГ 7: ТОРГ - Rate Question (ПРАВИЛО - диспетчер спрашивает первым!)
             {
-                brokerQuestion: "Great! What rate are you looking for on this 1,980 miles Detroit-Phoenix automotive load?",
-                dispatcherPrompt: "💎 ТОРГ! Posted $4,950 ($2.50/mi) - просите $5,200-5,400!",
+                brokerQuestion: "Great! What rate are you looking for on this 3,020 miles Seattle WA-Boston MA seafood load?",
+                dispatcherPrompt: "💎 ТОРГ! Posted $12,080 ($4.00/mi) - просите $13,500-15,000!",
                 suggestions: [
-                    { text: "For 1,980 miles Detroit-Phoenix with automotive parts, I'm looking at $5,400. That's $2.73/mile - fair for dry van, auto parts experience, lift gate, tight timing.", quality: "excellent", analytics: "✨ ОТЛИЧНО! $5,400 = $450 больше!", path: "master" },
-                    { text: "$5,200 for this auto parts load. $2.63/mile - fair with all services.", quality: "good", analytics: "✔️ Хорошо! $5,200 = $250 больше!", path: "master" },
-                    { text: "$5,050 for 1,980 miles.", quality: "normal", analytics: "⚪ Нормально. $100 больше.", path: "warning" },
-                    { text: "$5,000 for this load?", quality: "weak", analytics: "⚠️ Слабо! $50 больше.", path: "warning" },
-                    { text: "I need $6,500 minimum! Auto parts is risky!", quality: "aggressive", analytics: "🔴 Нереально!", path: "reject_rate_final" },
-                    { text: "I'll take $4,950 posted.", quality: "fail", analytics: "❌ Без торга!", path: "reject_weak_final" }
+                    { text: "For 3,020 miles Seattle WA-Boston MA with fresh seafood, I'm looking at $14,500. That's $4.80/mile - fair for reefer, seafood expertise, temp monitoring, auction timing.", quality: "excellent", path: "master" },
+                    { text: "$13,500 for this seafood load. $4.47/mile - fair with all services.", quality: "good", path: "master" },
+                    { text: "$13,000 for 3,020 miles.", quality: "normal", path: "warning" },
+                    { text: "$12,500 for this load?", quality: "weak", path: "warning" },
+                    { text: "I need $16,000 minimum! Seafood is risky!", quality: "aggressive", path: "reject_rate_final" },
+                    { text: "I'll take $12,080 posted.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // ШАГ 8: Counter Offer
+            // ШАГ 8: ПОВОРОТ! Auction Premium! (ГИБРИД - auction needs seafood 2 hours early!)
             {
-                brokerQuestion: "That's high. I can do $5,100. That's $2.58/mile - good for this lane.",
-                dispatcherPrompt: "💎 Встречное $5,100. Просите $5,200 или примите!",
+                brokerQuestion: "That's reasonable. But wait - I just got call from Boston MA auction house. They want seafood 2 hours early for premium bidding slot - Thursday 3 AM instead of 5 AM. If you can deliver early, I'll add $1,000 auction bonus. Total $15,000! Premium slot = premium prices. Can you do it?",
+                dispatcherPrompt: "🐟 AUCTION BONUS! Thursday 3 AM delivery + $1,000 = $15,000!",
                 suggestions: [
-                    { text: "Can we meet at $5,200? Fair middle - you save $200 from my ask, I earn $250 above posted for professional auto parts service.", quality: "excellent", analytics: "✨ ОТЛИЧНО! Компромисс!", path: "master" },
-                    { text: "$5,100 works. Let's book it.", quality: "good", analytics: "✔️ Хорошо! $150 больше!", path: "master" },
-                    { text: "$5,100 confirmed.", quality: "normal", analytics: "⚪ Нормально.", path: "master" },
-                    { text: "Okay, $5,100...", quality: "weak", analytics: "⚠️ Слабо.", path: "warning" },
-                    { text: "$5,200 or I walk!", quality: "aggressive", analytics: "🔴 Ультиматум!", path: "reject_ultimatum_final" },
-                    { text: "No, need $5,400!", quality: "fail", analytics: "❌ Отказ!", path: "reject_ultimatum_final" }
+                    { text: "Captain Mike, absolutely! Premium auction slot takes priority! Driver Carlos can push schedule, deliver Thursday 3 AM - 2 hours early for premium bidding. Seafood auction timing is everything. $15,000 with auction bonus - we understand market dynamics!", quality: "excellent", path: "master" },
+                    { text: "Yes! Premium auction priority! Can deliver Thursday 3 AM. $15,000 confirmed!", quality: "good", path: "master" },
+                    { text: "Thursday 3 AM delivery works. $15,000 confirmed.", quality: "normal", path: "master" },
+                    { text: "3 AM is early... but for auction... okay...", quality: "weak", path: "warning" },
+                    { text: "Auction needs $16,000 minimum!", quality: "aggressive", path: "reject_rate_final" },
+                    { text: "Can't do 3 AM, 5 AM only.", quality: "fail", path: "reject_timing_final" }
                 ]
             },
-            // ШАГ 9: Final Offer
+            // ШАГ 9: Seafood Market Insight (ГИБРИД)
             {
-                brokerQuestion: "$5,150 final. That's $2.60/mile. You're professional with auto parts - worth it. Deal?",
-                dispatcherPrompt: "💎 ФИНАЛ! $5,150 - заработали $200!",
+                brokerQuestion: "Excellent! Seafood market insight: King crab prices are up 40% this season. Premium auction slots get 20% higher bids. I have 12-15 seafood loads weekly Seattle WA-Boston MA, all paying premium for auction timing. Want to be my go-to seafood carrier?",
+                dispatcherPrompt: "💎 Seafood market insight! 12-15 loads/week premium! Go-to carrier?",
                 suggestions: [
-                    { text: "$5,150 perfect! Deal! Your auto parts will arrive safe and on time.", quality: "excellent", analytics: "✨ ОТЛИЧНО!", path: "master" },
-                    { text: "$5,150 is a deal!", quality: "good", analytics: "✔️ Хорошо! $200 больше!", path: "master" },
-                    { text: "$5,150 confirmed.", quality: "normal", analytics: "⚪ Нормально.", path: "master" },
-                    { text: "Okay, $5,150...", quality: "weak", analytics: "⚠️ Слабо.", path: "warning" },
-                    { text: "Can't you do $5,200?", quality: "aggressive", analytics: "🔴 После final!", path: "reject_final_final" },
-                    { text: "$5,175? Just $25 more?", quality: "fail", analytics: "❌ Торгуется!", path: "reject_final_final" }
+                    { text: "Absolutely Captain Mike! King crab boom = opportunity for seafood carriers. 12-15 loads weekly at premium rates - we'll be your dedicated ocean-to-table specialists. Auction timing, temp control, fresh catch - we understand seafood market!", quality: "excellent", path: "master" },
+                    { text: "Very interested! Want to be your go-to seafood carrier. 12-15 weekly loads at premium rates works perfectly.", quality: "good", path: "master" },
+                    { text: "Interested in being go-to seafood carrier.", quality: "normal", path: "warning" },
+                    { text: "12-15 weekly might be challenging...", quality: "weak", path: "warning" },
+                    { text: "Seafood market is too volatile!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Let's see how this load goes first.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // ШАГ 10: Email
+            // ШАГ 10: Email + Seafood Partnership (ПРАВИЛО)
             {
-                brokerQuestion: "Perfect! Email? I'll send rate con now. Remember - air-ride, lift gate, Friday 3 PM Phoenix.",
-                dispatcherPrompt: "💎 Email! Подтвердите handling и timing!",
+                brokerQuestion: "Perfect! Email? I'll send auction rate con NOW. Also sending seafood carrier agreement - exclusive rates, priority booking, auction bonuses. Confirm: Seattle WA 4 AM tomorrow, Boston MA 3 AM Thursday, $15,000 total.",
+                dispatcherPrompt: "💎 Email! Seafood carrier agreement! Подтвердите auction plan!",
                 suggestions: [
-                    { text: "Perfect! dispatch@autohaul.com. I'll sign in 30 minutes. Confirmed: air-ride suspension, certified lift gate, Friday 3 PM guaranteed. Your auto parts are in good hands!", quality: "excellent", analytics: "✨ ОТЛИЧНО!", path: "master" },
-                    { text: "dispatch@autohaul.com. Sign today. Air-ride and lift gate, Friday 3 PM confirmed.", quality: "good", analytics: "✔️ Хорошо!", path: "master" },
-                    { text: "dispatch@autohaul.com. Will handle properly.", quality: "normal", analytics: "⚪ Нормально.", path: "master" },
-                    { text: "Let me find email...", quality: "weak", analytics: "⚠️ Слабо.", path: "warning" },
-                    { text: "Send anywhere. Driver knows.", quality: "aggressive", analytics: "🔴 Агрессивно!", path: "reject_email_final" },
-                    { text: "No email... text message?", quality: "fail", analytics: "❌ Провал!", path: "reject_email_final" }
+                    { text: "Perfect! dispatch@oceanhaul.com. I'll sign both immediately. Confirmed: Seattle WA Fish Dock 4 AM tomorrow, Boston MA Fish Market 3 AM Thursday, $15,000 total. Your fresh seafood is in expert hands!", quality: "excellent", path: "master" },
+                    { text: "dispatch@oceanhaul.com. Sign immediately. Seattle WA 4 AM tomorrow, Boston MA 3 AM Thursday, $15,000 confirmed!", quality: "good", path: "master" },
+                    { text: "dispatch@oceanhaul.com. All confirmed.", quality: "normal", path: "warning" },
+                    { text: "Let me find email...", quality: "weak", path: "warning" },
+                    { text: "Send anywhere. Drivers know.", quality: "aggressive", path: "reject_email_final" },
+                    { text: "No email... text message?", quality: "fail", path: "reject_email_final" }
                 ]
             },
             // ШАГ 11: SUCCESS OUTCOME
             {
-                brokerResponse: "Excellent! Rate con sent to dispatch@autohaul.com. Sign ASAP. You handled every auto parts question perfectly! Adding you to preferred dry van carriers. I have 9-11 automotive loads weekly Detroit-Phoenix. Let's work together long-term. Good luck!",
+                brokerResponse: "Excellent! Auction rate con sent to dispatch@oceanhaul.com. You just became my seafood hero! Most carriers don't understand auction timing. You secured premium bidding slot! Adding you to priority seafood carrier list. Ocean-to-table market pays top dollar for auction reliability - you're now my #1 seafood specialist!",
                 outcome: {
                     type: "success",
                     quality: "excellent",
-                    rate: "$5,150",
-                    ratePerMile: "$2.60/mile",
-                    relationship: "strengthened",
-                    weeklyLoads: "9-11 automotive loads weekly ($46,350-56,650/week potential)",
-                    feedback: `✅ ОТЛИЧНЫЕ ПЕРЕГОВОРЫ! Заработали $200 больше posted ($5,150 vs $4,950 = 4.0%).\n\n💰 ФИНАНСЫ:\n• Ставка: $5,150\n• Дизель: -$792 (248 gal × $3.20 MI→AZ)\n• Чистая прибыль: $4,358 (85% от ставки)\n\n💡 УРОК: Automotive expertise = preferred carrier = 9-11 loads weekly ($185,400-226,600/месяц потенциал)!`
+                    rate: "$15,000 (auction bonus)",
+                    ratePerMile: "$4.97/mile",
+                    relationship: "#1 seafood carrier",
+                    weeklyLoads: "12-15 seafood loads weekly ($180,000-225,000/week potential)",
+                    feedback: `🐟 SEAFOOD AUCTION HERO! Premium slot secured!\n\n💰 ФИНАНСЫ:\n• Ставка: $13,500\n• Auction bonus: +$1,000\n• ИТОГО: $15,000 (posted $12,080 = +$2,920 = 24.2%!)\n• Дизель: -$1,208 (3,020 miles × 0.125 gal/mi × $3.20)\n• Чистая прибыль: $13,792 (92%)\n\n🎯 УРОК: Seafood auction timing = premium money!\n\nТы:\n✅ Следовал всем правилам профессионально\n✅ Понял auction timing importance\n✅ Принял early delivery challenge\n✅ Показал seafood market expertise\n✅ Заработал +$2,920 больше posted!\n\n⭐ БОНУС: 12-15 loads/week = $9,360,000-11,700,000/год потенциал!\n\n💡 Seafood auction loads платят premium за timing reliability!`
                 }
             }
         ],
-
-        // WARNING PATH - MULTI-STEP (11 шагов, по одному для каждого шага master)
+        // WARNING PATH: 11 шагов с уникальными сообщениями
         warning: [
-            // WARNING ШАГ 1: MC/Company
             {
-                brokerResponse: "⚠️ I need your MC number and company name clearly. This is professional business. Can you provide that?",
-                dispatcherPrompt: "💡 Брокер хочет MC и компанию! Дайте четко!",
-                suggestions: [
-                    { text: "I apologize! MC 445566, AutoHaul Express, 28 dry vans specialized in automotive. Van in Detroit ready 9 AM. Driver 7 years auto parts experience. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. MC 445566, AutoHaul Express. 28 vans. Van in Detroit ready.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "MC 445566, AutoHaul Express.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think I said MC...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "Why so many questions?", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about MC.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I need your MC number and company name clearly for seafood. Can you provide that?", dispatcherPrompt: "💡 Брокер хочет MC и компанию!", suggestions: [
+                    { text: "I apologize! MC 445566, OceanHaul Transport. Seafood specialists.", quality: "excellent", path: "master" },
+                    { text: "Sorry. MC 445566, OceanHaul.", quality: "good", path: "master" },
+                    { text: "MC 445566, OceanHaul.", quality: "normal", path: "master" },
+                    { text: "I think I said MC...", quality: "weak", path: "reject_weak_final" },
+                    { text: "Why so many questions?", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Not sure about MC.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // WARNING ШАГ 2: Location/Equipment
             {
-                brokerResponse: "⚠️ I need to know where your van is and if you can pick up tomorrow 9 AM. Can you confirm location and timing?",
-                dispatcherPrompt: "💡 Брокер хочет местоположение и timing! Подтвердите!",
-                suggestions: [
-                    { text: "I apologize! Van in Detroit at auto plant, empty. Air-ride and lift gate ready. Driver ready 9 AM tomorrow sharp. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. Van in Detroit at auto plant. Air-ride ready. Driver ready 9 AM tomorrow.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "Van in Detroit. Ready 9 AM.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think van is ready...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "Why so specific?", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about location.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I need to know where your reefer is and if you can pick up tomorrow 4 AM for seafood. Can you confirm?", dispatcherPrompt: "💡 Брокер хочет местоположение и pickup 4 AM!", suggestions: [
+                    { text: "Reefer in Seattle WA, empty and ready. Can pick up tomorrow 4 AM for seafood.", quality: "excellent", path: "master" },
+                    { text: "Reefer in Seattle WA. Ready 4 AM tomorrow.", quality: "good", path: "master" },
+                    { text: "Seattle WA area. Should be ready 4 AM.", quality: "normal", path: "master" },
+                    { text: "I think reefer is in Seattle WA...", quality: "weak", path: "reject_weak_final" },
+                    { text: "Seafood loads are demanding!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Maybe 5 or 6 AM pickup?", quality: "fail", path: "reject_timing_final" }
                 ]
             },
-            // WARNING ШАГ 3: Experience/DOT
             {
-                brokerResponse: "⚠️ I need to know driver's automotive parts experience and DOT status. This is precision cargo. Can you provide details?",
-                dispatcherPrompt: "💡 Брокер хочет опыт и DOT! Дайте детали!",
-                suggestions: [
-                    { text: "I apologize! Driver has 7 years automotive parts experience - engines, transmissions. Clean DOT - last inspection 3 weeks ago, zero violations. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. Driver 7 years auto parts experience. Clean DOT, last inspection 3 weeks ago.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "Driver experienced with auto parts. DOT clean.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think driver experienced...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "Driver knows his job!", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about experience.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I need driver's seafood experience and clean DOT status. Fresh seafood spoils fast. Can you confirm?", dispatcherPrompt: "💡 Брокер хочет seafood experience и DOT!", suggestions: [
+                    { text: "Driver has 11 years seafood experience. Clean DOT, last inspection 6 weeks ago.", quality: "excellent", path: "master" },
+                    { text: "Driver experienced with seafood. Clean DOT.", quality: "good", path: "master" },
+                    { text: "Driver has seafood experience. DOT is clean.", quality: "normal", path: "master" },
+                    { text: "Driver has some seafood experience...", quality: "weak", path: "reject_weak_final" },
+                    { text: "DOT inspections are harassment!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Driver knows reefer loads.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // WARNING ШАГ 4: Insurance
             {
-                brokerResponse: "⚠️ I need confirmation of $150K cargo coverage for automotive parts. Can you provide insurance details?",
-                dispatcherPrompt: "💡 Брокер хочет insurance $150K! Подтвердите!",
-                suggestions: [
-                    { text: "I apologize! $150K cargo coverage through Allstate. $1M liability. Certificates current, expire November 2028. I'll email after booking. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. $150K cargo, $1M liability. Current certificates. Will send after booking.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "$150K cargo, $1M liability. Current.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think we have $150K...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "Insurance is standard!", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about coverage.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I need confirmation of $200K cargo coverage for fresh seafood. Do you have current certificates?", dispatcherPrompt: "💡 Брокер хочет $200K insurance!", suggestions: [
+                    { text: "$200K cargo coverage for seafood through Travelers. Current certificates, will email after booking.", quality: "excellent", path: "master" },
+                    { text: "$200K cargo for seafood. Current certificates.", quality: "good", path: "master" },
+                    { text: "$200K cargo coverage. Certificates current.", quality: "normal", path: "master" },
+                    { text: "Should have $200K coverage...", quality: "weak", path: "reject_weak_final" },
+                    { text: "Insurance companies overcharge seafood!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "$150K should be enough for seafood.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // WARNING ШАГ 5: Handling
             {
-                brokerResponse: "⚠️ I need to know how you'll secure automotive parts and operate lift gate. Can you explain your process?",
-                dispatcherPrompt: "💡 Брокер хочет handling детали! Объясните процесс!",
-                suggestions: [
-                    { text: "I apologize! Parts secured with straps and load bars. Heavy engines on bottom. Lift gate certified, driver trained. If issues, driver stops and calls. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. Straps and load bars. Engines on bottom. Lift gate certified. Driver stops if issues.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "Straps and load bars. Will notify if issues.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think we secure properly...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "Standard securement!", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about process.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I need to know how you'll maintain 28-32°F for seafood. What's your temp monitoring?", dispatcherPrompt: "💡 Брокер хочет temp monitoring details!", suggestions: [
+                    { text: "Multi-temp reefer 28-32°F. Driver checks hourly. If alarm, driver stops and calls immediately.", quality: "excellent", path: "master" },
+                    { text: "Temp monitoring system. Driver monitors regularly.", quality: "good", path: "master" },
+                    { text: "Have temp monitoring. Driver will check.", quality: "normal", path: "master" },
+                    { text: "Driver will monitor temperature...", quality: "weak", path: "reject_weak_final" },
+                    { text: "Reefer maintains temp automatically!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Driver checks when he remembers.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // WARNING ШАГ 6: Commitment
             {
-                brokerResponse: "⚠️ I need commitment for Friday 3 PM delivery. Production line depends on this. Can you commit?",
-                dispatcherPrompt: "💡 Брокер хочет commitment Friday 3 PM! Подтвердите!",
-                suggestions: [
-                    { text: "I apologize! Absolutely committed Friday 3 PM! Depart tomorrow 9 AM, arrive Thursday evening with 20-hour buffer. Production timing critical. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. Yes, committed Friday 3 PM. Arrive Thursday evening with buffer.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "Yes, Friday 3 PM works.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think we can make it...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "Traffic is unpredictable!", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about timing.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I need solid commitment for Thursday 5 AM delivery at Boston MA Fish Market. Auction depends on this. Can you commit?", dispatcherPrompt: "💡 Брокер хочет commitment для auction!", suggestions: [
+                    { text: "Absolutely committed Thursday 5 AM! Auction timing is critical - will call ahead if any delay.", quality: "excellent", path: "master" },
+                    { text: "Yes, committed Thursday 5 AM. Auction timing priority.", quality: "good", path: "master" },
+                    { text: "Thursday 5 AM should work.", quality: "normal", path: "master" },
+                    { text: "We'll try for Thursday 5 AM...", quality: "weak", path: "reject_weak_final" },
+                    { text: "Auction timing is unpredictable!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Driver gets there when possible.", quality: "fail", path: "reject_timing_final" }
                 ]
             },
-            // WARNING ШАГ 7: Rate Question
             {
-                brokerResponse: "⚠️ I need a realistic rate for this load. What's your actual rate expectation?",
-                dispatcherPrompt: "💡 Брокер хочет реальную цену! Назовите адекватную!",
-                suggestions: [
-                    { text: "I apologize! For 1,980 miles with automotive parts, I'm looking at $5,200. That's $2.63/mile - fair for all services. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. $5,100 for this load. $2.58/mile - fair with all services.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "$5,050 for 1,980 miles.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think $5,000 is fair...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "Market rate is higher!", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about rate.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I asked for your rate on this seafood load. What are you looking for on 3,020 miles Seattle WA-Boston MA?", dispatcherPrompt: "💡 Брокер повторяет вопрос о ставке!", suggestions: [
+                    { text: "$14,500 for seafood. $4.80/mile with all specialized services.", quality: "excellent", path: "master" },
+                    { text: "$13,500 for this seafood load. Fair rate.", quality: "good", path: "master" },
+                    { text: "$13,000 for 3,020 miles.", quality: "normal", path: "master" },
+                    { text: "$12,500 maybe?", quality: "weak", path: "reject_weak_final" },
+                    { text: "Seafood loads need $16,000 minimum!", quality: "aggressive", path: "reject_rate_final" },
+                    { text: "I'll take posted $12,080.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // WARNING ШАГ 8: Counter Offer
             {
-                brokerResponse: "⚠️ I gave you my counter offer. Can you work with $5,100 or do you need more?",
-                dispatcherPrompt: "💡 Брокер дал $5,100! Примите или попросите чуть больше!",
-                suggestions: [
-                    { text: "I apologize! Can we meet at $5,150? Fair middle ground. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. $5,100 works. Let's book it.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "$5,100 confirmed.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think $5,100 is low...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_weak_final" },
-                    { text: "That's not enough!", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_attitude_final" },
-                    { text: "Not sure about that.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ I offered auction bonus for Thursday 3 AM delivery with premium slot. Can you handle this or not?", dispatcherPrompt: "💡 Брокер повторяет auction offer!", suggestions: [
+                    { text: "Yes! Premium auction priority! Can deliver Thursday 3 AM. $15,000 confirmed!", quality: "excellent", path: "master" },
+                    { text: "Thursday 3 AM delivery works. $15,000 confirmed.", quality: "good", path: "master" },
+                    { text: "3 AM is early but for auction... okay.", quality: "normal", path: "master" },
+                    { text: "3 AM is very early... maybe...", quality: "weak", path: "reject_timing_final" },
+                    { text: "Auction needs $16,000!", quality: "aggressive", path: "reject_rate_final" },
+                    { text: "Can't do 3 AM, 5 AM only.", quality: "fail", path: "reject_timing_final" }
                 ]
             },
-            // WARNING ШАГ 9: Final Offer
             {
-                brokerResponse: "⚠️ This is my final offer - $5,150. Can you accept this or not?",
-                dispatcherPrompt: "💡 Брокер дал final $5,150! Примите или потеряете груз!",
-                suggestions: [
-                    { text: "I apologize! $5,150 is perfect! Deal! Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. $5,150 is a deal!", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "$5,150 confirmed.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think we need more...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_final_final" },
-                    { text: "Can't you do better?", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_final_final" },
-                    { text: "Not sure about final.", quality: "fail", analytics: "❌ Провал!", path: "reject_final_final" }
+                brokerResponse: "⚠️ I offered to make you my go-to seafood carrier with 12-15 weekly loads. Are you interested or not?", dispatcherPrompt: "💡 Брокер хочет подтверждение seafood partnership!", suggestions: [
+                    { text: "Very interested! Want to be your go-to seafood carrier. 12-15 weekly loads at premium rates.", quality: "excellent", path: "master" },
+                    { text: "Interested in being go-to seafood carrier. Weekly loads work.", quality: "good", path: "master" },
+                    { text: "Interested in seafood partnership.", quality: "normal", path: "master" },
+                    { text: "12-15 weekly might be challenging...", quality: "weak", path: "reject_weak_final" },
+                    { text: "Seafood market is volatile!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Let's see how this goes first.", quality: "fail", path: "reject_weak_final" }
                 ]
             },
-            // WARNING ШАГ 10: Email
             {
-                brokerResponse: "⚠️ I need your email to send rate confirmation. What's your dispatch email?",
-                dispatcherPrompt: "💡 Брокер хочет email! Дайте четко!",
-                suggestions: [
-                    { text: "I apologize! dispatch@autohaul.com. I'll sign in 30 minutes. Air-ride and lift gate confirmed. Ready to work professionally!", quality: "excellent", analytics: "✨ Исправился полностью!", path: "master" },
-                    { text: "Sorry. dispatch@autohaul.com. Sign today. Friday 3 PM confirmed.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "dispatch@autohaul.com. Will handle properly.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I think it's dispatch@...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_email_final" },
-                    { text: "Just send it anywhere!", quality: "aggressive", analytics: "🔴 Стало хуже!", path: "reject_email_final" },
-                    { text: "Not sure about email.", quality: "fail", analytics: "❌ Провал!", path: "reject_email_final" }
+                brokerResponse: "⚠️ I need your email NOW to send auction rate confirmation. What's your email?", dispatcherPrompt: "💡 Брокер хочет email для auction rate con!", suggestions: [
+                    { text: "dispatch@oceanhaul.com. I'll sign immediately. Auction confirmed!", quality: "excellent", path: "master" },
+                    { text: "dispatch@oceanhaul.com. Will sign quickly.", quality: "good", path: "master" },
+                    { text: "dispatch@oceanhaul.com", quality: "normal", path: "master" },
+                    { text: "Let me find email address...", quality: "weak", path: "reject_email_final" },
+                    { text: "Just send it anywhere, drivers know.", quality: "aggressive", path: "reject_email_final" },
+                    { text: "No email... text message works?", quality: "fail", path: "reject_email_final" }
                 ]
             },
-            // WARNING ШАГ 11: Final Success (если дошли сюда через warning)
             {
-                brokerResponse: "Okay, rate con sent to dispatch@autohaul.com. Sign ASAP. You improved your communication. Let's see how this load goes.",
-                outcome: {
-                    type: "success",
-                    quality: "good",
-                    rate: "$5,150",
-                    ratePerMile: "$2.60/mile",
-                    relationship: "neutral",
-                    weeklyLoads: "Maybe more loads if this goes well",
-                    feedback: `✅ ГРУЗ ПОЛУЧЕН! Но коммуникация была слабой. Заработали $200 больше posted ($5,150 vs $4,950 = 4.0%).\n\n💰 ФИНАНСЫ:\n• Ставка: $5,150\n• Дизель: -$792\n• Чистая прибыль: $4,358\n\n⚠️ УРОК: Слабая коммуникация = нет preferred status! Брокер сомневается. Нужно быть увереннее с первого шага!`
-                }
-            }
-        ],
-
-        // WARNING_STRICT PATH (строгое предупреждение - только 1 шаг)
-        warning_strict: [
-            {
-                brokerResponse: "⚠️ STOP! This is professional business with automotive parts! If you want this load, answer professionally NOW. Last chance!",
-                dispatcherPrompt: "🚨 ПОСЛЕДНИЙ ШАНС! Automotive parts не терпит ошибок!",
-                suggestions: [
-                    { text: "I sincerely apologize! MC 445566, AutoHaul Express, 28 dry vans specialized in automotive. Van in Detroit at auto plant, air-ride and lift gate ready. Driver 7 years auto parts experience. Committed Friday 3 PM. Ready to work professionally!", quality: "excellent", analytics: "✨ Полностью исправился!", path: "master" },
-                    { text: "I apologize. MC 445566, AutoHaul. Van in Detroit, air-ride ready. Driver experienced. Friday 3 PM ready.", quality: "good", analytics: "✔️ Исправился!", path: "master" },
-                    { text: "Sorry. MC 445566. Van in Detroit. Friday ready.", quality: "normal", analytics: "⚪ Минимально исправился.", path: "master" },
-                    { text: "I said it's ready...", quality: "weak", analytics: "⚠️ Не исправился!", path: "reject_attitude_final" },
-                    { text: "Fine! Whatever!", quality: "aggressive", analytics: "🔴 Еще хуже!", path: "reject_attitude_final" },
-                    { text: "Can't confirm everything.", quality: "fail", analytics: "❌ Провал!", path: "reject_weak_final" }
+                brokerResponse: "⚠️ This is seafood auction! I need professional carrier who understands timing. Are you that carrier or should I call someone else?", dispatcherPrompt: "💡 Последний шанс! Seafood auction!", suggestions: [
+                    { text: "Absolutely! We're the professional seafood carrier you need. Auction confirmed, timing comes first!", quality: "excellent", path: "master" },
+                    { text: "Yes, we can handle seafood auction professionally.", quality: "good", path: "master" },
+                    { text: "We can do this auction load.", quality: "normal", path: "master" },
+                    { text: "I think we can handle it...", quality: "weak", path: "reject_weak_final" },
+                    { text: "Find someone else then!", quality: "aggressive", path: "reject_attitude_final" },
+                    { text: "Maybe call someone else.", quality: "fail", path: "reject_weak_final" }
                 ]
             }
         ],
 
-        // REJECT PATHS
-        reject_weak_final: [
-            {
-                brokerResponse: "Sorry, I can't risk automotive parts with uncertainty. I need reliable carrier. Good luck!",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    feedback: "❌ REJECT: Automotive parts требует 100% надежности! Неуверенность = поврежденный груз = потери!"
-                }
-            }
-        ],
+        warning_strict: [{
+            brokerResponse: "Listen, this is fresh seafood for auction. I need a professional carrier who takes timing seriously. Last chance - are you professional or should I hang up?", dispatcherPrompt: "🚨 ПОСЛЕДНИЙ ШАНС! Seafood auction!", suggestions: [
+                { text: "I apologize Captain Mike! We're absolutely professional with seafood. MC 445566, OceanHaul Transport, 9 years seafood experience. Auction timing is our priority!", quality: "excellent", path: "master" },
+                { text: "Sorry! We're professional seafood carrier. Auction timing priority.", quality: "good", path: "master" },
+                { text: "We're professional with seafood.", quality: "normal", path: "warning" },
+                { text: "I'm trying to be professional...", quality: "weak", path: "reject_attitude_final" },
+                { text: "I am professional! You're demanding!", quality: "aggressive", path: "reject_attitude_final" },
+                { text: "Whatever, just tell me the rate.", quality: "fail", path: "reject_attitude_final" }
+            ]
+        }],
 
-        reject_attitude_final: [
-            {
-                brokerResponse: "I don't work with unprofessional carriers on automotive parts. Good luck!",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    feedback: "❌ REJECT: Грубость с automotive parts грузом недопустима! Брокеры хотят профессионалов!"
-                }
-            }
-        ],
-
-        reject_timing_final: [
-            {
-                brokerResponse: "9 AM pickup critical for automotive schedule. I need carrier who can meet timing. Thanks.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    feedback: "❌ REJECT: Automotive timing критичен! Опоздание = остановка производства!"
-                }
-            }
-        ],
-
-        reject_rate_final: [
-            {
-                brokerResponse: "$6,500 is way too high for this lane. I need realistic carrier. Thanks.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    feedback: "❌ REJECT: $6,500 нереально! Posted $4,950, можно $5,200-5,400, но не $6,500!"
-                }
-            }
-        ],
-
-        reject_ultimatum_final: [
-            {
-                brokerResponse: "I don't respond to ultimatums. I need professional carrier. Thanks.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    feedback: "❌ REJECT: Ультиматумы не работают! Брокеры хотят партнерства, не конфронтации."
-                }
-            }
-        ],
-
-        reject_final_final: [
-            {
-                brokerResponse: "I gave you my final offer. I need carrier who respects negotiation. Thanks.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    feedback: "❌ REJECT: Торг после 'final offer' = неуважение!"
-                }
-            }
-        ],
-
-        reject_email_final: [
-            {
-                brokerResponse: "I need professional carrier with email for documentation. Thanks.",
-                outcome: {
-                    type: "failure",
-                    quality: "fail",
-                    rate: "$0",
-                    feedback: "❌ REJECT: Нет email = нет профессионализма!"
-                }
-            }
-        ]
+        reject_weak_final: [{ brokerResponse: "I can't work with uncertain carriers on fresh seafood. Auction timing requires confidence. I'm going with someone more decisive. Good luck!", outcome: { type: "rejection", reason: "weak_responses", feedback: `❌ ОТКЛОНЕН: Слабые ответы на seafood load\n\n💔 ПРИЧИНА:\n• Неуверенные ответы\n• Нет четкости в seafood expertise\n• Брокер не доверяет с auction timing\n\n💡 УРОК: Seafood loads требуют 100% уверенности!` } }],
+        reject_attitude_final: [{ brokerResponse: "Your attitude is unprofessional for seafood. I need carriers who respect auction timing. I'm hanging up and calling someone else.", outcome: { type: "rejection", reason: "bad_attitude", feedback: `❌ ОТКЛОНЕН: Плохое отношение к seafood load\n\n💔 ПРИЧИНА:\n• Агрессивные ответы\n• Нет уважения к auction timing\n• Непрофессиональное поведение\n\n💡 УРОК: Seafood loads = auction responsibility!` } }],
+        reject_timing_final: [{ brokerResponse: "You can't commit to seafood auction timing. Fresh catch waits for no one. I'm calling a carrier who understands urgency. Goodbye!", outcome: { type: "rejection", reason: "timing_issues", feedback: `❌ ОТКЛОНЕН: Не можешь handle auction timing\n\n💔 ПРИЧИНА:\n• Не готов к early delivery\n• Не понимаешь auction urgency\n• Seafood не ждет delays\n\n💡 УРОК: Seafood auction = non-negotiable timing!` } }],
+        reject_rate_final: [{ brokerResponse: "Your rate is unrealistic for seafood. I have auction budget constraints. Finding a more reasonable carrier. Good luck!", outcome: { type: "rejection", reason: "unrealistic_rate", feedback: `❌ ОТКЛОНЕН: Нереальная ставка для seafood\n\n💔 ПРИЧИНА:\n• Слишком высокая ставка\n• Не понимаешь seafood market\n• Жадность > auction opportunity\n\n💡 УРОК: Seafood loads имеют market limits!` } }],
+        reject_ultimatum_final: [{ brokerResponse: "I don't respond to ultimatums on seafood! Auction timing requires cooperation. I'm calling a more collaborative carrier.", outcome: { type: "rejection", reason: "ultimatum_given", feedback: `❌ ОТКЛОНЕН: Ультиматум на seafood load\n\n💔 ПРИЧИНА:\n• Давление на seafood broker\n• Ультиматумы неуместны в auction\n• Нет понимания cooperation\n\n💡 УРОК: Seafood loads требуют collaboration!` } }],
+        reject_final_final: [{ brokerResponse: "You rejected my final offer on seafood auction load. I can't negotiate further with auction deadlines. Calling another carrier now.", outcome: { type: "rejection", reason: "rejected_final_offer", feedback: `❌ ОТКЛОНЕН: Отклонил final offer на seafood\n\n💔 ПРИЧИНА:\n• Отказался от последнего предложения\n• Не понял критичность auction\n• Упустил seafood opportunity\n\n💡 УРОК: Seafood final offers часто справедливы!` } }],
+        reject_email_final: [{ brokerResponse: "I can't send auction rate confirmation without proper email. Seafood loads require documentation. I'm calling a more organized carrier.", outcome: { type: "rejection", reason: "no_email_provided", feedback: `❌ ОТКЛОНЕН: Нет email для seafood documentation\n\n💔 ПРИЧИНА:\n• Нет proper email address\n• Seafood loads требуют documentation\n• Непрофессиональная организация\n\n💡 УРОК: Seafood = максимальная documentation!` } }]
     }
 };
 
-allScenarios.push(scenario6);
-console.log('✅ Scenario 6 loaded: Dry Van Automotive Parts (Detroit → Phoenix) - PREMIUM QUALITY V2 with MULTI-STEP WARNING');
+if (typeof allScenarios !== 'undefined') {
+    allScenarios.push(scenario6);
+}
+
+console.log('✅ Scenario 6 loaded: Reefer Seafood Fresh (HYBRID: Rules + Auction Urgency)');
