@@ -1156,6 +1156,32 @@
       transform: scale(1) translateY(0);
     }
 
+    /* Рандомная анимация подпрыгивания для каждого кружка */
+    .timeline-node[data-step="1"] .node-circle {
+      animation: randomBounce1 8s ease-in-out infinite;
+    }
+
+    .timeline-node[data-step="2"] .node-circle {
+      animation: randomBounce2 10s ease-in-out infinite;
+    }
+
+    .timeline-node[data-step="3"] .node-circle {
+      animation: randomBounce3 12s ease-in-out infinite;
+    }
+
+    .timeline-node[data-step="4"] .node-circle {
+      animation: randomBounce4 9s ease-in-out infinite;
+    }
+
+    .timeline-node[data-step="5"] .node-circle {
+      animation: randomBounce5 11s ease-in-out infinite;
+    }
+
+    /* Останавливаем анимацию при активном состоянии */
+    .timeline-node.active .node-circle {
+      animation: none !important;
+    }
+
     .node-circle span {
       position: relative;
       color: transparent;
@@ -5843,6 +5869,87 @@
         min-height: 120px;
       }
     }
+
+    /* Рандомные анимации подпрыгивания для кружков */
+    @keyframes randomBounce1 {
+
+      0%,
+      100% {
+        transform: scale(1) translateY(0);
+      }
+
+      15% {
+        transform: scale(1.05) translateY(-6px);
+      }
+
+      20% {
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes randomBounce2 {
+
+      0%,
+      100% {
+        transform: scale(1) translateY(0);
+      }
+
+      35% {
+        transform: scale(1.12) translateY(-12px);
+      }
+
+      40% {
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes randomBounce3 {
+
+      0%,
+      100% {
+        transform: scale(1) translateY(0);
+      }
+
+      55% {
+        transform: scale(1.08) translateY(-8px);
+      }
+
+      60% {
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes randomBounce4 {
+
+      0%,
+      100% {
+        transform: scale(1) translateY(0);
+      }
+
+      25% {
+        transform: scale(1.15) translateY(-15px);
+      }
+
+      30% {
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes randomBounce5 {
+
+      0%,
+      100% {
+        transform: scale(1) translateY(0);
+      }
+
+      45% {
+        transform: scale(1.06) translateY(-5px);
+      }
+
+      50% {
+        transform: scale(1) translateY(0);
+      }
+    }
   </style>
   <link rel="stylesheet" href="shared-nav.css">
 </head>
@@ -5898,7 +6005,7 @@
             </div>
           </div>
 
-          <a href="pages/documentation-new.html" class="nav-link" data-short="Докум.">Документация</a>
+          <a href="pages/documentation.html" class="nav-link" data-short="Докум.">Документация</a>
           <a href="pricing.html" class="nav-link" data-short="Тарифы">Тарифы</a>
           <a href="dashboard.html" class="nav-link" id="dashboardLink" style="display: none;"
             data-short="Кабинет">Личный кабинет</a>
@@ -5962,7 +6069,7 @@
         <a href="contacts.html" class="nav-link nav-link-sub">Контакты</a>
       </div>
 
-      <a href="pages/documentation-new.html" class="nav-link">📄 Документация</a>
+      <a href="pages/documentation.html" class="nav-link">📄 Документация</a>
       <a href="pricing.html" class="nav-link">💰 Тарифы</a>
       <a href="dashboard.html" class="nav-link" id="dashboardLinkMobile" style="display: none;">👤 Личный кабинет</a>
     </div>

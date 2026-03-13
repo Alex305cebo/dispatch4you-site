@@ -91,13 +91,13 @@
     pointer-events: none;
 }
 
-/* Quiz Unlock Message - всегда активен */
+/* Quiz Unlock Message - всегда активен, даже когда quiz locked */
 .quiz-unlock-message {
     text-align: center;
     padding: 20px;
     margin-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    pointer-events: auto;
+    pointer-events: auto !important;
 }
 
 .quiz-unlock-message p {
@@ -113,7 +113,7 @@
 .quiz-unlock-message .audio-completion-trigger {
     margin: 0 auto;
     display: inline-flex;
-    pointer-events: auto;
+    pointer-events: auto !important;
 }
 
 .quick-check-header {

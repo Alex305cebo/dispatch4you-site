@@ -570,7 +570,119 @@
                 min-width: 1200px;
             }
         }
-    </style>
+    
+    /* ========================================
+       RESPONSIVE DESIGN - ALL BREAKPOINTS
+       ======================================== */
+
+    /* Large Desktop (1400px) */
+    @media (max-width: 1400px) {
+      .container {
+        max-width: 1200px;
+      }
+    }
+
+    /* Desktop/Tablet Landscape (1024px) */
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 30px;
+      }
+      
+      h1 {
+        font-size: clamp(36px, 5vw, 48px);
+      }
+      
+      h2 {
+        font-size: clamp(28px, 4vw, 36px);
+      }
+    }
+
+    /* Tablet Portrait (768px) */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+      
+      h1 {
+        font-size: clamp(32px, 6vw, 42px);
+      }
+      
+      h2 {
+        font-size: clamp(24px, 5vw, 32px);
+      }
+      
+      h3 {
+        font-size: clamp(20px, 4vw, 24px);
+      }
+      
+      /* Hide desktop navigation */
+      .nav-links {
+        display: none;
+      }
+      
+      /* Show mobile menu toggle */
+      .mobile-menu-toggle {
+        display: flex;
+      }
+    }
+
+    /* Mobile (480px) */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 16px;
+      }
+      
+      body {
+        font-size: 14px;
+      }
+      
+      h1 {
+        font-size: clamp(28px, 7vw, 36px);
+      }
+      
+      h2 {
+        font-size: clamp(22px, 6vw, 28px);
+      }
+      
+      h3 {
+        font-size: clamp(18px, 5vw, 22px);
+      }
+      
+      p {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      
+      .btn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 14px;
+      }
+    }
+
+    /* Small Mobile (360px) */
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 12px;
+      }
+      
+      h1 {
+        font-size: 26px;
+      }
+      
+      h2 {
+        font-size: 22px;
+      }
+      
+      h3 {
+        font-size: 18px;
+      }
+      
+      p {
+        font-size: 13px;
+      }
+    }
+  </style>
 </head>
 
 <body>

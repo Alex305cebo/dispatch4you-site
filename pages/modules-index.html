@@ -73,28 +73,23 @@
                 radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1), transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1), transparent 50%),
                 radial-gradient(circle at 40% 20%, rgba(240, 147, 251, 0.1), transparent 50%);
-            animation: backgroundMove 20s ease infinite;
+            animation: none;
             z-index: -1;
         }
 
-        @keyframes backgroundMove {
 
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
 
-            25% {
-                transform: translate(5%, 5%) scale(1.05);
-            }
+        25% {
+            transform: translate(5%, 5%) scale(1.05);
+        }
 
-            50% {
-                transform: translate(-5%, 5%) scale(1.1);
-            }
+        50% {
+            transform: translate(-5%, 5%) scale(1.1);
+        }
 
-            75% {
-                transform: translate(5%, -5%) scale(1.05);
-            }
+        75% {
+            transform: translate(5%, -5%) scale(1.05);
+        }
         }
 
         .nav {
@@ -207,7 +202,7 @@
             height: 100%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 4px;
-            width: 20%;
+            width: 50%;
             transition: width 0.3s ease;
         }
 
@@ -1143,7 +1138,7 @@
         <div class="progress-overview">
             <div class="progress-stats">
                 <div class="stat">
-                    <div class="stat-number">2</div>
+                    <div class="stat-number">12</div>
                     <div class="stat-label">Завершено</div>
                 </div>
                 <div class="stat">
@@ -1151,7 +1146,7 @@
                     <div class="stat-label">Всего модулей</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">35</div>
+                    <div class="stat-number">355</div>
                     <div class="stat-label">Минут изучено</div>
                 </div>
             </div>
@@ -1163,7 +1158,7 @@
         <!-- Modules Grid -->
         <div class="modules-grid">
             <!-- Module 1: Введение -->
-            <div class="module-card" onclick="location.href='module-1-introduction.html'">
+            <div class="module-card" onclick="location.href='doc-module-1.html'">
                 <div class="module-header">
                     <div class="module-number">01</div>
                     <div class="module-status completed">✓</div>
@@ -1178,10 +1173,10 @@
             </div>
 
             <!-- Module 2: Регулирование -->
-            <div class="module-card" onclick="location.href='module-2-regulations.html'">
+            <div class="module-card" onclick="location.href='doc-module-2.html'">
                 <div class="module-header">
                     <div class="module-number">02</div>
-                    <div class="module-status current">▶</div>
+                    <div class="module-status completed">✓</div>
                 </div>
                 <h3>Регулирование и законодательство</h3>
                 <p>FMCSA, DOT требования, Hours of Service (HOS), ELD mandate и другие важные регулирования для
@@ -1193,10 +1188,10 @@
             </div>
 
             <!-- Module 3: Типы оборудования -->
-            <div class="module-card" onclick="location.href='module-3-equipment.html'">
+            <div class="module-card" onclick="location.href='doc-module-3.html'">
                 <div class="module-header">
                     <div class="module-number">03</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status completed">✓</div>
                 </div>
                 <h3>Типы оборудования и грузов</h3>
                 <p>Dry Van, Reefer, Flatbed, Step Deck, Power Only и специализированные прицепы. Особенности работы с
@@ -1208,10 +1203,10 @@
             </div>
 
             <!-- Module 4: Load Boards -->
-            <div class="module-card" onclick="location.href='module-4-loadboards.html'">
+            <div class="module-card" onclick="location.href='doc-module-4.html'">
                 <div class="module-header">
                     <div class="module-number">04</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status completed">✓</div>
                 </div>
                 <h3>Работа с Load Boards</h3>
                 <p>DAT, Truckstop, 123loadboard. Поиск грузов, фильтры, анализ рынка, расчет deadhead miles и
@@ -1223,10 +1218,10 @@
             </div>
 
             <!-- Module 5: Переговоры -->
-            <div class="module-card" onclick="location.href='module-5-negotiations.html'">
+            <div class="module-card" onclick="location.href='doc-module-5.html'">
                 <div class="module-header">
                     <div class="module-number">05</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status completed">✓</div>
                 </div>
                 <h3>Переговоры с брокерами</h3>
                 <p>Техники переговоров, работа с возражениями, стратегии повышения ставок, построение долгосрочных
@@ -1238,10 +1233,10 @@
             </div>
 
             <!-- Module 6: Планирование маршрутов -->
-            <div class="module-card" onclick="location.href='module-6-routing.html'">
+            <div class="module-card" onclick="location.href='doc-module-6.html'">
                 <div class="module-header">
                     <div class="module-number">06</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status current">▶</div>
                 </div>
                 <h3>Планирование маршрутов</h3>
                 <p>Оптимизация маршрутов, расчет топлива, учет HOS, поиск backhaul грузов, работа с географией США.</p>
@@ -1252,13 +1247,14 @@
             </div>
 
             <!-- Module 7: Документооборот -->
-            <div class="module-card" onclick="location.href='module-7-documentation.html'">
+            <div class="module-card" onclick="location.href='doc-module-7.html'">
                 <div class="module-header">
                     <div class="module-number">07</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status available">✅</div>
                 </div>
-                <h3>Документооборот и оформление</h3>
-                <p>Rate Confirmation, BOL, POD, Lumper Receipts, Invoicing, Factoring и цифровизация документооборота.
+                <h3>Документооборот и отчетность</h3>
+                <p>Ведение документации, IFTA отчеты, работа с претензиями, электронные системы и автоматизация
+                    процессов.
                 </p>
                 <div class="module-meta">
                     <span>🎧 4 аудио-блока</span>
@@ -1266,53 +1262,53 @@
                 </div>
             </div>
 
-            <!-- Module 8: TMS и технологии -->
-            <div class="module-card" onclick="location.href='module-8-technology.html'">
+            <!-- Module 8: Управление водителями -->
+            <div class="module-card" onclick="location.href='doc-module-8.html'">
                 <div class="module-header">
                     <div class="module-number">08</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status completed">✓</div>
                 </div>
-                <h3>TMS системы и технологии</h3>
-                <p>Transportation Management Systems, ELD устройства, GPS tracking, автоматизация процессов диспетчера.
+                <h3>Управление водителями</h3>
+                <p>Найм, мотивация, контроль производительности и решение конфликтов с водителями.
                 </p>
                 <div class="module-meta">
-                    <span>🎧 4 аудио-блока</span>
-                    <span>⏱️ 25 мин</span>
+                    <span>🎧 6 аудио-блоков</span>
+                    <span>⏱️ 35 мин</span>
                 </div>
             </div>
 
             <!-- Module 9: Безопасность и CSA -->
-            <div class="module-card" onclick="location.href='module-9-safety.html'">
+            <div class="module-card" onclick="location.href='doc-module-9.html'">
                 <div class="module-header">
                     <div class="module-number">09</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status completed">✓</div>
                 </div>
                 <h3>Безопасность и CSA Scores</h3>
-                <p>Система CSA, SMS scores, программы безопасности, roadside inspections, compliance и предотвращение
-                    нарушений.</p>
+                <p>Система CSA, SMS scores, roadside inspections, программы безопасности и предотвращение аварий.
+                </p>
                 <div class="module-meta">
-                    <span>🎧 4 аудио-блока</span>
-                    <span>⏱️ 25 мин</span>
+                    <span>🎧 6 аудио-блоков</span>
+                    <span>⏱️ 40 мин</span>
                 </div>
             </div>
 
             <!-- Module 10: Финансы и расчеты -->
-            <div class="module-card" onclick="location.href='module-10-finance.html'">
+            <div class="module-card" onclick="location.href='doc-module-10.html'">
                 <div class="module-header">
                     <div class="module-number">10</div>
-                    <div class="module-status locked">🔒</div>
+                    <div class="module-status completed">✓</div>
                 </div>
                 <h3>Финансы и расчет прибыли</h3>
                 <p>Расчет стоимости миль, операционные расходы, RPM (Revenue Per Mile), profit margins, factoring и cash
                     flow.</p>
                 <div class="module-meta">
-                    <span>🎧 5 аудио-блоков</span>
-                    <span>⏱️ 30 мин</span>
+                    <span>🎧 6 аудио-блоков</span>
+                    <span>⏱️ 45 мин</span>
                 </div>
             </div>
 
             <!-- Module 11: Кризисные ситуации -->
-            <div class="module-card" onclick="location.href='module-11-crisis.html'">
+            <div class="module-card completed" onclick="location.href='doc-module-11.html'">>
                 <div class="module-header">
                     <div class="module-number">11</div>
                     <div class="module-status locked">🔒</div>
@@ -1326,7 +1322,7 @@
             </div>
 
             <!-- Module 12: Практика и карьера -->
-            <div class="module-card" onclick="location.href='module-12-practice.html'">
+            <div class="module-card completed" onclick="location.href='doc-module-12.html'">>
                 <div class="module-header">
                     <div class="module-number">12</div>
                     <div class="module-status locked">🔒</div>
@@ -1345,12 +1341,13 @@
     <script>
         // Load progress from localStorage
         function loadProgress() {
-            const currentModule = localStorage.getItem('current-module') || '1';
-            const completedModules = [];
+            const currentModule = localStorage.getItem('current-module') || '5';
+            const completedModules = [1, 2, 3, 4, 5]; // Модули 1, 2, 3, 4 и 5 завершены, 6 - текущий
 
-            for (let i = 1; i <= 10; i++) {
+            // Проверяем прогресс модулей
+            for (let i = 1; i <= 12; i++) {
                 const progress = localStorage.getItem(`module${i}-progress`);
-                if (progress && parseInt(progress) >= 100) {
+                if (progress && parseInt(progress) >= 100 && !completedModules.includes(i)) {
                     completedModules.push(i);
                 }
             }
