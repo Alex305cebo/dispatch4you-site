@@ -280,32 +280,32 @@
             display: inline-block;
             margin-top: 20px;
             padding: 16px 32px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
             border-radius: 12px;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
             text-transform: none;
             letter-spacing: 0.3px;
         }
 
         .audio-completion-trigger:hover {
+            background: var(--primary);
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.6);
-            background: linear-gradient(135deg, #059669, #047857);
         }
 
         .audio-completion-trigger:active {
             transform: translateY(0);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         }
 
         .audio-completion-trigger.completed {
-            background: linear-gradient(135deg, #6b7280, #4b5563);
+            background: transparent;
+            border-color: #6b7280;
+            color: #6b7280;
             cursor: not-allowed;
             opacity: 0.6;
         }
