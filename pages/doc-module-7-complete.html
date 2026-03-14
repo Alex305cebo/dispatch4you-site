@@ -53,10 +53,10 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
             background:
                 radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1), transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1), transparent 50%),
@@ -156,7 +156,7 @@
 
         .sector-number {
             position: absolute;
-            left: -80px;
+            left: -120px;
             top: 30px;
             font-size: 72px;
             font-weight: 900;
@@ -526,7 +526,7 @@
             display: block;
             width: 100%;
             padding: 16px 24px;
-            margin: 30px 0;
+            margin: 30px 0 0 0;
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
             border: 2px solid var(--primary);
             border-radius: 12px;
@@ -555,7 +555,7 @@
             border: 1px solid rgba(240, 147, 251, 0.2);
             border-radius: 16px;
             padding: 30px;
-            margin: 30px 0;
+            margin: 30px 0 0 0;
             transition: all 0.3s ease;
         }
 
@@ -616,7 +616,7 @@
             border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 16px;
             padding: 30px;
-            margin: 30px 0;
+            margin: 30px 0 0 0;
             transition: all 0.3s ease;
             position: relative;
             opacity: 1;
@@ -626,11 +626,20 @@
         .quick-check-block.locked {
             opacity: 0.6;
             cursor: not-allowed;
+        }
+        
+        .quick-check-block.locked > * {
             pointer-events: none;
+        }
+        
+        .quick-check-block.locked .audio-completion-btn {
+            pointer-events: auto;
+            opacity: 1;
+            cursor: pointer;
         }
 
         .quick-check-block.locked::after {
-            content: '🔒 Прослушайте аудио чтобы разблокировать квиз';
+            content: '🔒 Прослушайте аудио';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -934,10 +943,6 @@
             </div>
         </div>
 
-        <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio1', 'quiz-1')">
-            🎧 Я закончил слушать этот блок
-        </button>
-
         <div class="quick-check-block locked" id="quiz-1" data-quiz-id="quiz-7-1" data-correct-answer="b">
             <div class="quick-check-header">
                 <span class="quick-check-icon">✅</span>
@@ -967,7 +972,11 @@
                 <div class="quiz-feedback">
                     <strong>Правильно! ✓</strong> Фотография водителя НЕ требуется в Rate Confirmation. Обязательные
                     поля: MC#, DOT#, rate, load details, payment terms, insurance requirements.
+                    <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio1', 'quiz-1')">
+            🎧 Я закончил слушать этот блок
+        </button>
                 </div>
+            </div>
             </div>
         </div>
         </div>
@@ -1113,10 +1122,6 @@
                 </div>
             </div>
 
-            <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio2', 'quiz-2')">
-                🎧 Я закончил слушать этот блок
-            </button>
-
             <div class="quick-check-block locked" id="quiz-2" data-quiz-id="quiz-7-2" data-correct-answer="c">
                 <div class="quick-check-header">
                     <span class="quick-check-icon">✅</span>
@@ -1146,7 +1151,11 @@
                     <div class="quiz-feedback">
                         <strong>Правильно! ✓</strong> Net 30 (30 дней) - стандартный срок оплаты в trucking индустрии.
                         Quick Pay (1-5 дней) доступен за комиссию 3-5%. Избегайте брокеров с Net 45-60!
-                    </div>
+                    <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio2', 'quiz-2')">
+                🎧 Я закончил слушать этот блок
+            </button>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
@@ -1298,10 +1307,6 @@
                 </div>
             </div>
 
-            <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio3', 'quiz-3')">
-                🎧 Я закончил слушать этот блок
-            </button>
-
             <div class="quick-check-block locked" id="quiz-3" data-quiz-id="quiz-7-3" data-correct-answer="b">
                 <div class="quick-check-header">
                     <span class="quick-check-icon">✅</span>
@@ -1331,7 +1336,11 @@
                         <strong>Правильно! ✓</strong> IFTA отчеты подаются ежеквартально (Jan-Mar, Apr-Jun, Jul-Sep,
                         Oct-Dec). Дедлайны: последний день месяца после окончания квартала (Apr 30, Jul 31, Oct 31, Jan
                         31).
-                    </div>
+                    <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio3', 'quiz-3')">
+                🎧 Я закончил слушать этот блок
+            </button>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
@@ -1482,10 +1491,6 @@
                 </div>
             </div>
 
-            <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio4', 'quiz-4')">
-                🎧 Я закончил слушать этот блок
-            </button>
-
             <div class="quick-check-block locked" id="quiz-4" data-quiz-id="quiz-7-4" data-correct-answer="c">
                 <div class="quick-check-header">
                     <span class="quick-check-icon">✅</span>
@@ -1515,7 +1520,11 @@
                     <div class="quiz-feedback">
                         <strong>Правильно! ✓</strong> По федеральным правилам carrier должен ответить на claim в течение
                         30 дней и принять решение (оплатить/отклонить) в течение 120 дней.
-                    </div>
+                    <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio4', 'quiz-4')">
+                🎧 Я закончил слушать этот блок
+            </button>
+                </div>
+            </div>
                 </div>
             </div>
             2,000 миль = $2.00/миля. Backhaul позволяет считать прибыльность всего маршрута, а не отдельных
@@ -1703,10 +1712,6 @@
                 </div>
             </div>
 
-            <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio5', 'quiz-5')">
-                🎧 Я закончил слушать этот блок
-            </button>
-
             <div class="quick-check-block locked" id="quiz-5" data-quiz-id="quiz-7-5" data-correct-answer="d">
                 <div class="quick-check-header">
                     <span class="quick-check-icon">✅</span>
@@ -1735,7 +1740,11 @@
                     <div class="quiz-feedback">
                         <strong>Правильно! ✓</strong> TMS управляет dispatch, документами, accounting, tracking, но НЕ
                         занимается физическим ремонтом траков. Для maintenance есть отдельные системы (CMMS).
-                    </div>
+                    <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio5', 'quiz-5')">
+                🎧 Я закончил слушать этот блок
+            </button>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
@@ -1827,10 +1836,6 @@
                 </div>
             </div>
 
-            <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio6', 'quiz-6')">
-                🎧 Я закончил слушать этот блок
-            </button>
-
             <div class="quick-check-block locked" id="quiz-6" data-quiz-id="quiz-7-6" data-correct-answer="b">
                 <div class="quick-check-header">
                     <span class="quick-check-icon">✅</span>
@@ -1859,7 +1864,11 @@
                     <div class="quiz-feedback">
                         <strong>Правильно! ✓</strong> HOS violations для компании стоят $11,000-16,000 (для водителя
                         $1,000-11,000). Это одни из самых дорогих нарушений в trucking индустрии.
-                    </div>
+                    <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio6', 'quiz-6')">
+                🎧 Я закончил слушать этот блок
+            </button>
+                </div>
+            </div>
                 </div>
             </div>
         </div>

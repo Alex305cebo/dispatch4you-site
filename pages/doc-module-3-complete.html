@@ -53,10 +53,10 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
             background:
                 radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1), transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1), transparent 50%),
@@ -157,7 +157,7 @@
 
         .sector-number {
             position: absolute;
-            left: -80px;
+            left: -120px;
             top: 30px;
             font-size: 72px;
             font-weight: 900;
@@ -481,7 +481,7 @@
             display: block;
             width: 100%;
             padding: 16px 24px;
-            margin: 30px 0;
+            margin: 30px 0 0 0;
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
             border: 2px solid var(--primary);
             border-radius: 12px;
@@ -510,7 +510,7 @@
             border: 1px solid rgba(240, 147, 251, 0.2);
             border-radius: 16px;
             padding: 30px;
-            margin: 30px 0;
+            margin: 30px 0 0 0;
             transition: all 0.3s ease;
         }
 
@@ -580,7 +580,7 @@
             border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 16px;
             padding: 30px;
-            margin: 30px 0;
+            margin: 30px 0 0 0;
             transition: all 0.3s ease;
             position: relative;
             opacity: 1;
@@ -590,11 +590,20 @@
         .quick-check-block.locked {
             opacity: 0.6;
             cursor: not-allowed;
+        }
+        
+        .quick-check-block.locked > * {
             pointer-events: none;
+        }
+        
+        .quick-check-block.locked .audio-completion-btn {
+            pointer-events: auto;
+            opacity: 1;
+            cursor: pointer;
         }
 
         .quick-check-block.locked::after {
-            content: '🔒 Прослушайте аудио чтобы разблокировать квиз';
+            content: '🔒 Прослушайте аудио';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -981,10 +990,6 @@
             </div>
 
             <!-- Audio Completion Button -->
-            <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio1', 'quiz-1')">
-                🎧 Я закончил слушать этот блок
-            </button>
-
             <!-- Quick Check 1 -->
             <div class="quick-check-block locked" id="quiz-1" data-quiz-id="quiz-3-1" data-correct-answer="b">
                 <div class="quick-check-header">
@@ -1013,6 +1018,9 @@
                         <strong>Правильно! ✓</strong> Reefer ставки на 20-40% выше Dry Van из-за дополнительных расходов
                         на топливо и maintenance холодильного оборудования.
                     </div>
+                    <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio1', 'quiz-1')">
+                🎧 Я закончил слушать этот блок
+            </button>
                 </div>
             </div>
         </div>
