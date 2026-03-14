@@ -344,17 +344,43 @@
         }
 
         @media (max-width: 768px) {
-            .mobile-progress-bar {
-                display: block;
-            }
 
             .progress-ring,
             .progress-ring-interactive {
                 display: none !important;
             }
 
+            .audio-container {
+                width: auto;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                position: static;
+            }
+
+            .audio-btn {
+                position: relative;
+                flex-shrink: 0;
+            }
+
             .audio-duration {
-                bottom: -50px;
+                position: static;
+                transform: none;
+                opacity: 1;
+                bottom: auto;
+                left: auto;
+                font-size: 12px;
+            }
+
+            .mobile-progress-bar {
+                display: block;
+                position: static;
+                transform: none;
+                bottom: auto;
+                left: auto;
+                width: 120px;
             }
         }
 
@@ -543,11 +569,11 @@
             opacity: 0.6;
             cursor: not-allowed;
         }
-        
-        .quick-check-block.locked > * {
+
+        .quick-check-block.locked>* {
             pointer-events: none;
         }
-        
+
         .quick-check-block.locked .audio-completion-btn {
             pointer-events: auto;
             opacity: 1;
@@ -756,6 +782,13 @@
 
             .audio-container {
                 align-self: center;
+                width: auto;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                position: static;
             }
 
             .lesson-nav {
@@ -923,8 +956,8 @@
                         $16,000, для водителя - $5,500.
                     </div>
                     <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio1', 'quiz-1')">
-                🎧 Я закончил слушать этот блок
-            </button>
+                        🎧 Я закончил слушать этот блок
+                    </button>
                 </div>
             </div>
         </div>
@@ -1061,8 +1094,8 @@
                         $750,000. $5M требуется только для hazmat.
                     </div>
                     <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio2', 'quiz-2')">
-                🎧 Я закончил слушать этот блок
-            </button>
+                        🎧 Я закончил слушать этот блок
+                    </button>
                 </div>
             </div>
         </div>
@@ -1215,8 +1248,8 @@
                         недельный счетчик обнуляется.
                     </div>
                     <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio3', 'quiz-3')">
-                🎧 Я закончил слушать этот блок
-            </button>
+                        🎧 Я закончил слушать этот блок
+                    </button>
                 </div>
             </div>
         </div>
@@ -1366,8 +1399,8 @@
                         пока устройство не будет отремонтировано.
                     </div>
                     <button class="audio-completion-btn" onclick="markAudioComplete(this, 'audio4', 'quiz-4')">
-                🎧 Я закончил слушать этот блок
-            </button>
+                        🎧 Я закончил слушать этот блок
+                    </button>
                 </div>
             </div>
         </div>

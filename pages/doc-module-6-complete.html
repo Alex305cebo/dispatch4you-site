@@ -349,17 +349,43 @@
         }
 
         @media (max-width: 768px) {
-            .mobile-progress-bar {
-                display: block;
-            }
 
             .progress-ring,
             .progress-ring-interactive {
                 display: none !important;
             }
 
+            .audio-container {
+                width: auto;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                position: static;
+            }
+
+            .audio-btn {
+                position: relative;
+                flex-shrink: 0;
+            }
+
             .audio-duration {
-                bottom: -50px;
+                position: static;
+                transform: none;
+                opacity: 1;
+                bottom: auto;
+                left: auto;
+                font-size: 12px;
+            }
+
+            .mobile-progress-bar {
+                display: block;
+                position: static;
+                transform: none;
+                bottom: auto;
+                left: auto;
+                width: 120px;
             }
         }
 
@@ -768,6 +794,13 @@
 
             .audio-container {
                 align-self: center;
+                width: auto;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                position: static;
             }
 
             .lesson-nav {
