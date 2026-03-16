@@ -1015,6 +1015,17 @@
       localStorage.removeItem('user');
       window.location.href = 'login.html';
     };
+
+    // Кнопка админ-панели только для супер-админа
+    const SUPER_ADMIN = 'dersire.der@gmail.com';
+    if (firebaseUser && firebaseUser.email === SUPER_ADMIN) {
+      const adminBtn = document.createElement('a');
+      adminBtn.href = 'pages/admin.html';
+      adminBtn.innerHTML = '⚡ Админ панель';
+      adminBtn.style.cssText = 'display:inline-block;margin-top:16px;padding:10px 24px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:white;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;';
+      const welcomeSection = document.querySelector('.welcome-section');
+      if (welcomeSection) welcomeSection.appendChild(adminBtn);
+    }
   </script>
 </body>
 

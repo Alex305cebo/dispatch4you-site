@@ -10,6 +10,39 @@
 </head>
 
 <body>
+    <!-- Firebase Admin Auth Check -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+        const SUPER_ADMIN_EMAIL = 'dersire.der@gmail.com';
+
+        const app = initializeApp({
+            apiKey: "AIzaSyC505dhT1WjUPhXbinqLvEOTlEXWxYy8GI",
+            authDomain: "dispatch4you-80e0f.firebaseapp.com",
+            projectId: "dispatch4you-80e0f",
+            storageBucket: "dispatch4you-80e0f.firebasestorage.app",
+            messagingSenderId: "349235354473",
+            appId: "1:349235354473:web:488aeb29211b02bb153bf8"
+        });
+
+        const auth = getAuth(app);
+        onAuthStateChanged(auth, (user) => {
+            if (!user || user.email !== SUPER_ADMIN_EMAIL) {
+                document.body.innerHTML = `
+          <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#020617;font-family:Inter,sans-serif;color:#f1f5f9;flex-direction:column;gap:16px;">
+            <div style="font-size:64px;">🔒</div>
+            <h1 style="font-size:28px;font-weight:800;">Доступ запрещён</h1>
+            <p style="color:#64748b;">Эта страница доступна только супер-администратору</p>
+            <a href="../dashboard.html" style="margin-top:8px;padding:12px 28px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border-radius:12px;text-decoration:none;font-weight:600;">← Вернуться</a>
+          </div>`;
+                return;
+            }
+            // Показываем имя в сайдбаре
+            const adminName = document.getElementById('adminName');
+            if (adminName) adminName.textContent = user.displayName || 'Super Admin';
+        });
+    </script>
     <style>
         :root {
             --bg: #0a0d14;
@@ -791,7 +824,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">🎓</div>
-            <div class="logo-text">Admin Panel<span>Курсы Диспетчера</span></div>
+            <div class="logo-text">Admin Panel<span id="adminName">Super Admin</span></div>
         </div>
         <nav>
             <div class="nav-section">Главное</div>
