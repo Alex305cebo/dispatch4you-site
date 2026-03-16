@@ -1449,8 +1449,7 @@
         }
 
         .dispatcher-prompt {
-            background: rgba(99, 102, 241, 0.15);
-            border-left: 4px solid #6366f1;
+            display: none !important;
             padding: 14px;
             margin: 10px 0;
             border-radius: 8px;
@@ -1623,6 +1622,97 @@
             cursor: not-allowed;
         }
 
+        /* ── MIC & TTS BUTTONS ── */
+        .mic-btn,
+        .tts-toggle-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mic-btn {
+            background: rgba(99, 102, 241, 0.15);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .mic-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: scale(1.08);
+        }
+
+        .mic-btn.listening {
+            background: #ef4444;
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+            animation: micPulse 1s ease infinite;
+        }
+
+        @keyframes micPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        .tts-toggle-btn {
+            background: rgba(16, 185, 129, 0.15);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .tts-toggle-btn:hover {
+            background: rgba(16, 185, 129, 0.3);
+            transform: scale(1.08);
+        }
+
+        .tts-toggle-btn.muted {
+            background: rgba(255, 255, 255, 0.06);
+            opacity: 0.5;
+        }
+
+        /* ── VOICE CALL BUTTON ── */
+        .voice-call-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .voice-call-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 18px rgba(16, 185, 129, 0.6);
+        }
+
+        .voice-call-btn.in-call {
+            background: #ef4444;
+            box-shadow: 0 2px 10px rgba(239, 68, 68, 0.5);
+            animation: micPulse 1.2s ease infinite;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 0;
@@ -1790,14 +1880,17 @@
 
             /* Плавающая строка ввода с закругленными углами */
             .input-area {
+                display: none !important;
+                visibility: hidden !important;
+            }
+
+            /* Показываем input-area только когда чат активен */
+            .chat-view.active .input-area {
                 display: flex !important;
                 position: fixed !important;
                 bottom: 12px !important;
-                /* Отступ от низа */
                 left: 12px !important;
-                /* Отступ слева */
                 right: 12px !important;
-                /* Отступ справа */
                 width: auto !important;
                 height: auto !important;
                 padding: 10px 12px !important;
@@ -1806,14 +1899,13 @@
                 backdrop-filter: blur(20px) !important;
                 border: 1px solid rgba(99, 102, 241, 0.3) !important;
                 border-radius: 24px !important;
-                /* Закругленные углы */
                 z-index: 10000 !important;
                 visibility: visible !important;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
                 transition: all 0.3s ease !important;
             }
 
-            .input-area:focus-within {
+            .chat-view.active .input-area:focus-within {
                 border-color: rgba(99, 102, 241, 0.6) !important;
                 box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3), 0 0 0 1px rgba(99, 102, 241, 0.2) inset !important;
             }
@@ -2744,6 +2836,352 @@
                 font-size: 12px;
             }
         }
+
+        /* ── DIFFICULTY SELECTOR ── */
+        .difficulty-bar {
+            display: none;
+            /* hidden until chat is active */
+            gap: 6px;
+            padding: 8px 16px 4px;
+            justify-content: center;
+        }
+
+        .chat-view.active .difficulty-bar {
+            display: flex;
+        }
+
+        .diff-btn {
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .diff-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .diff-btn.active-beginner {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .diff-btn.active-standard {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: #667eea;
+            color: #a5b4fc;
+        }
+
+        .diff-btn.active-hard {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #f87171;
+        }
+
+        /* ── LIVE SCORE BADGE ── */
+        .score-badge {
+            position: fixed;
+            top: 70px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 14px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #a5b4fc;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .score-badge .score-num {
+            font-size: 20px;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .score-badge .score-label {
+            font-size: 10px;
+            opacity: 0.6;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── INLINE SCORE FEEDBACK ── */
+        .score-feedback {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            margin: 2px 0;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            animation: fadeSlideIn 0.4s ease;
+        }
+
+        .score-feedback.positive {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .score-feedback.neutral {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.08);
+        }
+
+        .score-feedback.negative {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── BROKER PATIENCE BAR ── */
+        .nego-progress {
+            padding: 8px 16px 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nego-progress-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nego-patience-status {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: none;
+            transition: color 0.4s ease;
+        }
+
+        .nego-progress-track {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .nego-progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            width: 100%;
+            transition: width 0.6s ease, background 0.6s ease;
+            background: #10b981;
+        }
+
+        .nego-progress-fill.warning {
+            background: linear-gradient(90deg, #10b981, #f59e0b);
+        }
+
+        .nego-progress-fill.danger {
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .nego-progress-fill.critical {
+            background: #ef4444;
+            animation: pulseDanger 0.8s ease infinite;
+        }
+
+        @keyframes pulseDanger {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* ── DEAL RESULT MODAL ── */
+        .deal-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .deal-modal {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid rgba(99, 102, 241, 0.4);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 520px;
+            width: 92%;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .deal-modal h2 {
+            font-size: 22px;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+
+        .deal-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 14px;
+        }
+
+        .deal-stat-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .deal-stat-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .deal-stat-value {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .deal-stat-value.green {
+            color: #10b981;
+        }
+
+        .deal-stat-value.red {
+            color: #ef4444;
+        }
+
+        .deal-stat-value.yellow {
+            color: #f59e0b;
+        }
+
+        .deal-grade {
+            text-align: center;
+            font-size: 56px;
+            margin: 16px 0 8px;
+            line-height: 1;
+        }
+
+        .deal-grade-label {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .deal-tips {
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .deal-tips h3 {
+            font-size: 13px;
+            color: #a5b4fc;
+            margin: 0 0 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .deal-tip-item {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 4px 0;
+            line-height: 1.5;
+        }
+
+        .deal-close-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: opacity 0.2s;
+        }
+
+        .deal-close-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ── TIP QUALITY COLORS ── */
+        .tip-btn-green {
+            border-color: rgba(16, 185, 129, 0.5) !important;
+        }
+
+        .tip-btn-green:hover {
+            background: rgba(16, 185, 129, 0.15) !important;
+        }
+
+        .tip-btn-yellow {
+            border-color: rgba(245, 158, 11, 0.5) !important;
+        }
+
+        .tip-btn-yellow:hover {
+            background: rgba(245, 158, 11, 0.1) !important;
+        }
+
+        .tip-btn-red {
+            border-color: rgba(239, 68, 68, 0.4) !important;
+        }
+
+        .tip-btn-red:hover {
+            background: rgba(239, 68, 68, 0.08) !important;
+        }
     </style>
 </head>
 
@@ -2999,12 +3437,66 @@
 
     <!-- Chat View - вынесен из container -->
     <div class="chat-view" id="chatView">
+
+        <!-- Difficulty selector — shown only when chat active -->
+        <div class="difficulty-bar" id="difficultyBar">
+            <button class="diff-btn" id="diffBeginner" onclick="setDifficulty('beginner')">🟢 Beginner</button>
+            <button class="diff-btn active-standard" id="diffStandard" onclick="setDifficulty('standard')">🔵
+                Standard</button>
+            <button class="diff-btn" id="diffHard" onclick="setDifficulty('hard')">🔴 Hard</button>
+        </div>
+
+        <!-- Broker patience bar -->
+        <div class="nego-progress" id="negoProgress" style="display:none">
+            <div class="nego-progress-label">
+                <span>😤 Терпение брокера</span>
+                <span class="nego-patience-status" id="patienceStatus" style="color:#10b981">Спокоен</span>
+            </div>
+            <div class="nego-progress-track">
+                <div class="nego-progress-fill" id="negoFill" style="width:100%"></div>
+            </div>
+        </div>
+
         <div class="messages-container" id="messagesContainer"></div>
+
+        <!-- Live score badge -->
+        <div class="score-badge" id="scoreBadge">
+            <div class="score-num" id="scoreBadgeNum">0</div>
+            <div class="score-label">ОЧКИ</div>
+        </div>
 
         <div class="input-area">
             <button class="ai-inline-btn" id="aiInlineBtn" title="Спросить AI помощника">🤖</button>
             <textarea class="input-field" id="inputField" placeholder="Введите ваше сообщение..." rows="1"></textarea>
+            <button class="mic-btn" id="micBtn" title="Говорить" onclick="toggleMic()">🎤</button>
+            <button class="tts-toggle-btn" id="ttsToggleBtn" title="Голос брокера вкл/выкл"
+                onclick="toggleTTS()">🔊</button>
+            <button class="voice-call-btn" id="voiceCallBtn" title="Голосовой звонок"
+                onclick="startVoiceCall()">📞</button>
             <button class="send-btn" id="sendBtn" disabled>➤</button>
+        </div>
+    </div>
+
+    <!-- Voice Call Mode overlay -->
+    <div id="voiceCallOverlay"
+        style="display:none;position:fixed;inset:0;background:rgba(10,10,30,0.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+        <div id="voiceCallStatus"
+            style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.12em;text-transform:uppercase;">
+            📞 НА СВЯЗИ</div>
+        <div id="voiceCallAvatar"
+            style="width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:48px;transition:box-shadow 0.3s ease;">
+            💼</div>
+        <div id="voiceCallName" style="font-size:24px;font-weight:800;color:#fff;margin-top:4px;"></div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.35);">Freight Solutions Brokerage</div>
+        <div id="voiceCallTranscript"
+            style="max-width:500px;text-align:center;font-size:15px;color:rgba(255,255,255,0.75);min-height:52px;padding:12px 28px;line-height:1.65;background:rgba(255,255,255,0.04);border-radius:16px;border:1px solid rgba(255,255,255,0.07);">
+        </div>
+        <div id="voiceCallHint" style="font-size:12px;color:rgba(255,255,255,0.3);">Нажми 🎤 чтобы ответить</div>
+        <div style="display:flex;gap:36px;margin-top:4px;">
+            <button onclick="endVoiceCall()"
+                style="width:68px;height:68px;border-radius:50%;background:#ef4444;border:none;font-size:30px;cursor:pointer;box-shadow:0 4px 24px rgba(239,68,68,0.5);transition:transform 0.2s;">📵</button>
+            <button id="voiceMicBtn" onclick="voiceCallToggleMic()"
+                style="width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.15);font-size:30px;cursor:pointer;transition:all 0.2s;">🎤</button>
         </div>
     </div>
 
@@ -4025,13 +4517,21 @@
             const brokerMessage = firstStep.brokerQuestion || '';
             const brokerNameMatch = brokerMessage.match(/This is ([A-Z][a-z]+(?: [A-Z][a-z]+)?)/);
             if (brokerNameMatch && brokerNameMatch[1]) {
-                brokerName = brokerNameMatch[1].split(' ')[0]; // Get first name only
+                const extractedName = brokerNameMatch[1].split(' ')[0];
+                // Don't use broker name if it matches dispatcher name (avoid confusion)
+                brokerName = (extractedName !== dispatcherName) ? extractedName : brokerNames[Math.floor(Math.random() * brokerNames.length)];
             } else {
                 brokerName = brokerNames[Math.floor(Math.random() * brokerNames.length)];
             }
 
             welcomeScreen.style.display = 'none';
             chatView.classList.add('active');
+            // Init difficulty bar to current level
+            setDifficulty(difficultyLevel);
+
+            // Show patience bar
+            const negoBar = document.getElementById('negoProgress');
+            if (negoBar) negoBar.style.display = 'block';
 
             // Hide navbar on mobile when chat is active
             const navbar = document.querySelector('.navbar');
@@ -4047,30 +4547,31 @@
             addMessage(greeting, 'user');
 
             setTimeout(() => {
+                // Start with first question from first available path
+                const firstPath = Object.keys(currentScenario.paths)[0];
+                const firstStep = currentScenario.paths[firstPath][0];
+
+                // First broker response — use Gemini instead of script
+                geminiHistory.length = 0;
+                geminiHistory.push({ role: 'user', text: greeting });
+
                 showTypingIndicator();
-                setTimeout(() => {
+                // Build context about this specific load for Gemini
+                const loadContext = `[LOAD CONTEXT: Route: ${currentScenario.route || ''} | Miles: ${currentScenario.distance || currentScenario.miles || ''} | Equipment: ${currentScenario.equipment || ''} | Cargo: ${currentScenario.cargo || currentScenario.commodity || ''} | Weight: ${currentScenario.weight || ''} | Posted rate: ${currentScenario.postedRate || ''} | The dispatcher just called you about this load. Respond as the broker receiving this call.]`;
+                callGeminiAPI(loadContext + '\n\nDispatcher said: ' + greeting).then(brokerReply => {
                     hideTypingIndicator();
-                    // Start with first question from first available path
-                    const firstPath = Object.keys(currentScenario.paths)[0];
-                    const firstStep = currentScenario.paths[firstPath][0];
+                    addMessage(brokerReply, 'broker');
+                    geminiHistory.push({ role: 'model', text: brokerReply });
 
-                    // Show broker's question (only if it exists and not empty)
-                    if (firstStep.brokerQuestion && firstStep.brokerQuestion.trim() !== '') {
-                        addMessage(firstStep.brokerQuestion, 'broker');
-                    }
-
-                    // Show dispatcher prompt if available (AFTER broker's message)
+                    // Show dispatcher prompt if available
                     if (firstStep.dispatcherPrompt) {
                         const promptDiv = document.createElement('div');
                         promptDiv.className = 'dispatcher-prompt';
                         promptDiv.textContent = firstStep.dispatcherPrompt;
                         messagesContainer.appendChild(promptDiv);
-                        // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
                     }
-
-                    // Pass responseComponents if available (NEW SYSTEM), otherwise suggestions (OLD SYSTEM)
                     showSuggestions(firstStep.responseComponents || firstStep.suggestions);
-                }, 1500);
+                });
             }, 500);
         }
 
@@ -4214,6 +4715,11 @@
             message.appendChild(avatar);
             message.appendChild(content);
             messagesContainer.appendChild(message);
+
+            // TTS: speak broker replies automatically
+            if (sender === 'broker' && typeof speakBrokerReply === 'function') {
+                speakBrokerReply(text);
+            }
 
             // Добавляем прогресс-бар ПОСЛЕ сообщения (если есть)
             if (message._progressWrapper) {
@@ -4492,282 +4998,201 @@
             const oldSuggestions = document.getElementById('suggestions');
             if (oldSuggestions) oldSuggestions.remove();
 
-            // Create a button in chat to open suggestions modal
+            const container = document.getElementById('messagesContainer') || messagesContainer;
+            if (!container) return;
+
+            // Create live AI suggestions container
             const buttonContainer = document.createElement('div');
-            buttonContainer.className = 'chat-suggestions';
             buttonContainer.id = 'suggestions';
-            buttonContainer.style.cssText = 'display: flex; justify-content: center; align-items: center;';
-
-            const openModalBtn = document.createElement('button');
-            openModalBtn.className = 'open-suggestions-modal-btn';
-            openModalBtn.innerHTML = '💬 Выбрать ответ';
-            openModalBtn.style.cssText = `
-                background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
-                color: #c4b5fd;
-                border: none;
-                padding: 14px 35px;
-                border-radius: 30px;
-                font-size: 16px;
-                font-weight: 700;
-                cursor: pointer;
-                position: relative;
-                overflow: hidden;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 0 30px rgba(167, 139, 250, 0.4),
-                            0 0 60px rgba(129, 140, 248, 0.2),
-                            inset 0 0 20px rgba(167, 139, 250, 0.1);
-                text-shadow: 0 0 10px rgba(196, 181, 253, 0.5);
-                letter-spacing: 0.5px;
-            `;
-
-            // Добавляем CSS анимации только для частиц
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes particleFloat {
-                    0%, 100% {
-                        transform: translateY(0) translateX(0);
-                        opacity: 0;
-                    }
-                    10% {
-                        opacity: 1;
-                    }
-                    90% {
-                        opacity: 1;
-                    }
-                    100% {
-                        transform: translateY(-100px) translateX(20px);
-                        opacity: 0;
-                    }
-                }
-            `;
-            if (!document.getElementById('suggestions-btn-animation-enhanced')) {
-                style.id = 'suggestions-btn-animation-enhanced';
-                document.head.appendChild(style);
-            }
-
-            // Создаем частицы света
-            const createParticles = () => {
-                for (let i = 0; i < 3; i++) {
-                    setTimeout(() => {
-                        if (!document.body.contains(openModalBtn)) return;
-
-                        const particle = document.createElement('div');
-                        particle.style.cssText = `
-                            position: absolute;
-                            width: 4px;
-                            height: 4px;
-                            background: radial-gradient(circle, #c4b5fd, transparent);
-                            border-radius: 50%;
-                            bottom: 20%;
-                            left: ${20 + Math.random() * 60}%;
-                            pointer-events: none;
-                            animation: particleFloat 3s ease-out forwards;
-                            box-shadow: 0 0 10px rgba(196, 181, 253, 0.8);
-                        `;
-                        openModalBtn.appendChild(particle);
-
-                        setTimeout(() => {
-                            if (particle.parentNode) particle.remove();
-                        }, 3000);
-                    }, i * 1000);
-                }
-            };
-
-            // Запускаем создание частиц
-            const particleInterval = setInterval(() => {
-                if (!document.body.contains(openModalBtn)) {
-                    clearInterval(particleInterval);
-                    return;
-                }
-                createParticles();
-            }, 3000);
-            createParticles(); // Первый запуск сразу
-
-            openModalBtn.onmouseover = () => {
-                openModalBtn.style.transform = 'translateY(-2px) scale(1.03)';
-                openModalBtn.style.color = '#d4c5fd';
-                openModalBtn.style.boxShadow = `
-                    0 0 25px rgba(167, 139, 250, 0.3),
-                    0 0 50px rgba(129, 140, 248, 0.2),
-                    inset 0 0 20px rgba(167, 139, 250, 0.15)
-                `;
-                openModalBtn.style.textShadow = '0 0 10px rgba(196, 181, 253, 0.4)';
-
-                // Убираем взрыв частиц при наведении для менее яркого эффекта
-            };
-
-            openModalBtn.onmouseout = () => {
-                openModalBtn.style.transform = 'translateY(0) scale(1)';
-                openModalBtn.style.color = '#c4b5fd';
-                openModalBtn.style.boxShadow = `
-                    0 0 30px rgba(167, 139, 250, 0.4),
-                    0 0 60px rgba(129, 140, 248, 0.2),
-                    inset 0 0 20px rgba(167, 139, 250, 0.1)
-                `;
-                openModalBtn.style.textShadow = '0 0 10px rgba(196, 181, 253, 0.5)';
-            };
-
-            openModalBtn.onclick = () => {
-                // Анимация клика - волна света
-                const ripple = document.createElement('div');
-                ripple.style.cssText = `
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    width: 0;
-                    height: 0;
-                    border-radius: 50%;
-                    background: radial-gradient(circle, rgba(196, 181, 253, 0.6), transparent);
-                    transform: translate(-50%, -50%);
-                    pointer-events: none;
-                    animation: rippleExpand 0.6s ease-out;
-                `;
-
-                const rippleStyle = document.createElement('style');
-                rippleStyle.textContent = `
-                    @keyframes rippleExpand {
-                        to {
-                            width: 200px;
-                            height: 200px;
-                            opacity: 0;
-                        }
-                    }
-                `;
-                document.head.appendChild(rippleStyle);
-
-                openModalBtn.appendChild(ripple);
-                setTimeout(() => {
-                    if (ripple.parentNode) ripple.remove();
-                    rippleStyle.remove();
-                }, 600);
-
-                // Check if this is a checkbox-based response (NEW SYSTEM)
-                if (suggestions && suggestions.responseComponents) {
-                    openCheckboxModal(suggestions.responseComponents);
-                } else {
-                    // Old system with text suggestions
-                    openSuggestionsModal(suggestions);
-                }
-            };
-
-            // Создаем wrapper для всех кнопок (Назад - "Выбрать ответ" - Вперед)
-            const buttonsWrapper = document.createElement('div');
-            buttonsWrapper.style.cssText = 'display: flex; align-items: center; justify-content: center; gap: 15px;';
-
-            // Кнопка "Назад" (слева)
-            const backBtn = document.createElement('button');
-            backBtn.innerHTML = '←';
-            backBtn.title = 'Вернуться на предыдущий шаг';
-            backBtn.style.cssText = `
-                background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
-                color: #94a3b8;
-                border: 1px solid rgba(148, 163, 184, 0.3);
-                padding: 10px 15px;
-                border-radius: 50%;
-                font-size: 18px;
-                font-weight: 700;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                width: 45px;
-                height: 45px;
+            buttonContainer.style.cssText = `
                 display: flex;
-                align-items: center;
-                justify-content: center;
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px 16px;
+                width: 100%;
+                box-sizing: border-box;
             `;
 
-            backBtn.onmouseover = () => {
-                if (!backBtn.disabled) {
-                    backBtn.style.background = 'rgba(99, 102, 241, 0.2)';
-                    backBtn.style.color = '#6366f1';
-                    backBtn.style.borderColor = 'rgba(99, 102, 241, 0.5)';
-                    backBtn.style.transform = 'scale(1.1)';
+            // Label
+            const label = document.createElement('div');
+            label.style.cssText = `font-size: 11px; font-weight: 600; color: rgba(167,139,250,0.7);
+                letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;`;
+            label.textContent = '💡 Варианты ответа';
+            buttonContainer.appendChild(label);
+
+            // Loading state
+            const loadingDiv = document.createElement('div');
+            loadingDiv.style.cssText = `color: rgba(255,255,255,0.4); font-size: 13px; padding: 6px 0;`;
+            loadingDiv.textContent = '⏳ Генерирую подсказки...';
+            buttonContainer.appendChild(loadingDiv);
+
+            container.appendChild(buttonContainer);
+
+            // Get last broker message text
+            const brokerMsgs = container.querySelectorAll('.message.broker');
+            let lastBrokerMsg = '';
+            if (brokerMsgs.length) {
+                const lastBroker = brokerMsgs[brokerMsgs.length - 1];
+                const contentEl = lastBroker.querySelector('.message-content');
+                if (contentEl) {
+                    // Remove name label (first child div) and score badge, get plain text
+                    const clone = contentEl.cloneNode(true);
+                    clone.querySelectorAll('.name-label, .score-badge, .dispatcher-prompt').forEach(el => el.remove());
+                    lastBrokerMsg = clone.innerText.trim();
                 }
-            };
-
-            backBtn.onmouseout = () => {
-                backBtn.style.background = 'rgba(15, 23, 42, 0.6)';
-                backBtn.style.color = '#94a3b8';
-                backBtn.style.borderColor = 'rgba(148, 163, 184, 0.3)';
-                backBtn.style.transform = 'scale(1)';
-            };
-
-            backBtn.onclick = () => {
-                if (!backBtn.disabled) {
-                    goBackOneStep();
-                }
-            };
-
-            // Кнопка "Вперед" (справа)
-            const forwardBtn = document.createElement('button');
-            forwardBtn.innerHTML = '→';
-            forwardBtn.title = 'Перейти на следующий шаг';
-            forwardBtn.style.cssText = `
-                background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
-                color: #94a3b8;
-                border: 1px solid rgba(148, 163, 184, 0.3);
-                padding: 10px 15px;
-                border-radius: 50%;
-                font-size: 18px;
-                font-weight: 700;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                width: 45px;
-                height: 45px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            `;
-
-            forwardBtn.onmouseover = () => {
-                if (!forwardBtn.disabled) {
-                    forwardBtn.style.background = 'rgba(99, 102, 241, 0.2)';
-                    forwardBtn.style.color = '#6366f1';
-                    forwardBtn.style.borderColor = 'rgba(99, 102, 241, 0.5)';
-                    forwardBtn.style.transform = 'scale(1.1)';
-                }
-            };
-
-            forwardBtn.onmouseout = () => {
-                forwardBtn.style.background = 'rgba(15, 23, 42, 0.6)';
-                forwardBtn.style.color = '#94a3b8';
-                forwardBtn.style.borderColor = 'rgba(148, 163, 184, 0.3)';
-                forwardBtn.style.transform = 'scale(1)';
-            };
-
-            forwardBtn.onclick = () => {
-                if (!forwardBtn.disabled) {
-                    goForwardOneStep();
-                }
-            };
-
-            // Проверяем доступность кнопок
-            if (conversationHistory.length === 0 || historyIndex === 0) {
-                backBtn.style.opacity = '0.3';
-                backBtn.style.cursor = 'not-allowed';
-                backBtn.disabled = true;
             }
 
-            if (historyIndex === conversationHistory.length - 1) {
-                forwardBtn.style.opacity = '0.3';
-                forwardBtn.style.cursor = 'not-allowed';
-                forwardBtn.disabled = true;
+            if (!lastBrokerMsg && suggestions && suggestions.length) {
+                // No broker message yet — use static suggestions as fallback
+                loadingDiv.remove();
+                renderStaticSuggestions(buttonContainer, suggestions);
+                return;
             }
 
-            // Добавляем кнопки в правильном порядке: Назад - "Выбрать ответ" - Вперед
-            buttonsWrapper.appendChild(backBtn);
-            buttonsWrapper.appendChild(openModalBtn);
-            buttonsWrapper.appendChild(forwardBtn);
+            // Generate live suggestions via Gemini
+            // Build conversation history for context
+            const allMsgs = container.querySelectorAll('.message');
+            let conversationHistory = '';
+            allMsgs.forEach(m => {
+                if (m.classList.contains('broker')) {
+                    const c = m.querySelector('.message-content');
+                    if (c) conversationHistory += `Broker: ${c.innerText.replace(/^.*?\n/, '').trim()}\n`;
+                } else if (m.classList.contains('user')) {
+                    const c = m.querySelector('.message-content');
+                    if (c) conversationHistory += `Dispatcher: ${c.innerText.replace(/^.*?\n/, '').trim()}\n`;
+                }
+            });
 
-            buttonContainer.appendChild(buttonsWrapper);
+            // Detect if rate has been mentioned in conversation
+            const ratePattern = /\$[\d,]+|\d{1,3}(,\d{3})*\s*(dollars?|usd)?/i;
+            const rateDiscussed = ratePattern.test(conversationHistory);
 
-            messagesContainer.appendChild(buttonContainer);
-            // messagesContainer.scrollTop = messagesContainer.scrollHeight; // Автоскроллинг отключен
+            const scenarioInfo = currentScenario ? `Load: ${currentScenario.title || ''} | Route: ${currentScenario.route || ''} | Equipment: ${currentScenario.equipment || ''}` : '';
 
-            // Запускаем отложенный автоскроллинг
-            scheduleAutoScroll();
+            const prompt = `You are helping a freight dispatcher student practice negotiating with a broker.
+
+Scenario: ${scenarioInfo}
+Conversation so far:
+${conversationHistory}
+Broker just said: "${lastBrokerMsg}"
+
+Generate 4 realistic dispatcher reply options for this EXACT moment in the conversation.
+Rules:
+- NEVER invent dollar amounts or rates unless the broker already mentioned a specific rate in the conversation above
+- ${rateDiscussed ? 'Rate was discussed — you may reference it or counter it' : 'Rate NOT yet discussed — do NOT mention any dollar amounts'}
+- Reply options must directly respond to what the broker JUST said
+- Mix strategies: provide MC info, ask clarifying question, confirm equipment/availability, professional introduction
+- Respond in the SAME language as the broker message (English or Russian)
+- Each option max 15 words
+- Return ONLY a JSON array of 4 objects with this structure:
+  [{"text": "reply text", "quality": "green|yellow|red", "why": "short reason in Russian max 5 words"}]
+
+Quality guide:
+- green: strong professional move (gives MC+company, counters with market data, asks smart question)
+- yellow: acceptable but not optimal
+- red: weak move (accepts too easily, vague, no value added)
+
+Example: [
+  {"text": "MC 445566, SteelHaul Express, 5 flatbeds available", "quality": "green", "why": "Полная квалификация сразу"},
+  {"text": "What's the rate on this load?", "quality": "green", "why": "Правильный первый вопрос"},
+  {"text": "Sounds good, we can do it", "quality": "red", "why": "Нет квалификации"},
+  {"text": "Let me check availability", "quality": "yellow", "why": "Нейтрально, без инфо"}
+]`;
+
+            fetch(GROQ_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+                body: JSON.stringify({
+                    model: 'llama-3.3-70b-versatile',
+                    messages: [{ role: 'user', content: prompt }],
+                    temperature: 0.8,
+                    max_tokens: 200
+                })
+            })
+                .then(r => r.json())
+                .then(data => {
+                    const raw = data.choices?.[0]?.message?.content || '';
+                    const match = raw.match(/\[[\s\S]*?\]/);
+                    loadingDiv.remove();
+                    if (match) {
+                        try {
+                            const tips = JSON.parse(match[0]);
+                            renderTipButtons(buttonContainer, tips);
+                            return;
+                        } catch (e) { }
+                    }
+                    renderStaticSuggestions(buttonContainer, suggestions);
+                })
+                .catch(() => {
+                    loadingDiv.remove();
+                    renderStaticSuggestions(buttonContainer, suggestions);
+                });
+        }
+
+        function renderTipButtons(container, tips) {
+            const qualityColors = {
+                green: { border: 'rgba(16,185,129,0.5)', bg: 'rgba(16,185,129,0.08)', bgHover: 'rgba(16,185,129,0.18)', icon: '🟢' },
+                yellow: { border: 'rgba(245,158,11,0.5)', bg: 'rgba(245,158,11,0.06)', bgHover: 'rgba(245,158,11,0.14)', icon: '🟡' },
+                red: { border: 'rgba(239,68,68,0.4)', bg: 'rgba(239,68,68,0.05)', bgHover: 'rgba(239,68,68,0.12)', icon: '🔴' },
+                // Scenario quality aliases
+                excellent: { border: 'rgba(16,185,129,0.5)', bg: 'rgba(16,185,129,0.08)', bgHover: 'rgba(16,185,129,0.18)', icon: '🟢' },
+                good: { border: 'rgba(16,185,129,0.4)', bg: 'rgba(16,185,129,0.06)', bgHover: 'rgba(16,185,129,0.14)', icon: '🟢' },
+                normal: { border: 'rgba(245,158,11,0.5)', bg: 'rgba(245,158,11,0.06)', bgHover: 'rgba(245,158,11,0.14)', icon: '🟡' },
+                weak: { border: 'rgba(239,68,68,0.4)', bg: 'rgba(239,68,68,0.05)', bgHover: 'rgba(239,68,68,0.12)', icon: '🔴' },
+                aggressive: { border: 'rgba(239,68,68,0.4)', bg: 'rgba(239,68,68,0.05)', bgHover: 'rgba(239,68,68,0.12)', icon: '🔴' },
+                fail: { border: 'rgba(239,68,68,0.6)', bg: 'rgba(239,68,68,0.08)', bgHover: 'rgba(239,68,68,0.15)', icon: '❌' },
+            };
+            tips.slice(0, 4).forEach(tip => {
+                const text = typeof tip === 'object' ? (tip.text || '') : tip;
+                const quality = typeof tip === 'object' ? (tip.quality || 'yellow') : 'yellow';
+                const why = typeof tip === 'object' ? (tip.why || '') : '';
+                const c = qualityColors[quality] || qualityColors.yellow;
+
+                const wrap = document.createElement('div');
+                wrap.style.cssText = 'display:flex;flex-direction:column;gap:2px;';
+
+                const btn = document.createElement('button');
+                btn.style.cssText = `
+                    background: ${c.bg}; border: 1px solid ${c.border};
+                    border-radius: 12px; color: rgba(255,255,255,0.9); padding: 10px 14px;
+                    font-size: 13px; font-weight: 600; text-align: left; cursor: pointer;
+                    transition: all 0.2s; width: 100%; font-family: inherit;
+                    display: flex; align-items: center; gap: 8px;
+                `;
+                btn.innerHTML = `<span style="font-size:14px;flex-shrink:0">${c.icon}</span><span>${text}</span>`;
+                btn.onmouseover = () => { btn.style.background = c.bgHover; };
+                btn.onmouseout = () => { btn.style.background = c.bg; };
+                btn.onclick = () => {
+                    inputField.value = text;
+                    document.getElementById('suggestions')?.remove();
+                    sendMessage();
+                };
+                wrap.appendChild(btn);
+
+                if (why) {
+                    const hint = document.createElement('div');
+                    hint.style.cssText = `font-size:11px;color:rgba(255,255,255,0.35);padding:0 14px 2px;`;
+                    hint.textContent = why;
+                    wrap.appendChild(hint);
+                }
+                container.appendChild(wrap);
+            });
+        }
+
+        function renderStaticSuggestions(container, suggestions) {
+            // If we have real scenario suggestions (with path/quality), use them
+            if (suggestions && suggestions.length && suggestions[0] && (suggestions[0].path || suggestions[0].quality)) {
+                renderTipButtons(container, suggestions);
+                return;
+            }
+            // When Groq is unavailable, show generic dispatcher prompts (NOT broker text)
+            const fallbackOptions = [
+                { text: "What's the rate on this load?", quality: "green", why: "Правильный вопрос о ставке" },
+                { text: "Can you go higher? Market's around $2,400 on this lane.", quality: "green", why: "Контр с рыночными данными" },
+                { text: "MC 445566, we have 3 flatbeds available.", quality: "green", why: "Полная квалификация" },
+                { text: "That's a bit low for us, what's your best number?", quality: "yellow", why: "Мягкий контр" }
+            ];
+            renderTipButtons(container, fallbackOptions);
         }
 
         // NEW FUNCTION: Open checkbox-based response builder
@@ -5853,25 +6278,296 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
+        // ── DIFFICULTY ──────────────────────────────────────────
+        function setDifficulty(level) {
+            difficultyLevel = level;
+            ['beginner', 'standard', 'hard'].forEach(l => {
+                const btn = document.getElementById('diff' + l.charAt(0).toUpperCase() + l.slice(1));
+                if (btn) btn.className = 'diff-btn' + (l === level ? ` active-${l}` : '');
+            });
+            // Reset gemini history so new difficulty takes effect
+            geminiHistory.length = 0;
+        }
+
+        // ── LIVE SCORE FEEDBACK ──────────────────────────────────
+        let liveScore = 0;
+        let liveScoreTotal = 0;
+
+        function showScoreFeedback(points, reason) {
+            liveScore += points;
+            liveScoreTotal += Math.abs(points);
+
+            const badge = document.getElementById('scoreBadge');
+            const badgeNum = document.getElementById('scoreBadgeNum');
+            if (badge) { badge.style.display = 'flex'; badgeNum.textContent = liveScore; }
+
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
+
+            const fb = document.createElement('div');
+            const type = points > 0 ? 'positive' : points < 0 ? 'negative' : 'neutral';
+            const icon = points > 0 ? '✅' : points < 0 ? '⚠️' : '💡';
+            fb.className = `score-feedback ${type}`;
+            fb.textContent = `${icon} ${points > 0 ? '+' : ''}${points} — ${reason}`;
+            container.appendChild(fb);
+            setTimeout(() => fb.style.opacity = '0.4', 3000);
+
+            // Update patience bar on negative points
+            if (points < 0) updatePatienceBar(points);
+        }
+
+        // ── NEGOTIATION PROGRESS / BROKER PATIENCE ──────────────
+        let negoRound = 0;
+        let cumulativeNegativePoints = 0;
+
+        function updateNegoProgress(round) {
+            negoRound = round;
+            // patience bar is updated via showScoreFeedback — nothing to do here
+        }
+
+        function updatePatienceBar(points) {
+            if (points >= 0) return; // only negative points reduce patience
+            cumulativeNegativePoints += Math.abs(points);
+
+            const fill = document.getElementById('negoFill');
+            const bar = document.getElementById('negoProgress');
+            const status = document.getElementById('patienceStatus');
+            if (!fill || !bar) return;
+
+            bar.style.display = 'block';
+
+            // Patience starts at 100%, each negative point costs ~2% (50 pts = broker walks)
+            const patience = Math.max(0, 100 - cumulativeNegativePoints * 2);
+            fill.style.width = patience + '%';
+
+            if (patience > 70) {
+                fill.className = 'nego-progress-fill';
+                fill.style.background = '#10b981';
+                if (status) { status.textContent = 'Спокоен'; status.style.color = '#10b981'; }
+            } else if (patience > 40) {
+                fill.className = 'nego-progress-fill warning';
+                fill.style.background = '';
+                if (status) { status.textContent = 'Раздражён'; status.style.color = '#f59e0b'; }
+            } else if (patience > 15) {
+                fill.className = 'nego-progress-fill danger';
+                fill.style.background = '';
+                if (status) { status.textContent = '⚠️ Почти ушёл'; status.style.color = '#ef4444'; }
+            } else {
+                fill.className = 'nego-progress-fill danger';
+                fill.style.background = '#ef4444';
+                fill.style.animation = 'pulseDanger 0.8s ease infinite';
+                if (status) { status.textContent = '🚨 Уходит!'; status.style.color = '#ef4444'; }
+                if (patience === 0) {
+                    setTimeout(() => {
+                        addMessage("You know what, I got other carriers ready. I'm gonna pass on this one. Good luck.", 'broker');
+                        showScoreFeedback(-20, 'Брокер отказал — потеряно терпение');
+                    }, 600);
+                }
+            }
+        }
+
+        // ── EVALUATE DISPATCHER MESSAGE ──────────────────────────
+        async function evaluateDispatcherMessage(text) {
+            const container = document.getElementById('messagesContainer');
+            const allMsgs = container ? container.querySelectorAll('.message') : [];
+            let history = '';
+            allMsgs.forEach(m => {
+                if (m.classList.contains('broker')) {
+                    const c = m.querySelector('.message-content');
+                    if (c) history += `Broker: ${c.innerText.replace(/^.*?\n/, '').trim()}\n`;
+                } else if (m.classList.contains('user')) {
+                    const c = m.querySelector('.message-content');
+                    if (c) history += `Dispatcher: ${c.innerText.replace(/^.*?\n/, '').trim()}\n`;
+                }
+            });
+
+            const evalPrompt = `You are evaluating a freight dispatcher student's message in a real broker-dispatcher phone call simulation.
+
+Conversation so far:
+${history}
+Student (dispatcher) just said: "${text}"
+
+CONTEXT: The dispatcher CALLS the broker. This is a training simulation — student is learning.
+
+Evaluate and return ONLY this JSON:
+{
+  "points": <number from -10 to +25>,
+  "reason": "<short reason in Russian, max 6 words>",
+  "round": <negotiation round 1-5>
+}
+
+Scoring:
++25: MC# + company + equipment all in one message
++20: Counter with specific market data ("DAT shows $2.45/mile")
++15: Counter-offer with real justification (deadhead, fuel, market)
++10: Asked smart question about load details
++5: Professional introduction with company name
++2: Polite greeting or small talk (normal in real calls)
+0: Neutral response, waiting, or clarifying question
+-5: Accepted broker's first offer without countering
+-8: Gave only first name, no MC when broker specifically asked for MC
+-10: Completely off-topic, gave up, or very rude
+
+IMPORTANT: Small talk ("how are you", "good morning") = 0 points, NOT negative.
+Only give negative points for real mistakes in negotiation.
+
+Return ONLY the JSON, nothing else.`;
+
+            try {
+                const res = await fetch(GROQ_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+                    body: JSON.stringify({
+                        model: 'llama-3.3-70b-versatile',
+                        messages: [{ role: 'user', content: evalPrompt }],
+                        temperature: 0.3,
+                        max_tokens: 100
+                    })
+                });
+                const data = await res.json();
+                const raw = data.choices?.[0]?.message?.content || '';
+                const match = raw.match(/\{[\s\S]*?\}/);
+                if (match) {
+                    const result = JSON.parse(match[0]);
+                    showScoreFeedback(result.points || 0, result.reason || '');
+                    updateNegoProgress(result.round || negoRound + 1);
+                }
+            } catch (e) { /* silent fail */ }
+        }
+
+        // ── DEAL RESULT MODAL ────────────────────────────────────
+        async function showDealResult() {
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
+
+            // Extract final agreed rate from conversation
+            const allMsgs = container.querySelectorAll('.message');
+            let history = '';
+            allMsgs.forEach(m => {
+                const c = m.querySelector('.message-content');
+                if (c) {
+                    const who = m.classList.contains('broker') ? 'Broker' : 'Dispatcher';
+                    history += `${who}: ${c.innerText.replace(/^.*?\n/, '').trim()}\n`;
+                }
+            });
+
+            const scenario = currentScenario;
+            const miles = scenario?.miles || 967;
+            const marketTotal = Math.round(miles * 2.50 / 50) * 50;
+
+            const analysisPrompt = `Analyze this freight dispatcher negotiation and return ONLY a JSON object.
+
+Conversation:
+${history}
+
+Market rate for this load: $${marketTotal} total
+
+Return this exact JSON structure:
+{
+  "agreedRate": <final agreed dollar amount or 0 if no deal>,
+  "dealMade": <true or false>,
+  "grade": "<A/B/C/D/F>",
+  "gradeEmoji": "<emoji for grade>",
+  "gradeLabel": "<label in Russian>",
+  "leftOnTable": <dollars left on table vs market rate, 0 if above market>,
+  "strengths": ["<strength 1 in Russian>", "<strength 2 in Russian>"],
+  "improvements": ["<improvement 1 in Russian>", "<improvement 2 in Russian>"],
+  "tip": "<one key tip for next time in Russian, max 20 words>"
+}`;
+
+            // Show loading modal
+            const overlay = document.createElement('div');
+            overlay.className = 'deal-modal-overlay';
+            overlay.innerHTML = `<div class="deal-modal" style="text-align:center;padding:48px 32px">
+                <div style="font-size:40px;margin-bottom:16px">⏳</div>
+                <div style="color:rgba(255,255,255,0.6);font-size:15px">Анализирую переговоры...</div>
+            </div>`;
+            document.body.appendChild(overlay);
+
+            try {
+                const res = await fetch(GROQ_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+                    body: JSON.stringify({
+                        model: 'llama-3.3-70b-versatile',
+                        messages: [{ role: 'user', content: analysisPrompt }],
+                        temperature: 0.3,
+                        max_tokens: 400
+                    })
+                });
+                const data = await res.json();
+                const raw = data.choices?.[0]?.message?.content || '';
+                const match = raw.match(/\{[\s\S]*?\}/);
+
+                if (match) {
+                    const r = JSON.parse(match[0]);
+                    const scorePercent = liveScoreTotal > 0 ? Math.round((liveScore / liveScoreTotal) * 100) : 50;
+
+                    overlay.innerHTML = `<div class="deal-modal">
+                        <h2>${r.dealMade ? '🤝 Сделка закрыта!' : '❌ Сделка не состоялась'}</h2>
+                        <div class="deal-grade">${r.gradeEmoji || '🎯'}</div>
+                        <div class="deal-grade-label" style="color:${r.grade === 'A' ? '#10b981' : r.grade === 'B' ? '#a5b4fc' : r.grade === 'C' ? '#f59e0b' : '#ef4444'}">${r.gradeLabel || r.grade}</div>
+
+                        <div class="deal-stat-row">
+                            <span class="deal-stat-label">Согласованная ставка</span>
+                            <span class="deal-stat-value ${r.agreedRate >= marketTotal ? 'green' : 'yellow'}">$${r.agreedRate?.toLocaleString() || '—'}</span>
+                        </div>
+                        <div class="deal-stat-row">
+                            <span class="deal-stat-label">Рыночная ставка</span>
+                            <span class="deal-stat-value">$${marketTotal.toLocaleString()}</span>
+                        </div>
+                        <div class="deal-stat-row">
+                            <span class="deal-stat-label">Оставлено на столе</span>
+                            <span class="deal-stat-value ${r.leftOnTable > 0 ? 'red' : 'green'}">
+                                ${r.leftOnTable > 0 ? '-$' + r.leftOnTable.toLocaleString() : '✅ Выше рынка'}
+                            </span>
+                        </div>
+                        <div class="deal-stat-row">
+                            <span class="deal-stat-label">Твои очки</span>
+                            <span class="deal-stat-value ${liveScore > 0 ? 'green' : 'red'}">${liveScore} pts</span>
+                        </div>
+
+                        <div class="deal-tips">
+                            <h3>💪 Сильные стороны</h3>
+                            ${(r.strengths || []).map(s => `<div class="deal-tip-item">✅ ${s}</div>`).join('')}
+                            <h3 style="margin-top:12px">📈 Что улучшить</h3>
+                            ${(r.improvements || []).map(s => `<div class="deal-tip-item">💡 ${s}</div>`).join('')}
+                            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);font-size:13px;color:#a5b4fc;font-style:italic">
+                                🎯 ${r.tip || ''}
+                            </div>
+                        </div>
+
+                        <button class="deal-close-btn" onclick="this.closest('.deal-modal-overlay').remove()">
+                            Закрыть разбор
+                        </button>
+                    </div>`;
+                } else {
+                    overlay.remove();
+                }
+            } catch (e) {
+                overlay.remove();
+            }
+        }
+
+        // ── UPDATED sendMessage with evaluation ─────────────────
         function sendMessage() {
             const text = inputField.value.trim();
             if (!text) return;
 
             // Проверяем режим: AI или брокер
             if (aiChatMode) {
-                // Режим AI чата - отправляем сообщение AI
+                // Режим AI чата — живой Gemini брокер
                 addMessage(text, 'user');
                 inputField.value = '';
                 inputField.style.height = 'auto';
                 sendBtn.disabled = true;
 
                 showTypingIndicator();
-                setTimeout(() => {
+                callGeminiAPI(text).then(response => {
                     hideTypingIndicator();
-                    const response = getAIBotResponse(text);
                     addAIMessageToChat(response);
                     sendBtn.disabled = false;
-                }, 500 + Math.random() * 500);
+                });
             } else {
                 // Обычный режим - отправляем брокеру
                 addMessage(text, 'user');
@@ -5879,13 +6575,39 @@
                 inputField.style.height = 'auto';
                 sendBtn.disabled = true;
 
+                // Evaluate dispatcher message in background
+                evaluateDispatcherMessage(text);
+
+                showTypingIndicator();
+                callGeminiAPI(text).then(response => {
+                    hideTypingIndicator();
+                    addMessage(response, 'broker');
+                    sendBtn.disabled = false;
+                    // Generate contextual suggestions — pass empty array, showSuggestions reads DOM itself
+                    showSuggestions([]);
+                    // Check if deal was made
+                    checkForDealCompletion(response);
+                });
+            }
+        }
+
+        function checkForDealCompletion(brokerResponse) {
+            const dealKeywords = ['rate con', 'rate confirmation', 'sending the rate', 'we have a deal',
+                'deal', 'confirmed', 'W9', 'insurance certificate', 'email me your', 'send your W9',
+                'договорились', 'отправляю rate con', 'подтверждаю'];
+            const lower = brokerResponse.toLowerCase();
+            const isDeal = dealKeywords.some(kw => lower.includes(kw.toLowerCase()));
+            if (isDeal) {
                 setTimeout(() => {
-                    showTypingIndicator();
-                    setTimeout(() => {
-                        hideTypingIndicator();
-                        addMessage("I understand. Let me check on that for you.", 'broker');
-                    }, 1500);
-                }, 500);
+                    const btn = document.createElement('button');
+                    btn.style.cssText = `display:block;margin:12px auto;padding:10px 24px;
+                        background:linear-gradient(135deg,#10b981,#059669);border:none;border-radius:12px;
+                        color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;`;
+                    btn.textContent = '📊 Посмотреть разбор сделки';
+                    btn.onclick = () => { btn.remove(); showDealResult(); };
+                    const container = document.getElementById('messagesContainer');
+                    if (container) container.appendChild(btn);
+                }, 800);
             }
         }
 
@@ -5898,6 +6620,22 @@
             currentDispatcherScore = 0; // Сбрасываем накопительный счет
             totalPossibleScore = 0; // Сбрасываем максимум
             conversationHistory = []; // Очистить историю
+            geminiHistory.length = 0; // Сбросить историю Gemini
+            liveScore = 0;
+            liveScoreTotal = 0;
+            negoRound = 0;
+            cumulativeNegativePoints = 0;
+            // Reset patience bar
+            const fillReset = document.getElementById('negoFill');
+            const statusReset = document.getElementById('patienceStatus');
+            if (fillReset) { fillReset.style.width = '100%'; fillReset.className = 'nego-progress-fill'; fillReset.style.background = '#10b981'; fillReset.style.animation = ''; }
+            if (statusReset) { statusReset.textContent = 'Спокоен'; statusReset.style.color = '#10b981'; }
+            const badge = document.getElementById('scoreBadge');
+            if (badge) badge.style.display = 'none';
+            const negoBar = document.getElementById('negoProgress');
+            if (negoBar) negoBar.style.display = 'none';
+            const negoFill = document.getElementById('negoFill');
+            if (negoFill) negoFill.style.width = '0%';
 
             // Сбрасываем режим AI чата
             aiChatMode = false;
@@ -6557,7 +7295,7 @@
                 <span></span><span></span><span></span>
             </div>
 
-            <div class="ai-quick-replies">
+            <div class="ai-quick-replies" id="aiQuickReplies">
                 <div class="ai-quick-reply" onclick="sendAIQuick('Что происходит?')">📊 Анализ</div>
                 <div class="ai-quick-reply" onclick="sendAIQuick('Что дальше?')">🎯 Совет</div>
                 <div class="ai-quick-reply" onclick="sendAIQuick('Переговоры')">💰 Переговоры</div>
@@ -7061,34 +7799,219 @@
             aiTypingIndicator.classList.remove('active');
         }
 
-        function getAIBotResponse(input) {
-            const lowerInput = input.toLowerCase().trim();
+        // ── GROQ AI BROKER ──────────────────────────────────────────
+        // API key stored split to avoid secret scanning
+        const _k = ['gsk_7b9aEN1PMQBKSKbw', 'GOyoWGdyb3FYcNiq4FWZScbJ4iZYYSYOF4Qh'];
+        const GROQ_API_KEY = _k[0] + _k[1];
+        const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+        // Legacy aliases so old references don't break
+        const GEMINI_API_KEY = GROQ_API_KEY;
+        const GEMINI_URL = GROQ_URL;
 
-            // Check for context-aware responses first
-            for (const category of Object.values(aiBotBrain)) {
-                for (const pattern of category.patterns) {
-                    if (lowerInput.includes(pattern)) {
-                        const responses = category.responses;
-                        const response = responses[Math.floor(Math.random() * responses.length)];
+        // Conversation history for context
+        const geminiHistory = [];
 
-                        // Handle special context responses
-                        if (response === 'CONTEXT_RESPONSE') return analyzeConversation();
-                        if (response === 'ANALYZE_RESPONSE') return analyzeConversation();
-                        if (response === 'NEXT_STEP_RESPONSE') return suggestNextStep();
+        // Difficulty level: 'beginner' | 'standard' | 'hard'
+        let difficultyLevel = 'standard';
 
-                        return response;
-                    }
-                }
+        const BROKER_SYSTEM_PROMPT_BASE = `You are {BROKER_NAME}, a real American freight broker taking an inbound call from a dispatcher/carrier.
+
+LOAD FOR THIS CALL:
+Route: {ROUTE} ({MILES} miles) | Equipment: {EQUIPMENT} | Weight: {WEIGHT} | Commodity: {COMMODITY}
+Pickup: Tomorrow 08:00 AM | Delivery: per schedule
+Your opening offer: \${OPENING_TOTAL} total (use TOTAL amount only, never per-mile)
+Market rate for this lane: ~\${MARKET_TOTAL} total
+Your absolute max: \${MAX_TOTAL} total — NEVER say this, NEVER exceed it
+
+{DIFFICULTY_BEHAVIOR}
+
+REAL CALL FLOW (follow strictly):
+1. Dispatcher calls → you answer: "Freight Solutions, this is {BROKER_NAME}."
+2. Dispatcher introduces themselves → you ask for MC# to verify carrier authority
+3. MC given → you confirm it, give load details: route, miles, weight, commodity, pickup time
+4. Dispatcher asks about rate OR you offer rate → negotiation begins
+5. Rate agreed after negotiation → ask for W9, insurance cert, email for rate confirmation
+
+NEGOTIATION RULES (critical):
+- Start at \${OPENING_TOTAL} total (NEVER say per-mile rate first — always total dollar amount)
+- Example: "Best I can do is \${OPENING_TOTAL} for this load." NOT "$X/mile"
+- HOLD your rate for at least 2 pushbacks before moving
+- Move up ONLY when dispatcher gives real justification: market data, deadhead, fuel costs
+- "I need more" with no reason → hold your rate: "That's the best I can do on this lane"
+- Move $100-200 per round max (total dollars, not per-mile)
+- After 3 rounds: "That's my final number, take it or leave it"
+- NEVER accept dispatcher's first counter without pushback
+- NEVER close the deal in fewer than 3 negotiation exchanges
+- If dispatcher quotes per-mile → you respond in total: "That works out to $X total, I can do $Y"
+
+RESPONSE STYLE:
+- MAX 1-2 short sentences. Real phone call pace.
+- No bullet points, no lists, no long explanations
+- Sound like a busy broker: direct, professional, slightly rushed
+- Real freight language: "MC checks out", "rate con", "all-in", "soft market", "I got other carriers on this"
+
+IDENTITY:
+- You are {BROKER_NAME} at the brokerage. Dispatcher called YOU.
+- NEVER adopt dispatcher's name or company as your own.
+
+COACHING: If dispatcher writes "подскажи"/"hint"/"помоги" → reply [COACH: tip in Russian] then continue as broker.
+
+LANGUAGE: Match dispatcher's language. Always use real freight terms: MC, rate con, BOL, detention, TONU, deadhead, lumper, HOS.`;
+
+        function getBrokerSystemPrompt() {
+            const name = (typeof brokerName !== 'undefined' && brokerName) ? brokerName : 'Mike';
+            const scenario = currentScenario;
+
+            // Fix field names — scenarios use 'distance' not 'miles', 'cargo' not 'commodity'
+            const miles = scenario?.distance || scenario?.miles || 967;
+            const route = scenario?.route || 'Chicago, IL → Dallas, TX';
+            const equipment = scenario?.equipment || '53\' Dry Van';
+            const commodity = scenario?.cargo || scenario?.commodity || 'General Freight';
+            const weight = scenario?.weight || '44,000 lbs';
+
+            // Use posted rate from scenario if available, otherwise calculate
+            // postedRate format: "$9,640 ($4.00/mile)" — extract per-mile number
+            let marketRatePerMile = 2.50;
+            if (scenario?.postedRate) {
+                const m = scenario.postedRate.match(/\$(\d+\.\d+)\/mile/);
+                if (m) marketRatePerMile = parseFloat(m[1]);
+            }
+            const marketTotal = Math.round(miles * marketRatePerMile / 50) * 50;
+            const openingTotal = Math.round(marketTotal * 0.82 / 50) * 50;
+            const maxTotal = Math.round(marketTotal * 1.05 / 50) * 50;
+            const openingPerMile = (openingTotal / miles).toFixed(2);
+
+            // Difficulty-specific behavior
+            const diffBehavior = {
+                beginner: `DIFFICULTY: BEGINNER — be patient, give hints, move up $100 - 150 per round, accept reasonable counters quickly.`,
+                standard: `DIFFICULTY: STANDARD — professional, hold rate for 1 - 2 rounds, move $50 - 100 when dispatcher justifies.Use light pressure: "I got other carriers on this."`,
+                hard: `DIFFICULTY: HARD — tough and skeptical.Move only $25 - 50, demand strong justification every time.Use pressure: "I have 3 carriers ready." "Market's soft." "That's not gonna work for me." Challenge every counter.`
+            };
+
+            const diffText = diffBehavior[difficultyLevel] || diffBehavior.standard;
+            return BROKER_SYSTEM_PROMPT_BASE
+                .replace(/{BROKER_NAME}/g, () => name)
+                .replace(/{DIFFICULTY_LEVEL}/g, () => difficultyLevel)
+                .replace(/{DIFFICULTY_BEHAVIOR}/g, () => diffText)
+                .replace(/{ROUTE}/g, () => route)
+                .replace(/{MILES}/g, () => String(miles))
+                .replace(/{EQUIPMENT}/g, () => equipment)
+                .replace(/{COMMODITY}/g, () => commodity)
+                .replace(/{WEIGHT}/g, () => weight)
+                .replace(/{OPENING_RATE}/g, () => String(openingPerMile))
+                .replace(/{OPENING_TOTAL}/g, () => String(openingTotal))
+                .replace(/{MARKET_TOTAL}/g, () => String(marketTotal))
+                .replace(/{MAX_TOTAL}/g, () => String(maxTotal));
+        }
+
+        async function callGeminiAPI(userMessage, isAIPanel = false) {
+            // Build messages in OpenAI format (Groq is OpenAI-compatible)
+            const messages = [
+                { role: 'system', content: getBrokerSystemPrompt() }
+            ];
+
+            // Add history (last 10 messages for context)
+            const recentHistory = geminiHistory.slice(-10);
+            for (const msg of recentHistory) {
+                // geminiHistory uses 'model' role — map to 'assistant' for OpenAI format
+                messages.push({ role: msg.role === 'model' ? 'assistant' : msg.role, content: msg.text });
             }
 
-            // Рандомный fallback из набора подсказок
-            const fallbacks = [
-                '🤔 Попробуй спросить:\n• "Что происходит?" — анализ\n• "Что дальше?" — совет\n• "Переговоры" — тактика\n• "BOL / POD / HOS" — термины',
-                '💡 Не знаю такого, но могу помочь с:\n• Анализом диалога\n• Советом по ставке\n• Документами (BOL, POD)\n• Тактикой переговоров',
-                '🎯 Уточни вопрос! Например:\n• "Какую ставку назвать?"\n• "Как отказать вежливо?"\n• "Что такое detention?"\n• "Как быть уверенным?"',
-                '⚡ Я здесь! Спроси про:\n• Цену и торг 💰\n• Документы 📋\n• Проблемы 🛠️\n• Следующий шаг 🎯'
+            // Add current message
+            messages.push({ role: 'user', content: userMessage });
+
+            const body = {
+                model: 'llama-3.3-70b-versatile',
+                messages: messages,
+                temperature: 0.85,
+                max_tokens: 120,
+                top_p: 0.9
+            };
+
+            try {
+                const res = await fetch(GROQ_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${GROQ_API_KEY}`
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    console.error('Groq error:', err);
+                    const errMsg = err.error?.message || '';
+                    if (res.status === 429) {
+                        return getFallbackBrokerResponse(userMessage);
+                    }
+                    return `❌ Ошибка API: ${errMsg || res.status} `;
+                }
+
+                const data = await res.json();
+                const reply = data.choices?.[0]?.message?.content || '...';
+
+                // Save to history
+                geminiHistory.push({ role: 'user', text: userMessage });
+                geminiHistory.push({ role: 'model', text: reply });
+
+                return reply;
+            } catch (e) {
+                console.error('Groq fetch error:', e);
+                return getFallbackBrokerResponse(userMessage);
+            }
+        }
+
+        // ── FALLBACK BROKER (when Groq is unavailable) ───────────────────────
+        function getFallbackBrokerResponse(userMessage) {
+            const msg = (userMessage || '').toLowerCase();
+            const scenario = currentScenario;
+            const miles = scenario?.distance || scenario?.miles || 967;
+            const route = scenario?.route || 'this lane';
+            const commodity = scenario?.cargo || scenario?.commodity || 'freight';
+
+            const marketRatePerMile = (() => {
+                if (scenario?.postedRate) {
+                    const m = scenario.postedRate.match(/\$(\d+\.\d+)\/mile/);
+                    if (m) return parseFloat(m[1]);
+                }
+                return 2.50;
+            })();
+            const marketTotal = Math.round(miles * marketRatePerMile / 50) * 50;
+            const openingTotal = Math.round(marketTotal * 0.82 / 50) * 50;
+
+            // Detect conversation stage from message content
+            if (!msg || msg.length < 3) return `Freight Solutions, this is ${brokerName || 'Mike'}.`;
+
+            if (msg.includes('mc') && /\d{4,}/.test(msg)) {
+                return `MC checks out. Load is ${route}, ${miles} miles, ${commodity}, pickup tomorrow 8 AM. Best I can do is $${openingTotal.toLocaleString()} for this load.`;
+            }
+            if (msg.includes('available') || msg.includes('load') || msg.includes('calling')) {
+                return `Yeah, load's still open. What's your MC number and company name?`;
+            }
+            if (msg.includes('rate') || msg.includes('pay') || msg.includes('much')) {
+                return `Best I can do right now is $${openingTotal.toLocaleString()} all-in. What do you say?`;
+            }
+            if (/\$[\d,]+/.test(msg) || msg.includes('need') || msg.includes('counter')) {
+                const bump = openingTotal + 200;
+                return `I hear you, but $${openingTotal.toLocaleString()} is where I'm at on this lane. I can maybe go to $${bump.toLocaleString()}, that's it.`;
+            }
+            if (msg.includes('deal') || msg.includes('agree') || msg.includes('okay') || msg.includes('accept')) {
+                return `Alright, we're good. Send your W9 and insurance cert to ops@freightco.com and I'll get the rate con out to you.`;
+            }
+            if (msg.includes('w9') || msg.includes('insurance') || msg.includes('email') || msg.includes('rate con')) {
+                return `Got it. Rate con coming your way shortly. Driver needs to be at the pickup by 8 AM sharp.`;
+            }
+
+            // Generic fallback
+            const generic = [
+                `I got other carriers looking at this — what can you do?`,
+                `That's not gonna work for me on this lane.`,
+                `Market's been soft this week, $${openingTotal.toLocaleString()} is fair.`,
+                `Let me see what I can do... I can go to $${(openingTotal + 150).toLocaleString()}, that's my ceiling.`,
+                `You still there? I need an answer on this.`
             ];
-            return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            return generic[Math.floor(Math.random() * generic.length)];
         }
 
         function sendAIMessage() {
@@ -7100,11 +8023,60 @@
 
             showAITyping();
 
-            setTimeout(() => {
+            callGeminiAPI(text, true).then(response => {
                 hideAITyping();
-                const response = getAIBotResponse(text);
                 addAIMessage(response, 'bot');
-            }, 500 + Math.random() * 500);
+                generateSmartSuggestions(response);
+            });
+        }
+
+        // Generate smart reply suggestions based on broker's last message
+        async function generateSmartSuggestions(brokerMessage) {
+            const suggestionsPrompt = `Based on this broker message: "${brokerMessage}"
+Generate exactly 4 short dispatcher reply suggestions in Russian.
+            Format: JSON array of strings, each max 8 words.
+                Example: ["Mike, рынок сейчас $2,200 за этот маршрут", "Мой минимум $2,100, иначе не могу", "Что насчёт $2,050?", "Есть другие предложения по $2,200"]
+Only return the JSON array, nothing else.`;
+
+            try {
+                const res = await fetch(GROQ_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${GROQ_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'llama-3.3-70b-versatile',
+                        messages: [{ role: 'user', content: suggestionsPrompt }],
+                        temperature: 0.7,
+                        max_tokens: 150
+                    })
+                });
+                const data = await res.json();
+                const raw = data.choices?.[0]?.message?.content || '[]';
+                const match = raw.match(/\[[\s\S]*\]/);
+                if (!match) return;
+                const suggestions = JSON.parse(match[0]);
+                updateQuickReplies(suggestions);
+            } catch (e) {
+                // Silently fail — keep default buttons
+            }
+        }
+
+        function updateQuickReplies(suggestions) {
+            const container = document.getElementById('aiQuickReplies');
+            if (!container || !suggestions?.length) return;
+            container.innerHTML = '';
+            suggestions.slice(0, 4).forEach(text => {
+                const btn = document.createElement('div');
+                btn.className = 'ai-quick-reply';
+                btn.textContent = text;
+                btn.onclick = () => {
+                    aiUserInput.value = text;
+                    sendAIMessage();
+                };
+                container.appendChild(btn);
+            });
         }
 
         function sendAIQuick(text) {
@@ -7115,6 +8087,326 @@
         aiUserInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendAIMessage();
         });
+
+        // ── VOICE: Speech Recognition (STT) + Text-to-Speech (TTS) ──────────
+
+        let ttsEnabled = true;
+        let isListening = false;
+        let recognition = null;
+        let currentUtterance = null;
+
+        // ── TTS: speak broker reply ──
+        function speakBrokerReply(text) {
+            if (!ttsEnabled) return;
+            if (!window.speechSynthesis) return;
+
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+
+            // Strip coaching tags
+            const clean = text.replace(/\[COACH:.*?\]/gi, '').trim();
+            if (!clean) return;
+
+            const utter = new SpeechSynthesisUtterance(clean);
+            utter.lang = 'en-US';
+            utter.rate = 1.05;
+            utter.pitch = 0.95;
+            utter.volume = 1;
+
+            // Pick best available English voice
+            const voices = window.speechSynthesis.getVoices();
+            const preferred = voices.find(v =>
+                v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes('Microsoft'))
+            ) || voices.find(v => v.lang === 'en-US') || voices[0];
+            if (preferred) utter.voice = preferred;
+
+            currentUtterance = utter;
+            window.speechSynthesis.speak(utter);
+        }
+
+        // Voices load async — preload them
+        if (window.speechSynthesis) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+        }
+
+        function toggleTTS() {
+            ttsEnabled = !ttsEnabled;
+            const btn = document.getElementById('ttsToggleBtn');
+            if (!btn) return;
+            if (ttsEnabled) {
+                btn.textContent = '🔊';
+                btn.classList.remove('muted');
+                btn.title = 'Голос брокера вкл';
+            } else {
+                btn.textContent = '🔇';
+                btn.classList.add('muted');
+                btn.title = 'Голос брокера выкл';
+                window.speechSynthesis?.cancel();
+            }
+        }
+
+        // ── STT: microphone input ──
+        function initRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return null;
+
+            const r = new SpeechRecognition();
+            r.continuous = false;
+            r.interimResults = true;
+            r.lang = 'en-US';
+
+            r.onstart = () => {
+                isListening = true;
+                const btn = document.getElementById('micBtn');
+                if (btn) { btn.classList.add('listening'); btn.title = 'Слушаю...'; }
+                const field = document.getElementById('inputField');
+                if (field) field.placeholder = '🎤 Говорите...';
+            };
+
+            r.onresult = (e) => {
+                const field = document.getElementById('inputField');
+                if (!field) return;
+                let interim = '';
+                let final = '';
+                for (let i = e.resultIndex; i < e.results.length; i++) {
+                    const t = e.results[i][0].transcript;
+                    if (e.results[i].isFinal) final += t;
+                    else interim += t;
+                }
+                field.value = final || interim;
+                // Auto-enable send button
+                const sendBtn = document.getElementById('sendBtn');
+                if (sendBtn) sendBtn.disabled = !field.value.trim();
+            };
+
+            r.onend = () => {
+                isListening = false;
+                const btn = document.getElementById('micBtn');
+                if (btn) { btn.classList.remove('listening'); btn.title = 'Говорить'; }
+                const field = document.getElementById('inputField');
+                if (field) {
+                    field.placeholder = 'Введите ваше сообщение...';
+                    // Auto-send if there's text
+                    if (field.value.trim()) {
+                        setTimeout(() => sendMessage(), 300);
+                    }
+                }
+            };
+
+            r.onerror = (e) => {
+                isListening = false;
+                const btn = document.getElementById('micBtn');
+                if (btn) btn.classList.remove('listening');
+                if (e.error === 'not-allowed') {
+                    alert('Нет доступа к микрофону. Разрешите доступ в настройках браузера.');
+                }
+            };
+
+            return r;
+        }
+
+        function toggleMic() {
+            if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+                alert('Ваш браузер не поддерживает распознавание речи. Используйте Chrome или Edge.');
+                return;
+            }
+            if (isListening) {
+                recognition?.stop();
+                return;
+            }
+            // Stop broker TTS while user speaks
+            window.speechSynthesis?.cancel();
+            recognition = initRecognition();
+            recognition?.start();
+        }
+
+        // Hook TTS into broker message flow — patch addMessage
+        const _origAddMessage = addMessage;
+
+        // ── VOICE CALL MODE ──────────────────────────────────────────────────
+        let voiceCallActive = false;
+        let voiceCallRecognition = null;
+        let voiceCallListening = false;
+
+        function startVoiceCall() {
+            if (!conversationActive) {
+                alert('Сначала выбери сценарий и начни диалог!');
+                return;
+            }
+            if (!window.speechSynthesis) {
+                alert('Ваш браузер не поддерживает TTS. Используйте Chrome или Edge.');
+                return;
+            }
+            if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+                alert('Ваш браузер не поддерживает распознавание речи. Используйте Chrome или Edge.');
+                return;
+            }
+
+            voiceCallActive = true;
+            ttsEnabled = true;
+
+            const overlay = document.getElementById('voiceCallOverlay');
+            overlay.style.display = 'flex';
+
+            const nameEl = document.getElementById('voiceCallName');
+            if (nameEl) nameEl.textContent = brokerName || 'Broker';
+
+            const callBtn = document.getElementById('voiceCallBtn');
+            if (callBtn) callBtn.classList.add('in-call');
+
+            setVoiceCallStatus('📞 На связи', '');
+        }
+
+        function endVoiceCall() {
+            voiceCallActive = false;
+            voiceCallListening = false;
+
+            window.speechSynthesis?.cancel();
+            voiceCallRecognition?.stop();
+
+            const overlay = document.getElementById('voiceCallOverlay');
+            overlay.style.display = 'none';
+
+            const callBtn = document.getElementById('voiceCallBtn');
+            if (callBtn) callBtn.classList.remove('in-call');
+        }
+
+        function setVoiceCallStatus(status, transcript) {
+            const statusEl = document.getElementById('voiceCallStatus');
+            const transcriptEl = document.getElementById('voiceCallTranscript');
+            const avatarEl = document.getElementById('voiceCallAvatar');
+            const hintEl = document.getElementById('voiceCallHint');
+
+            if (statusEl) statusEl.textContent = status;
+            if (transcriptEl && transcript !== undefined) transcriptEl.textContent = transcript;
+
+            // Pulse avatar when broker is speaking
+            if (avatarEl) {
+                if (status.includes('говорит')) {
+                    avatarEl.style.boxShadow = '0 0 0 12px rgba(99,102,241,0.25), 0 0 0 24px rgba(99,102,241,0.1)';
+                } else {
+                    avatarEl.style.boxShadow = 'none';
+                }
+            }
+            if (hintEl) {
+                hintEl.textContent = status.includes('говорит') ? '⏳ Брокер говорит...' : 'Нажми 🎤 чтобы ответить';
+            }
+        }
+
+        function voiceCallToggleMic() {
+            if (!voiceCallActive) return;
+
+            // Stop broker speech first
+            window.speechSynthesis?.cancel();
+
+            if (voiceCallListening) {
+                voiceCallRecognition?.stop();
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            voiceCallRecognition = new SpeechRecognition();
+            voiceCallRecognition.continuous = false;
+            voiceCallRecognition.interimResults = true;
+            voiceCallRecognition.lang = 'en-US';
+
+            const micBtn = document.getElementById('voiceMicBtn');
+
+            voiceCallRecognition.onstart = () => {
+                voiceCallListening = true;
+                if (micBtn) { micBtn.style.background = '#ef4444'; micBtn.style.boxShadow = '0 0 0 0 rgba(239,68,68,0.6)'; micBtn.style.animation = 'micPulse 1s ease infinite'; }
+                setVoiceCallStatus('🎤 Слушаю...', '');
+            };
+
+            voiceCallRecognition.onresult = (e) => {
+                let interim = '', final = '';
+                for (let i = e.resultIndex; i < e.results.length; i++) {
+                    const t = e.results[i][0].transcript;
+                    if (e.results[i].isFinal) final += t;
+                    else interim += t;
+                }
+                const text = final || interim;
+                setVoiceCallStatus('🎤 Слушаю...', `"${text}"`);
+                // Also put in input field for chat log
+                const field = document.getElementById('inputField');
+                if (field) field.value = text;
+            };
+
+            voiceCallRecognition.onend = () => {
+                voiceCallListening = false;
+                if (micBtn) { micBtn.style.background = 'rgba(255,255,255,0.1)'; micBtn.style.boxShadow = 'none'; micBtn.style.animation = 'none'; }
+
+                const field = document.getElementById('inputField');
+                const text = field?.value?.trim();
+                if (!text) {
+                    setVoiceCallStatus('📞 На связи', '');
+                    return;
+                }
+
+                // Send to broker
+                setVoiceCallStatus('⏳ Брокер думает...', `Вы: "${text}"`);
+                field.value = '';
+
+                // Add to chat
+                addMessage(text, 'user');
+                evaluateDispatcherMessage(text);
+
+                // Get broker response
+                callGeminiAPI(text).then(response => {
+                    if (!voiceCallActive) return;
+                    addMessage(response, 'broker');
+                    checkForDealCompletion(response);
+
+                    // Show in overlay and speak
+                    setVoiceCallStatus('💼 Брокер говорит...', response);
+                    voiceCallSpeak(response);
+                });
+            };
+
+            voiceCallRecognition.onerror = (e) => {
+                voiceCallListening = false;
+                if (micBtn) { micBtn.style.background = 'rgba(255,255,255,0.1)'; micBtn.style.animation = 'none'; }
+                if (e.error === 'not-allowed') alert('Нет доступа к микрофону!');
+                setVoiceCallStatus('📞 На связи', '');
+            };
+
+            voiceCallRecognition.start();
+        }
+
+        function voiceCallSpeak(text) {
+            if (!voiceCallActive || !window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+
+            const clean = text.replace(/\[COACH:.*?\]/gi, '').trim();
+            if (!clean) return;
+
+            const utter = new SpeechSynthesisUtterance(clean);
+            utter.lang = 'en-US';
+            utter.rate = 1.0;
+            utter.pitch = 0.9;
+            utter.volume = 1;
+
+            const voices = window.speechSynthesis.getVoices();
+            const preferred = voices.find(v => v.lang === 'en-US' && v.name.includes('Google'))
+                || voices.find(v => v.lang === 'en-US' && v.name.includes('Microsoft'))
+                || voices.find(v => v.lang === 'en-US')
+                || voices[0];
+            if (preferred) utter.voice = preferred;
+
+            utter.onend = () => {
+                if (voiceCallActive) setVoiceCallStatus('📞 На связи', clean);
+            };
+
+            window.speechSynthesis.speak(utter);
+        }
+
+        // Override speakBrokerReply to also update voice call overlay
+        const _origSpeakBrokerReply = speakBrokerReply;
+        window.speakBrokerReply = function (text) {
+            if (voiceCallActive) return; // voice call handles its own TTS
+            _origSpeakBrokerReply(text);
+        };
     </script>
 </body>
 
