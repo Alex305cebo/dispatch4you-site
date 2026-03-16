@@ -8327,19 +8327,7 @@ Only return the JSON array, nothing else.`;
                 if (btn) { btn.textContent = '📵'; btn.classList.add('in-call'); btn.title = 'Завершить звонок'; }
             }
         }
-        if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-            alert('Ваш браузер не поддерживает распознавание речи. Используйте Chrome или Edge.');
-            return;
-        }
-        if (isListening) {
-            recognition?.stop();
-            return;
-        }
-        // Stop broker TTS while user speaks
-        window.speechSynthesis?.cancel();
-        recognition = initRecognition();
-        recognition?.start();
-        }
+        // Speech recognition guard — moved inside toggleUniversalCall or initRecognition
 
         // Hook TTS into broker message flow — patch addMessage
         const _origAddMessage = addMessage;
