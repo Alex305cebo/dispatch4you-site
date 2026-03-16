@@ -57,11 +57,11 @@
       pointer-events: none;
     }
 
-    
 
-      50% {
-        transform: translate(-5%, 5%) scale(1.05);
-      }
+
+    50% {
+      transform: translate(-5%, 5%) scale(1.05);
+    }
     }
 
     .container {
@@ -2290,7 +2290,7 @@
 
     .dropdown-states-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 12px;
       max-height: none;
       overflow: visible;
@@ -5068,7 +5068,7 @@
                 </div>
               </div>
               <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0;">
-                <div style="font-size: 16px; font-weight: 900; background: linear-gradient(135deg, #10b981, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${state.rate}/mi</div>
+                <div style="font-size: 16px; font-weight: 900; background: linear-gradient(135deg, #10b981, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${state.rate}</div>
                 <div style="font-size: 9px; color: ${truckRatio > 1.2 ? '#22c55e' : truckRatio < 0.9 ? '#ef4444' : '#f59e0b'}; font-weight: 600;">${competition}</div>
                 <div style="font-size: 9px; color: #94a3b8;">🚛 ${loads} грузов</div>
               </div>

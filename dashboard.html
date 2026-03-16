@@ -882,29 +882,20 @@
     </div>
   </section>
 
-  <script src="auth.js"></script>
   <script>
-    // Check if user is logged in (TEMPORARILY DISABLED)
+    function checkAuth() { return JSON.parse(localStorage.getItem('user')); }
     const user = checkAuth();
-    // Временно отключена проверка авторизации
-    // if (!user) {
-    //   alert('Пожалуйста, войдите в систему');
-    //   window.location.href = 'login.html';
-    // }
 
-    // Update user info - используем демо данные если пользователь не авторизован
-    const displayUser = user || {
-      firstName: 'Гость',
-      lastName: 'Демо',
-      email: 'demo@example.com'
-    };
-
+    // Update user info - заполним после Firebase auth
+    const displayUser = user || { firstName: 'Гость', lastName: '', email: '' };
     document.getElementById('userName').textContent = displayUser.firstName;
-    document.getElementById('profileName').textContent = displayUser.firstName + ' ' + displayUser.lastName;
-    document.getElementById('profileEmail').textContent = displayUser.email;
-    document.getElementById('firstName').value = displayUser.firstName;
-    document.getElementById('lastName').value = displayUser.lastName;
-    document.getElementById('email').value = displayUser.email;
+    if (displayUser.firstName !== 'Гость') {
+      document.getElementById('profileName').textContent = (displayUser.firstName + ' ' + (displayUser.lastName || '')).trim();
+      document.getElementById('profileEmail').textContent = displayUser.email || '';
+      document.getElementById('firstName').value = displayUser.firstName;
+      document.getElementById('lastName').value = displayUser.lastName || '';
+      document.getElementById('email').value = displayUser.email || '';
+    }
 
     // Tab switching
     function switchTab(tabName) {
@@ -969,6 +960,62 @@
     }
   </script>
 
+  <!-- Firebase Auth -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyC505dhT1WjUPhXbinqLvEOTlEXWxYy8GI",
+      authDomain: "dispatch4you-80e0f.firebaseapp.com",
+      projectId: "dispatch4you-80e0f"
+    });
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (firebaseUser) => {
+      const navActions = document.querySelector('.nav-actions');
+      const mobileNavActions = document.querySelector('.mobile-nav-actions');
+
+      if (firebaseUser) {
+        const parts = (firebaseUser.displayName || '').split(' ');
+        const firstName = parts[0] || firebaseUser.email.split('@')[0];
+        const lastName = parts.slice(1).join(' ') || '';
+        const email = firebaseUser.email;
+
+        // Обновляем UI
+        document.getElementById('userName').textContent = firstName;
+        const pName = document.getElementById('profileName');
+        const pEmail = document.getElementById('profileEmail');
+        const fFirst = document.getElementById('firstName');
+        const fLast = document.getElementById('lastName');
+        const fEmail = document.getElementById('email');
+        if (pName) pName.textContent = (firstName + ' ' + lastName).trim();
+        if (pEmail) pEmail.textContent = email;
+        if (fFirst) fFirst.value = firstName;
+        if (fLast) fLast.value = lastName;
+        if (fEmail) fEmail.value = email;
+
+        // Навигация — показываем имя и выход
+        const html = `
+          <span style="color:#a5b4fc;font-weight:600;font-size:14px;">👤 ${firstName}</span>
+          <button onclick="window.fbSignOut()" style="padding:6px 14px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#fca5a5;font-size:13px;cursor:pointer;font-weight:600;">Выйти</button>
+        `;
+        if (navActions) navActions.innerHTML = html;
+        if (mobileNavActions) mobileNavActions.innerHTML = html;
+
+        localStorage.setItem('user', JSON.stringify({ uid: firebaseUser.uid, firstName, lastName, email }));
+      } else {
+        // Не залогинен — редирект на логин
+        window.location.href = 'login.html';
+      }
+    });
+
+    window.fbSignOut = async () => {
+      await signOut(auth);
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    };
+  </script>
 </body>
 
 </html>

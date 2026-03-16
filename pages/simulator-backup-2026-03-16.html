@@ -5185,7 +5185,7 @@ Example: [
                 renderTipButtons(container, suggestions);
                 return;
             }
-            // When Groq is unavailable, show generic dispatcher prompts (NOT broker text)
+            // When AI is unavailable, show generic dispatcher prompts (NOT broker text)
             const fallbackOptions = [
                 { text: "What's the rate on this load?", quality: "green", why: "Правильный вопрос о ставке" },
                 { text: "Can you go higher? Market's around $2,400 on this lane.", quality: "green", why: "Контр с рыночными данными" },
@@ -7800,7 +7800,7 @@ Return this exact JSON structure:
             aiTypingIndicator.classList.remove('active');
         }
 
-        // ── GROQ AI BROKER ──────────────────────────────────────────
+        // ── AI BROKER ──────────────────────────────────────────
         // API key stored split to avoid secret scanning
         const _k = ['gsk_7b9aEN1PMQBKSKbw', 'GOyoWGdyb3FYcNiq4FWZScbJ4iZYYSYOF4Qh'];
         const GROQ_API_KEY = _k[0] + _k[1];
@@ -7906,7 +7906,7 @@ LANGUAGE: Match dispatcher's language. Always use real freight terms: MC, rate c
         }
 
         async function callGeminiAPI(userMessage, isAIPanel = false) {
-            // Build messages in OpenAI format (Groq is OpenAI-compatible)
+            // Build messages in OpenAI format (AI is OpenAI-compatible)
             const messages = [
                 { role: 'system', content: getBrokerSystemPrompt() }
             ];
@@ -7941,7 +7941,7 @@ LANGUAGE: Match dispatcher's language. Always use real freight terms: MC, rate c
 
                 if (!res.ok) {
                     const err = await res.json();
-                    console.error('Groq error:', err);
+                    console.error('AI error:', err);
                     const errMsg = err.error?.message || '';
                     if (res.status === 429) {
                         return getFallbackBrokerResponse(userMessage);
@@ -7958,12 +7958,12 @@ LANGUAGE: Match dispatcher's language. Always use real freight terms: MC, rate c
 
                 return reply;
             } catch (e) {
-                console.error('Groq fetch error:', e);
+                console.error('AI fetch error:', e);
                 return getFallbackBrokerResponse(userMessage);
             }
         }
 
-        // ── FALLBACK BROKER (when Groq is unavailable) ───────────────────────
+        // ── FALLBACK BROKER (when AI is unavailable) ───────────────────────
         // Stage tracker so fallback progresses naturally through negotiation
         let _fallbackStage = 0;
         function resetFallbackStage() { _fallbackStage = 0; }
