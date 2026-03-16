@@ -7844,6 +7844,44 @@ Return this exact JSON structure:
         const GEMINI_API_KEY = GROQ_API_KEY;
         const GEMINI_URL = GROQ_URL;
 
+        let _groqStatus = 'unknown'; // 'ok' | 'offline' | 'rate_limited' | 'error'
+
+        function _updateGroqIndicator(online) {
+            let ind = document.getElementById('groqIndicator');
+            if (!ind) {
+                ind = document.createElement('div');
+                ind.id = 'groqIndicator';
+                ind.style.cssText = 'position:fixed;bottom:12px;left:12px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;z-index:9999;pointer-events:none;transition:all 0.4s;';
+                document.body.appendChild(ind);
+            }
+            if (online) {
+                ind.textContent = '🟢 Groq AI';
+                ind.style.background = 'rgba(16,185,129,0.15)';
+                ind.style.color = '#10b981';
+                ind.style.border = '1px solid rgba(16,185,129,0.3)';
+                setTimeout(() => { if (ind) ind.style.opacity = '0.4'; }, 3000);
+            } else {
+                ind.textContent = '🔴 Groq offline — fallback';
+                ind.style.background = 'rgba(239,68,68,0.15)';
+                ind.style.color = '#ef4444';
+                ind.style.border = '1px solid rgba(239,68,68,0.3)';
+                ind.style.opacity = '1';
+            }
+        }
+
+        // Test Groq on page load
+        (async () => {
+            try {
+                const r = await fetch(GROQ_URL, {
+                    method: 'POST', mode: 'cors',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+                    body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: 'ping' }], max_tokens: 5 })
+                });
+                if (r.ok) { _groqStatus = 'ok'; _updateGroqIndicator(true); }
+                else { _groqStatus = 'error'; _updateGroqIndicator(false); }
+            } catch (e) { _groqStatus = 'offline'; _updateGroqIndicator(false); }
+        })();
+
         // Conversation history for context
         const geminiHistory = [];
 
@@ -7967,6 +8005,7 @@ LANGUAGE: Match dispatcher's language. Always use real freight terms: MC, rate c
             try {
                 const res = await fetch(GROQ_URL, {
                     method: 'POST',
+                    mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${GROQ_API_KEY}`
@@ -7979,13 +8018,19 @@ LANGUAGE: Match dispatcher's language. Always use real freight terms: MC, rate c
                     console.error('Groq error:', err);
                     const errMsg = err.error?.message || '';
                     if (res.status === 429) {
+                        _groqStatus = 'rate_limited';
                         return getFallbackBrokerResponse(userMessage);
                     }
-                    return `❌ Ошибка API: ${errMsg || res.status} `;
+                    _groqStatus = 'error';
+                    return getFallbackBrokerResponse(userMessage);
                 }
 
                 const data = await res.json();
                 const reply = data.choices?.[0]?.message?.content || '...';
+
+                // Mark Groq as working
+                _groqStatus = 'ok';
+                _updateGroqIndicator(true);
 
                 // Save to history
                 geminiHistory.push({ role: 'user', text: userMessage });
@@ -7993,7 +8038,9 @@ LANGUAGE: Match dispatcher's language. Always use real freight terms: MC, rate c
 
                 return reply;
             } catch (e) {
-                console.error('Groq fetch error:', e);
+                console.error('Groq fetch error:', e.message);
+                _groqStatus = 'offline';
+                _updateGroqIndicator(false);
                 return getFallbackBrokerResponse(userMessage);
             }
         }
