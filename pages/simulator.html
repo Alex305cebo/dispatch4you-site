@@ -1508,9 +1508,37 @@
             flex-shrink: 0;
         }
 
-        /* Скрыть все кнопки КРОМЕ sendBtn, resetButton, aiInlineBtn, micBtn, ttsToggleBtn, voiceCallBtn */
-        .input-area button:not(#sendBtn):not(#resetButton):not(#aiInlineBtn):not(#micBtn):not(#ttsToggleBtn):not(#voiceCallBtn) {
+        /* Скрыть все кнопки КРОМЕ sendBtn, resetButton, aiInlineBtn, universalCallBtn */
+        .input-area button:not(#sendBtn):not(#resetButton):not(#aiInlineBtn):not(#universalCallBtn) {
             display: none !important;
+        }
+
+        .universal-call-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+            color: #fff;
+        }
+
+        .universal-call-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 18px rgba(16, 185, 129, 0.6);
+        }
+
+        .universal-call-btn.in-call {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 2px 10px rgba(239, 68, 68, 0.5);
+            animation: micPulse 1.2s ease infinite;
         }
 
         /* AI Inline Button */
@@ -3468,11 +3496,8 @@
         <div class="input-area">
             <button class="ai-inline-btn" id="aiInlineBtn" title="Спросить AI помощника">🤖</button>
             <textarea class="input-field" id="inputField" placeholder="Введите ваше сообщение..." rows="1"></textarea>
-            <button class="mic-btn" id="micBtn" title="Говорить" onclick="toggleMic()">🎤</button>
-            <button class="tts-toggle-btn" id="ttsToggleBtn" title="Голос брокера вкл/выкл"
-                onclick="toggleTTS()">🔊</button>
-            <button class="voice-call-btn" id="voiceCallBtn" title="Голосовой звонок"
-                onclick="startVoiceCall()">📞</button>
+            <button class="universal-call-btn" id="universalCallBtn" title="Голосовой звонок"
+                onclick="toggleUniversalCall()">📞</button>
             <button class="send-btn" id="sendBtn" disabled>➤</button>
         </div>
     </div>
@@ -8304,19 +8329,38 @@ Only return the JSON array, nothing else.`;
             return r;
         }
 
-        function toggleMic() {
-            if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-                alert('Ваш браузер не поддерживает распознавание речи. Используйте Chrome или Edge.');
-                return;
+        // ── UNIVERSAL CALL BUTTON ────────────────────────────────
+        // One button: starts voice call (mic + tts + overlay) or ends it
+        function toggleUniversalCall() {
+            if (voiceCallActive) {
+                endVoiceCall();
+                ttsEnabled = false;
+                window.speechSynthesis?.cancel();
+                const btn = document.getElementById('universalCallBtn');
+                if (btn) { btn.textContent = '📞'; btn.classList.remove('in-call'); btn.title = 'Голосовой звонок'; }
+            } else {
+                if (!conversationActive) {
+                    alert('Сначала выбери сценарий и начни диалог!');
+                    return;
+                }
+                ttsEnabled = true;
+                startVoiceCall();
+                const btn = document.getElementById('universalCallBtn');
+                if (btn) { btn.textContent = '📵'; btn.classList.add('in-call'); btn.title = 'Завершить звонок'; }
             }
-            if (isListening) {
-                recognition?.stop();
-                return;
-            }
-            // Stop broker TTS while user speaks
-            window.speechSynthesis?.cancel();
-            recognition = initRecognition();
-            recognition?.start();
+        }
+        if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+            alert('Ваш браузер не поддерживает распознавание речи. Используйте Chrome или Edge.');
+            return;
+        }
+        if (isListening) {
+            recognition?.stop();
+            return;
+        }
+        // Stop broker TTS while user speaks
+        window.speechSynthesis?.cancel();
+        recognition = initRecognition();
+        recognition?.start();
         }
 
         // Hook TTS into broker message flow — patch addMessage
@@ -8350,8 +8394,8 @@ Only return the JSON array, nothing else.`;
             const nameEl = document.getElementById('voiceCallName');
             if (nameEl) nameEl.textContent = brokerName || 'Broker';
 
-            const callBtn = document.getElementById('voiceCallBtn');
-            if (callBtn) callBtn.classList.add('in-call');
+            const callBtn = document.getElementById('universalCallBtn');
+            if (callBtn) { callBtn.textContent = '📵'; callBtn.classList.add('in-call'); callBtn.title = 'Завершить звонок'; }
 
             setVoiceCallStatus('📞 На связи', '');
         }
@@ -8364,10 +8408,10 @@ Only return the JSON array, nothing else.`;
             voiceCallRecognition?.stop();
 
             const overlay = document.getElementById('voiceCallOverlay');
-            overlay.style.display = 'none';
+            if (overlay) overlay.style.display = 'none';
 
-            const callBtn = document.getElementById('voiceCallBtn');
-            if (callBtn) callBtn.classList.remove('in-call');
+            const callBtn = document.getElementById('universalCallBtn');
+            if (callBtn) { callBtn.textContent = '📞'; callBtn.classList.remove('in-call'); callBtn.title = 'Голосовой звонок'; }
         }
 
         function setVoiceCallStatus(status, transcript) {
