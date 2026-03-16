@@ -4,87 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel — Курсы Диспетчера</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Super Admin — Курсы Диспетчера</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-
-<body>
-    <!-- Firebase Admin Auth Check -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-
-        const SUPER_ADMIN_EMAIL = 'dersire.der@gmail.com';
-
-        const app = initializeApp({
-            apiKey: "AIzaSyC505dhT1WjUPhXbinqLvEOTlEXWxYy8GI",
-            authDomain: "dispatch4you-80e0f.firebaseapp.com",
-            projectId: "dispatch4you-80e0f",
-            storageBucket: "dispatch4you-80e0f.firebasestorage.app",
-            messagingSenderId: "349235354473",
-            appId: "1:349235354473:web:488aeb29211b02bb153bf8"
-        });
-
-        const auth = getAuth(app);
-        onAuthStateChanged(auth, (user) => {
-            if (!user || user.email !== SUPER_ADMIN_EMAIL) {
-                document.body.innerHTML = `
-          <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#020617;font-family:Inter,sans-serif;color:#f1f5f9;flex-direction:column;gap:16px;">
-            <div style="font-size:64px;">🔒</div>
-            <h1 style="font-size:28px;font-weight:800;">Доступ запрещён</h1>
-            <p style="color:#64748b;">Эта страница доступна только супер-администратору</p>
-            <a href="../dashboard.html" style="margin-top:8px;padding:12px 28px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border-radius:12px;text-decoration:none;font-weight:600;">← Вернуться</a>
-          </div>`;
-                return;
-            }
-            // Показываем имя в сайдбаре
-            const adminName = document.getElementById('adminName');
-            if (adminName) adminName.textContent = user.displayName || 'Super Admin';
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg: #0a0d14;
-            --bg2: #111520;
-            --bg3: #161b27;
-            --card: #1a2035;
-            --card2: #1e2640;
+            --bg: #0a0a14;
+            --bg2: #0f0f1e;
+            --card: #16162a;
+            --card2: #1c1c35;
             --border: rgba(255, 255, 255, 0.07);
-            --text: #e8eaf0;
-            --muted: #7b8299;
             --primary: #667eea;
             --secondary: #764ba2;
             --accent: #f093fb;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --info: #06b6d4;
-            --grad1: linear-gradient(135deg, #667eea, #764ba2);
-            --grad2: linear-gradient(135deg, #f093fb, #f5576c);
-            --grad3: linear-gradient(135deg, #4facfe, #00f2fe);
-            --grad4: linear-gradient(135deg, #43e97b, #38f9d7);
-            --grad5: linear-gradient(135deg, #fa709a, #fee140);
+            --info: #3b82f6;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --sw: 260px;
+            --th: 64px;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
-            padding: 0
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
+            font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
-            font-family: 'Segoe UI', system-ui, sans-serif;
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            font-family: inherit;
         }
 
         /* SIDEBAR */
-        .sidebar {
-            width: 240px;
+        .sb {
+            width: var(--sw);
             background: var(--bg2);
             border-right: 1px solid var(--border);
             display: flex;
@@ -94,300 +66,429 @@
             left: 0;
             height: 100vh;
             z-index: 100;
-            transition: width .3s
+            transition: width .3s;
         }
 
-        .sidebar.collapsed {
-            width: 64px
+        .sb.col {
+            width: 64px;
         }
 
-        .sidebar-logo {
-            padding: 20px 16px;
+        .sb.col .nl,
+        .sb.col .ns,
+        .sb.col .slt,
+        .sb.col .bdg,
+        .sb.col .sui {
+            display: none;
+        }
+
+        .sb.col .ni {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .slogo {
             display: flex;
             align-items: center;
             gap: 12px;
-            border-bottom: 1px solid var(--border)
+            padding: 20px 16px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .sidebar-logo .logo-icon {
+        .slogo-icon {
             width: 36px;
             height: 36px;
-            background: var(--grad1);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            flex-shrink: 0
+            flex-shrink: 0;
         }
 
-        .sidebar-logo .logo-text {
+        .slt {
+            font-weight: 800;
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+        .slt span {
+            display: block;
+            font-size: 10px;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .su {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sa {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 700;
             font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden
+            flex-shrink: 0;
         }
 
-        .sidebar-logo .logo-text span {
+        .sui {
+            font-size: 12px;
+        }
+
+        .sui strong {
             display: block;
+            font-size: 13px;
+        }
+
+        .sui span {
+            color: var(--success);
             font-size: 11px;
-            color: var(--muted);
-            font-weight: 400
         }
 
-        .sidebar nav {
+        .snav {
             flex: 1;
-            padding: 12px 8px;
-            overflow-y: auto
+            overflow-y: auto;
+            padding: 8px 0;
         }
 
-        .nav-section {
+        .snav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .snav::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .ns {
             font-size: 10px;
+            font-weight: 700;
             color: var(--muted);
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 12px 8px 6px;
-            white-space: nowrap;
-            overflow: hidden
+            padding: 12px 16px 4px;
         }
 
-        .nav-item {
+        .ni {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            color: var(--muted);
+            transition: all .2s;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .ni:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .ni.act {
+            color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+            border-left-color: var(--primary);
+        }
+
+        .ni i {
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .nl {
+            flex: 1;
+        }
+
+        .bdg {
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 20px;
+        }
+
+        .bdg.r {
+            background: var(--danger);
+        }
+
+        .bdg.g {
+            background: var(--success);
+        }
+
+        .sfooter {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .cbtn {
+            width: 100%;
+            padding: 8px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--muted);
             cursor: pointer;
             transition: all .2s;
-            color: var(--muted);
-            text-decoration: none;
-            white-space: nowrap;
-            overflow: hidden;
-            margin-bottom: 2px
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .nav-item:hover,
-        .nav-item.active {
-            background: var(--card);
-            color: var(--text)
-        }
-
-        .nav-item.active {
-            background: linear-gradient(135deg, rgba(102, 126, 234, .2), rgba(118, 75, 162, .2));
-            color: var(--primary);
-            border-left: 3px solid var(--primary)
-        }
-
-        .nav-item i {
-            width: 20px;
-            text-align: center;
-            flex-shrink: 0;
-            font-size: 15px
-        }
-
-        .nav-item .badge {
-            margin-left: auto;
-            background: var(--danger);
-            color: #fff;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            flex-shrink: 0
-        }
-
-        .sidebar-footer {
-            padding: 12px 8px;
-            border-top: 1px solid var(--border)
-        }
-
-        .sidebar-toggle {
-            width: 100%;
-            background: none;
-            border: 1px solid var(--border);
-            color: var(--muted);
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all .2s
-        }
-
-        .sidebar-toggle:hover {
-            background: var(--card);
-            color: var(--text)
+        .cbtn:hover {
+            color: var(--text);
+            background: var(--card2);
         }
 
         /* MAIN */
         .main {
-            margin-left: 240px;
+            margin-left: var(--sw);
             flex: 1;
             display: flex;
             flex-direction: column;
+            transition: margin-left .3s;
             min-height: 100vh;
-            transition: margin-left .3s
         }
 
-        .main.expanded {
-            margin-left: 64px
+        .main.exp {
+            margin-left: 64px;
         }
 
         /* TOPBAR */
         .topbar {
+            height: var(--th);
             background: var(--bg2);
             border-bottom: 1px solid var(--border);
-            padding: 0 24px;
-            height: 64px;
             display: flex;
             align-items: center;
             gap: 16px;
+            padding: 0 24px;
             position: sticky;
             top: 0;
-            z-index: 50
+            z-index: 50;
         }
 
-        .topbar-title {
-            font-size: 18px;
+        .tb-title {
             font-weight: 700;
-            flex: 1
+            font-size: 16px;
+            flex: 1;
         }
 
-        .topbar-title span {
-            font-size: 13px;
+        .tb-title span {
+            display: block;
+            font-size: 11px;
             color: var(--muted);
             font-weight: 400;
-            display: block
         }
 
-        .topbar-search {
+        .tb-search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 8px 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 260px
+            width: 280px;
         }
 
-        .topbar-search input {
+        .tb-search input {
             background: none;
             border: none;
             outline: none;
             color: var(--text);
             font-size: 13px;
-            width: 100%
+            width: 100%;
         }
 
-        .topbar-search i {
+        .tb-search i {
             color: var(--muted);
-            font-size: 13px
+            font-size: 13px;
         }
 
-        .topbar-actions {
+        .tb-actions {
             display: flex;
             align-items: center;
-            gap: 8px
+            gap: 8px;
         }
 
-        .icon-btn {
-            width: 38px;
-            height: 38px;
+        .ib {
+            width: 36px;
+            height: 36px;
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: var(--muted);
             transition: all .2s;
-            position: relative
+            position: relative;
         }
 
-        .icon-btn:hover {
+        .ib:hover {
+            color: var(--text);
             background: var(--card2);
-            color: var(--text)
         }
 
-        .icon-btn .dot {
+        .ib .dot {
             position: absolute;
             top: 6px;
             right: 6px;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: var(--danger);
             border-radius: 50%;
-            border: 2px solid var(--bg2)
+            border: 2px solid var(--bg2);
         }
 
-        .avatar {
-            width: 38px;
-            height: 38px;
-            background: var(--grad1);
-            border-radius: 10px;
+        .tb-av {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             font-size: 14px;
-            cursor: pointer
+            cursor: pointer;
         }
 
         /* CONTENT */
         .content {
             padding: 24px;
-            flex: 1
+            flex: 1;
         }
 
-        /* STAT CARDS */
-        .stats-grid {
+        .page {
+            display: none;
+        }
+
+        .page.act {
+            display: block;
+        }
+
+        /* SECTION HEADER */
+        .sh {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .st {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .st span {
+            display: block;
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn {
+            padding: 9px 18px;
+            border-radius: 9px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .btn-p {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-p:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+        }
+
+        .btn-o {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-o:hover {
+            background: var(--card2);
+        }
+
+        .btn-d {
+            background: rgba(239, 68, 68, .15);
+            border: 1px solid rgba(239, 68, 68, .3);
+            color: #fca5a5;
+        }
+
+        .btn-s {
+            background: rgba(16, 185, 129, .15);
+            border: 1px solid rgba(16, 185, 129, .3);
+            color: #6ee7b7;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* STATS */
+        .sg {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
-            margin-bottom: 24px
+            margin-bottom: 24px;
         }
 
-        .stat-card {
+        .sc {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
-            transition: transform .2s, box-shadow .2s
+            transition: transform .2s;
         }
 
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, .4)
+        .sc:hover {
+            transform: translateY(-2px);
         }
 
-        .stat-card::before {
+        .sc::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px
+            height: 3px;
+            background: var(--g, linear-gradient(90deg, var(--primary), var(--secondary)));
         }
 
-        .stat-card:nth-child(1)::before {
-            background: var(--grad1)
-        }
-
-        .stat-card:nth-child(2)::before {
-            background: var(--grad2)
-        }
-
-        .stat-card:nth-child(3)::before {
-            background: var(--grad3)
-        }
-
-        .stat-card:nth-child(4)::before {
-            background: var(--grad4)
-        }
-
-        .stat-card .icon {
+        .sc-icon {
             width: 44px;
             height: 44px;
             border-radius: 12px;
@@ -395,335 +496,292 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            margin-bottom: 12px
+            margin-bottom: 12px;
         }
 
-        .stat-card:nth-child(1) .icon {
-            background: linear-gradient(135deg, rgba(102, 126, 234, .2), rgba(118, 75, 162, .2));
-            color: var(--primary)
-        }
-
-        .stat-card:nth-child(2) .icon {
-            background: linear-gradient(135deg, rgba(240, 147, 251, .2), rgba(245, 87, 108, .2));
-            color: #f093fb
-        }
-
-        .stat-card:nth-child(3) .icon {
-            background: linear-gradient(135deg, rgba(79, 172, 254, .2), rgba(0, 242, 254, .2));
-            color: #4facfe
-        }
-
-        .stat-card:nth-child(4) .icon {
-            background: linear-gradient(135deg, rgba(67, 233, 123, .2), rgba(56, 249, 215, .2));
-            color: #43e97b
-        }
-
-        .stat-card .value {
+        .sc-val {
             font-size: 28px;
             font-weight: 800;
-            line-height: 1
+            margin-bottom: 4px;
         }
 
-        .stat-card .label {
+        .sc-lbl {
             font-size: 12px;
             color: var(--muted);
-            margin-top: 4px
+            margin-bottom: 8px;
         }
 
-        .stat-card .trend {
+        .sc-tr {
             font-size: 12px;
-            margin-top: 8px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 4px
+            gap: 4px;
         }
 
-        .trend.up {
-            color: var(--success)
+        .sc-tr.up {
+            color: var(--success);
         }
 
-        .trend.down {
-            color: var(--danger)
+        .sc-tr.dn {
+            color: var(--danger);
         }
 
-        .stat-card .bg-icon {
+        .sc-bg {
             position: absolute;
             right: -10px;
             bottom: -10px;
-            font-size: 70px;
-            opacity: .04
+            font-size: 64px;
+            opacity: .06;
         }
-    </style>
-    <style>
-        /* CHARTS ROW */
-        .charts-row {
+
+        /* CHARTS */
+        .cr {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 16px;
-            margin-bottom: 24px
+            margin-bottom: 24px;
         }
 
-        .chart-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px
-        }
-
-        .chart-card .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px
-        }
-
-        .card-title {
-            font-size: 15px;
-            font-weight: 700
-        }
-
-        .card-title span {
-            display: block;
-            font-size: 12px;
-            color: var(--muted);
-            font-weight: 400;
-            margin-top: 2px
-        }
-
-        .select-sm {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            cursor: pointer
-        }
-
-        /* MIDDLE ROW */
-        .middle-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px
-        }
-
-        /* TABLE CARD */
-        .table-card {
+        .cc {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 24px
         }
 
-        .table-wrap {
-            overflow-x: auto;
-            margin-top: 16px
+        .ch {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .ct {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .ct span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .sel {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* TABLE */
+        .tc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .thead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tfilters {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .fi {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            outline: none;
+            width: 200px;
+        }
+
+        .fi::placeholder {
+            color: var(--muted);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px
         }
 
         th {
-            color: var(--muted);
-            font-weight: 600;
+            padding: 12px 16px;
             text-align: left;
-            padding: 10px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
             border-bottom: 1px solid var(--border);
-            white-space: nowrap
         }
 
         td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, .04);
-            vertical-align: middle
-        }
-
-        tr:last-child td {
-            border-bottom: none
+            padding: 12px 16px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         tr:hover td {
-            background: rgba(255, 255, 255, .02)
+            background: rgba(255, 255, 255, 0.02);
         }
 
-        .user-cell {
+        .uc {
             display: flex;
             align-items: center;
-            gap: 10px
+            gap: 10px;
         }
 
-        .user-avatar {
+        .uav {
             width: 32px;
             height: 32px;
-            border-radius: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .un {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .ue {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .sb2 {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .s-act {
+            background: rgba(16, 185, 129, .15);
+            color: #6ee7b7;
+        }
+
+        .s-pen {
+            background: rgba(245, 158, 11, .15);
+            color: #fcd34d;
+        }
+
+        .s-ina {
+            background: rgba(239, 68, 68, .15);
+            color: #fca5a5;
+        }
+
+        .pm {
+            width: 80px;
+            height: 5px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .pmf {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+        }
+
+        .ta {
+            display: flex;
+            gap: 6px;
+        }
+
+        .ai {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
-            font-weight: 700;
-            flex-shrink: 0
+            transition: all .2s;
         }
 
-        .user-name {
-            font-weight: 600;
-            font-size: 13px
+        .ai:hover {
+            color: var(--text);
+            background: var(--card2);
         }
 
-        .user-email {
-            font-size: 11px;
-            color: var(--muted)
-        }
-
-        .badge-status {
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600
-        }
-
-        .badge-active {
-            background: rgba(16, 185, 129, .15);
-            color: var(--success)
-        }
-
-        .badge-inactive {
-            background: rgba(239, 68, 68, .15);
-            color: var(--danger)
-        }
-
-        .badge-pending {
-            background: rgba(245, 158, 11, .15);
-            color: var(--warning)
-        }
-
-        .progress-mini {
-            height: 6px;
-            background: rgba(255, 255, 255, .08);
-            border-radius: 3px;
-            overflow: hidden;
-            width: 80px
-        }
-
-        .progress-mini-fill {
-            height: 100%;
-            border-radius: 3px;
-            background: var(--grad1)
-        }
-
-        /* ACTIVITY FEED */
-        .feed-item {
+        .pag {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border)
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
         }
 
-        .feed-item:last-child {
-            border-bottom: none
+        .pag-info {
+            font-size: 12px;
+            color: var(--muted);
         }
 
-        .feed-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+        .pag-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pb {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0
+            transition: all .2s;
         }
 
-        .feed-text {
-            font-size: 13px;
-            line-height: 1.5
-        }
-
-        .feed-text strong {
-            color: var(--text)
-        }
-
-        .feed-text span {
-            color: var(--muted)
-        }
-
-        .feed-time {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 2px
-        }
-
-        /* MINI STAT */
-        .mini-stat {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border)
-        }
-
-        .mini-stat:last-child {
-            border-bottom: none
-        }
-
-        .mini-stat-label {
-            font-size: 13px;
-            color: var(--muted)
-        }
-
-        .mini-stat-value {
-            font-size: 14px;
-            font-weight: 700
-        }
-
-        /* DONUT LEGEND */
-        .donut-legend {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 12px
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px
-        }
-
-        .legend-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            margin-right: 8px
-        }
-
-        .legend-label {
-            display: flex;
-            align-items: center;
-            color: var(--muted)
-        }
-
-        .legend-val {
-            font-weight: 700;
-            color: var(--text)
+        .pb:hover,
+        .pb.act {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         /* QUICK ACTIONS */
-        .actions-grid {
+        .qa {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 12px;
-            margin-bottom: 24px
+            margin-bottom: 24px;
         }
 
-        .action-btn {
+        .qab {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 14px;
@@ -734,445 +792,1730 @@
             gap: 8px;
             cursor: pointer;
             transition: all .2s;
-            text-decoration: none;
-            color: var(--text)
+            text-align: center;
         }
 
-        .action-btn:hover {
-            background: var(--card2);
-            transform: translateY(-2px)
+        .qab:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
         }
 
-        .action-btn i {
-            font-size: 22px
+        .qai {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
         }
 
-        .action-btn span {
+        .qal {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        /* FEED */
+        .fi2 {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .fi2:last-child {
+            border-bottom: none;
+        }
+
+        .fd {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .ft {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .ftm {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* MODULE STATS */
+        .mr {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mr:last-child {
+            border-bottom: none;
+        }
+
+        .mn {
+            font-size: 13px;
+            font-weight: 600;
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .mb {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, .08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .mf {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .mp {
             font-size: 12px;
             color: var(--muted);
-            text-align: center
+            width: 36px;
+            text-align: right;
         }
 
-        /* SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px
+        /* MIDDLE ROW */
+        .mrow {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
-        ::-webkit-scrollbar-track {
-            background: transparent
+        /* NOTIFICATIONS */
+        .nl2 {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px
+        .ni2 {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .ni2.unr {
+            border-left: 3px solid var(--primary);
+        }
+
+        .nii {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .nb {
+            flex: 1;
+        }
+
+        .nt {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .nd {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .ntm {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* SETTINGS */
+        .setg {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .setc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .sett {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fg {
+            margin-bottom: 14px;
+        }
+
+        .fl {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .finp {
+            width: 100%;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 9px 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color .2s;
+        }
+
+        .finp:focus {
+            border-color: var(--primary);
+        }
+
+        .tr2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tr2:last-child {
+            border-bottom: none;
+        }
+
+        .tri {
+            font-size: 13px;
+        }
+
+        .tri span {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .tgl {
+            width: 40px;
+            height: 22px;
+            background: var(--card2);
+            border-radius: 11px;
+            position: relative;
+            cursor: pointer;
+            transition: background .2s;
+            border: 1px solid var(--border);
+        }
+
+        .tgl.on {
+            background: var(--primary);
+        }
+
+        .tgl::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: left .2s;
+        }
+
+        .tgl.on::after {
+            left: 20px;
+        }
+
+        /* LOGS */
+        .li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+        }
+
+        .li:last-child {
+            border-bottom: none;
+        }
+
+        .ll {
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 10px;
+            width: 50px;
+            text-align: center;
+        }
+
+        .ll-i {
+            background: rgba(59, 130, 246, .15);
+            color: #93c5fd;
+        }
+
+        .ll-w {
+            background: rgba(245, 158, 11, .15);
+            color: #fcd34d;
+        }
+
+        .ll-e {
+            background: rgba(239, 68, 68, .15);
+            color: #fca5a5;
+        }
+
+        .ll-s {
+            background: rgba(16, 185, 129, .15);
+            color: #6ee7b7;
+        }
+
+        .lt {
+            color: var(--muted);
+            width: 140px;
+            flex-shrink: 0;
+        }
+
+        .lm {
+            flex: 1;
+        }
+
+        .lu {
+            color: var(--muted);
+            width: 160px;
+            text-align: right;
+        }
+
+        /* PAYMENTS */
+        .pi {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pi:last-child {
+            border-bottom: none;
+        }
+
+        .pii {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .pin {
+            flex: 1;
+        }
+
+        .pin-n {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .pin-d {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .pa {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .pa.pl {
+            color: var(--success);
+        }
+
+        .pa.mi {
+            color: var(--danger);
+        }
+
+        /* DONUT LEGEND */
+        .dl {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .dli {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+        }
+
+        .dld {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* MODAL */
+        .mo {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mo.open {
+            display: flex;
+        }
+
+        .md {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            width: 480px;
+            max-width: 95vw;
+        }
+
+        .mh {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .mtt {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .mc {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mc:hover {
+            color: var(--text);
+        }
+
+        .mf2 {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        /* TOAST */
+        .tct {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tst {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            min-width: 280px;
+            animation: sli .3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+        }
+
+        .tst.s {
+            border-left: 3px solid var(--success);
+        }
+
+        .tst.e {
+            border-left: 3px solid var(--danger);
+        }
+
+        .tst.i {
+            border-left: 3px solid var(--info);
+        }
+
+        @keyframes sli {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ANALYTICS */
+        .ag {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .fs {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .fs:last-child {
+            border-bottom: none;
+        }
+
+        .fsl {
+            font-size: 13px;
+            width: 140px;
+        }
+
+        .fsb {
+            flex: 1;
+            height: 24px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .fsbf {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .fsp {
+            font-size: 12px;
+            color: var(--muted);
+            width: 40px;
+            text-align: right;
         }
 
         /* RESPONSIVE */
-        @media(max-width:1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr)
+        @media(max-width:1024px) {
+
+            .cr,
+            .mrow,
+            .ag {
+                grid-template-columns: 1fr;
             }
 
-            .charts-row {
-                grid-template-columns: 1fr
-            }
-
-            .middle-row {
-                grid-template-columns: 1fr 1fr
+            .setg {
+                grid-template-columns: 1fr;
             }
         }
 
         @media(max-width:768px) {
-            .sidebar {
-                width: 64px
+            .sb {
+                transform: translateX(-100%);
+            }
+
+            .sb.mob {
+                transform: translateX(0);
             }
 
             .main {
-                margin-left: 64px
+                margin-left: 0 !important;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr 1fr
-            }
-
-            .middle-row {
-                grid-template-columns: 1fr
-            }
-
-            .topbar-search {
-                display: none
-            }
-
-            .actions-grid {
-                grid-template-columns: repeat(2, 1fr)
-            }
-        }
-
-        @media(max-width:480px) {
-            .stats-grid {
-                grid-template-columns: 1fr
-            }
-
-            .content {
-                padding: 16px
+            .tb-search {
+                display: none;
             }
         }
     </style>
+</head>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-logo">
-            <div class="logo-icon">🎓</div>
-            <div class="logo-text">Admin Panel<span id="adminName">Super Admin</span></div>
-        </div>
-        <nav>
-            <div class="nav-section">Главное</div>
-            <a href="admin.html" class="nav-item active"><i class="fa fa-chart-pie"></i><span>Дашборд</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-users"></i><span>Пользователи</span><span
-                    class="badge">12</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-book-open"></i><span>Модули</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-chart-line"></i><span>Аналитика</span></a>
-            <div class="nav-section">Контент</div>
-            <a href="#" class="nav-item"><i class="fa fa-file-alt"></i><span>Страницы</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-headphones"></i><span>Аудио</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-question-circle"></i><span>Квизы</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-comments"></i><span>Отзывы</span><span
-                    class="badge">3</span></a>
-            <div class="nav-section">Система</div>
-            <a href="#" class="nav-item"><i class="fa fa-credit-card"></i><span>Платежи</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-bell"></i><span>Уведомления</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-cog"></i><span>Настройки</span></a>
-            <a href="#" class="nav-item"><i class="fa fa-shield-alt"></i><span>Безопасность</span></a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
-        </div>
-    </aside>
+<body>
 
-    <!-- MAIN -->
-    <div class="main" id="main">
+    <!-- Firebase Auth Guard -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+        const ADMIN = 'dersire.der@gmail.com';
+        const app = initializeApp({ apiKey: "AIzaSyC505dhT1WjUPhXbinqLvEOTlEXWxYy8GI", authDomain: "dispatch4you-80e0f.firebaseapp.com", projectId: "dispatch4you-80e0f", storageBucket: "dispatch4you-80e0f.firebasestorage.app", messagingSenderId: "349235354473", appId: "1:349235354473:web:488aeb29211b02bb153bf8" });
+        const auth = getAuth(app);
+        onAuthStateChanged(auth, u => {
+            if (!u || u.email !== ADMIN) { document.body.innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#020617;font-family:Inter,sans-serif;color:#f1f5f9;flex-direction:column;gap:16px;"><div style="font-size:64px">🔒</div><h1 style="font-size:28px;font-weight:800">Доступ запрещён</h1><p style="color:#64748b">Только для супер-администратора</p><a href="../dashboard.html" style="margin-top:8px;padding:12px 28px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border-radius:12px;text-decoration:none;font-weight:600">← Вернуться</a></div>`; return; }
+            document.getElementById('adminEmail').textContent = u.email;
+            document.getElementById('adminName').textContent = u.displayName || 'Super Admin';
+            document.getElementById('adminInitial').textContent = (u.displayName || 'A')[0].toUpperCase();
+            document.getElementById('topbarInitial').textContent = (u.displayName || 'A')[0].toUpperCase();
+            document.getElementById('adminPanel').style.display = 'flex';
+        });
+    </script>
 
-        <!-- TOPBAR -->
-        <div class="topbar">
-            <div class="topbar-title">Дашборд<span>Воскресенье, 15 марта 2026</span></div>
-            <div class="topbar-search">
-                <i class="fa fa-search"></i>
-                <input type="text" placeholder="Поиск пользователей, модулей...">
+    <!-- PANEL WRAPPER (hidden until auth) -->
+    <div id="adminPanel" style="display:none;width:100%;min-height:100vh;">
+
+        <!-- SIDEBAR -->
+        <aside class="sb" id="sb">
+            <div class="slogo">
+                <div class="slogo-icon">🎓</div>
+                <div class="slt">Super Admin<span>Курсы Диспетчера</span></div>
             </div>
-            <div class="topbar-actions">
-                <div class="icon-btn" title="Уведомления"><i class="fa fa-bell"></i>
-                    <div class="dot"></div>
-                </div>
-                <div class="icon-btn" title="Сообщения"><i class="fa fa-envelope"></i></div>
-                <div class="icon-btn" title="Задачи"><i class="fa fa-tasks"></i></div>
-                <div class="avatar" title="Администратор">A</div>
+            <div class="su">
+                <div class="sa" id="adminInitial">A</div>
+                <div class="sui"><strong id="adminName">Admin</strong><span>● Online</span></div>
             </div>
-        </div>
-
-        <!-- CONTENT -->
-        <div class="content">
-
-            <!-- QUICK ACTIONS -->
-            <div class="actions-grid">
-                <a href="#" class="action-btn"><i class="fa fa-user-plus" style="color:#667eea"></i><span>Добавить
-                        пользователя</span></a>
-                <a href="#" class="action-btn"><i class="fa fa-plus-circle" style="color:#f093fb"></i><span>Новый
-                        модуль</span></a>
-                <a href="#" class="action-btn"><i class="fa fa-download" style="color:#4facfe"></i><span>Экспорт
-                        данных</span></a>
-                <a href="#" class="action-btn"><i class="fa fa-paper-plane"
-                        style="color:#43e97b"></i><span>Рассылка</span></a>
+            <nav class="snav">
+                <div class="ns">Главное</div>
+                <div class="ni act" onclick="nav('dashboard',this)"><i class="fa fa-chart-pie"></i><span
+                        class="nl">Дашборд</span></div>
+                <div class="ni" onclick="nav('users',this)"><i class="fa fa-users"></i><span
+                        class="nl">Пользователи</span><span class="bdg">1284</span></div>
+                <div class="ni" onclick="nav('analytics',this)"><i class="fa fa-chart-line"></i><span
+                        class="nl">Аналитика</span></div>
+                <div class="ni" onclick="nav('payments',this)"><i class="fa fa-credit-card"></i><span
+                        class="nl">Платежи</span></div>
+                <div class="ns">Контент</div>
+                <div class="ni" onclick="nav('modules',this)"><i class="fa fa-book-open"></i><span
+                        class="nl">Модули</span></div>
+                <div class="ni" onclick="nav('quizzes',this)"><i class="fa fa-question-circle"></i><span
+                        class="nl">Квизы</span></div>
+                <div class="ni" onclick="nav('reviews',this)"><i class="fa fa-star"></i><span
+                        class="nl">Отзывы</span><span class="bdg r">3</span></div>
+                <div class="ni" onclick="nav('mailing',this)"><i class="fa fa-paper-plane"></i><span
+                        class="nl">Рассылки</span></div>
+                <div class="ns">Система</div>
+                <div class="ni" onclick="nav('notifications',this)"><i class="fa fa-bell"></i><span
+                        class="nl">Уведомления</span><span class="bdg r">5</span></div>
+                <div class="ni" onclick="nav('logs',this)"><i class="fa fa-terminal"></i><span class="nl">Логи</span>
+                </div>
+                <div class="ni" onclick="nav('settings',this)"><i class="fa fa-cog"></i><span
+                        class="nl">Настройки</span></div>
+                <div class="ni" onclick="nav('security',this)"><i class="fa fa-shield-alt"></i><span
+                        class="nl">Безопасность</span></div>
+            </nav>
+            <div class="sfooter">
+                <button class="cbtn" onclick="toggleSb()"><i class="fa fa-bars"></i><span
+                        class="nl">Свернуть</span></button>
             </div>
+        </aside>
 
-            <!-- STAT CARDS -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="icon"><i class="fa fa-users"></i></div>
-                    <div class="value">1,284</div>
-                    <div class="label">Всего пользователей</div>
-                    <div class="trend up"><i class="fa fa-arrow-up"></i> +8.2% за месяц</div>
-                    <div class="bg-icon">👥</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon"><i class="fa fa-graduation-cap"></i></div>
-                    <div class="value">847</div>
-                    <div class="label">Активных студентов</div>
-                    <div class="trend up"><i class="fa fa-arrow-up"></i> +12.5% за месяц</div>
-                    <div class="bg-icon">🎓</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon"><i class="fa fa-dollar-sign"></i></div>
-                    <div class="value">$24,680</div>
-                    <div class="label">Доход за месяц</div>
-                    <div class="trend up"><i class="fa fa-arrow-up"></i> +18.3% vs прошлый</div>
-                    <div class="bg-icon">💰</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon"><i class="fa fa-check-circle"></i></div>
-                    <div class="value">68%</div>
-                    <div class="label">Завершили курс</div>
-                    <div class="trend down"><i class="fa fa-arrow-down"></i> -2.1% за месяц</div>
-                    <div class="bg-icon">✅</div>
+        <!-- MAIN -->
+        <div class="main" id="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <div class="tb-title" id="pageTitle">Дашборд<span id="pageDate"></span></div>
+                <div class="tb-search"><i class="fa fa-search"></i><input type="text" placeholder="Поиск..."
+                        oninput="globalSearch(this.value)"></div>
+                <div class="tb-actions">
+                    <div class="ib" title="Уведомления" onclick="nav('notifications',null)"><i class="fa fa-bell"></i>
+                        <div class="dot"></div>
+                    </div>
+                    <div class="ib" title="Логи" onclick="nav('logs',null)"><i class="fa fa-terminal"></i></div>
+                    <div class="ib" title="Настройки" onclick="nav('settings',null)"><i class="fa fa-cog"></i></div>
+                    <div class="tb-av" id="topbarInitial" title="Профиль">A</div>
                 </div>
             </div>
 
-            <!-- CHARTS ROW -->
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="card-header">
-                        <div class="card-title">Активность пользователей<span>Регистрации и завершения курсов</span>
+            <!-- CONTENT -->
+            <div class="content">
+
+                <!-- PAGE: DASHBOARD -->
+                <div class="page act" id="p-dashboard">
+                    <div class="sh">
+                        <div class="st">Дашборд<span>Обзор платформы в реальном времени</span></div>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn btn-o btn-sm" onclick="exportData()"><i class="fa fa-download"></i>
+                                Экспорт</button>
+                            <button class="btn btn-p btn-sm" onclick="openModal('addUser')"><i class="fa fa-plus"></i>
+                                Добавить</button>
                         </div>
-                        <select class="select-sm" onchange="updateChart(this.value)">
-                            <option value="week">Неделя</option>
-                            <option value="month" selected>Месяц</option>
-                            <option value="year">Год</option>
-                        </select>
                     </div>
-                    <canvas id="activityChart" height="100"></canvas>
-                </div>
-                <div class="chart-card">
-                    <div class="card-header">
-                        <div class="card-title">Модули<span>Популярность по прохождению</span></div>
+                    <!-- Quick Actions -->
+                    <div class="qa">
+                        <div class="qab" onclick="openModal('addUser')">
+                            <div class="qai" style="background:rgba(102,126,234,.2)">👤</div><span class="qal">Добавить
+                                пользователя</span>
+                        </div>
+                        <div class="qab" onclick="nav('modules',null)">
+                            <div class="qai" style="background:rgba(240,147,251,.2)">📚</div><span class="qal">Новый
+                                модуль</span>
+                        </div>
+                        <div class="qab" onclick="exportData()">
+                            <div class="qai" style="background:rgba(79,172,254,.2)">📊</div><span class="qal">Экспорт
+                                данных</span>
+                        </div>
+                        <div class="qab" onclick="nav('mailing',null)">
+                            <div class="qai" style="background:rgba(67,233,123,.2)">📧</div><span
+                                class="qal">Рассылка</span>
+                        </div>
+                        <div class="qab" onclick="nav('analytics',null)">
+                            <div class="qai" style="background:rgba(245,158,11,.2)">📈</div><span
+                                class="qal">Аналитика</span>
+                        </div>
+                        <div class="qab" onclick="nav('logs',null)">
+                            <div class="qai" style="background:rgba(239,68,68,.2)">🔍</div><span class="qal">Логи
+                                системы</span>
+                        </div>
                     </div>
-                    <canvas id="donutChart" height="180"></canvas>
-                    <div class="donut-legend" id="donutLegend"></div>
+                    <!-- Stats -->
+                    <div class="sg">
+                        <div class="sc" style="--g:linear-gradient(90deg,#667eea,#764ba2)">
+                            <div class="sc-icon" style="background:rgba(102,126,234,.2)">👥</div>
+                            <div class="sc-val">1,284</div>
+                            <div class="sc-lbl">Всего пользователей</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+8.2% за месяц</div>
+                            <div class="sc-bg">👥</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#10b981,#059669)">
+                            <div class="sc-icon" style="background:rgba(16,185,129,.2)">🎓</div>
+                            <div class="sc-val">847</div>
+                            <div class="sc-lbl">Активных студентов</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+12.5%</div>
+                            <div class="sc-bg">🎓</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#f59e0b,#d97706)">
+                            <div class="sc-icon" style="background:rgba(245,158,11,.2)">💰</div>
+                            <div class="sc-val">$24,680</div>
+                            <div class="sc-lbl">Доход за месяц</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+18.3%</div>
+                            <div class="sc-bg">💰</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#f093fb,#f5576c)">
+                            <div class="sc-icon" style="background:rgba(240,147,251,.2)">✅</div>
+                            <div class="sc-val">68%</div>
+                            <div class="sc-lbl">Завершили курс</div>
+                            <div class="sc-tr dn"><i class="fa fa-arrow-down"></i>-2.1%</div>
+                            <div class="sc-bg">✅</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#3b82f6,#1d4ed8)">
+                            <div class="sc-icon" style="background:rgba(59,130,246,.2)">📋</div>
+                            <div class="sc-val">12</div>
+                            <div class="sc-lbl">Активных модулей</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+2 новых</div>
+                            <div class="sc-bg">📋</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#ef4444,#dc2626)">
+                            <div class="sc-icon" style="background:rgba(239,68,68,.2)">⭐</div>
+                            <div class="sc-val">4.8</div>
+                            <div class="sc-lbl">Средний рейтинг</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+0.2</div>
+                            <div class="sc-bg">⭐</div>
+                        </div>
+                    </div>
+                    <!-- Charts Row -->
+                    <div class="cr">
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Активность пользователей<span>Регистрации и завершения</span></div>
+                                <select class="sel" onchange="updateActivityChart(this.value)">
+                                    <option value="week">Неделя</option>
+                                    <option value="month" selected>Месяц</option>
+                                    <option value="year">Год</option>
+                                </select>
+                            </div><canvas id="actChart" height="100"></canvas>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Модули<span>Популярность</span></div>
+                            </div><canvas id="donutChart" height="180"></canvas>
+                            <div class="dl" id="donutLegend"></div>
+                        </div>
+                    </div>
+                    <!-- Middle Row -->
+                    <div class="mrow">
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Доходы<span>По месяцам 2026</span></div>
+                            </div><canvas id="revChart" height="140"></canvas>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Активность<span>Последние события</span></div>
+                            </div>
+                            <div id="feedList"></div>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Прогресс модулей<span>% прохождения</span></div>
+                            </div>
+                            <div id="modStats"></div>
+                        </div>
+                    </div>
+                    <!-- Users Table Preview -->
+                    <div class="tc">
+                        <div class="thead">
+                            <div class="ct">Последние пользователи</div><button class="btn btn-o btn-sm"
+                                onclick="nav('users',null)">Все пользователи →</button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Пользователь</th>
+                                    <th>Модуль</th>
+                                    <th>Прогресс</th>
+                                    <th>Статус</th>
+                                    <th>Дата</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashUsersBody"></tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <!-- MIDDLE ROW -->
-            <div class="middle-row">
-                <!-- Revenue chart -->
-                <div class="chart-card">
-                    <div class="card-header">
-                        <div class="card-title">Доходы<span>По месяцам 2026</span></div>
+                <!-- PAGE: USERS -->
+                <div class="page" id="p-users">
+                    <div class="sh">
+                        <div class="st">Пользователи<span>Управление аккаунтами</span></div>
+                        <button class="btn btn-p" onclick="openModal('addUser')"><i class="fa fa-user-plus"></i>
+                            Добавить</button>
                     </div>
-                    <canvas id="revenueChart" height="140"></canvas>
-                </div>
-                <!-- Activity feed -->
-                <div class="chart-card">
-                    <div class="card-header">
-                        <div class="card-title">Активность<span>Последние события</span></div>
+                    <div class="sg">
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(102,126,234,.2)">👥</div>
+                            <div class="sc-val">1,284</div>
+                            <div class="sc-lbl">Всего</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(16,185,129,.2)">✅</div>
+                            <div class="sc-val">847</div>
+                            <div class="sc-lbl">Активных</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(245,158,11,.2)">⏳</div>
+                            <div class="sc-val">312</div>
+                            <div class="sc-lbl">Ожидают</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(239,68,68,.2)">🚫</div>
+                            <div class="sc-val">125</div>
+                            <div class="sc-lbl">Неактивных</div>
+                        </div>
                     </div>
-                    <div id="activityFeed"></div>
-                </div>
-                <!-- Module stats -->
-                <div class="chart-card">
-                    <div class="card-header">
-                        <div class="card-title">Статистика модулей<span>Прогресс прохождения</span></div>
+                    <div class="tc">
+                        <div class="thead">
+                            <div class="tfilters">
+                                <input class="fi" type="text" placeholder="🔍 Поиск по имени или email..."
+                                    oninput="filterUsers(this.value)">
+                                <select class="sel" onchange="filterByStatus(this.value)">
+                                    <option value="">Все статусы</option>
+                                    <option value="active">Активные</option>
+                                    <option value="pending">Ожидают</option>
+                                    <option value="inactive">Неактивные</option>
+                                </select>
+                                <select class="sel" onchange="filterByModule(this.value)">
+                                    <option value="">Все модули</option>
+                                    <option>Модуль 1</option>
+                                    <option>Модуль 2</option>
+                                    <option>Модуль 3</option>
+                                    <option>Модуль 4</option>
+                                    <option>Модуль 5</option>
+                                </select>
+                            </div>
+                            <div style="display:flex;gap:8px;">
+                                <button class="btn btn-o btn-sm" onclick="exportUsers()"><i class="fa fa-download"></i>
+                                    CSV</button>
+                                <button class="btn btn-s btn-sm" onclick="sendBulkEmail()"><i
+                                        class="fa fa-envelope"></i> Рассылка</button>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" onchange="selectAll(this)"></th>
+                                    <th>Пользователь</th>
+                                    <th>Модуль</th>
+                                    <th>Прогресс</th>
+                                    <th>Статус</th>
+                                    <th>Регистрация</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersBody"></tbody>
+                        </table>
+                        <div class="pag">
+                            <div class="pag-info" id="pagInfo">Показано 1-10 из 1284</div>
+                            <div class="pag-btns" id="pagBtns"></div>
+                        </div>
                     </div>
-                    <div id="moduleStats"></div>
                 </div>
-            </div>
 
-            <!-- USERS TABLE -->
-            <div class="table-card">
-                <div class="card-header">
-                    <div class="card-title">Последние пользователи<span>Недавно зарегистрированные</span></div>
-                    <div style="display:flex;gap:8px">
-                        <input type="text" placeholder="Поиск..."
-                            style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:8px;font-size:12px;outline:none"
-                            oninput="filterTable(this.value)">
-                        <select class="select-sm">
-                            <option>Все</option>
-                            <option>Активные</option>
-                            <option>Неактивные</option>
-                        </select>
+                <!-- PAGE: ANALYTICS -->
+                <div class="page" id="p-analytics">
+                    <div class="sh">
+                        <div class="st">Аналитика<span>Детальная статистика платформы</span></div>
+                        <button class="btn btn-o btn-sm"><i class="fa fa-download"></i> Отчёт PDF</button>
+                    </div>
+                    <div class="sg">
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(102,126,234,.2)">👁️</div>
+                            <div class="sc-val">48,291</div>
+                            <div class="sc-lbl">Просмотров страниц</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+22%</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(16,185,129,.2)">⏱️</div>
+                            <div class="sc-val">18 мин</div>
+                            <div class="sc-lbl">Среднее время сессии</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+3 мин</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(239,68,68,.2)">📉</div>
+                            <div class="sc-val">32%</div>
+                            <div class="sc-lbl">Bounce Rate</div>
+                            <div class="sc-tr dn"><i class="fa fa-arrow-down"></i>-5%</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(245,158,11,.2)">🔄</div>
+                            <div class="sc-val">74%</div>
+                            <div class="sc-lbl">Retention 30 дней</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+8%</div>
+                        </div>
+                    </div>
+                    <div class="ag">
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Воронка конверсии<span>От визита до оплаты</span></div>
+                            </div>
+                            <div id="funnelChart"></div>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Источники трафика<span>Откуда приходят</span></div>
+                            </div><canvas id="trafficChart" height="200"></canvas>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Активность по часам<span>Когда учатся</span></div>
+                            </div><canvas id="hoursChart" height="160"></canvas>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Устройства<span>Desktop vs Mobile</span></div>
+                            </div><canvas id="devicesChart" height="200"></canvas>
+                        </div>
+                    </div>
+                    <div class="cr">
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Retention по когортам<span>% активных через N дней</span></div>
+                            </div><canvas id="retentionChart" height="120"></canvas>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">NPS Score<span>Индекс лояльности</span></div>
+                            </div>
+                            <div id="npsBlock" style="text-align:center;padding:20px;">
+                                <div
+                                    style="font-size:64px;font-weight:900;background:linear-gradient(135deg,#667eea,#f093fb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+                                    72</div>
+                                <div style="color:var(--muted);font-size:13px;margin-top:8px;">Отличный показатель (>50
+                                    = хорошо)</div>
+                                <div
+                                    style="display:flex;gap:8px;justify-content:center;margin-top:16px;font-size:12px;">
+                                    <span style="color:#6ee7b7">😊 Промоутеры: 68%</span><span style="color:#fcd34d">😐
+                                        Нейтральные: 20%</span><span style="color:#fca5a5">😞 Критики: 12%</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="table-wrap">
-                    <table id="usersTable">
-                        <thead>
-                            <tr>
-                                <th>Пользователь</th>
-                                <th>Модуль</th>
-                                <th>Прогресс</th>
-                                <th>Статус</th>
-                                <th>Дата</th>
-                                <th>Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersBody"></tbody>
-                    </table>
-                </div>
-            </div>
 
-        </div><!-- /content -->
-    </div><!-- /main -->
+                <!-- PAGE: PAYMENTS -->
+                <div class="page" id="p-payments">
+                    <div class="sh">
+                        <div class="st">Платежи<span>Финансовая статистика</span></div>
+                        <button class="btn btn-o btn-sm"><i class="fa fa-download"></i> Выгрузить</button>
+                    </div>
+                    <div class="sg">
+                        <div class="sc" style="--g:linear-gradient(90deg,#10b981,#059669)">
+                            <div class="sc-icon" style="background:rgba(16,185,129,.2)">💵</div>
+                            <div class="sc-val">$24,680</div>
+                            <div class="sc-lbl">Доход за март</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+18.3%</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#667eea,#764ba2)">
+                            <div class="sc-icon" style="background:rgba(102,126,234,.2)">📦</div>
+                            <div class="sc-val">312</div>
+                            <div class="sc-lbl">Транзакций</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+42</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#f59e0b,#d97706)">
+                            <div class="sc-icon" style="background:rgba(245,158,11,.2)">💳</div>
+                            <div class="sc-val">$79.10</div>
+                            <div class="sc-lbl">Средний чек</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+$4.20</div>
+                        </div>
+                        <div class="sc" style="--g:linear-gradient(90deg,#ef4444,#dc2626)">
+                            <div class="sc-icon" style="background:rgba(239,68,68,.2)">↩️</div>
+                            <div class="sc-val">2.1%</div>
+                            <div class="sc-lbl">Возвраты</div>
+                            <div class="sc-tr dn"><i class="fa fa-arrow-down"></i>-0.3%</div>
+                        </div>
+                    </div>
+                    <div class="cr">
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">Доходы по месяцам<span>2026 год</span></div>
+                            </div><canvas id="payRevChart" height="120"></canvas>
+                        </div>
+                        <div class="cc">
+                            <div class="ch">
+                                <div class="ct">По тарифам<span>Распределение</span></div>
+                            </div><canvas id="planChart" height="200"></canvas>
+                        </div>
+                    </div>
+                    <div class="tc">
+                        <div class="thead">
+                            <div class="ct">Последние транзакции</div><input class="fi" type="text"
+                                placeholder="Поиск транзакций...">
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Пользователь</th>
+                                    <th>Тариф</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
+                                    <th>Дата</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentsBody"></tbody>
+                        </table>
+                        <div class="pag">
+                            <div class="pag-info">Показано 1-10 из 312</div>
+                            <div class="pag-btns"><button class="pb act">1</button><button class="pb">2</button><button
+                                    class="pb">3</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE: MODULES -->
+                <div class="page" id="p-modules">
+                    <div class="sh">
+                        <div class="st">Модули<span>Управление учебным контентом</span></div>
+                        <button class="btn btn-p" onclick="openModal('addModule')"><i class="fa fa-plus"></i> Новый
+                            модуль</button>
+                    </div>
+                    <div id="modulesGrid"
+                        style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;"></div>
+                </div>
+
+                <!-- PAGE: QUIZZES -->
+                <div class="page" id="p-quizzes">
+                    <div class="sh">
+                        <div class="st">Квизы<span>Статистика тестирования</span></div>
+                        <button class="btn btn-p"><i class="fa fa-plus"></i> Новый квиз</button>
+                    </div>
+                    <div class="sg">
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(102,126,234,.2)">📝</div>
+                            <div class="sc-val">48</div>
+                            <div class="sc-lbl">Всего квизов</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(16,185,129,.2)">✅</div>
+                            <div class="sc-val">73%</div>
+                            <div class="sc-lbl">Средний результат</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(245,158,11,.2)">🔄</div>
+                            <div class="sc-val">2.4</div>
+                            <div class="sc-lbl">Попыток в среднем</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(239,68,68,.2)">⏱️</div>
+                            <div class="sc-val">4.2 мин</div>
+                            <div class="sc-lbl">Среднее время</div>
+                        </div>
+                    </div>
+                    <div class="tc">
+                        <div class="thead">
+                            <div class="ct">Все квизы</div><input class="fi" type="text" placeholder="Поиск квизов...">
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Квиз</th>
+                                    <th>Модуль</th>
+                                    <th>Вопросов</th>
+                                    <th>Попыток</th>
+                                    <th>Ср. балл</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quizzesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PAGE: REVIEWS -->
+                <div class="page" id="p-reviews">
+                    <div class="sh">
+                        <div class="st">Отзывы<span>Управление отзывами студентов</span></div>
+                    </div>
+                    <div class="sg">
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(245,158,11,.2)">⭐</div>
+                            <div class="sc-val">4.8</div>
+                            <div class="sc-lbl">Средний рейтинг</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(16,185,129,.2)">✅</div>
+                            <div class="sc-val">284</div>
+                            <div class="sc-lbl">Одобрено</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(245,158,11,.2)">⏳</div>
+                            <div class="sc-val">3</div>
+                            <div class="sc-lbl">На модерации</div>
+                        </div>
+                        <div class="sc">
+                            <div class="sc-icon" style="background:rgba(239,68,68,.2)">🚫</div>
+                            <div class="sc-val">12</div>
+                            <div class="sc-lbl">Отклонено</div>
+                        </div>
+                    </div>
+                    <div id="reviewsList" style="display:flex;flex-direction:column;gap:12px;"></div>
+                </div>
+
+                <!-- PAGE: MAILING -->
+                <div class="page" id="p-mailing">
+                    <div class="sh">
+                        <div class="st">Рассылки<span>Email-маркетинг</span></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="setc">
+                            <div class="sett">✉️ Новая рассылка</div>
+                            <div class="fg"><label class="fl">Тема письма</label><input class="finp" type="text"
+                                    placeholder="Новый модуль доступен!"></div>
+                            <div class="fg"><label class="fl">Получатели</label><select class="finp">
+                                    <option>Все пользователи (1284)</option>
+                                    <option>Активные студенты (847)</option>
+                                    <option>Неактивные (125)</option>
+                                    <option>Завершили курс (312)</option>
+                                </select></div>
+                            <div class="fg"><label class="fl">Сообщение</label><textarea class="finp" rows="6"
+                                    placeholder="Текст письма..."></textarea></div>
+                            <div style="display:flex;gap:8px;margin-top:8px;">
+                                <button class="btn btn-o" onclick="toast('Черновик сохранён','i')"><i
+                                        class="fa fa-save"></i> Черновик</button>
+                                <button class="btn btn-p" onclick="toast('Рассылка отправлена!','s')"><i
+                                        class="fa fa-paper-plane"></i> Отправить</button>
+                            </div>
+                        </div>
+                        <div class="setc">
+                            <div class="sett">📊 История рассылок</div>
+                            <div id="mailingHistory"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE: NOTIFICATIONS -->
+                <div class="page" id="p-notifications">
+                    <div class="sh">
+                        <div class="st">Уведомления<span>Системные оповещения</span></div>
+                        <button class="btn btn-o btn-sm" onclick="markAllRead()"><i class="fa fa-check-double"></i>
+                            Прочитать все</button>
+                    </div>
+                    <div class="nl2" id="notifList"></div>
+                </div>
+
+                <!-- PAGE: LOGS -->
+                <div class="page" id="p-logs">
+                    <div class="sh">
+                        <div class="st">Логи системы<span>Журнал событий</span></div>
+                        <div style="display:flex;gap:8px;">
+                            <select class="sel" onchange="filterLogs(this.value)">
+                                <option value="">Все уровни</option>
+                                <option value="INFO">INFO</option>
+                                <option value="WARN">WARN</option>
+                                <option value="ERROR">ERROR</option>
+                                <option value="SUCCESS">SUCCESS</option>
+                            </select>
+                            <button class="btn btn-d btn-sm" onclick="clearLogs()"><i class="fa fa-trash"></i>
+                                Очистить</button>
+                        </div>
+                    </div>
+                    <div class="tc">
+                        <div style="padding:0 20px;">
+                            <div id="logsList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE: SETTINGS -->
+                <div class="page" id="p-settings">
+                    <div class="sh">
+                        <div class="st">Настройки<span>Конфигурация платформы</span></div>
+                        <button class="btn btn-p" onclick="saveSettings()"><i class="fa fa-save"></i> Сохранить</button>
+                    </div>
+                    <div class="setg">
+                        <div class="setc">
+                            <div class="sett">🌐 Основные</div>
+                            <div class="fg"><label class="fl">Название сайта</label><input class="finp"
+                                    value="Курсы Диспетчера"></div>
+                            <div class="fg"><label class="fl">Email поддержки</label><input class="finp" type="email"
+                                    value="support@dispatch4you.com"></div>
+                            <div class="fg"><label class="fl">Телефон</label><input class="finp"
+                                    value="+1 (555) 123-4567"></div>
+                            <div class="fg"><label class="fl">Часовой пояс</label><select class="finp">
+                                    <option>UTC-5 (EST)</option>
+                                    <option>UTC-6 (CST)</option>
+                                    <option>UTC+3 (MSK)</option>
+                                </select></div>
+                        </div>
+                        <div class="setc">
+                            <div class="sett">💳 Платежи</div>
+                            <div class="fg"><label class="fl">Stripe Public Key</label><input class="finp"
+                                    value="pk_live_..."></div>
+                            <div class="fg"><label class="fl">Валюта</label><select class="finp">
+                                    <option>USD ($)</option>
+                                    <option>EUR (€)</option>
+                                    <option>RUB (₽)</option>
+                                </select></div>
+                            <div class="fg"><label class="fl">Пробный период (дней)</label><input class="finp"
+                                    type="number" value="7"></div>
+                        </div>
+                        <div class="setc">
+                            <div class="sett">🔔 Уведомления</div>
+                            <div class="tr2">
+                                <div class="tri">Email при регистрации<span>Отправлять приветствие</span></div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                            <div class="tr2">
+                                <div class="tri">Email при оплате<span>Квитанция автоматически</span></div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                            <div class="tr2">
+                                <div class="tri">Уведомления в Telegram<span>Бот для администратора</span></div>
+                                <div class="tgl" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                            <div class="tr2">
+                                <div class="tri">Еженедельный отчёт<span>Статистика на email</span></div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                        </div>
+                        <div class="setc">
+                            <div class="sett">🎨 Внешний вид</div>
+                            <div class="tr2">
+                                <div class="tri">Тёмная тема по умолчанию<span>Для новых пользователей</span></div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                            <div class="tr2">
+                                <div class="tri">Анимации интерфейса<span>Плавные переходы</span></div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                            <div class="tr2">
+                                <div class="tri">Режим обслуживания<span>Закрыть сайт для пользователей</span></div>
+                                <div class="tgl" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE: SECURITY -->
+                <div class="page" id="p-security">
+                    <div class="sh">
+                        <div class="st">Безопасность<span>Защита платформы</span></div>
+                    </div>
+                    <div class="setg">
+                        <div class="setc">
+                            <div class="sett">🔐 Аутентификация</div>
+                            <div class="tr2">
+                                <div class="tri">Двухфакторная аутентификация<span>2FA для всех администраторов</span>
+                                </div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                            <div class="tr2">
+                                <div class="tri">Блокировка после 5 попыток<span>Временная блокировка IP</span></div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                            <div class="tr2">
+                                <div class="tri">Сессии только HTTPS<span>Запрет HTTP соединений</span></div>
+                                <div class="tgl on" onclick="this.classList.toggle('on')"></div>
+                            </div>
+                        </div>
+                        <div class="setc">
+                            <div class="sett">🛡️ Активные сессии</div>
+                            <div id="sessionsList"></div>
+                        </div>
+                        <div class="setc" style="grid-column:1/-1;">
+                            <div class="sett">🚫 Заблокированные IP</div>
+                            <div style="display:flex;gap:8px;margin-bottom:16px;"><input class="finp" style="flex:1"
+                                    placeholder="IP адрес для блокировки..."><button class="btn btn-d"
+                                    onclick="toast('IP заблокирован','e')"><i class="fa fa-ban"></i>
+                                    Заблокировать</button></div>
+                            <div id="blockedIPs"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /content -->
+        </div><!-- /main -->
+    </div><!-- /adminPanel -->
+
+    <!-- MODAL: Add User -->
+    <div class="mo" id="modal-addUser">
+        <div class="md">
+            <div class="mh">
+                <div class="mtt">👤 Добавить пользователя</div><button class="mc"
+                    onclick="closeModal('addUser')">✕</button>
+            </div>
+            <div class="fg"><label class="fl">Имя</label><input class="finp" placeholder="Иван"></div>
+            <div class="fg"><label class="fl">Фамилия</label><input class="finp" placeholder="Иванов"></div>
+            <div class="fg"><label class="fl">Email</label><input class="finp" type="email"
+                    placeholder="ivan@example.com"></div>
+            <div class="fg"><label class="fl">Тариф</label><select class="finp">
+                    <option>Базовый ($49)</option>
+                    <option>Стандарт ($99)</option>
+                    <option>Премиум ($199)</option>
+                </select></div>
+            <div class="mf2"><button class="btn btn-o" onclick="closeModal('addUser')">Отмена</button><button
+                    class="btn btn-p" onclick="addUser()"><i class="fa fa-check"></i> Создать</button></div>
+        </div>
+    </div>
+
+    <!-- MODAL: Add Module -->
+    <div class="mo" id="modal-addModule">
+        <div class="md">
+            <div class="mh">
+                <div class="mtt">📚 Новый модуль</div><button class="mc" onclick="closeModal('addModule')">✕</button>
+            </div>
+            <div class="fg"><label class="fl">Название модуля</label><input class="finp" placeholder="Модуль 13: ...">
+            </div>
+            <div class="fg"><label class="fl">Описание</label><textarea class="finp" rows="3"
+                    placeholder="Краткое описание..."></textarea></div>
+            <div class="fg"><label class="fl">Количество секторов</label><input class="finp" type="number" value="5"
+                    min="1" max="12"></div>
+            <div class="fg"><label class="fl">Статус</label><select class="finp">
+                    <option>Черновик</option>
+                    <option>Активный</option>
+                    <option>Скрытый</option>
+                </select></div>
+            <div class="mf2"><button class="btn btn-o" onclick="closeModal('addModule')">Отмена</button><button
+                    class="btn btn-p" onclick="toast('Модуль создан!','s');closeModal('addModule')"><i
+                        class="fa fa-check"></i> Создать</button></div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="tct" id="toastContainer"></div>
 
     <script>
-        // ===== SIDEBAR TOGGLE =====
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            document.getElementById('main').classList.toggle('expanded');
+        // ===== DATA =====
+        const USERS = [
+            { id: 1, name: 'Алексей Козлов', email: 'alex@mail.ru', module: 'Модуль 4', progress: 72, status: 'active', date: '15.03.2026', color: '#667eea' },
+            { id: 2, name: 'Мария Смирнова', email: 'maria@gmail.com', module: 'Модуль 7', progress: 91, status: 'active', date: '14.03.2026', color: '#f093fb' },
+            { id: 3, name: 'Дмитрий Волков', email: 'dmitry@yandex.ru', module: 'Модуль 2', progress: 34, status: 'pending', date: '13.03.2026', color: '#4facfe' },
+            { id: 4, name: 'Анна Петрова', email: 'anna@mail.ru', module: 'Модуль 12', progress: 100, status: 'active', date: '12.03.2026', color: '#43e97b' },
+            { id: 5, name: 'Сергей Иванов', email: 'sergey@gmail.com', module: 'Модуль 1', progress: 18, status: 'inactive', date: '10.03.2026', color: '#fa709a' },
+            { id: 6, name: 'Ольга Новикова', email: 'olga@mail.ru', module: 'Модуль 5', progress: 55, status: 'active', date: '09.03.2026', color: '#f59e0b' },
+            { id: 7, name: 'Павел Морозов', email: 'pavel@gmail.com', module: 'Модуль 3', progress: 67, status: 'active', date: '08.03.2026', color: '#a78bfa' },
+            { id: 8, name: 'Елена Соколова', email: 'elena@mail.ru', module: 'Модуль 8', progress: 43, status: 'pending', date: '07.03.2026', color: '#34d399' },
+            { id: 9, name: 'Андрей Лебедев', email: 'andrey@yandex.ru', module: 'Модуль 6', progress: 88, status: 'active', date: '06.03.2026', color: '#fb923c' },
+            { id: 10, name: 'Наталья Козлова', email: 'natalia@gmail.com', module: 'Модуль 9', progress: 22, status: 'inactive', date: '05.03.2026', color: '#e879f9' },
+        ];
+        const MODULES = [
+            { id: 1, name: 'Основы диспетчирования', sectors: 6, students: 847, progress: 78, status: 'active' },
+            { id: 2, name: 'FMCSA и DOT', sectors: 4, students: 612, progress: 65, status: 'active' },
+            { id: 3, name: 'Load Boards', sectors: 5, students: 534, progress: 71, status: 'active' },
+            { id: 4, name: 'Переговоры с брокерами', sectors: 6, students: 489, progress: 58, status: 'active' },
+            { id: 5, name: 'Документация', sectors: 4, students: 423, progress: 82, status: 'active' },
+            { id: 6, name: 'Тарифы и ставки', sectors: 5, students: 398, progress: 69, status: 'active' },
+            { id: 7, name: 'Управление водителями', sectors: 6, students: 356, progress: 74, status: 'active' },
+            { id: 8, name: 'Страхование', sectors: 5, students: 312, progress: 61, status: 'active' },
+            { id: 9, name: 'Финансы', sectors: 6, students: 287, progress: 55, status: 'active' },
+            { id: 10, name: 'Маркетинг', sectors: 4, students: 245, progress: 48, status: 'active' },
+            { id: 11, name: 'Юридические аспекты', sectors: 5, students: 198, progress: 42, status: 'active' },
+            { id: 12, name: 'Карьера диспетчера', sectors: 4, students: 167, progress: 38, status: 'active' },
+        ];
+        const PAYMENTS = [
+            { id: '#TXN-001', user: 'Алексей Козлов', plan: 'Премиум', amount: 199, status: 'success', date: '15.03.2026' },
+            { id: '#TXN-002', user: 'Мария Смирнова', plan: 'Стандарт', amount: 99, status: 'success', date: '14.03.2026' },
+            { id: '#TXN-003', user: 'Дмитрий Волков', plan: 'Базовый', amount: 49, status: 'pending', date: '13.03.2026' },
+            { id: '#TXN-004', user: 'Анна Петрова', plan: 'Премиум', amount: 199, status: 'success', date: '12.03.2026' },
+            { id: '#TXN-005', user: 'Сергей Иванов', plan: 'Стандарт', amount: 99, status: 'refund', date: '10.03.2026' },
+        ];
+        const LOGS = [
+            { level: 'SUCCESS', time: '16.03.2026 14:32:11', msg: 'Пользователь успешно зарегистрирован', user: 'maria@gmail.com' },
+            { level: 'INFO', time: '16.03.2026 14:28:05', msg: 'Модуль 7 завершён', user: 'alex@mail.ru' },
+            { level: 'WARN', time: '16.03.2026 13:55:42', msg: 'Попытка входа с нового устройства', user: 'dmitry@yandex.ru' },
+            { level: 'ERROR', time: '16.03.2026 13:12:08', msg: 'Ошибка платежа: карта отклонена', user: 'sergey@gmail.com' },
+            { level: 'INFO', time: '16.03.2026 12:44:33', msg: 'Квиз пройден: результат 85%', user: 'anna@mail.ru' },
+            { level: 'SUCCESS', time: '16.03.2026 11:30:17', msg: 'Оплата прошла успешно $199', user: 'pavel@gmail.com' },
+            { level: 'WARN', time: '16.03.2026 10:15:52', msg: 'Высокая нагрузка на сервер (CPU 78%)', user: 'system' },
+            { level: 'INFO', time: '16.03.2026 09:02:44', msg: 'Резервная копия создана', user: 'system' },
+        ];
+        const NOTIFS = [
+            { icon: '👤', color: 'rgba(102,126,234,.2)', title: 'Новая регистрация', desc: 'Мария Смирнова зарегистрировалась на платформе', time: '5 минут назад', unread: true },
+            { icon: '💰', color: 'rgba(16,185,129,.2)', title: 'Новый платёж', desc: 'Алексей Козлов оплатил тариф Премиум ($199)', time: '12 минут назад', unread: true },
+            { icon: '⭐', color: 'rgba(245,158,11,.2)', title: 'Новый отзыв', desc: 'Анна Петрова оставила отзыв 5★', time: '1 час назад', unread: true },
+            { icon: '⚠️', color: 'rgba(239,68,68,.2)', title: 'Ошибка системы', desc: 'Платёж #TXN-005 отклонён банком', time: '2 часа назад', unread: false },
+            { icon: '📊', color: 'rgba(59,130,246,.2)', title: 'Еженедельный отчёт', desc: 'Отчёт за неделю 10-16 марта готов', time: '3 часа назад', unread: false },
+        ];
+    </script>
+
+    <script>
+        // ===== NAVIGATION =====
+        function nav(page, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('act'));
+            document.querySelectorAll('.ni').forEach(n => n.classList.remove('act'));
+            const p = document.getElementById('p-' + page);
+            if (p) p.classList.add('act');
+            if (el) el.classList.add('act');
+            else { document.querySelectorAll('.ni').forEach(n => { if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + page + "'")) n.classList.add('act'); }); }
+            const titles = { dashboard: 'Дашборд', users: 'Пользователи', analytics: 'Аналитика', payments: 'Платежи', modules: 'Модули', quizzes: 'Квизы', reviews: 'Отзывы', mailing: 'Рассылки', notifications: 'Уведомления', logs: 'Логи системы', settings: 'Настройки', security: 'Безопасность' };
+            document.getElementById('pageTitle').innerHTML = titles[page] + '<span>' + new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + '</span>';
+        }
+        function toggleSb() { const sb = document.getElementById('sb'); const main = document.getElementById('main'); sb.classList.toggle('col'); main.classList.toggle('exp'); }
+
+        // ===== TOAST =====
+        function toast(msg, type = 'i') {
+            const c = document.getElementById('toastContainer');
+            const icons = { s: '✅', e: '❌', i: 'ℹ️' };
+            const t = document.createElement('div');
+            t.className = 'tst ' + type;
+            t.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${msg}</span>`;
+            c.appendChild(t);
+            setTimeout(() => t.remove(), 3500);
         }
 
-        // ===== ACTIVITY CHART =====
-        const actCtx = document.getElementById('activityChart').getContext('2d');
-        const chartData = {
-            week: {
-                labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
-                reg: [12, 18, 15, 22, 19, 8, 5],
-                comp: [8, 12, 10, 16, 14, 6, 3]
-            },
-            month: {
-                labels: ['1', '5', '10', '15', '20', '25', '30'],
-                reg: [45, 62, 58, 80, 72, 90, 68],
-                comp: [30, 45, 40, 60, 55, 70, 52]
-            },
-            year: {
-                labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-                reg: [120, 145, 180, 160, 200, 220, 190, 210, 240, 180, 160, 140],
-                comp: [80, 100, 130, 110, 150, 170, 140, 160, 190, 130, 110, 90]
-            }
-        };
-        let actChart = new Chart(actCtx, {
-            type: 'line',
-            data: {
-                labels: chartData.month.labels,
-                datasets: [
-                    { label: 'Регистрации', data: chartData.month.reg, borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,.1)', tension: .4, fill: true, pointBackgroundColor: '#667eea', pointRadius: 4 },
-                    { label: 'Завершения', data: chartData.month.comp, borderColor: '#f093fb', backgroundColor: 'rgba(240,147,251,.1)', tension: .4, fill: true, pointBackgroundColor: '#f093fb', pointRadius: 4 }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: true,
-                plugins: { legend: { labels: { color: '#7b8299', font: { size: 12 } } } },
-                scales: {
-                    x: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#7b8299' } },
-                    y: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#7b8299' } }
-                }
-            }
-        });
+        // ===== MODAL =====
+        function openModal(id) { document.getElementById('modal-' + id).classList.add('open'); }
+        function closeModal(id) { document.getElementById('modal-' + id).classList.remove('open'); }
+        document.addEventListener('click', e => { if (e.target.classList.contains('mo')) e.target.classList.remove('open'); });
 
-        function updateChart(period) {
-            actChart.data.labels = chartData[period].labels;
-            actChart.data.datasets[0].data = chartData[period].reg;
-            actChart.data.datasets[1].data = chartData[period].comp;
-            actChart.update();
-        }
-
-        // ===== DONUT CHART =====
-        const modules = [
-            { name: 'Модуль 1: Введение', val: 284, color: '#667eea' },
-            { name: 'Модуль 2: Регуляции', val: 198, color: '#f093fb' },
-            { name: 'Модуль 3: Оборудование', val: 176, color: '#4facfe' },
-            { name: 'Модуль 4: Loadboards', val: 154, color: '#43e97b' },
-            { name: 'Модуль 5: Переговоры', val: 132, color: '#fa709a' },
-            { name: 'Другие', val: 103, color: '#f59e0b' }
-        ];
-        const dCtx = document.getElementById('donutChart').getContext('2d');
-        new Chart(dCtx, {
-            type: 'doughnut',
-            data: {
-                labels: modules.map(m => m.name),
-                datasets: [{ data: modules.map(m => m.val), backgroundColor: modules.map(m => m.color), borderWidth: 0, hoverOffset: 6 }]
-            },
-            options: {
-                cutout: '70%', responsive: true, maintainAspectRatio: true,
-                plugins: { legend: { display: false } }
-            }
-        });
-        const legend = document.getElementById('donutLegend');
-        const total = modules.reduce((s, m) => s + m.val, 0);
-        modules.forEach(m => {
-            legend.innerHTML += `<div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background:${m.color}"></div>${m.name}</div><div class="legend-val">${Math.round(m.val / total * 100)}%</div></div>`;
-        });
-
-        // ===== REVENUE CHART =====
-        const rCtx = document.getElementById('revenueChart').getContext('2d');
-        new Chart(rCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн'],
-                datasets: [{
-                    label: 'Доход $',
-                    data: [18200, 21400, 24680, 19800, 26500, 28900],
-                    backgroundColor: ['rgba(102,126,234,.7)', 'rgba(118,75,162,.7)', 'rgba(240,147,251,.7)', 'rgba(79,172,254,.7)', 'rgba(67,233,123,.7)', 'rgba(250,112,154,.7)'],
-                    borderRadius: 8, borderSkipped: false
-                }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { display: false }, ticks: { color: '#7b8299' } },
-                    y: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#7b8299', callback: v => '$' + (v / 1000).toFixed(0) + 'k' } }
-                }
-            }
-        });
-
-        // ===== ACTIVITY FEED =====
-        const events = [
-            { icon: '👤', color: 'rgba(102,126,234,.2)', text: '<strong>Алексей К.</strong> <span>зарегистрировался</span>', time: '2 мин назад' },
-            { icon: '✅', color: 'rgba(16,185,129,.2)', text: '<strong>Мария С.</strong> <span>завершила Модуль 3</span>', time: '15 мин назад' },
-            { icon: '💳', color: 'rgba(245,158,11,.2)', text: '<strong>Новый платёж</strong> <span>$299 — Тариф Pro</span>', time: '32 мин назад' },
-            { icon: '⭐', color: 'rgba(240,147,251,.2)', text: '<strong>Дмитрий В.</strong> <span>оставил отзыв 5★</span>', time: '1 час назад' },
-            { icon: '🎓', color: 'rgba(79,172,254,.2)', text: '<strong>Анна П.</strong> <span>получила сертификат</span>', time: '2 часа назад' },
-        ];
-        const feed = document.getElementById('activityFeed');
-        events.forEach(e => {
-            feed.innerHTML += `<div class="feed-item"><div class="feed-icon" style="background:${e.color}">${e.icon}</div><div><div class="feed-text">${e.text}</div><div class="feed-time">${e.time}</div></div></div>`;
-        });
-
-        // ===== MODULE STATS =====
-        const mods = [
-            { name: 'Модуль 1', pct: 92 }, { name: 'Модуль 2', pct: 78 },
-            { name: 'Модуль 3', pct: 65 }, { name: 'Модуль 4', pct: 54 },
-            { name: 'Модуль 5', pct: 48 }, { name: 'Модуль 6', pct: 41 },
-        ];
-        const ms = document.getElementById('moduleStats');
-        mods.forEach(m => {
-            ms.innerHTML += `<div class="mini-stat"><span class="mini-stat-label">${m.name}</span><div style="display:flex;align-items:center;gap:8px"><div class="progress-mini"><div class="progress-mini-fill" style="width:${m.pct}%"></div></div><span class="mini-stat-value">${m.pct}%</span></div></div>`;
-        });
-
-        // ===== USERS TABLE =====
-        const users = [
-            { name: 'Алексей Козлов', email: 'alex@mail.ru', module: 'Модуль 4', progress: 72, status: 'active', date: '15.03.2026', color: '#667eea' },
-            { name: 'Мария Смирнова', email: 'maria@gmail.com', module: 'Модуль 7', progress: 91, status: 'active', date: '14.03.2026', color: '#f093fb' },
-            { name: 'Дмитрий Волков', email: 'dmitry@yandex.ru', module: 'Модуль 2', progress: 34, status: 'pending', date: '13.03.2026', color: '#4facfe' },
-            { name: 'Анна Петрова', email: 'anna@mail.ru', module: 'Модуль 12', progress: 100, status: 'active', date: '12.03.2026', color: '#43e97b' },
-            { name: 'Сергей Иванов', email: 'sergey@gmail.com', module: 'Модуль 1', progress: 18, status: 'inactive', date: '10.03.2026', color: '#fa709a' },
-            { name: 'Ольга Новикова', email: 'olga@mail.ru', module: 'Модуль 5', progress: 55, status: 'active', date: '09.03.2026', color: '#f59e0b' },
-        ];
-
-        function renderTable(data) {
-            const statusMap = { active: ['badge-active', 'Активен'], inactive: ['badge-inactive', 'Неактивен'], pending: ['badge-pending', 'Ожидает'] };
-            document.getElementById('usersBody').innerHTML = data.map(u => `
+        // ===== RENDER USERS TABLE =====
+        let filteredUsers = [...USERS];
+        function renderUsers(data) {
+            const tbody = document.getElementById('usersBody');
+            if (!tbody) return;
+            tbody.innerHTML = data.map(u => `
     <tr>
-      <td><div class="user-cell"><div class="user-avatar" style="background:${u.color}22;color:${u.color}">${u.name[0]}</div><div><div class="user-name">${u.name}</div><div class="user-email">${u.email}</div></div></div></td>
+      <td><input type="checkbox"></td>
+      <td><div class="uc"><div class="uav" style="background:${u.color}22;color:${u.color}">${u.name[0]}</div><div><div class="un">${u.name}</div><div class="ue">${u.email}</div></div></div></td>
       <td>${u.module}</td>
-      <td><div style="display:flex;align-items:center;gap:8px"><div class="progress-mini"><div class="progress-mini-fill" style="width:${u.progress}%"></div></div><span style="font-size:12px">${u.progress}%</span></div></td>
-      <td><span class="badge-status ${statusMap[u.status][0]}">${statusMap[u.status][1]}</span></td>
+      <td><div style="display:flex;align-items:center;gap:8px"><div class="pm"><div class="pmf" style="width:${u.progress}%"></div></div><span style="font-size:12px">${u.progress}%</span></div></td>
+      <td><span class="sb2 ${u.status === 'active' ? 's-act' : u.status === 'pending' ? 's-pen' : 's-ina'}">${u.status === 'active' ? 'Активен' : u.status === 'pending' ? 'Ожидает' : 'Неактивен'}</span></td>
       <td style="color:var(--muted);font-size:12px">${u.date}</td>
-      <td><div style="display:flex;gap:6px">
-        <button onclick="alert('Редактировать: ${u.name}')" style="background:rgba(102,126,234,.15);color:#667eea;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:11px"><i class="fa fa-edit"></i></button>
-        <button onclick="alert('Удалить: ${u.name}')" style="background:rgba(239,68,68,.15);color:#ef4444;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:11px"><i class="fa fa-trash"></i></button>
-      </div></td>
+      <td><div class="ta"><button class="ai" title="Просмотр" onclick="toast('Профиль: ${u.name}','i')"><i class="fa fa-eye"></i></button><button class="ai" title="Редактировать" onclick="toast('Редактирование...','i')"><i class="fa fa-edit"></i></button><button class="ai" title="Удалить" onclick="toast('Пользователь удалён','e')" style="color:#fca5a5"><i class="fa fa-trash"></i></button></div></td>
     </tr>`).join('');
         }
-        renderTable(users);
+        function filterUsers(q) { filteredUsers = USERS.filter(u => u.name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase())); renderUsers(filteredUsers); }
+        function filterByStatus(s) { filteredUsers = s ? USERS.filter(u => u.status === s) : [...USERS]; renderUsers(filteredUsers); }
+        function filterByModule(m) { filteredUsers = m ? USERS.filter(u => u.module === m) : [...USERS]; renderUsers(filteredUsers); }
+        function selectAll(cb) { document.querySelectorAll('#usersBody input[type=checkbox]').forEach(c => c.checked = cb.checked); }
+        function exportUsers() { toast('CSV файл скачивается...', 's'); }
+        function sendBulkEmail() { toast('Рассылка отправлена выбранным пользователям', 's'); }
+        function addUser() { toast('Пользователь создан!', 's'); closeModal('addUser'); }
 
-        function filterTable(q) {
-            renderTable(users.filter(u => u.name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase())));
+        // ===== RENDER DASH USERS =====
+        function renderDashUsers() {
+            const tbody = document.getElementById('dashUsersBody');
+            if (!tbody) return;
+            tbody.innerHTML = USERS.slice(0, 5).map(u => `
+    <tr>
+      <td><div class="uc"><div class="uav" style="background:${u.color}22;color:${u.color}">${u.name[0]}</div><div><div class="un">${u.name}</div><div class="ue">${u.email}</div></div></div></td>
+      <td>${u.module}</td>
+      <td><div style="display:flex;align-items:center;gap:8px"><div class="pm"><div class="pmf" style="width:${u.progress}%"></div></div><span style="font-size:12px">${u.progress}%</span></div></td>
+      <td><span class="sb2 ${u.status === 'active' ? 's-act' : u.status === 'pending' ? 's-pen' : 's-ina'}">${u.status === 'active' ? 'Активен' : u.status === 'pending' ? 'Ожидает' : 'Неактивен'}</span></td>
+      <td style="color:var(--muted);font-size:12px">${u.date}</td>
+    </tr>`).join('');
         }
 
-        // ===== COUNTER ANIMATION =====
-        document.querySelectorAll('.stat-card .value').forEach(el => {
-            const raw = el.textContent;
-            const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
-            const prefix = raw.match(/^\D*/)[0];
-            const suffix = raw.match(/\D*$/)[0];
-            if (!num) return;
-            let start = null;
-            const step = ts => {
-                if (!start) start = ts;
-                const p = Math.min((ts - start) / 1200, 1);
-                const ease = 1 - Math.pow(1 - p, 3);
-                el.textContent = prefix + (num < 100 ? (ease * num).toFixed(0) : Math.round(ease * num).toLocaleString()) + suffix;
-                if (p < 1) requestAnimationFrame(step);
-            };
-            requestAnimationFrame(step);
+        // ===== RENDER MODULES =====
+        function renderModules() {
+            const g = document.getElementById('modulesGrid');
+            if (!g) return;
+            g.innerHTML = MODULES.map(m => `
+    <div class="cc" style="cursor:pointer" onmouseenter="this.style.borderColor='var(--primary)'" onmouseleave="this.style.borderColor='var(--border)'">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="font-size:13px;font-weight:700">Модуль ${m.id}</div>
+        <span class="sb2 s-act">Активен</span>
+      </div>
+      <div style="font-size:15px;font-weight:700;margin-bottom:8px">${m.name}</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">${m.sectors} секторов · ${m.students} студентов</div>
+      <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px"><span>Прогресс прохождения</span><span>${m.progress}%</span></div><div class="pm" style="width:100%;height:6px"><div class="pmf" style="width:${m.progress}%"></div></div></div>
+      <div style="display:flex;gap:6px"><button class="btn btn-o btn-sm" onclick="toast('Редактирование модуля ${m.id}','i')"><i class="fa fa-edit"></i> Изменить</button><button class="btn btn-d btn-sm" onclick="toast('Модуль скрыт','e')"><i class="fa fa-eye-slash"></i></button></div>
+    </div>`).join('');
+        }
+
+        // ===== RENDER PAYMENTS =====
+        function renderPayments() {
+            const tbody = document.getElementById('paymentsBody');
+            if (!tbody) return;
+            tbody.innerHTML = PAYMENTS.map(p => `
+    <tr>
+      <td style="font-size:12px;color:var(--muted)">${p.id}</td>
+      <td>${p.user}</td>
+      <td>${p.plan}</td>
+      <td style="font-weight:700;color:${p.status === 'refund' ? 'var(--danger)' : 'var(--success)'}">$${p.amount}</td>
+      <td><span class="sb2 ${p.status === 'success' ? 's-act' : p.status === 'pending' ? 's-pen' : 's-ina'}">${p.status === 'success' ? 'Успешно' : p.status === 'pending' ? 'Ожидает' : 'Возврат'}</span></td>
+      <td style="color:var(--muted);font-size:12px">${p.date}</td>
+      <td><div class="ta"><button class="ai" onclick="toast('Квитанция отправлена','s')"><i class="fa fa-receipt"></i></button><button class="ai" onclick="toast('Возврат оформлен','e')" style="color:#fca5a5"><i class="fa fa-undo"></i></button></div></td>
+    </tr>`).join('');
+        }
+
+        // ===== RENDER QUIZZES =====
+        function renderQuizzes() {
+            const tbody = document.getElementById('quizzesBody');
+            if (!tbody) return;
+            const quizzes = [
+                { name: 'Основы диспетчирования', module: 'Модуль 1', questions: 10, attempts: 847, score: 78 },
+                { name: 'FMCSA и DOT', module: 'Модуль 2', questions: 8, attempts: 612, score: 71 },
+                { name: 'Load Boards', module: 'Модуль 3', questions: 12, attempts: 534, score: 65 },
+                { name: 'Переговоры', module: 'Модуль 4', questions: 10, attempts: 489, score: 82 },
+                { name: 'Документация', module: 'Модуль 5', questions: 8, attempts: 423, score: 74 },
+            ];
+            tbody.innerHTML = quizzes.map(q => `
+    <tr>
+      <td style="font-weight:600">${q.name}</td>
+      <td style="color:var(--muted)">${q.module}</td>
+      <td>${q.questions}</td>
+      <td>${q.attempts.toLocaleString()}</td>
+      <td><div style="display:flex;align-items:center;gap:8px"><div class="pm"><div class="pmf" style="width:${q.score}%"></div></div><span style="font-size:12px">${q.score}%</span></div></td>
+      <td><div class="ta"><button class="ai" onclick="toast('Редактирование квиза','i')"><i class="fa fa-edit"></i></button><button class="ai" onclick="toast('Статистика квиза','i')"><i class="fa fa-chart-bar"></i></button></div></td>
+    </tr>`).join('');
+        }
+
+        // ===== RENDER REVIEWS =====
+        function renderReviews() {
+            const c = document.getElementById('reviewsList');
+            if (!c) return;
+            const reviews = [
+                { name: 'Алексей К.', rating: 5, text: 'Отличный курс! Всё понятно и структурировано. Уже работаю диспетчером.', date: '15.03.2026', status: 'approved' },
+                { name: 'Мария С.', rating: 5, text: 'Очень полезный материал. Симулятор переговоров — лучшая часть!', date: '14.03.2026', status: 'approved' },
+                { name: 'Дмитрий В.', rating: 4, text: 'Хороший курс, но хотелось бы больше практических примеров.', date: '13.03.2026', status: 'pending' },
+            ];
+            c.innerHTML = reviews.map(r => `
+    <div class="ni2 ${r.status === 'pending' ? 'unr' : ''}">
+      <div class="nii" style="background:rgba(245,158,11,.2)">⭐</div>
+      <div class="nb">
+        <div class="nt">${r.name} · ${'⭐'.repeat(r.rating)}</div>
+        <div class="nd">${r.text}</div>
+        <div class="ntm">${r.date} · <span style="color:${r.status === 'approved' ? 'var(--success)' : 'var(--warning)'}">${r.status === 'approved' ? 'Одобрен' : 'На модерации'}</span></div>
+        ${r.status === 'pending' ? `<div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-s btn-sm" onclick="toast('Отзыв одобрен','s');this.closest('.ni2').classList.remove('unr')"><i class="fa fa-check"></i> Одобрить</button><button class="btn btn-d btn-sm" onclick="toast('Отзыв отклонён','e');this.closest('.ni2').remove()"><i class="fa fa-times"></i> Отклонить</button></div>` : ''}
+      </div>
+    </div>`).join('');
+        }
+
+        // ===== RENDER NOTIFICATIONS =====
+        function renderNotifs() {
+            const c = document.getElementById('notifList');
+            if (!c) return;
+            c.innerHTML = NOTIFS.map(n => `
+    <div class="ni2 ${n.unread ? 'unr' : ''}">
+      <div class="nii" style="background:${n.color}">${n.icon}</div>
+      <div class="nb"><div class="nt">${n.title}</div><div class="nd">${n.desc}</div><div class="ntm">${n.time}</div></div>
+      ${n.unread ? `<button class="ai" onclick="this.closest('.ni2').classList.remove('unr');toast('Прочитано','i')" title="Прочитать"><i class="fa fa-check"></i></button>` : ''}
+    </div>`).join('');
+        }
+        function markAllRead() { document.querySelectorAll('.ni2.unr').forEach(n => n.classList.remove('unr')); toast('Все уведомления прочитаны', 's'); }
+
+        // ===== RENDER LOGS =====
+        let allLogs = [...LOGS];
+        function renderLogs(data) {
+            const c = document.getElementById('logsList');
+            if (!c) return;
+            c.innerHTML = data.map(l => `
+    <div class="li">
+      <span class="ll ${l.level === 'INFO' ? 'll-i' : l.level === 'WARN' ? 'll-w' : l.level === 'ERROR' ? 'll-e' : 'll-s'}">${l.level}</span>
+      <span class="lt">${l.time}</span>
+      <span class="lm">${l.msg}</span>
+      <span class="lu">${l.user}</span>
+    </div>`).join('');
+        }
+        function filterLogs(v) { renderLogs(v ? allLogs.filter(l => l.level === v) : allLogs); }
+        function clearLogs() { allLogs = []; renderLogs([]); toast('Логи очищены', 'e'); }
+
+        // ===== RENDER SECURITY =====
+        function renderSecurity() {
+            const s = document.getElementById('sessionsList');
+            if (s) s.innerHTML = [
+                { device: 'Chrome / Windows', ip: '192.168.1.1', time: 'Сейчас', current: true },
+                { device: 'Safari / iPhone', ip: '10.0.0.5', time: '2 часа назад', current: false },
+            ].map(s => `<div class="tr2"><div class="tri">${s.device}<span>${s.ip} · ${s.time}</span></div>${s.current ? '<span style="color:var(--success);font-size:12px">● Текущая</span>' : `<button class="btn btn-d btn-sm" onclick="toast('Сессия завершена','e');this.closest('.tr2').remove()">Завершить</button>`}</div>`).join('');
+            const b = document.getElementById('blockedIPs');
+            if (b) b.innerHTML = ['185.220.101.45', '91.108.4.0', '198.54.117.200'].map(ip => `<div class="tr2"><div class="tri">${ip}<span>Заблокирован вручную</span></div><button class="btn btn-s btn-sm" onclick="toast('IP разблокирован','s');this.closest('.tr2').remove()">Разблокировать</button></div>`).join('');
+        }
+
+        // ===== RENDER MAILING HISTORY =====
+        function renderMailing() {
+            const c = document.getElementById('mailingHistory');
+            if (!c) return;
+            c.innerHTML = [
+                { subj: 'Новый модуль 12 доступен!', sent: 1284, open: '68%', date: '10.03.2026' },
+                { subj: 'Напоминание: завершите курс', sent: 312, open: '45%', date: '05.03.2026' },
+                { subj: 'Специальное предложение -30%', sent: 1284, open: '72%', date: '01.03.2026' },
+            ].map(m => `<div class="pi"><div class="pii" style="background:rgba(102,126,234,.2)">📧</div><div class="pin"><div class="pin-n">${m.subj}</div><div class="pin-d">Отправлено: ${m.sent} · Открыто: ${m.open} · ${m.date}</div></div></div>`).join('');
+        }
+
+        // ===== RENDER FUNNEL =====
+        function renderFunnel() {
+            const c = document.getElementById('funnelChart');
+            if (!c) return;
+            const steps = [
+                { label: 'Посетители сайта', val: 100, color: '#667eea' },
+                { label: 'Регистрация', val: 42, color: '#764ba2' },
+                { label: 'Начали курс', val: 28, color: '#f093fb' },
+                { label: 'Прошли 50%', val: 18, color: '#f59e0b' },
+                { label: 'Оплатили', val: 12, color: '#10b981' },
+            ];
+            c.innerHTML = steps.map(s => `<div class="fs"><div class="fsl">${s.label}</div><div class="fsb"><div class="fsbf" style="width:${s.val}%;background:${s.color}">${s.val}%</div></div><div class="fsp">${s.val}%</div></div>`).join('');
+        }
+
+        // ===== RENDER ACTIVITY FEED =====
+        function renderFeed() {
+            const c = document.getElementById('feedList');
+            if (!c) return;
+            const items = [
+                { color: '#10b981', text: '<b>Мария С.</b> зарегистрировалась', time: '5 мин назад' },
+                { color: '#667eea', text: '<b>Алексей К.</b> завершил Модуль 4', time: '12 мин назад' },
+                { color: '#f59e0b', text: '<b>Новый платёж</b> $199 от Анны П.', time: '28 мин назад' },
+                { color: '#f093fb', text: '<b>Дмитрий В.</b> начал Модуль 2', time: '1 час назад' },
+                { color: '#ef4444', text: '<b>Ошибка платежа</b> у Сергея И.', time: '2 часа назад' },
+            ];
+            c.innerHTML = items.map(i => `<div class="fi2"><div class="fd" style="background:${i.color}"></div><div><div class="ft">${i.text}</div><div class="ftm">${i.time}</div></div></div>`).join('');
+        }
+
+        // ===== RENDER MODULE STATS =====
+        function renderModStats() {
+            const c = document.getElementById('modStats');
+            if (!c) return;
+            const colors = ['#667eea', '#f093fb', '#10b981', '#f59e0b', '#3b82f6', '#ef4444'];
+            c.innerHTML = MODULES.slice(0, 6).map((m, i) => `<div class="mr"><div class="mn">Модуль ${m.id}</div><div class="mb"><div class="mf" style="width:${m.progress}%;background:${colors[i]}"></div></div><div class="mp">${m.progress}%</div></div>`).join('');
+        }
+
+        // ===== CHARTS =====
+        function initCharts() {
+            // Activity Chart
+            const actCtx = document.getElementById('actChart');
+            if (actCtx) {
+                window.actChart = new Chart(actCtx, { type: 'line', data: { labels: ['1', '3', '5', '7', '9', '11', '13', '15', '17', '19', '21', '23', '25', '27', '29', '31'], datasets: [{ label: 'Регистрации', data: [12, 19, 8, 24, 18, 32, 28, 41, 35, 29, 38, 45, 52, 48, 61, 58], borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,.1)', tension: .4, fill: true }, { label: 'Завершения', data: [5, 8, 4, 12, 9, 15, 13, 20, 17, 14, 19, 22, 26, 24, 31, 29], borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.1)', tension: .4, fill: true }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } }, scales: { x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' } }, y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' } } } } });
+            }
+            // Donut Chart
+            const doCtx = document.getElementById('donutChart');
+            if (doCtx) {
+                const colors = ['#667eea', '#f093fb', '#10b981', '#f59e0b', '#3b82f6', '#ef4444'];
+                const labels = ['Модуль 1', 'Модуль 2', 'Модуль 3', 'Модуль 4', 'Модуль 5', 'Другие'];
+                new Chart(doCtx, { type: 'doughnut', data: { labels, datasets: [{ data: [847, 612, 534, 489, 423, 380], backgroundColor: colors, borderWidth: 0 }] }, options: { responsive: true, plugins: { legend: { display: false } }, cutout: '70%' } });
+                document.getElementById('donutLegend').innerHTML = labels.map((l, i) => `<div class="dli"><div class="dld" style="background:${colors[i]}"></div>${l}</div>`).join('');
+            }
+            // Revenue Chart
+            const revCtx = document.getElementById('revChart');
+            if (revCtx) {
+                new Chart(revCtx, { type: 'bar', data: { labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн'], datasets: [{ label: 'Доход $', data: [18200, 19800, 24680, 0, 0, 0], backgroundColor: 'rgba(102,126,234,.6)', borderRadius: 6 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' } } } } });
+            }
+            // Traffic Chart
+            const trCtx = document.getElementById('trafficChart');
+            if (trCtx) {
+                new Chart(trCtx, { type: 'doughnut', data: { labels: ['Органика', 'Соцсети', 'Прямой', 'Реклама', 'Email'], datasets: [{ data: [38, 24, 18, 12, 8], backgroundColor: ['#667eea', '#f093fb', '#10b981', '#f59e0b', '#3b82f6'], borderWidth: 0 }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } }, cutout: '60%' } });
+            }
+            // Hours Chart
+            const hrCtx = document.getElementById('hoursChart');
+            if (hrCtx) {
+                new Chart(hrCtx, { type: 'bar', data: { labels: ['6', '8', '10', '12', '14', '16', '18', '20', '22'], datasets: [{ data: [12, 28, 45, 38, 52, 61, 74, 68, 42], backgroundColor: 'rgba(240,147,251,.6)', borderRadius: 4 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' } } } } });
+            }
+            // Devices Chart
+            const devCtx = document.getElementById('devicesChart');
+            if (devCtx) {
+                new Chart(devCtx, { type: 'pie', data: { labels: ['Desktop', 'Mobile', 'Tablet'], datasets: [{ data: [58, 34, 8], backgroundColor: ['#667eea', '#f093fb', '#10b981'], borderWidth: 0 }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } } } });
+            }
+            // Retention Chart
+            const retCtx = document.getElementById('retentionChart');
+            if (retCtx) {
+                new Chart(retCtx, { type: 'line', data: { labels: ['День 1', 'День 7', 'День 14', 'День 30', 'День 60', 'День 90'], datasets: [{ label: 'Retention %', data: [100, 74, 61, 48, 38, 29], borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,.1)', tension: .4, fill: true }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' } }, y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' }, max: 100 } } } });
+            }
+            // Payment Revenue Chart
+            const prCtx = document.getElementById('payRevChart');
+            if (prCtx) {
+                new Chart(prCtx, { type: 'line', data: { labels: ['Янв', 'Фев', 'Мар'], datasets: [{ label: '$', data: [18200, 19800, 24680], borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.1)', tension: .4, fill: true }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' } } } } });
+            }
+            // Plan Chart
+            const plCtx = document.getElementById('planChart');
+            if (plCtx) {
+                new Chart(plCtx, { type: 'doughnut', data: { labels: ['Базовый $49', 'Стандарт $99', 'Премиум $199'], datasets: [{ data: [312, 489, 483], backgroundColor: ['#3b82f6', '#667eea', '#f093fb'], borderWidth: 0 }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } }, cutout: '60%' } });
+            }
+        }
+        function updateActivityChart(period) {
+            if (!window.actChart) return;
+            const data = { week: { labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'], reg: [8, 12, 18, 15, 22, 28, 19], comp: [4, 6, 9, 7, 11, 14, 9] }, month: { labels: ['1', '5', '10', '15', '20', '25', '31'], reg: [12, 28, 35, 41, 38, 52, 58], comp: [6, 14, 18, 20, 19, 26, 29] }, year: { labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'], reg: [180, 220, 312, 0, 0, 0, 0, 0, 0, 0, 0, 0], comp: [90, 110, 156, 0, 0, 0, 0, 0, 0, 0, 0, 0] } };
+            const d = data[period];
+            window.actChart.data.labels = d.labels;
+            window.actChart.data.datasets[0].data = d.reg;
+            window.actChart.data.datasets[1].data = d.comp;
+            window.actChart.update();
+        }
+
+        // ===== MISC =====
+        function exportData() { toast('Данные экспортируются...', 's'); }
+        function saveSettings() { toast('Настройки сохранены!', 's'); }
+        function globalSearch(q) { if (q.length > 2) toast(`Поиск: "${q}"...`, 'i'); }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('pageDate').textContent = new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            renderDashUsers();
+            renderUsers(USERS);
+            renderModules();
+            renderPayments();
+            renderQuizzes();
+            renderReviews();
+            renderNotifs();
+            renderLogs(LOGS);
+            renderSecurity();
+            renderMailing();
+            renderFunnel();
+            renderFeed();
+            renderModStats();
+            setTimeout(initCharts, 100);
         });
     </script>
 </body>
