@@ -1,13 +1,11 @@
 // Общий скрипт для проверки авторизации на всех страницах
 // ⚠️ ВРЕМЕННО ОТКЛЮЧЕНА ПРОВЕРКА АВТОРИЗАЦИИ - ДОСТУП ОТКРЫТ ВСЕМ
 
-// Проверка авторизации
+// Проверка авторизации (Firebase сохраняет только 'user', authToken не используется)
 function checkAuth() {
-  const token = localStorage.getItem('authToken');
   const user = localStorage.getItem('user');
-
-  if (token && user) {
-    return JSON.parse(user);
+  if (user) {
+    try { return JSON.parse(user); } catch (e) { return null; }
   }
   return null;
 }
@@ -32,11 +30,8 @@ function updateAuthUI() {
 // Выход из системы
 function logout(event) {
   if (event) event.preventDefault();
-
   localStorage.removeItem('authToken');
   localStorage.removeItem('user');
-
-  alert('Вы вышли из системы');
   window.location.href = 'index.html';
 }
 
@@ -116,7 +111,4 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!isPublic) {
     requireAuth();
   }
-
-  // Фоновая проверка токена
-  verifyToken();
 });
