@@ -3496,6 +3496,11 @@
         <div class="input-area">
             <button class="ai-inline-btn" id="aiInlineBtn" title="Спросить AI помощника">🤖</button>
             <textarea class="input-field" id="inputField" placeholder="Введите ваше сообщение..." rows="1"></textarea>
+            <div id="groqIndicator" title="Groq AI статус"
+                style="display:flex;align-items:center;gap:4px;padding:0 6px;flex-shrink:0;cursor:default;">
+                <span id="groqDot"
+                    style="width:8px;height:8px;border-radius:50%;background:#64748b;display:inline-block;transition:background 0.4s;"></span>
+            </div>
             <button class="universal-call-btn" id="universalCallBtn" title="Голосовой звонок"
                 onclick="toggleUniversalCall()">📞</button>
             <button class="send-btn" id="sendBtn" disabled>➤</button>
@@ -4511,6 +4516,7 @@
             // Сбрасываем историю диалога
             conversationHistory = [];
             historyIndex = -1;
+            if (typeof _aiChatOpened !== 'undefined') _aiChatOpened = false;
 
             if (!currentScenario) {
                 console.error('ERROR: currentScenario is undefined! scenarioIndex:', scenarioIndex);
@@ -6653,6 +6659,7 @@ Return this exact JSON structure:
             totalPossibleScore = 0; // Сбрасываем максимум
             conversationHistory = []; // Очистить историю
             geminiHistory.length = 0; // Сбросить историю Gemini
+            if (typeof _aiChatOpened !== 'undefined') _aiChatOpened = false; // Сбросить AI чат
             liveScore = 0;
             liveScoreTotal = 0;
             negoRound = 0;
@@ -7355,25 +7362,28 @@ Return this exact JSON structure:
 
         // Track conversation context
         let conversationContext = [];
+        let _aiChatOpened = false; // track if chat was already opened
 
         // Open AI chatbot with automatic context analysis
         aiHelperBtn.addEventListener('click', () => {
             aiChatbotModal.classList.add('active');
             aiUserInput.focus();
 
-            // Automatically show context analysis when opening
-            setTimeout(() => {
-                const context = captureConversationContext();
-                if (context.length > 0) {
-                    // Add automatic analysis message
-                    showAITyping();
-                    setTimeout(() => {
-                        hideAITyping();
-                        const analysis = analyzeCurrentStep();
-                        addAIMessage(analysis, 'bot');
-                    }, 800);
-                }
-            }, 300);
+            // Show context analysis only on FIRST open per conversation
+            if (!_aiChatOpened) {
+                _aiChatOpened = true;
+                setTimeout(() => {
+                    const context = captureConversationContext();
+                    if (context.length > 0) {
+                        showAITyping();
+                        setTimeout(() => {
+                            hideAITyping();
+                            const analysis = analyzeCurrentStep();
+                            addAIMessage(analysis, 'bot');
+                        }, 800);
+                    }
+                }, 300);
+            }
         });
 
         // Close AI chatbot
@@ -7841,25 +7851,15 @@ Return this exact JSON structure:
         let _groqStatus = 'unknown'; // 'ok' | 'offline' | 'rate_limited' | 'error'
 
         function _updateGroqIndicator(online) {
-            let ind = document.getElementById('groqIndicator');
-            if (!ind) {
-                ind = document.createElement('div');
-                ind.id = 'groqIndicator';
-                ind.style.cssText = 'position:fixed;bottom:12px;left:12px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;z-index:9999;pointer-events:none;transition:all 0.4s;';
-                document.body.appendChild(ind);
+            // Update inline dot in input-area
+            const dot = document.getElementById('groqDot');
+            const ind = document.getElementById('groqIndicator');
+            if (dot) {
+                dot.style.background = online ? '#10b981' : '#ef4444';
+                dot.style.boxShadow = online ? '0 0 6px #10b981' : 'none';
             }
-            if (online) {
-                ind.textContent = '🟢 Groq AI';
-                ind.style.background = 'rgba(16,185,129,0.15)';
-                ind.style.color = '#10b981';
-                ind.style.border = '1px solid rgba(16,185,129,0.3)';
-                setTimeout(() => { if (ind) ind.style.opacity = '0.4'; }, 3000);
-            } else {
-                ind.textContent = '🔴 Groq offline — fallback';
-                ind.style.background = 'rgba(239,68,68,0.15)';
-                ind.style.color = '#ef4444';
-                ind.style.border = '1px solid rgba(239,68,68,0.3)';
-                ind.style.opacity = '1';
+            if (ind) {
+                ind.title = online ? '🟢 Groq AI online' : '🔴 Groq offline — fallback mode';
             }
         }
 
