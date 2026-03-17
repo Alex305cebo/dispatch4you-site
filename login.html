@@ -332,6 +332,9 @@
         'auth/invalid-email': 'Неверный формат email.',
         'auth/too-many-requests': 'Слишком много попыток. Попробуйте позже.',
         'auth/network-request-failed': 'Ошибка сети. Проверьте интернет.',
+        'auth/unauthorized-domain': 'Домен не авторизован в Firebase. Добавьте dispatch4you.com в Firebase Console → Authentication → Settings → Authorized domains.',
+        'auth/popup-blocked': 'Браузер заблокировал popup. Разрешите всплывающие окна для этого сайта.',
+        'auth/cancelled-popup-request': 'Запрос отменён.',
       };
       return map[code] || 'Ошибка: ' + code;
     }
@@ -370,7 +373,10 @@
         localStorage.removeItem('returnUrl');
         window.location.href = returnUrl || 'dashboard.html';
       } catch (err) {
-        if (err.code !== 'auth/popup-closed-by-user') showError(translateError(err.code));
+        console.error('Google login error:', err.code, err.message);
+        if (err.code !== 'auth/popup-closed-by-user') {
+          showError(translateError(err.code) + ' (код: ' + err.code + ')');
+        }
       }
     });
 
