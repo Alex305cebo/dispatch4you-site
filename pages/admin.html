@@ -1638,17 +1638,17 @@
                         </div>
                         <div class="sc">
                             <div class="sc-icon" style="background:rgba(16,185,129,.2)">✅</div>
-                            <div class="sc-val">847</div>
+                            <div class="sc-val" id="stat-active-users">0</div>
                             <div class="sc-lbl">Активных</div>
                         </div>
                         <div class="sc">
                             <div class="sc-icon" style="background:rgba(245,158,11,.2)">⏳</div>
-                            <div class="sc-val">312</div>
+                            <div class="sc-val" id="stat-pending-users">0</div>
                             <div class="sc-lbl">Ожидают</div>
                         </div>
                         <div class="sc">
                             <div class="sc-icon" style="background:rgba(239,68,68,.2)">🚫</div>
-                            <div class="sc-val">125</div>
+                            <div class="sc-val" id="stat-inactive-users">0</div>
                             <div class="sc-lbl">Неактивных</div>
                         </div>
                     </div>
@@ -2249,9 +2249,20 @@
             const pagInfo = document.getElementById('pagInfo');
             if (el1) el1.textContent = total;
             if (el2) el2.textContent = total;
-            if (el3) el3.textContent = total; // все зарегистрированные = активные студенты
+            if (el3) el3.textContent = total;
             if (badge) badge.textContent = total;
             if (pagInfo) pagInfo.textContent = `Показано 1-${Math.min(10, total)} из ${total}`;
+
+            // Считаем реальные статусы
+            const activeCount = users.filter(u => u.status === 'active').length;
+            const pendingCount = users.filter(u => u.status === 'pending' || !u.status).length;
+            const inactiveCount = users.filter(u => u.status === 'inactive').length;
+            const elActive = document.getElementById('stat-active-users');
+            const elPending = document.getElementById('stat-pending-users');
+            const elInactive = document.getElementById('stat-inactive-users');
+            if (elActive) elActive.textContent = activeCount;
+            if (elPending) elPending.textContent = pendingCount;
+            if (elInactive) elInactive.textContent = inactiveCount;
         }
 
         // Загружаем данные после инициализации панели
