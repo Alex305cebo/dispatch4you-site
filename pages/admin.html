@@ -2295,7 +2295,7 @@
 
         const COLORS = ['#667eea', '#f093fb', '#4facfe', '#43e97b', '#fa709a', '#f59e0b', '#a78bfa', '#34d399', '#fb923c', '#e879f9'];
 
-        const ROLES = {
+        window.ROLES = {
             1: { label: '🌱 Новичок', level: 1 },
             2: { label: '📖 Стажёр', level: 2 },
             3: { label: '🎓 Студент', level: 3 },
@@ -2307,6 +2307,7 @@
             9: { label: '🔥 Модератор', level: 9 },
             10: { label: '👑 Администратор', level: 10 }
         };
+        const ROLES = window.ROLES; // Локальный алиас для module scope
 
         async function loadUsersFromFirestore() {
             try {
@@ -2593,7 +2594,7 @@
                 return;
             }
             tbody.innerHTML = data.map(u => {
-                const roleInfo = ROLES[u.role] || ROLES[1];
+                const roleInfo = window.ROLES[u.role] || window.ROLES[1];
                 // XP прогресс до следующего уровня
                 const xpThresholds = [0, 50, 150, 300, 500, 800, 1200, 1800, 2500, 9999];
                 const curMin = xpThresholds[(u.role || 1) - 1] || 0;
