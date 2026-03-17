@@ -75,60 +75,6 @@
       padding: 0 32px;
     }
 
-    /* Navigation */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 999;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 16px 0;
-    }
-
-    [data-theme="light"] .navbar {
-      background: rgba(248, 250, 252, 0.8);
-    }
-
-    .nav-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-
-    .logo-icon {
-      font-size: 28px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-    }
-
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-secondary);
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--primary);
-    }
-
     /* Dashboard Layout */
     .dashboard {
       padding-top: 100px;
@@ -710,9 +656,6 @@
   <div id="nav-placeholder"></div>
   <script src="nav-loader.js"></script>
 
-  <!-- Header Placeholder -->
-  <div id="header-placeholder"></div>
-
   <!-- Dashboard -->
   <section class="dashboard">
     <div class="container">
@@ -1176,28 +1119,6 @@
   </script>
 </body>
 
-<!-- Mobile menu script -->
-<script>
-  // Mobile menu functionality
-  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-
-  if (mobileMenuToggle && mobileMenu && mobileMenuOverlay) {
-    mobileMenuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-      mobileMenuOverlay.classList.toggle('active');
-      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-    });
-
-    mobileMenuOverlay.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-      mobileMenuOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-  }
-</script>
-
 <!-- Daily Login XP (auto-triggered via xp-system.js onAuthStateChanged) -->
 <script type="module">
   import "./xp-system.js";
@@ -1205,10 +1126,10 @@
 
 <!-- Firebase Auth -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
-  const app = initializeApp({
+  const app = getApps().length ? getApps()[0] : initializeApp({
     apiKey: "AIzaSyC505dhT1WjUPhXbinqLvEOTlEXWxYy8GI",
     authDomain: "dispatch4you-80e0f.firebaseapp.com",
     projectId: "dispatch4you-80e0f"
