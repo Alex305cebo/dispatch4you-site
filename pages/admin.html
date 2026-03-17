@@ -35,13 +35,19 @@
             box-sizing: border-box;
         }
 
+        html,
+        body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+        }
+
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         a {
@@ -265,10 +271,15 @@
             flex-direction: column;
             transition: margin-left .3s;
             min-height: 100vh;
+            width: calc(100vw - var(--sw));
+            max-width: calc(100vw - var(--sw));
+            overflow-x: hidden;
         }
 
         .main.exp {
             margin-left: 64px;
+            width: calc(100vw - 64px);
+            max-width: calc(100vw - 64px);
         }
 
         /* TOPBAR */
@@ -283,6 +294,18 @@
             position: sticky;
             top: 0;
             z-index: 50;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Гамбургер меню (скрыто на десктопе) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 8px;
         }
 
         .tb-title {
@@ -377,6 +400,9 @@
         .content {
             padding: 24px;
             flex: 1;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         .page {
@@ -464,6 +490,8 @@
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
+            width: 100%;
+            max-width: 100%;
         }
 
         .sc {
@@ -543,6 +571,8 @@
             grid-template-columns: 2fr 1fr;
             gap: 16px;
             margin-bottom: 24px;
+            width: 100%;
+            max-width: 100%;
         }
 
         .cc {
@@ -550,6 +580,9 @@
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         .ch {
@@ -589,6 +622,9 @@
             border-radius: 16px;
             overflow: hidden;
             margin-bottom: 24px;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
         }
 
         .thead {
@@ -623,6 +659,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 900px;
         }
 
         th {
@@ -844,6 +881,8 @@
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 12px;
             margin-bottom: 24px;
+            width: 100%;
+            max-width: 100%;
         }
 
         .qab {
@@ -1434,14 +1473,59 @@
                 width: 100% !important;
             }
 
+            /* Гамбургер меню */
+            .hamburger {
+                display: flex !important;
+                flex-direction: column;
+                gap: 4px;
+                cursor: pointer;
+                padding: 8px;
+                z-index: 1001;
+            }
+
+            .hamburger span {
+                width: 24px;
+                height: 3px;
+                background: var(--text);
+                border-radius: 2px;
+                transition: all 0.3s;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
+
+            /* Оверлей для закрытия меню */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 999;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
             .sb {
                 transform: translateX(-100%);
                 position: fixed;
                 z-index: 1000;
+                transition: transform 0.3s ease;
             }
 
             .sb.mob {
                 transform: translateX(0);
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
             }
 
             .main {
@@ -1941,6 +2025,9 @@
     <!-- PANEL WRAPPER (hidden until auth) -->
     <div id="adminPanel" style="display:none;width:100%;min-height:100vh;">
 
+        <!-- Оверлей для закрытия мобильного меню -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
+
         <!-- SIDEBAR -->
         <aside class="sb" id="sb">
             <div class="slogo">
@@ -2000,6 +2087,13 @@
         <div class="main" id="main">
             <!-- TOPBAR -->
             <div class="topbar">
+                <!-- Гамбургер меню для мобильных -->
+                <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
                 <div class="tb-title" id="pageTitle">Дашборд<span id="pageDate"></span></div>
                 <div class="tb-actions">
                     <div class="ib" title="Уведомления" onclick="nav('notifications',null)"><i class="fa fa-bell"></i>
@@ -3117,8 +3211,26 @@
             else { document.querySelectorAll('.ni').forEach(n => { if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + page + "'")) n.classList.add('act'); }); }
             const titles = { dashboard: 'Дашборд', users: 'Пользователи', analytics: 'Аналитика', payments: 'Платежи', modules: 'Модули', quizzes: 'Квизы', reviews: 'Отзывы', mailing: 'Рассылки', notifications: 'Уведомления', logs: 'Логи системы', settings: 'Настройки', security: 'Безопасность' };
             document.getElementById('pageTitle').innerHTML = titles[page] + '<span>' + new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + '</span>';
+
+            // Закрываем мобильное меню после выбора пункта
+            if (window.innerWidth <= 768) {
+                toggleMobileMenu();
+            }
         }
+
         function toggleSb() { const sb = document.getElementById('sb'); const main = document.getElementById('main'); sb.classList.toggle('col'); main.classList.toggle('exp'); }
+
+        // ===== MOBILE MENU =====
+        function toggleMobileMenu() {
+            const sb = document.getElementById('sb');
+            const overlay = document.getElementById('sidebarOverlay');
+            const hamburger = document.getElementById('hamburger');
+
+            sb.classList.toggle('mob');
+            overlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+        window.toggleMobileMenu = toggleMobileMenu;
 
         // ===== TOAST =====
         function toast(msg, type = 'i') {
