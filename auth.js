@@ -39,10 +39,11 @@ window.updateAuthUI = function () {
     if (mobileNavActions) mobileNavActions.innerHTML = html;
   }
 
+  // УБИРАЕМ ПОКАЗ ССЫЛКИ "Личный кабинет" В МЕНЮ - она дублируется с блоком справа
   const dl = document.getElementById('dashboardLink');
   const dlm = document.getElementById('dashboardLinkMobile');
-  if (user && dl) dl.style.display = 'block';
-  if (user && dlm) dlm.style.display = 'block';
+  if (dl) dl.style.display = 'none'; // Всегда скрываем
+  if (dlm) dlm.style.display = 'none'; // Всегда скрываем
 };
 
 window.authLogout = function (event) {
