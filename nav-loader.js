@@ -39,7 +39,6 @@
                         <a href="{{BASE}}course.html">📖 Обзор курса</a>
                         <a href="{{BASE}}pages/modules-index.html">📚 12 Модулей обучения</a>
                         <a href="{{BASE}}pages/simulator.html">🎯 Симулятор переговоров</a>
-                        <a href="{{BASE}}pages/calls.html">📞 Примеры звонков</a>
                         <a href="{{BASE}}pages/cases.html">💼 Практические кейсы</a>
                         <a href="{{BASE}}pages/testing.html">✍️ Тестирование</a>
                     </div>
@@ -90,7 +89,6 @@
             <a href="{{BASE}}course.html" class="nav-link nav-link-sub">Обзор курса</a>
             <a href="{{BASE}}pages/modules-index.html" class="nav-link nav-link-sub">📚 12 Модулей обучения</a>
             <a href="{{BASE}}pages/simulator.html" class="nav-link nav-link-sub">🎯 Симулятор переговоров</a>
-            <a href="{{BASE}}pages/calls.html" class="nav-link nav-link-sub">📞 Примеры звонков</a>
             <a href="{{BASE}}pages/cases.html" class="nav-link nav-link-sub">💼 Практические кейсы</a>
             <a href="{{BASE}}pages/testing.html" class="nav-link nav-link-sub">✍️ Тестирование</a>
         </div>
