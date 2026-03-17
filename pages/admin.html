@@ -696,6 +696,69 @@
             color: #fca5a5;
         }
 
+        /* ===== ROLE BADGES ===== */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .role-1 {
+            background: rgba(148, 163, 184, .15);
+            color: #94a3b8;
+        }
+
+        .role-2 {
+            background: rgba(100, 116, 139, .15);
+            color: #a0aec0;
+        }
+
+        .role-3 {
+            background: rgba(34, 197, 94, .15);
+            color: #4ade80;
+        }
+
+        .role-4 {
+            background: rgba(20, 184, 166, .15);
+            color: #2dd4bf;
+        }
+
+        .role-5 {
+            background: rgba(59, 130, 246, .15);
+            color: #60a5fa;
+        }
+
+        .role-6 {
+            background: rgba(99, 102, 241, .15);
+            color: #818cf8;
+        }
+
+        .role-7 {
+            background: rgba(168, 85, 247, .15);
+            color: #c084fc;
+        }
+
+        .role-8 {
+            background: rgba(236, 72, 153, .15);
+            color: #f472b6;
+        }
+
+        .role-9 {
+            background: rgba(245, 158, 11, .15);
+            color: #fbbf24;
+        }
+
+        .role-10 {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, .4);
+        }
+
         .pm {
             width: 80px;
             height: 5px;
@@ -1684,6 +1747,7 @@
                                 <tr>
                                     <th><input type="checkbox" onchange="selectAll(this)"></th>
                                     <th>Пользователь</th>
+                                    <th>Уровень</th>
                                     <th>Модуль</th>
                                     <th>Прогресс</th>
                                     <th>Статус</th>
@@ -2161,6 +2225,18 @@
                     <option value="pending">Ожидает</option>
                     <option value="inactive">Неактивен</option>
                 </select></div>
+            <div class="fg"><label class="fl">Уровень / Звание</label><select id="editUserRole" class="finp">
+                    <option value="1">🌱 1 — Новичок</option>
+                    <option value="2">📖 2 — Стажёр</option>
+                    <option value="3">🎓 3 — Студент</option>
+                    <option value="4">🚛 4 — Диспетчер Jr</option>
+                    <option value="5">📋 5 — Диспетчер</option>
+                    <option value="6">⭐ 6 — Диспетчер Sr</option>
+                    <option value="7">🏆 7 — Эксперт</option>
+                    <option value="8">💎 8 — Наставник</option>
+                    <option value="9">🔥 9 — Модератор</option>
+                    <option value="10">👑 10 — Администратор</option>
+                </select></div>
             <div class="mf2"><button class="btn btn-o" onclick="closeModal('editUser')">Отмена</button><button
                     class="btn btn-p" onclick="saveEditUser()"><i class="fa fa-check"></i> Сохранить</button></div>
         </div>
@@ -2209,6 +2285,19 @@
 
         const COLORS = ['#667eea', '#f093fb', '#4facfe', '#43e97b', '#fa709a', '#f59e0b', '#a78bfa', '#34d399', '#fb923c', '#e879f9'];
 
+        const ROLES = {
+            1: { label: '🌱 Новичок', level: 1 },
+            2: { label: '📖 Стажёр', level: 2 },
+            3: { label: '🎓 Студент', level: 3 },
+            4: { label: '🚛 Диспетчер Jr', level: 4 },
+            5: { label: '📋 Диспетчер', level: 5 },
+            6: { label: '⭐ Диспетчер Sr', level: 6 },
+            7: { label: '🏆 Эксперт', level: 7 },
+            8: { label: '💎 Наставник', level: 8 },
+            9: { label: '🔥 Модератор', level: 9 },
+            10: { label: '👑 Администратор', level: 10 }
+        };
+
         async function loadUsersFromFirestore() {
             try {
                 const snap = await getDocs(collection(db, 'users'));
@@ -2229,6 +2318,7 @@
                         module: '—',
                         progress: 0,
                         status: d.status || 'active',
+                        role: d.role || 1,
                         date: dateStr,
                         color: COLORS[users.length % COLORS.length]
                     });
@@ -2337,6 +2427,7 @@
             document.getElementById('editUserLastName').value = parts.slice(1).join(' ') || '';
             document.getElementById('editUserEmail').value = u.email || '';
             document.getElementById('editUserStatus').value = u.status || 'active';
+            document.getElementById('editUserRole').value = u.role || 1;
             openModal('editUser');
         };
 
@@ -2345,6 +2436,7 @@
             const firstName = document.getElementById('editUserFirstName').value.trim();
             const lastName = document.getElementById('editUserLastName').value.trim();
             const status = document.getElementById('editUserStatus').value;
+            const role = parseInt(document.getElementById('editUserRole').value) || 1;
             if (!uid || !firstName) { window.toast('Заполните имя', 'e'); return; }
             const btn = document.querySelector('#modal-editUser .btn-p');
             btn.disabled = true; btn.textContent = 'Сохраняем...';
@@ -2352,7 +2444,7 @@
                 await updateDoc(doc(db, 'users', uid), {
                     firstName, lastName,
                     displayName: firstName + ' ' + lastName,
-                    status
+                    status, role
                 });
                 window.toast('✅ Данные сохранены', 's');
                 closeModal('editUser');
@@ -2473,16 +2565,20 @@
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:32px">Нет пользователей</td></tr>';
                 return;
             }
-            tbody.innerHTML = data.map(u => `
+            tbody.innerHTML = data.map(u => {
+                const roleInfo = ROLES[u.role] || ROLES[1];
+                return `
     <tr>
       <td><input type="checkbox"></td>
       <td><div class="uc"><div class="uav" style="background:${u.color}22;color:${u.color}">${(u.name || '?')[0]}</div><div><div class="un">${u.name}</div><div class="ue">${u.email}</div></div></div></td>
+      <td><span class="role-badge role-${u.role || 1}">${roleInfo.label}</span></td>
       <td>${u.module}</td>
       <td><div style="display:flex;align-items:center;gap:8px"><div class="pm"><div class="pmf" style="width:${u.progress}%"></div></div><span style="font-size:12px">${u.progress}%</span></div></td>
       <td><span class="sb2 ${u.status === 'active' ? 's-act' : u.status === 'pending' ? 's-pen' : 's-ina'}">${u.status === 'active' ? 'Активен' : u.status === 'pending' ? 'Ожидает' : 'Неактивен'}</span></td>
       <td style="color:var(--muted);font-size:12px">${u.date}</td>
       <td><div class="ta"><button class="ai" title="Просмотр" onclick="viewUser('${u.id}','${u.name}','${u.email}')"><i class="fa fa-eye"></i></button><button class="ai" title="Редактировать" onclick="openEditUser('${u.id}')"><i class="fa fa-edit"></i></button><button class="ai" title="Удалить" onclick="deleteUser('${u.id}','${u.name}')" style="color:#fca5a5"><i class="fa fa-trash"></i></button></div></td>
-    </tr>`).join('');
+    </tr>`;
+            }).join('');
         }
         function filterUsers(q) { filteredUsers = USERS.filter(u => u.name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase())); renderUsers(filteredUsers); }
         function filterByStatus(s) { filteredUsers = s ? USERS.filter(u => u.status === s) : [...USERS]; renderUsers(filteredUsers); }
