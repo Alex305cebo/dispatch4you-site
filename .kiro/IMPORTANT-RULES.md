@@ -463,3 +463,53 @@ cp pages/doc-module-X.html backup_*/
 5. **ВСЕГДА** следуй структуре из модуля 1
 
 **Эти правила НЕ опциональны!**
+
+---
+
+## 🔴 FIREBASE AUTH — КРИТИЧЕСКИЕ ПРАВИЛА (добавлено 2026-03-16)
+
+### ❌ Ошибка: Google OAuth не работает на продакшн домене
+
+**Симптом:** После входа через Google пользователя выкидывает обратно на `login.html`. В Firebase Console пользователь создаётся, но редирект не происходит.
+
+**Причина 1 — Домен не авторизован:**
+Firebase по умолчанию разрешает OAuth только с `localhost` и своих доменов. Любой кастомный домен нужно добавлять вручную.
+
+**Решение:** Firebase Console → Authentication → Settings → Authorized domains → Add domain:
+- `dispatch4you.com`
+- `www.dispatch4you.com`
+
+**Причина 2 — Нет обработки redirect flow:**
+Мобильные браузеры и Safari блокируют popup окна. Firebase тогда использует redirect, но без `getRedirectResult()` результат теряется при возврате на страницу.
+
+**Решение — ВСЕГДА использовать этот паттерн для Google Auth:**
+```javascript
+import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
+
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+// 1. При загрузке страницы — проверяем результат redirect
+getRedirectResult(auth).then((result) => {
+  if (result && result.user) {
+    saveUserAndRedirect(result.user); // сохранить в localStorage + редирект
+  }
+}).catch(console.error);
+
+// 2. Кнопка Google — popup с fallback на redirect
+googleBtn.addEventListener('click', async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    saveUserAndRedirect(result.user);
+  } catch (err) {
+    if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
+      await signInWithRedirect(auth, provider); // fallback
+    }
+  }
+});
+```
+
+### 🔴 ПРАВИЛО: При добавлении Firebase Auth на ЛЮБОЙ новый домен
+1. Сразу добавить домен в Firebase Console → Authorized domains
+2. Использовать `getRedirectResult` + `signInWithRedirect` fallback
+3. Версия Firebase: всегда `11.6.0` (не 12.x — не существует!)
