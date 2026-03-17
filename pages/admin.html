@@ -1518,9 +1518,11 @@
                         class="nl">Безопасность</span></div>
 
                 <div class="ns">Сайт</div>
-                <a href="../index.html" class="ni"
-                    style="text-decoration:none;background:linear-gradient(135deg,rgba(99,102,241,0.25),rgba(139,92,246,0.25));border:1px solid rgba(99,102,241,0.5);border-radius:10px;color:#a5b4fc;font-weight:700;">
-                    <i class="fa fa-home" style="color:#818cf8;"></i>
+                <a href="../index.html"
+                    style="display:flex;align-items:center;gap:10px;text-decoration:none;margin:4px 8px;padding:10px 14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:12px;color:#ffffff;font-weight:700;font-size:13px;box-shadow:0 4px 15px rgba(99,102,241,0.4);transition:all 0.2s;"
+                    onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(99,102,241,0.6)'"
+                    onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(99,102,241,0.4)'">
+                    <i class="fa fa-home" style="font-size:16px;"></i>
                     <span class="nl">🌐 На главную сайта</span>
                 </a>
             </nav>
@@ -1535,8 +1537,8 @@
             <!-- TOPBAR -->
             <div class="topbar">
                 <div class="tb-title" id="pageTitle">Дашборд<span id="pageDate"></span></div>
-                <div class="tb-search"><i class="fa fa-search"></i><input type="text" placeholder="Поиск..."
-                        oninput="globalSearch(this.value)"></div>
+                <div class="tb-search"><i class="fa fa-search"></i><input id="topbarSearch" type="text"
+                        autocomplete="off" placeholder="Поиск..." oninput="globalSearch(this.value)"></div>
                 <div class="tb-actions">
                     <div class="ib" title="Уведомления" onclick="nav('notifications',null)"><i class="fa fa-bell"></i>
                         <div class="dot"></div>
@@ -2371,9 +2373,11 @@
 
         // Загружаем данные после инициализации панели
         window.addEventListener('adminPanelReady', async () => {
-            // Сбрасываем поле поиска при загрузке (браузер мог автозаполнить)
+            // Сбрасываем поля поиска при загрузке (браузер мог автозаполнить)
             const searchEl = document.getElementById('usersSearchInput');
             if (searchEl) searchEl.value = '';
+            const topbarEl = document.getElementById('topbarSearch');
+            if (topbarEl) topbarEl.value = '';
 
             const users = await loadUsersFromFirestore();
             window.USERS = users;
@@ -2867,6 +2871,14 @@
         function exportData() { toast('Данные экспортируются...', 's'); }
         function saveSettings() { toast('Настройки сохранены!', 's'); }
         function globalSearch(q) { if (q.length > 2) toast(`Поиск: "${q}"...`, 'i'); }
+
+        // Сброс полей поиска при загрузке страницы
+        window.addEventListener('load', () => {
+            ['usersSearchInput', 'topbarSearch'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+        });
 
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', () => {
