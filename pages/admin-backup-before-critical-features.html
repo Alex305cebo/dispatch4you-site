@@ -2587,22 +2587,21 @@
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                         <div class="setc">
                             <div class="sett">✉️ Новая рассылка</div>
-                            <div class="fg"><label class="fl">Тема письма</label><input class="finp" id="mailingSubject"
-                                    type="text" placeholder="Новый модуль доступен!"></div>
-                            <div class="fg"><label class="fl">Получатели</label><select class="finp"
-                                    id="mailingRecipients">
-                                    <option value="all">Все пользователи (1284)</option>
-                                    <option value="active">Активные студенты (847)</option>
-                                    <option value="inactive">Неактивные (125)</option>
-                                    <option value="completed">Завершили курс (312)</option>
+                            <div class="fg"><label class="fl">Тема письма</label><input class="finp" type="text"
+                                    placeholder="Новый модуль доступен!"></div>
+                            <div class="fg"><label class="fl">Получатели</label><select class="finp">
+                                    <option>Все пользователи (1284)</option>
+                                    <option>Активные студенты (847)</option>
+                                    <option>Неактивные (125)</option>
+                                    <option>Завершили курс (312)</option>
                                 </select></div>
-                            <div class="fg"><label class="fl">Сообщение</label><textarea class="finp"
-                                    id="mailingMessage" rows="6" placeholder="Текст письма..."></textarea></div>
+                            <div class="fg"><label class="fl">Сообщение</label><textarea class="finp" rows="6"
+                                    placeholder="Текст письма..."></textarea></div>
                             <div style="display:flex;gap:8px;margin-top:8px;">
-                                <button class="btn btn-o" onclick="saveMailingDraft()"><i class="fa fa-save"></i>
-                                    Черновик</button>
-                                <button class="btn btn-p" onclick="sendMailing()"><i class="fa fa-paper-plane"></i>
-                                    Отправить</button>
+                                <button class="btn btn-o" onclick="toast('Черновик сохранён','i')"><i
+                                        class="fa fa-save"></i> Черновик</button>
+                                <button class="btn btn-p" onclick="toast('Рассылка отправлена!','s')"><i
+                                        class="fa fa-paper-plane"></i> Отправить</button>
                             </div>
                         </div>
                         <div class="setc">
@@ -2951,20 +2950,20 @@
             <div class="mh">
                 <div class="mtt">📚 Новый модуль</div><button class="mc" onclick="closeModal('addModule')">✕</button>
             </div>
-            <div class="fg"><label class="fl">Название модуля</label><input class="finp" id="newModuleName"
-                    placeholder="Модуль 13: ...">
+            <div class="fg"><label class="fl">Название модуля</label><input class="finp" placeholder="Модуль 13: ...">
             </div>
-            <div class="fg"><label class="fl">Описание</label><textarea class="finp" id="newModuleDesc" rows="3"
+            <div class="fg"><label class="fl">Описание</label><textarea class="finp" rows="3"
                     placeholder="Краткое описание..."></textarea></div>
-            <div class="fg"><label class="fl">Количество секторов</label><input class="finp" id="newModuleSectors"
-                    type="number" value="5" min="1" max="20"></div>
-            <div class="fg"><label class="fl">Статус</label><select class="finp" id="newModuleStatus">
-                    <option value="draft">Черновик</option>
-                    <option value="active">Активный</option>
-                    <option value="hidden">Скрытый</option>
+            <div class="fg"><label class="fl">Количество секторов</label><input class="finp" type="number" value="5"
+                    min="1" max="12"></div>
+            <div class="fg"><label class="fl">Статус</label><select class="finp">
+                    <option>Черновик</option>
+                    <option>Активный</option>
+                    <option>Скрытый</option>
                 </select></div>
             <div class="mf2"><button class="btn btn-o" onclick="closeModal('addModule')">Отмена</button><button
-                    class="btn btn-p" onclick="createNewModule()"><i class="fa fa-check"></i> Создать</button></div>
+                    class="btn btn-p" onclick="toast('Модуль создан!','s');closeModal('addModule')"><i
+                        class="fa fa-check"></i> Создать</button></div>
         </div>
     </div>
 
@@ -3470,54 +3469,6 @@
             // Перерисовываем список модулей
             renderModules();
         };
-
-        // ===== CREATE NEW MODULE =====
-        window.createNewModule = function () {
-            const name = document.getElementById('newModuleName').value.trim();
-            const desc = document.getElementById('newModuleDesc').value.trim();
-            const sectors = parseInt(document.getElementById('newModuleSectors').value);
-            const status = document.getElementById('newModuleStatus').value;
-
-            if (!name) {
-                window.toast('❌ Введите название модуля', 'e');
-                return;
-            }
-
-            if (sectors < 1 || sectors > 20) {
-                window.toast('❌ Количество секторов должно быть от 1 до 20', 'e');
-                return;
-            }
-
-            // Находим максимальный ID
-            const maxId = Math.max(...MODULES.map(m => m.id), 0);
-            const newId = maxId + 1;
-
-            // Создаем новый модуль
-            const newModule = {
-                id: newId,
-                name: name,
-                description: desc,
-                sectors: sectors,
-                students: 0,
-                progress: 0,
-                status: status
-            };
-
-            // Добавляем в массив
-            MODULES.push(newModule);
-
-            // Перерисовываем список
-            renderModules();
-
-            // Очищаем форму
-            document.getElementById('newModuleName').value = '';
-            document.getElementById('newModuleDesc').value = '';
-            document.getElementById('newModuleSectors').value = '5';
-            document.getElementById('newModuleStatus').value = 'draft';
-
-            window.toast(`✅ Модуль ${newId} "${name}" создан!`, 's');
-            closeModal('addModule');
-        };
     </script>
 
     <script>
@@ -3664,95 +3615,8 @@
         function filterByModule(m) { filteredUsers = m ? USERS.filter(u => u.module === m) : [...USERS]; renderUsers(filteredUsers); }
         function sortByXP() { filteredUsers = [...(filteredUsers.length ? filteredUsers : USERS)].sort((a, b) => (b.xp || 0) - (a.xp || 0)); renderUsers(filteredUsers); }
         function selectAll(cb) { document.querySelectorAll('#usersBody input[type=checkbox]').forEach(c => c.checked = cb.checked); }
-        // ===== EXPORT FUNCTIONS =====
-        function exportUsers() {
-            try {
-                const users = window.USERS || [];
-                if (users.length === 0) {
-                    toast('❌ Нет данных для экспорта', 'e');
-                    return;
-                }
-
-                // Подготовка данных для CSV
-                const headers = ['ID', 'Имя', 'Email', 'Телефон', 'Роль', 'Статус', 'Модуль', 'Прогресс', 'XP', 'Тариф', 'Дата регистрации'];
-                const rows = users.map(u => [
-                    u.id || '',
-                    u.name || '',
-                    u.email || '',
-                    u.phone || '',
-                    u.role || 1,
-                    u.status || 'pending',
-                    u.module || '—',
-                    u.progress || 0,
-                    u.xp || 0,
-                    u.tariff || '—',
-                    u.date || ''
-                ]);
-
-                // Создание CSV
-                const csvContent = [
-                    headers.join(','),
-                    ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-                ].join('\n');
-
-                // Скачивание файла
-                const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                const date = new Date().toISOString().split('T')[0];
-                link.setAttribute('href', url);
-                link.setAttribute('download', `users-export-${date}.csv`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                toast(`✅ Экспортировано ${users.length} пользователей`, 's');
-            } catch (err) {
-                console.error('exportUsers error:', err);
-                toast('❌ Ошибка экспорта: ' + err.message, 'e');
-            }
-        }
-
-        function sendBulkEmail() {
-            // Получаем выбранных пользователей
-            const checkboxes = document.querySelectorAll('#usersBody input[type=checkbox]:checked');
-            const selectedCount = checkboxes.length;
-
-            if (selectedCount === 0) {
-                toast('❌ Выберите пользователей для рассылки', 'e');
-                return;
-            }
-
-            // Собираем email адреса
-            const emails = [];
-            checkboxes.forEach(cb => {
-                const row = cb.closest('tr');
-                const emailCell = row.querySelector('.ue');
-                if (emailCell) {
-                    emails.push(emailCell.textContent);
-                }
-            });
-
-            // Показываем подтверждение
-            if (confirm(`Отправить рассылку ${selectedCount} пользователям?\n\nПолучатели:\n${emails.slice(0, 5).join('\n')}${emails.length > 5 ? '\n...' : ''}`)) {
-                // Сохраняем в историю рассылок
-                const mailingHistory = JSON.parse(localStorage.getItem('mailingHistory') || '[]');
-                mailingHistory.unshift({
-                    date: new Date().toISOString(),
-                    recipients: selectedCount,
-                    emails: emails,
-                    subject: 'Рассылка от администратора',
-                    status: 'sent'
-                });
-                localStorage.setItem('mailingHistory', JSON.stringify(mailingHistory.slice(0, 10)));
-
-                toast(`✅ Рассылка отправлена ${selectedCount} пользователям`, 's');
-
-                // Снимаем выделение
-                checkboxes.forEach(cb => cb.checked = false);
-            }
-        }
+        function exportUsers() { toast('CSV файл скачивается...', 's'); }
+        function sendBulkEmail() { toast('Рассылка отправлена выбранным пользователям', 's'); }
         // ===== RENDER DASH USERS =====
         window.renderDashUsers = function renderDashUsers() {
             const tbody = document.getElementById('dashUsersBody');
@@ -3837,72 +3701,24 @@
         }
 
         // ===== RENDER REVIEWS =====
-        let REVIEWS = [
-            { id: 1, name: 'Алексей К.', rating: 5, text: 'Отличный курс! Всё понятно и структурировано. Уже работаю диспетчером.', date: '15.03.2026', status: 'approved' },
-            { id: 2, name: 'Мария С.', rating: 5, text: 'Очень полезный материал. Симулятор переговоров — лучшая часть!', date: '14.03.2026', status: 'approved' },
-            { id: 3, name: 'Дмитрий В.', rating: 4, text: 'Хороший курс, но хотелось бы больше практических примеров.', date: '13.03.2026', status: 'pending' },
-        ];
-
         function renderReviews() {
             const c = document.getElementById('reviewsList');
             if (!c) return;
-            c.innerHTML = REVIEWS.map(r => `
-    <div class="ni2 ${r.status === 'pending' ? 'unr' : ''}" data-review-id="${r.id}">
+            const reviews = [
+                { name: 'Алексей К.', rating: 5, text: 'Отличный курс! Всё понятно и структурировано. Уже работаю диспетчером.', date: '15.03.2026', status: 'approved' },
+                { name: 'Мария С.', rating: 5, text: 'Очень полезный материал. Симулятор переговоров — лучшая часть!', date: '14.03.2026', status: 'approved' },
+                { name: 'Дмитрий В.', rating: 4, text: 'Хороший курс, но хотелось бы больше практических примеров.', date: '13.03.2026', status: 'pending' },
+            ];
+            c.innerHTML = reviews.map(r => `
+    <div class="ni2 ${r.status === 'pending' ? 'unr' : ''}">
       <div class="nii" style="background:rgba(245,158,11,.2)">⭐</div>
       <div class="nb">
         <div class="nt">${r.name} · ${'⭐'.repeat(r.rating)}</div>
         <div class="nd">${r.text}</div>
-        <div class="ntm">${r.date} · <span style="color:${r.status === 'approved' ? 'var(--success)' : r.status === 'rejected' ? 'var(--danger)' : 'var(--warning)'}">${r.status === 'approved' ? 'Одобрен' : r.status === 'rejected' ? 'Отклонён' : 'На модерации'}</span></div>
-        ${r.status === 'pending' ? `<div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-s btn-sm" onclick="approveReview(${r.id})"><i class="fa fa-check"></i> Одобрить</button><button class="btn btn-d btn-sm" onclick="rejectReview(${r.id})"><i class="fa fa-times"></i> Отклонить</button></div>` : ''}
+        <div class="ntm">${r.date} · <span style="color:${r.status === 'approved' ? 'var(--success)' : 'var(--warning)'}">${r.status === 'approved' ? 'Одобрен' : 'На модерации'}</span></div>
+        ${r.status === 'pending' ? `<div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-s btn-sm" onclick="toast('Отзыв одобрен','s');this.closest('.ni2').classList.remove('unr')"><i class="fa fa-check"></i> Одобрить</button><button class="btn btn-d btn-sm" onclick="toast('Отзыв отклонён','e');this.closest('.ni2').remove()"><i class="fa fa-times"></i> Отклонить</button></div>` : ''}
       </div>
     </div>`).join('');
-        }
-
-        window.approveReview = function (reviewId) {
-            const review = REVIEWS.find(r => r.id === reviewId);
-            if (!review) return;
-
-            review.status = 'approved';
-
-            // Сохраняем в localStorage
-            localStorage.setItem('reviews', JSON.stringify(REVIEWS));
-
-            // Перерисовываем
-            renderReviews();
-
-            window.toast('✅ Отзыв одобрен', 's');
-        };
-
-        window.rejectReview = function (reviewId) {
-            const review = REVIEWS.find(r => r.id === reviewId);
-            if (!review) return;
-
-            if (!confirm(`Отклонить отзыв от ${review.name}?`)) return;
-
-            review.status = 'rejected';
-
-            // Удаляем из массива
-            REVIEWS = REVIEWS.filter(r => r.id !== reviewId);
-
-            // Сохраняем в localStorage
-            localStorage.setItem('reviews', JSON.stringify(REVIEWS));
-
-            // Перерисовываем
-            renderReviews();
-
-            window.toast('🗑️ Отзыв отклонён', 'e');
-        };
-
-        // Загрузка отзывов из localStorage при старте
-        function loadReviews() {
-            try {
-                const saved = localStorage.getItem('reviews');
-                if (saved) {
-                    REVIEWS = JSON.parse(saved);
-                }
-            } catch (err) {
-                console.error('loadReviews error:', err);
-            }
         }
 
         // ===== RENDER NOTIFICATIONS =====
@@ -3949,101 +3765,11 @@
         function renderMailing() {
             const c = document.getElementById('mailingHistory');
             if (!c) return;
-
-            // Загружаем историю из localStorage
-            const history = JSON.parse(localStorage.getItem('mailingHistory') || '[]');
-
-            if (history.length === 0) {
-                c.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px">История рассылок пуста</div>';
-                return;
-            }
-
-            c.innerHTML = history.map(m => {
-                const date = new Date(m.date).toLocaleDateString('ru-RU');
-                return `<div class="pi"><div class="pii" style="background:rgba(102,126,234,.2)">📧</div><div class="pin"><div class="pin-n">${m.subject || 'Без темы'}</div><div class="pin-d">Отправлено: ${m.recipients} · ${date}</div></div></div>`;
-            }).join('');
-        }
-
-        // ===== MAILING FUNCTIONS =====
-        window.saveMailingDraft = function () {
-            const subject = document.getElementById('mailingSubject').value.trim();
-            const message = document.getElementById('mailingMessage').value.trim();
-            const recipients = document.getElementById('mailingRecipients').value;
-
-            if (!subject || !message) {
-                toast('❌ Заполните тему и сообщение', 'e');
-                return;
-            }
-
-            // Сохраняем черновик
-            const draft = { subject, message, recipients, savedAt: new Date().toISOString() };
-            localStorage.setItem('mailingDraft', JSON.stringify(draft));
-
-            toast('💾 Черновик сохранён', 's');
-        };
-
-        window.sendMailing = function () {
-            const subject = document.getElementById('mailingSubject').value.trim();
-            const message = document.getElementById('mailingMessage').value.trim();
-            const recipients = document.getElementById('mailingRecipients').value;
-
-            if (!subject || !message) {
-                toast('❌ Заполните тему и сообщение', 'e');
-                return;
-            }
-
-            const recipientCounts = {
-                'all': 1284,
-                'active': 847,
-                'inactive': 125,
-                'completed': 312
-            };
-
-            const count = recipientCounts[recipients] || 0;
-
-            if (!confirm(`Отправить рассылку "${subject}" для ${count} пользователей?`)) {
-                return;
-            }
-
-            // Добавляем в историю
-            const history = JSON.parse(localStorage.getItem('mailingHistory') || '[]');
-            history.unshift({
-                subject: subject,
-                message: message,
-                recipients: count,
-                recipientType: recipients,
-                date: new Date().toISOString(),
-                status: 'sent'
-            });
-            localStorage.setItem('mailingHistory', JSON.stringify(history.slice(0, 20)));
-
-            // Очищаем форму
-            document.getElementById('mailingSubject').value = '';
-            document.getElementById('mailingMessage').value = '';
-
-            // Обновляем историю
-            renderMailing();
-
-            toast(`✅ Рассылка отправлена ${count} пользователям!`, 's');
-        };
-
-        // Загрузка черновика при открытии страницы
-        function loadMailingDraft() {
-            try {
-                const draft = localStorage.getItem('mailingDraft');
-                if (draft) {
-                    const data = JSON.parse(draft);
-                    const subjectInput = document.getElementById('mailingSubject');
-                    const messageInput = document.getElementById('mailingMessage');
-                    const recipientsSelect = document.getElementById('mailingRecipients');
-
-                    if (subjectInput) subjectInput.value = data.subject || '';
-                    if (messageInput) messageInput.value = data.message || '';
-                    if (recipientsSelect) recipientsSelect.value = data.recipients || 'all';
-                }
-            } catch (err) {
-                console.error('loadMailingDraft error:', err);
-            }
+            c.innerHTML = [
+                { subj: 'Новый модуль 12 доступен!', sent: 1284, open: '68%', date: '10.03.2026' },
+                { subj: 'Напоминание: завершите курс', sent: 312, open: '45%', date: '05.03.2026' },
+                { subj: 'Специальное предложение -30%', sent: 1284, open: '72%', date: '01.03.2026' },
+            ].map(m => `<div class="pi"><div class="pii" style="background:rgba(102,126,234,.2)">📧</div><div class="pin"><div class="pin-n">${m.subj}</div><div class="pin-d">Отправлено: ${m.sent} · Открыто: ${m.open} · ${m.date}</div></div></div>`).join('');
         }
 
         // ===== RENDER FUNNEL =====
@@ -4144,125 +3870,13 @@
         }
 
         // ===== MISC =====
-        function exportData() {
-            try {
-                const data = {
-                    exportDate: new Date().toISOString(),
-                    users: window.USERS || [],
-                    modules: MODULES || [],
-                    payments: PAYMENTS || [],
-                    logs: allLogs || [],
-                    notifications: NOTIFS || [],
-                    stats: {
-                        totalUsers: (window.USERS || []).length,
-                        activeUsers: (window.USERS || []).filter(u => u.status === 'active').length,
-                        totalModules: (MODULES || []).length,
-                        totalPayments: (PAYMENTS || []).length
-                    }
-                };
-
-                // Создание JSON файла
-                const jsonContent = JSON.stringify(data, null, 2);
-                const blob = new Blob([jsonContent], { type: 'application/json' });
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                const date = new Date().toISOString().split('T')[0];
-                link.setAttribute('href', url);
-                link.setAttribute('download', `admin-data-export-${date}.json`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                toast('✅ Данные экспортированы в JSON', 's');
-            } catch (err) {
-                console.error('exportData error:', err);
-                toast('❌ Ошибка экспорта: ' + err.message, 'e');
-            }
-        }
-
-        function saveSettings() {
-            try {
-                // Собираем все настройки со страницы
-                const settings = {
-                    general: {
-                        siteName: document.querySelector('.setc:nth-child(1) .finp:nth-of-type(1)')?.value || 'Курсы Диспетчера',
-                        supportEmail: document.querySelector('.setc:nth-child(1) .finp:nth-of-type(2)')?.value || 'support@dispatch4you.com',
-                        phone: document.querySelector('.setc:nth-child(1) .finp:nth-of-type(3)')?.value || '+1 (555) 123-4567',
-                        timezone: document.querySelector('.setc:nth-child(1) select')?.value || 'UTC-5 (EST)'
-                    },
-                    payments: {
-                        stripeKey: document.querySelector('.setc:nth-child(2) .finp:nth-of-type(1)')?.value || 'pk_live_...',
-                        currency: document.querySelector('.setc:nth-child(2) select')?.value || 'USD ($)',
-                        trialDays: document.querySelector('.setc:nth-child(2) input[type="number"]')?.value || '7'
-                    },
-                    notifications: {
-                        emailOnRegister: document.querySelector('.setc:nth-child(3) .tr2:nth-child(2) .tgl')?.classList.contains('on') || false,
-                        emailOnPayment: document.querySelector('.setc:nth-child(3) .tr2:nth-child(3) .tgl')?.classList.contains('on') || false,
-                        telegramNotif: document.querySelector('.setc:nth-child(3) .tr2:nth-child(4) .tgl')?.classList.contains('on') || false,
-                        weeklyReport: document.querySelector('.setc:nth-child(3) .tr2:nth-child(5) .tgl')?.classList.contains('on') || false
-                    },
-                    appearance: {
-                        darkTheme: document.querySelector('.setc:nth-child(4) .tr2:nth-child(2) .tgl')?.classList.contains('on') || false,
-                        animations: document.querySelector('.setc:nth-child(4) .tr2:nth-child(3) .tgl')?.classList.contains('on') || false,
-                        maintenanceMode: document.querySelector('.setc:nth-child(4) .tr2:nth-child(4) .tgl')?.classList.contains('on') || false
-                    },
-                    savedAt: new Date().toISOString()
-                };
-
-                // Сохраняем в localStorage
-                localStorage.setItem('adminSettings', JSON.stringify(settings));
-                toast('✅ Настройки сохранены!', 's');
-            } catch (err) {
-                console.error('saveSettings error:', err);
-                toast('❌ Ошибка сохранения: ' + err.message, 'e');
-            }
-        }
-
-        // Загрузка настроек при старте
-        function loadSettings() {
-            try {
-                const saved = localStorage.getItem('adminSettings');
-                if (!saved) return;
-
-                const settings = JSON.parse(saved);
-
-                // Применяем сохраненные настройки
-                if (settings.general) {
-                    const inputs = document.querySelectorAll('.setc:nth-child(1) .finp');
-                    if (inputs[0]) inputs[0].value = settings.general.siteName;
-                    if (inputs[1]) inputs[1].value = settings.general.supportEmail;
-                    if (inputs[2]) inputs[2].value = settings.general.phone;
-                }
-
-                if (settings.payments) {
-                    const inputs = document.querySelectorAll('.setc:nth-child(2) .finp');
-                    if (inputs[0]) inputs[0].value = settings.payments.stripeKey;
-                }
-
-                // Применяем состояния переключателей
-                if (settings.notifications) {
-                    const toggles = document.querySelectorAll('.setc:nth-child(3) .tgl');
-                    if (toggles[0] && settings.notifications.emailOnRegister) toggles[0].classList.add('on');
-                    if (toggles[1] && settings.notifications.emailOnPayment) toggles[1].classList.add('on');
-                    if (toggles[2] && settings.notifications.telegramNotif) toggles[2].classList.add('on');
-                    if (toggles[3] && settings.notifications.weeklyReport) toggles[3].classList.add('on');
-                }
-            } catch (err) {
-                console.error('loadSettings error:', err);
-            }
-        }
+        function exportData() { toast('Данные экспортируются...', 's'); }
+        function saveSettings() { toast('Настройки сохранены!', 's'); }
         function globalSearch(q) { /* топбар-поиск удалён */ }
 
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('pageDate').textContent = new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-
-            // Загружаем сохраненные данные
-            loadSettings();
-            loadReviews();
-            loadMailingDraft();
-
             // renderUsers и renderDashUsers вызываются после загрузки из Firestore (adminPanelReady)
             renderModules();
             renderPayments();
