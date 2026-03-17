@@ -416,7 +416,13 @@
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: firstName + ' ' + lastName });
         localStorage.setItem('user', JSON.stringify({ uid: cred.user.uid, firstName, lastName, email }));
-        await saveUserToFirestore(cred.user, firstName, lastName);
+        try {
+          await saveUserToFirestore(cred.user, firstName, lastName);
+          console.log('✅ Firestore: пользователь сохранён');
+        } catch (fsErr) {
+          console.error('❌ Firestore error:', fsErr.code, fsErr.message);
+          // Не блокируем регистрацию — пользователь создан в Auth
+        }
         showSuccess('Аккаунт создан! Перенаправляем...');
         setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
       } catch (err) {
@@ -434,7 +440,12 @@
         const firstName = parts[0] || user.email.split('@')[0];
         const lastName = parts.slice(1).join(' ') || '';
         localStorage.setItem('user', JSON.stringify({ uid: user.uid, firstName, lastName, email: user.email }));
-        await saveUserToFirestore(user, firstName, lastName);
+        try {
+          await saveUserToFirestore(user, firstName, lastName);
+          console.log('✅ Firestore: пользователь сохранён (Google)');
+        } catch (fsErr) {
+          console.error('❌ Firestore error (Google):', fsErr.code, fsErr.message);
+        }
         window.location.href = 'dashboard.html';
       } catch (err) {
         if (err.code !== 'auth/popup-closed-by-user') showError(translateError(err.code));
