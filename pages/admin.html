@@ -2384,8 +2384,8 @@
                 searchEl.addEventListener('input', function () { filterUsers(this.value); });
             }
 
-            if (typeof renderUsers === 'function') renderUsers(users);
-            if (typeof renderDashUsers === 'function') renderDashUsers();
+            if (typeof window.renderUsers === 'function') window.renderUsers(users);
+            if (typeof window.renderDashUsers === 'function') window.renderDashUsers();
         });
 
         // ===== ADD USER (глобальная функция из module scope) =====
@@ -2428,8 +2428,8 @@
                 const users = await loadUsersFromFirestore();
                 window.USERS = users; window.filteredUsers = [...users];
                 updateCounters(users);
-                if (typeof renderUsers === 'function') renderUsers(users);
-                if (typeof renderDashUsers === 'function') renderDashUsers();
+                if (typeof window.renderUsers === 'function') window.renderUsers(users);
+                if (typeof window.renderDashUsers === 'function') window.renderDashUsers();
             } catch (err) {
                 console.error('addUser error:', err);
                 const msgs = { 'auth/email-already-in-use': 'Email уже зарегистрирован', 'auth/invalid-email': 'Неверный email', 'auth/weak-password': 'Пароль слишком слабый' };
@@ -2473,7 +2473,7 @@
                 const users = await loadUsersFromFirestore();
                 window.USERS = users; window.filteredUsers = [...users];
                 updateCounters(users);
-                if (typeof renderUsers === 'function') renderUsers(users);
+                if (typeof window.renderUsers === 'function') window.renderUsers(users);
             } catch (err) {
                 console.error('saveEditUser error:', err);
                 window.toast('❌ Ошибка: ' + err.message, 'e');
@@ -2494,8 +2494,8 @@
                 const users = await loadUsersFromFirestore();
                 window.USERS = users; window.filteredUsers = [...users];
                 updateCounters(users);
-                if (typeof renderUsers === 'function') renderUsers(users);
-                if (typeof renderDashUsers === 'function') renderDashUsers();
+                if (typeof window.renderUsers === 'function') window.renderUsers(users);
+                if (typeof window.renderDashUsers === 'function') window.renderDashUsers();
             } catch (err) {
                 console.error('deleteUser error:', err);
                 window.toast('❌ Ошибка удаления: ' + err.message, 'e');
@@ -2585,7 +2585,7 @@
 
         // ===== RENDER USERS TABLE =====
         let filteredUsers = [];
-        function renderUsers(data) {
+        window.renderUsers = function renderUsers(data) {
             const tbody = document.getElementById('usersBody');
             if (!tbody) return;
             if (!data || data.length === 0) {
@@ -2632,7 +2632,7 @@
         function exportUsers() { toast('CSV файл скачивается...', 's'); }
         function sendBulkEmail() { toast('Рассылка отправлена выбранным пользователям', 's'); }
         // ===== RENDER DASH USERS =====
-        function renderDashUsers() {
+        window.renderDashUsers = function renderDashUsers() {
             const tbody = document.getElementById('dashUsersBody');
             if (!tbody) return;
             if (!USERS || USERS.length === 0) {
