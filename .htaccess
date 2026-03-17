@@ -3,6 +3,9 @@
 # Включение mod_rewrite
 RewriteEngine On
 
+# favicon.ico -> favicon.svg
+RewriteRule ^favicon\.ico$ favicon.svg [L,T=image/svg+xml]
+
 # Редирект с www на без www
 RewriteCond %{HTTP_HOST} ^www\.dispatch4you\.com [NC]
 RewriteRule ^(.*)$ https://dispatch4you.com/$1 [L,R=301]
