@@ -304,9 +304,10 @@
     <!-- Admin bypass modal -->
     <div class="modal" id="adminModal">
         <div class="modal-box">
-            <h3>🔐 Доступ</h3>
+            <h3>🔐 Вход для администраторов</h3>
+            <input type="text" id="adminLogin" placeholder="Логин" onkeydown="if(event.key==='Enter')checkAdmin()">
             <input type="password" id="adminPass" placeholder="Пароль" onkeydown="if(event.key==='Enter')checkAdmin()">
-            <div class="modal-error" id="modalError">Неверный пароль</div>
+            <div class="modal-error" id="modalError">Неверный логин или пароль</div>
             <button class="btn" style="width:100%;margin-bottom:8px" onclick="checkAdmin()">Войти</button>
             <button onclick="closeModal()"
                 style="background:none;border:none;color:#64748b;cursor:pointer;font-size:13px">Отмена</button>
@@ -314,7 +315,7 @@
     </div>
 
     <script>
-        // Если уже авторизован как админ — пропускаем
+        // Если уже авторизован как супер-админ через Firebase — пропускаем
         (function () {
             const user = localStorage.getItem('user');
             if (user) {
@@ -325,7 +326,17 @@
                     }
                 } catch (e) { }
             }
+            // Уже есть bypass
+            if (localStorage.getItem('maintenance_bypass') === '1') {
+                window.location.href = 'index.html';
+            }
         })();
+
+        // Список администраторов: логин -> пароль
+        const ADMINS = {
+            'alex': 'Der.69008',
+            'admin': 'Der.69008',
+        };
 
         function notify() {
             const email = document.getElementById('notifyEmail').value.trim();
@@ -336,19 +347,20 @@
 
         function showAdminModal() {
             document.getElementById('adminModal').classList.add('active');
-            setTimeout(() => document.getElementById('adminPass').focus(), 100);
+            setTimeout(() => document.getElementById('adminLogin').focus(), 100);
         }
 
         function closeModal() {
             document.getElementById('adminModal').classList.remove('active');
+            document.getElementById('adminLogin').value = '';
             document.getElementById('adminPass').value = '';
             document.getElementById('modalError').style.display = 'none';
         }
 
         function checkAdmin() {
+            const login = document.getElementById('adminLogin').value.trim().toLowerCase();
             const pass = document.getElementById('adminPass').value;
-            // Пароль для обхода maintenance
-            if (pass === 'dispatch2026admin') {
+            if (ADMINS[login] && ADMINS[login] === pass) {
                 localStorage.setItem('maintenance_bypass', '1');
                 window.location.href = 'index.html';
             } else {
