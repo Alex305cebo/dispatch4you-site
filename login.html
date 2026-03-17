@@ -352,7 +352,7 @@
         localStorage.setItem('user', JSON.stringify({ uid: user.uid, firstName: parts[0] || '', lastName: parts[1] || '', email: user.email }));
         const returnUrl = localStorage.getItem('returnUrl');
         localStorage.removeItem('returnUrl');
-        window.location.href = returnUrl || 'pages/modules-index.html';
+        window.location.href = returnUrl || 'dashboard.html';
       } catch (err) {
         showError(translateError(err.code));
         btn.disabled = false; btn.textContent = 'Войти';
@@ -368,7 +368,7 @@
         localStorage.setItem('user', JSON.stringify({ uid: user.uid, firstName: parts[0] || '', lastName: parts[1] || '', email: user.email }));
         const returnUrl = localStorage.getItem('returnUrl');
         localStorage.removeItem('returnUrl');
-        window.location.href = returnUrl || 'pages/modules-index.html';
+        window.location.href = returnUrl || 'dashboard.html';
       } catch (err) {
         if (err.code !== 'auth/popup-closed-by-user') showError(translateError(err.code));
       }
