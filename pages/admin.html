@@ -1529,37 +1529,37 @@
                         </div>
                         <div class="sc" style="--g:linear-gradient(90deg,#10b981,#059669)">
                             <div class="sc-icon" style="background:rgba(16,185,129,.2)">🎓</div>
-                            <div class="sc-val">847</div>
+                            <div class="sc-val" id="stat-active-students">—</div>
                             <div class="sc-lbl">Активных студентов</div>
-                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+12.5%</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>реальные данные</div>
                             <div class="sc-bg">🎓</div>
                         </div>
                         <div class="sc" style="--g:linear-gradient(90deg,#f59e0b,#d97706)">
                             <div class="sc-icon" style="background:rgba(245,158,11,.2)">💰</div>
-                            <div class="sc-val">$24,680</div>
+                            <div class="sc-val">—</div>
                             <div class="sc-lbl">Доход за месяц</div>
-                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+18.3%</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>нет данных</div>
                             <div class="sc-bg">💰</div>
                         </div>
                         <div class="sc" style="--g:linear-gradient(90deg,#f093fb,#f5576c)">
                             <div class="sc-icon" style="background:rgba(240,147,251,.2)">✅</div>
-                            <div class="sc-val">68%</div>
+                            <div class="sc-val">—</div>
                             <div class="sc-lbl">Завершили курс</div>
-                            <div class="sc-tr dn"><i class="fa fa-arrow-down"></i>-2.1%</div>
+                            <div class="sc-tr dn"><i class="fa fa-arrow-down"></i>нет данных</div>
                             <div class="sc-bg">✅</div>
                         </div>
                         <div class="sc" style="--g:linear-gradient(90deg,#3b82f6,#1d4ed8)">
                             <div class="sc-icon" style="background:rgba(59,130,246,.2)">📋</div>
                             <div class="sc-val">12</div>
                             <div class="sc-lbl">Активных модулей</div>
-                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+2 новых</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>12 модулей</div>
                             <div class="sc-bg">📋</div>
                         </div>
                         <div class="sc" style="--g:linear-gradient(90deg,#ef4444,#dc2626)">
                             <div class="sc-icon" style="background:rgba(239,68,68,.2)">⭐</div>
-                            <div class="sc-val">4.8</div>
+                            <div class="sc-val">—</div>
                             <div class="sc-lbl">Средний рейтинг</div>
-                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>+0.2</div>
+                            <div class="sc-tr up"><i class="fa fa-arrow-up"></i>нет данных</div>
                             <div class="sc-bg">⭐</div>
                         </div>
                     </div>
@@ -2216,10 +2216,12 @@
             const total = users.length;
             const el1 = document.getElementById('stat-total-dash');
             const el2 = document.getElementById('stat-total-users');
+            const el3 = document.getElementById('stat-active-students');
             const badge = document.getElementById('stat-badge-users');
             const pagInfo = document.getElementById('pagInfo');
             if (el1) el1.textContent = total;
             if (el2) el2.textContent = total;
+            if (el3) el3.textContent = total; // все зарегистрированные = активные студенты
             if (badge) badge.textContent = total;
             if (pagInfo) pagInfo.textContent = `Показано 1-${Math.min(10, total)} из ${total}`;
         }
