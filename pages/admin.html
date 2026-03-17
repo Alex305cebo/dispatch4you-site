@@ -2217,17 +2217,18 @@
                     const d = docSnap.data();
                     let dateStr = '—';
                     try {
-                        const ts = d.lastLogin;
+                        const ts = d.lastLogin || d.createdAt;
                         if (ts && ts.toDate) dateStr = ts.toDate().toLocaleDateString('ru-RU');
                         else if (ts) dateStr = new Date(ts).toLocaleDateString('ru-RU');
                     } catch (e) { }
+                    const fullName = ((d.firstName || '') + ' ' + (d.lastName || '')).trim();
                     users.push({
                         id: docSnap.id,
-                        name: ((d.firstName || '') + ' ' + (d.lastName || '')).trim() || d.email || docSnap.id,
+                        name: fullName || d.displayName || d.email || docSnap.id,
                         email: d.email || '',
                         module: '—',
                         progress: 0,
-                        status: 'active',
+                        status: d.status || 'active',
                         date: dateStr,
                         color: COLORS[users.length % COLORS.length]
                     });
