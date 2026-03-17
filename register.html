@@ -369,10 +369,12 @@
     function saveUserToFirestore(user, firstName, lastName) {
       return setDoc(doc(db, 'users', user.uid), {
         uid: user.uid, firstName, lastName,
-        email: user.email, displayName: user.displayName || (firstName + ' ' + lastName),
-        photoURL: user.photoURL || '', lastLogin: serverTimestamp(),
+        email: user.email,
+        displayName: user.displayName || (firstName + ' ' + lastName),
+        photoURL: user.photoURL || '',
+        lastLogin: serverTimestamp(),
         provider: user.providerData[0]?.providerId || 'password'
-      }, { merge: true }).catch(console.error);
+      }, { merge: true });
     }
 
     const errorMsg = document.getElementById('errorMsg');
@@ -414,7 +416,7 @@
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: firstName + ' ' + lastName });
         localStorage.setItem('user', JSON.stringify({ uid: cred.user.uid, firstName, lastName, email }));
-        saveUserToFirestore(cred.user, firstName, lastName);
+        await saveUserToFirestore(cred.user, firstName, lastName);
         showSuccess('Аккаунт создан! Перенаправляем...');
         setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
       } catch (err) {
@@ -432,7 +434,7 @@
         const firstName = parts[0] || user.email.split('@')[0];
         const lastName = parts.slice(1).join(' ') || '';
         localStorage.setItem('user', JSON.stringify({ uid: user.uid, firstName, lastName, email: user.email }));
-        saveUserToFirestore(user, firstName, lastName);
+        await saveUserToFirestore(user, firstName, lastName);
         window.location.href = 'dashboard.html';
       } catch (err) {
         if (err.code !== 'auth/popup-closed-by-user') showError(translateError(err.code));

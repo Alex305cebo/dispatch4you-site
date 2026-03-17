@@ -341,7 +341,7 @@
       return map[code] || 'Ошибка: ' + code;
     }
 
-    function saveUserAndRedirect(user) {
+    async function saveUserAndRedirect(user) {
       const parts = (user.displayName || '').split(' ');
       const firstName = parts[0] || user.email.split('@')[0];
       const lastName = parts.slice(1).join(' ') || '';
@@ -357,8 +357,8 @@
       };
       // Сохраняем в localStorage
       localStorage.setItem('user', JSON.stringify({ uid: user.uid, firstName, lastName, email: user.email }));
-      // Сохраняем в Firestore (merge чтобы не перезаписывать существующие данные)
-      setDoc(doc(db, 'users', user.uid), userData, { merge: true }).catch(console.error);
+      // Сохраняем в Firestore и только потом редиректим
+      try { await setDoc(doc(db, 'users', user.uid), userData, { merge: true }); } catch (e) { console.error(e); }
       const returnUrl = localStorage.getItem('returnUrl');
       localStorage.removeItem('returnUrl');
       window.location.href = returnUrl || 'dashboard.html';
