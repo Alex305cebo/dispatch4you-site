@@ -14,7 +14,7 @@ window.updateAuthUI = function () {
   if (!navActions) return;
 
   if (user) {
-    const name = user.firstName || user.email || 'Пользователь';
+    const name = user.lastName || user.firstName || user.email || 'Пользователь';
     const dashHref = isPages() ? '../dashboard.html' : 'dashboard.html';
     const html = `
       <div style="display:flex;align-items:center;gap:10px;">
