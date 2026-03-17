@@ -206,6 +206,178 @@
       background: rgba(236, 72, 153, 0.2);
     }
 
+    /* XP Block */
+    .xp-block {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .xp-level-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 120px;
+    }
+
+    .xp-level-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .xp-level-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #a5b4fc;
+      text-align: center;
+    }
+
+    .xp-level-num {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .xp-progress-section {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .xp-total {
+      font-size: 28px;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .xp-total span {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .xp-next-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .xp-bar-wrap {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .xp-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+      border-radius: 100px;
+      transition: width 0.6s ease;
+    }
+
+    .xp-stats-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .xp-stat-item {
+      text-align: center;
+    }
+
+    .xp-stat-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .xp-stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Leaderboard */
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .leaderboard-table th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .leaderboard-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+    }
+
+    .leaderboard-table tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .lb-rank {
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .lb-rank.top1 {
+      color: #fbbf24;
+    }
+
+    .lb-rank.top2 {
+      color: #94a3b8;
+    }
+
+    .lb-rank.top3 {
+      color: #cd7c2f;
+    }
+
+    .lb-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .lb-xp {
+      font-weight: 700;
+      color: #818cf8;
+    }
+
+    .lb-you {
+      background: rgba(99, 102, 241, 0.08) !important;
+    }
+
+    .lb-you td {
+      border-left: 3px solid #6366f1;
+    }
+
+    @media (max-width: 768px) {
+      .xp-block {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .xp-stats-row {
+        gap: 16px;
+      }
+    }
+
     .stat-value {
       font-size: 32px;
       font-weight: 800;
@@ -691,10 +863,45 @@
         </div>
       </div>
 
+      <!-- XP Block -->
+      <div class="xp-block" id="xpBlock" style="display:none;">
+        <div class="xp-level-badge">
+          <div class="xp-level-icon" id="xpLevelIcon">🌱</div>
+          <div class="xp-level-label" id="xpLevelLabel">Новичок</div>
+          <div class="xp-level-num" id="xpLevelNum">Уровень 1</div>
+        </div>
+        <div class="xp-progress-section">
+          <div class="xp-total"><span id="xpTotal">0</span> XP <span>всего</span></div>
+          <div class="xp-next-label" id="xpNextLabel">До следующего уровня: <b id="xpToNext">50</b> XP</div>
+          <div class="xp-bar-wrap">
+            <div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div>
+          </div>
+          <div class="xp-stats-row">
+            <div class="xp-stat-item">
+              <div class="xp-stat-val" id="xpStreak">0</div>
+              <div class="xp-stat-lbl">🔥 Серия дней</div>
+            </div>
+            <div class="xp-stat-item">
+              <div class="xp-stat-val" id="xpQuizzes">0</div>
+              <div class="xp-stat-lbl">✅ Квизов</div>
+            </div>
+            <div class="xp-stat-item">
+              <div class="xp-stat-val" id="xpModules">0</div>
+              <div class="xp-stat-lbl">🎓 Модулей</div>
+            </div>
+            <div class="xp-stat-item">
+              <div class="xp-stat-val" id="xpAudio">0</div>
+              <div class="xp-stat-lbl">🎧 Аудио</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Tabs -->
       <div class="tabs">
         <button class="tab active" onclick="switchTab('courses')">Мои курсы</button>
         <button class="tab" onclick="switchTab('profile')">Профиль</button>
+        <button class="tab" onclick="switchTab('rating')">🏆 Рейтинг</button>
         <button class="tab" onclick="switchTab('certificates')">Сертификаты</button>
         <button class="tab" onclick="switchTab('settings')">Настройки</button>
       </div>
@@ -811,6 +1018,35 @@
               <input type="tel" class="form-input" placeholder="+1 (555) 123-4567">
             </div>
             <button class="btn-save" onclick="saveProfile()">Сохранить изменения</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Rating / Leaderboard -->
+      <div id="tab-rating" class="tab-content">
+        <div class="settings-card" style="padding:0;overflow:hidden;">
+          <div
+            style="padding:24px 32px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <h3 style="font-size:22px;font-weight:700;">🏆 Рейтинг пользователей</h3>
+            <span style="font-size:13px;color:var(--text-muted);">Топ по XP за всё время</span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Пользователь</th>
+                  <th>Уровень</th>
+                  <th>XP</th>
+                  <th>🔥 Серия</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody">
+                <tr>
+                  <td colspan="5" style="text-align:center;padding:32px;color:var(--text-muted);">Загрузка...</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -948,94 +1184,200 @@
     }
   </script>
 
-  <script src="auth.js"></script>
-
-  <!-- Mobile menu script -->
-  <script>
-    // Mobile menu functionality
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-
-    if (mobileMenuToggle && mobileMenu && mobileMenuOverlay) {
-      mobileMenuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-        mobileMenuOverlay.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-      });
-
-      mobileMenuOverlay.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    }
-  </script>
-
-  <!-- Firebase Auth -->
+  <!-- XP System + Leaderboard -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    import { checkDailyLogin, getLevelByXP, getNextLevel, LEVELS } from "./xp-system.js";
 
-    const app = initializeApp({
+    const FIREBASE_CONFIG = {
       apiKey: "AIzaSyC505dhT1WjUPhXbinqLvEOTlEXWxYy8GI",
       authDomain: "dispatch4you-80e0f.firebaseapp.com",
-      projectId: "dispatch4you-80e0f"
-    });
+      projectId: "dispatch4you-80e0f",
+      storageBucket: "dispatch4you-80e0f.appspot.com",
+      messagingSenderId: "349235354473",
+      appId: "1:349235354473:web:488aeb29211b02bb153bf8"
+    };
+
+    const app = getApps().length ? getApps()[0] : initializeApp(FIREBASE_CONFIG);
+    const db = getFirestore(app);
     const auth = getAuth(app);
-    const SUPER_ADMIN = 'dersire.der@gmail.com';
 
-    onAuthStateChanged(auth, (firebaseUser) => {
+    function renderXPBlock(data, uid) {
+      const xp = data.xp || 0;
+      const level = getLevelByXP(xp);
+      const next = getNextLevel(xp);
+      const streak = data.loginStreak || 0;
+      const stats = data.stats || {};
 
-      if (firebaseUser) {
-        const parts = (firebaseUser.displayName || '').split(' ');
-        const firstName = parts[0] || firebaseUser.email.split('@')[0];
-        const lastName = parts.slice(1).join(' ') || '';
-        const email = firebaseUser.email;
+      document.getElementById('xpBlock').style.display = 'flex';
+      document.getElementById('xpLevelIcon').textContent = level.label.split(' ')[0];
+      document.getElementById('xpLevelLabel').textContent = level.label.replace(/^\S+\s/, '');
+      document.getElementById('xpLevelNum').textContent = 'Уровень ' + level.level;
+      document.getElementById('xpTotal').textContent = xp;
+      document.getElementById('xpStreak').textContent = streak;
+      document.getElementById('xpQuizzes').textContent = stats.quizCorrect || 0;
+      document.getElementById('xpModules').textContent = stats.moduleComplete || 0;
+      document.getElementById('xpAudio').textContent = stats.audioListened || 0;
 
-        // Обновляем UI
-        document.getElementById('userName').textContent = firstName;
-        const pName = document.getElementById('profileName');
-        const pEmail = document.getElementById('profileEmail');
-        const fFirst = document.getElementById('firstName');
-        const fLast = document.getElementById('lastName');
-        const fEmail = document.getElementById('email');
-        if (pName) pName.textContent = (firstName + ' ' + lastName).trim();
-        if (pEmail) pEmail.textContent = email;
-        if (fFirst) fFirst.value = firstName;
-        if (fLast) fLast.value = lastName;
-        if (fEmail) fEmail.value = email;
+      if (next) {
+        const prevXP = level.minXP;
+        const range = next.minXP - prevXP;
+        const progress = Math.min(100, Math.round(((xp - prevXP) / range) * 100));
+        document.getElementById('xpToNext').textContent = next.minXP - xp;
+        document.getElementById('xpNextLabel').innerHTML = `До уровня <b>${next.label}</b>: <b id="xpToNext">${next.minXP - xp}</b> XP`;
+        document.getElementById('xpBarFill').style.width = progress + '%';
+      } else {
+        document.getElementById('xpNextLabel').textContent = '👑 Максимальный уровень';
+        document.getElementById('xpBarFill').style.width = '100%';
+      }
+    }
 
-        // Навигация
-        const html = `
+    async function loadLeaderboard(currentUid) {
+      const tbody = document.getElementById('leaderboardBody');
+      try {
+        const q = query(collection(db, 'users'), orderBy('xp', 'desc'), limit(20));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--text-muted);">Нет данных</td></tr>';
+          return;
+        }
+        let html = '';
+        let rank = 1;
+        snap.forEach(d => {
+          const u = d.data();
+          const xp = u.xp || 0;
+          const level = getLevelByXP(xp);
+          const name = u.displayName || u.email || 'Пользователь';
+          const streak = u.loginStreak || 0;
+          const isYou = d.id === currentUid;
+          const rankClass = rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : '';
+          const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+          html += `<tr class="${isYou ? 'lb-you' : ''}">
+            <td><span class="lb-rank ${rankClass}">${rankIcon}</span></td>
+            <td><span class="lb-name">${name}${isYou ? ' <span style="color:#818cf8;font-size:11px;">(вы)</span>' : ''}</span></td>
+            <td style="font-size:13px;">${level.label}</td>
+            <td><span class="lb-xp">${xp} XP</span></td>
+            <td style="color:var(--text-secondary);">${streak > 0 ? '🔥 ' + streak : '—'}</td>
+          </tr>`;
+          rank++;
+        });
+        tbody.innerHTML = html;
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:32px;color:#ef4444;">Ошибка загрузки</td></tr>';
+        console.error(e);
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+      try {
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        if (snap.exists()) renderXPBlock(snap.data(), user.uid);
+      } catch (e) { console.error('XP load error:', e); }
+
+      // Загружаем лидерборд при открытии вкладки
+      document.querySelectorAll('.tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (btn.textContent.includes('Рейтинг')) loadLeaderboard(user.uid);
+        });
+      });
+    });
+  </script>
+</body>
+
+<!-- Mobile menu script -->
+<script>
+  // Mobile menu functionality
+  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+  if (mobileMenuToggle && mobileMenu && mobileMenuOverlay) {
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    mobileMenuOverlay.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileMenuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+</script>
+
+<!-- Daily Login XP (auto-triggered via xp-system.js onAuthStateChanged) -->
+<script type="module">
+  import "./xp-system.js";
+</script>
+
+<!-- Firebase Auth -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyC505dhT1WjUPhXbinqLvEOTlEXWxYy8GI",
+    authDomain: "dispatch4you-80e0f.firebaseapp.com",
+    projectId: "dispatch4you-80e0f"
+  });
+  const auth = getAuth(app);
+  const SUPER_ADMIN = 'dersire.der@gmail.com';
+
+  onAuthStateChanged(auth, (firebaseUser) => {
+
+    if (firebaseUser) {
+      const parts = (firebaseUser.displayName || '').split(' ');
+      const firstName = parts[0] || firebaseUser.email.split('@')[0];
+      const lastName = parts.slice(1).join(' ') || '';
+      const email = firebaseUser.email;
+
+      // Обновляем UI
+      document.getElementById('userName').textContent = firstName;
+      const pName = document.getElementById('profileName');
+      const pEmail = document.getElementById('profileEmail');
+      const fFirst = document.getElementById('firstName');
+      const fLast = document.getElementById('lastName');
+      const fEmail = document.getElementById('email');
+      if (pName) pName.textContent = (firstName + ' ' + lastName).trim();
+      if (pEmail) pEmail.textContent = email;
+      if (fFirst) fFirst.value = firstName;
+      if (fLast) fLast.value = lastName;
+      if (fEmail) fEmail.value = email;
+
+      // Навигация
+      const html = `
           <span style="color:#a5b4fc;font-weight:600;font-size:14px;">👤 ${firstName}</span>
           <button onclick="window.fbSignOut()" style="padding:6px 14px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#fca5a5;font-size:13px;cursor:pointer;font-weight:600;">Выйти</button>
         `;
-        const navActions = document.querySelector('.nav-actions');
-        const mobileNavActions = document.querySelector('.mobile-nav-actions');
-        if (navActions) navActions.innerHTML = html;
-        if (mobileNavActions) mobileNavActions.innerHTML = html;
+      const navActions = document.querySelector('.nav-actions');
+      const mobileNavActions = document.querySelector('.mobile-nav-actions');
+      if (navActions) navActions.innerHTML = html;
+      if (mobileNavActions) mobileNavActions.innerHTML = html;
 
-        localStorage.setItem('user', JSON.stringify({ uid: firebaseUser.uid, firstName, lastName, email }));
+      localStorage.setItem('user', JSON.stringify({ uid: firebaseUser.uid, firstName, lastName, email }));
 
-        // Кнопка админа
-        if (email.trim().toLowerCase() === SUPER_ADMIN) {
-          const btn = document.getElementById('adminPanelBtn');
-          if (btn) btn.style.display = 'inline-block';
-        }
-      } else {
-        // Не авторизован — редиректим на логин
-        localStorage.removeItem('user');
-        window.location.href = 'login.html';
+      // Кнопка админа
+      if (email.trim().toLowerCase() === SUPER_ADMIN) {
+        const btn = document.getElementById('adminPanelBtn');
+        if (btn) btn.style.display = 'inline-block';
       }
-    });
-
-    window.fbSignOut = async () => {
-      await signOut(auth);
+    } else {
+      // Не авторизован — редиректим на логин
       localStorage.removeItem('user');
       window.location.href = 'login.html';
-    };
-  </script>
+    }
+  });
+
+  window.fbSignOut = async () => {
+    await signOut(auth);
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+  };
+</script>
 </body>
 
 </html>
