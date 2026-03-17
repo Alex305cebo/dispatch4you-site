@@ -975,11 +975,8 @@
     });
     const auth = getAuth(app);
     const SUPER_ADMIN = 'dersire.der@gmail.com';
-    let redirectTimer = null;
 
     onAuthStateChanged(auth, (firebaseUser) => {
-      // Отменяем предыдущий таймер редиректа если Firebase вернул пользователя
-      if (redirectTimer) { clearTimeout(redirectTimer); redirectTimer = null; }
 
       if (firebaseUser) {
         const parts = (firebaseUser.displayName || '').split(' ');
@@ -1018,13 +1015,10 @@
           if (btn) btn.style.display = 'inline-block';
         }
       } else {
-        // Firebase вернул null — ждём 3 секунды прежде чем редиректить
-        // (на случай медленной загрузки SDK)
-        redirectTimer = setTimeout(() => {
-          if (!getAuth(app).currentUser) {
-            window.location.href = 'login.html';
-          }
-        }, 3000);
+        // Firebase вернул null — НЕ редиректим автоматически
+        // Пользователь может быть не залогинен, просто показываем гостевой вид
+        // Редирект только если явно нажали "Выйти"
+        console.log('Пользователь не авторизован — гостевой режим');
       }
     });
 
