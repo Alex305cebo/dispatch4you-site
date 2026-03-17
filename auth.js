@@ -1,4 +1,5 @@
 // auth.js — отображение пользователя в навбаре на всех страницах
+// Version 2.0 - Enhanced user profile display with avatar and full name
 
 function isPages() {
   return window.location.pathname.includes('/pages/');
