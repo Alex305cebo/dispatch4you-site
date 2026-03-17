@@ -19,19 +19,7 @@
     }
   </script>
   <script>
-    // 🔴 MAINTENANCE MODE — закрыто для всех кроме админа
-    (function () {
-      const ADMIN_EMAIL = 'dersire.der@gmail.com';
-      const bypass = localStorage.getItem('maintenance_bypass');
-      const user = localStorage.getItem('user');
-      let isAdmin = false;
-      if (user) {
-        try { isAdmin = (JSON.parse(user).email || '').toLowerCase() === ADMIN_EMAIL; } catch (e) { }
-      }
-      if (!isAdmin && bypass !== '1') {
-        window.location.href = 'maintenance.html';
-      }
-    })();
+    // MAINTENANCE MODE — ОТКЛЮЧЁН
   </script>
   <style>
     * {
@@ -7583,10 +7571,6 @@
           <span class="candy-icon">🎓</span>
           <span class="candy-text">Курс</span>
         </a>
-        <a href="help.html" class="candy-btn">
-          <span class="candy-icon">❓</span>
-          <span class="candy-text">Помощь</span>
-        </a>
         <a href="register.html" class="candy-btn">
           <span class="candy-icon">🚀</span>
           <span class="candy-text">Старт</span>
@@ -7730,7 +7714,6 @@
           <h4>Поддержка</h4>
           <a href="faq.html">FAQ</a>
           <a href="contacts.html">Контакты</a>
-          <a href="help.html">Помощь</a>
         </div>
 
         <div class="footer-section">
