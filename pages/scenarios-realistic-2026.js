@@ -1,26 +1,27 @@
 // ============================================================
 // REALISTIC DISPATCHER-BROKER SCENARIOS 2026
 // Based on real industry practices and negotiations
-// 15-20 step dialogues with authentic flow
+// 18-20 step dialogues with unique questions per scenario
 // ============================================================
 
 console.log('🟢 Loading realistic scenarios 2026...');
 
 // ─────────────────────────────────────────────────────────────
 // SCENARIO 1 — Dry Van | Chicago → Dallas | 1,000 miles
-// Standard negotiation with detention and payment terms
+// Focus: Payment terms, factoring, broker credit, high-value cargo
+// Unique questions: Claims history, factoring company, TONU, layover, lumpers, broker credit
 // ─────────────────────────────────────────────────────────────
 const scenario_chicago_dallas = {
     id: 101,
-    title: "Electronics — Chicago to Dallas",
+    title: "Electronics — Chicago to Dallas (High Value)",
     route: "Chicago IL → Dallas TX",
     distance: 1000,
     equipment: "Dry Van (53ft)",
-    cargo: "Packaged electronics",
+    cargo: "Packaged electronics ($180K value)",
     weight: "42,000 lbs (24 pallets)",
     postedRate: "$2,400 ($2.40/mile)",
     deadline: "Pickup tomorrow 8 AM-12 PM, Delivery Thursday 2 PM",
-    brokerStyle: "Professional, market-aware, willing to negotiate",
+    brokerStyle: "Professional, thorough, asks about payment and claims",
     difficulty: "standard",
     brokerName: "Sarah",
     brokerCompany: "Midwest Freight Solutions",
@@ -33,190 +34,179 @@ const scenario_chicago_dallas = {
                 dispatcherPrompt: "💡 Представьтесь профессионально с MC номером",
                 suggestions: [
                     { text: "Sure, this is Alex from Star Transport, MC 445566. We run 25 dry vans in the Midwest region, been in business 8 years with excellent safety rating.", quality: "excellent", path: "master" },
-                    { text: "Star Transport, MC 445566. We have dry vans available.", quality: "good", path: "master" },
-                    { text: "MC 445566, Star Transport.", quality: "normal", path: "warning" },
-                    { text: "Let me find my MC number...", quality: "weak", path: "warning" }
+                    { text: "Star Transport, MC 445566.", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "Great. Let me pull up the details. Pickup is at 2450 West Fulton Street, Chicago, tomorrow between 8 AM and 12 PM. Delivery to Dallas at 3500 Maple Avenue, appointment on Thursday at 2 PM. Can you make that schedule?",
-                dispatcherPrompt: "💡 Подтвердите возможность выполнить график",
+                brokerQuestion: "Great. Pickup is at 2450 West Fulton Street, Chicago, tomorrow between 8 AM and 12 PM. Delivery to Dallas at 3500 Maple Avenue, Thursday at 2 PM. Can you make that schedule?",
+                dispatcherPrompt: "💡 Подтвердите график и спросите о грузе",
                 suggestions: [
-                    { text: "Yes, we can make that schedule. My driver is currently in the Chicago area with zero deadhead. He can be at the pickup location tomorrow at 8 AM sharp. What's the commodity and any special handling requirements?", quality: "excellent", path: "master" },
-                    { text: "Yes, driver is in Chicago area, zero deadhead. Can make 8 AM pickup. What's the commodity?", quality: "good", path: "master" },
-                    { text: "We can make that schedule. What's the cargo?", quality: "normal", path: "warning" },
-                    { text: "Should be able to make it...", quality: "weak", path: "warning" }
+                    { text: "Yes, my driver is in Chicago with zero deadhead. Can be there at 8 AM. What's the commodity and any special requirements?", quality: "excellent", path: "master" },
+                    { text: "Yes, driver in Chicago, zero deadhead. What's the cargo?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "It's packaged electronics, 42,000 pounds, 24 pallets. Standard dry van, no special requirements. Just need to maintain normal temperature, no extreme heat or cold.",
-                dispatcherPrompt: "💡 Уточните детали и спросите о ставке",
+                brokerQuestion: "It's packaged electronics, 42,000 pounds, 24 pallets. High value cargo - about $180,000 worth. Do you have experience hauling electronics? Any claims history I should know about?",
+                dispatcherPrompt: "💡 ВАЖНО! Брокер спрашивает об опыте и claims",
                 suggestions: [
-                    { text: "Understood. Electronics, 42K lbs, 24 pallets, standard handling. My driver has experience with electronics - knows to avoid rough roads and secure properly. What rate are you offering for this load?", quality: "excellent", path: "master" },
-                    { text: "Got it. Electronics, 42K lbs. What's your rate?", quality: "good", path: "master" },
-                    { text: "Okay. What's the rate?", quality: "normal", path: "warning" },
-                    { text: "Rate?", quality: "weak", path: "warning" }
+                    { text: "Yes, we haul electronics regularly. My driver has 12 years experience with high-value cargo. We've had zero cargo claims in the past 5 years. Our drivers are trained on proper securement and we have $250K cargo insurance for high-value loads.", quality: "excellent", path: "master" },
+                    { text: "Yes, electronics experience. Zero claims in 5 years. $250K insurance.", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "We're looking at $2,400 all-in for this one.",
-                dispatcherPrompt: "💡 ТОРГ! $2,400 = $2.40/mile. Просите $2,700-2,800",
+                brokerQuestion: "Good. Have you hauled for us before? What's your payment preference - factoring or NET terms?",
+                dispatcherPrompt: "💡 Брокер проверяет payment history",
                 suggestions: [
-                    { text: "I appreciate the offer Sarah, but for 1,000 miles with electronics, I need to make this work for my driver. Can you do $2,800? That's $2.80 per mile, which is fair for both of us considering we have zero deadhead and a reliable driver.", quality: "excellent", path: "master" },
-                    { text: "That's $2.40/mile. Can you do $2,700? We have zero deadhead and reliable service.", quality: "good", path: "master" },
-                    { text: "Can you do better than $2,400?", quality: "normal", path: "warning" },
-                    { text: "$2,400 is too low.", quality: "weak", path: "warning" }
+                    { text: "First time working together. We use TBS Factoring - they're one of the big ones, so verification should be quick. Do you offer QuickPay?", quality: "excellent", path: "master" },
+                    { text: "First time. We use TBS Factoring. QuickPay available?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "That's too high for this lane. The market is soft this week. I can maybe go to $2,500, but that's pushing it.",
-                dispatcherPrompt: "💡 Брокер предлагает $2,500. Обоснуйте свою ставку",
+                brokerQuestion: "We work with TBS. QuickPay is 3% fee, paid in 24 hours. Or through your factor at no fee. What rate are you looking for?",
+                dispatcherPrompt: "💡 ТОРГ! $2,400 posted. Просите $2,800",
                 suggestions: [
-                    { text: "I understand the market, but look at what you're getting: my driver is in the area right now - zero deadhead. He can pick up tomorrow morning, no problem. Plus, electronics - I know your customer values reliability. How about we meet at $2,700?", quality: "excellent", path: "master" },
-                    { text: "Zero deadhead, reliable driver, electronics experience. Can we do $2,650?", quality: "good", path: "master" },
-                    { text: "How about $2,600?", quality: "normal", path: "warning" },
-                    { text: "Okay, $2,500 works.", quality: "weak", path: "reject_weak_final" }
+                    { text: "For 1,000 miles with high-value electronics and zero deadhead, I'm looking at $2,800. That's $2.80/mile. With our zero claims history and experienced driver, that's fair.", quality: "excellent", path: "master" },
+                    { text: "$2,700 for this load. $2.70/mile with our experience.", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "I hear you on the reliability. Let me check with my manager... *pause* ... Okay, I can do $2,600, but that's my absolute max.",
-                dispatcherPrompt: "💡 Брокер на $2,600. Добавьте условия или согласитесь",
+                brokerQuestion: "Market is soft. I can do $2,500, but that's pushing my margin.",
+                dispatcherPrompt: "💡 Обоснуйте свою ставку",
                 suggestions: [
-                    { text: "Alright Sarah, $2,600 works if we can add detention pay. What's your policy on that? I want to make sure my driver is protected if there are delays at pickup or delivery.", quality: "excellent", path: "master" },
-                    { text: "$2,600 works. What's your detention policy?", quality: "good", path: "master" },
-                    { text: "Okay, $2,600 is acceptable.", quality: "normal", path: "master" },
-                    { text: "Fine, $2,600.", quality: "weak", path: "warning" }
+                    { text: "I understand, but zero deadhead means immediate pickup. High-value cargo with zero claims. Experienced driver. How about $2,700? Only $200 more for peace of mind on a $180K load.", quality: "excellent", path: "master" },
+                    { text: "Zero deadhead, zero claims, experienced. Can we do $2,650?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "Standard detention is $50 per hour after 2 hours free time, both pickup and delivery.",
-                dispatcherPrompt: "💡 Уточните условия оплаты",
+                brokerQuestion: "Let me check with my manager... Okay, $2,600 is my max.",
+                dispatcherPrompt: "💡 Добавьте условия detention",
                 suggestions: [
-                    { text: "Perfect, $50/hour after 2 hours works. And what are your payment terms? Do you offer QuickPay?", quality: "excellent", path: "master" },
-                    { text: "Good. Payment terms?", quality: "good", path: "master" },
-                    { text: "Okay. How do we get paid?", quality: "normal", path: "warning" },
-                    { text: "Fine.", quality: "weak", path: "warning" }
+                    { text: "$2,600 works if we lock in detention pay. What's your policy? I want my driver protected if there are delays.", quality: "excellent", path: "master" },
+                    { text: "$2,600 works. Detention policy?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "We're on QuickPay - you can get paid in 24 hours for 3% fee, or standard NET 30.",
-                dispatcherPrompt: "💡 Спросите о дополнительных остановках и инструкциях",
+                brokerQuestion: "$50 per hour after 2 hours free time at both ends.",
+                dispatcherPrompt: "💡 Спросите о TONU",
                 suggestions: [
-                    { text: "QuickPay works for us. Are there any additional stops or special instructions we should know about?", quality: "excellent", path: "master" },
-                    { text: "QuickPay is fine. Any additional stops?", quality: "good", path: "master" },
-                    { text: "Okay. Anything else?", quality: "normal", path: "warning" },
-                    { text: "Fine.", quality: "weak", path: "warning" }
+                    { text: "Good. What about TONU? If shipper cancels after dispatch, what's the compensation?", quality: "excellent", path: "master" },
+                    { text: "TONU policy?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "No, it's a direct load. Just need to call the receiver 2 hours before delivery for dock assignment.",
-                dispatcherPrompt: "💡 Уточните необходимые документы",
+                brokerQuestion: "TONU is $300 after dispatch, $500 after arrival at shipper.",
+                dispatcherPrompt: "💡 Спросите о layover",
                 suggestions: [
-                    { text: "Understood. What documents do you need from us? BOL, POD, anything else?", quality: "excellent", path: "master" },
-                    { text: "Got it. What documents do you need?", quality: "good", path: "master" },
-                    { text: "Okay. Documents?", quality: "normal", path: "warning" },
-                    { text: "Fine.", quality: "weak", path: "warning" }
+                    { text: "Fair. What about layover? If driver gets stuck overnight, what's the compensation?", quality: "excellent", path: "master" },
+                    { text: "Layover pay?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "Standard - signed BOL, POD with receiver stamp, and photos of the seal at pickup and delivery.",
-                dispatcherPrompt: "💡 Подтвердите страховку",
+                brokerQuestion: "Layover is $200 per day. Rarely happens with this shipper though.",
+                dispatcherPrompt: "💡 Спросите про lumper fees",
                 suggestions: [
-                    { text: "No problem. Our cargo insurance is $100K. Is that sufficient for this load?", quality: "excellent", path: "master" },
-                    { text: "We have $100K cargo insurance. Sufficient?", quality: "good", path: "master" },
-                    { text: "We have insurance.", quality: "normal", path: "warning" },
-                    { text: "Okay.", quality: "weak", path: "warning" }
+                    { text: "Good. Are there lumper fees at either location? Who covers those?", quality: "excellent", path: "master" },
+                    { text: "Lumper fees?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "Yes, that's fine. I'll need a copy of your insurance certificate though.",
-                dispatcherPrompt: "💡 Финальное подтверждение всех условий",
+                brokerQuestion: "No lumpers - both use their own staff. Driver just needs to be present for count.",
+                dispatcherPrompt: "💡 Дополнительные остановки?",
                 suggestions: [
-                    { text: "Perfect. So we're confirmed at $2,600, detention $50/hour after 2 hours, QuickPay available. I'll send you our MC number and insurance certificate right now. Can you send me the rate confirmation?", quality: "excellent", path: "master" },
-                    { text: "Confirmed at $2,600, detention $50/hour. Sending insurance cert now.", quality: "good", path: "master" },
-                    { text: "Okay, sending documents.", quality: "normal", path: "warning" },
-                    { text: "Fine.", quality: "weak", path: "warning" }
+                    { text: "Perfect. Is this direct or any additional stops?", quality: "excellent", path: "master" },
+                    { text: "Any stops?", quality: "good", path: "master" }
                 ]
             },
             {
-                brokerQuestion: "Sounds good. Let me get your truck and driver info.",
-                dispatcherPrompt: "💡 Предоставьте информацию о водителе и траке",
+                brokerQuestion: "Direct load. Call receiver 2 hours before delivery for dock assignment. They're strict about that.",
+                dispatcherPrompt: "💡 Документы и фото",
                 suggestions: [
-                    { text: "Truck number is 2847, driver is John Smith, phone 555-0123. He'll be there tomorrow at 8 AM sharp. John has 12 years experience and excellent safety record.", quality: "excellent", path: "success_booked" },
-                    { text: "Truck 2847, driver John Smith, 555-0123. Will be there at 8 AM.", quality: "good", path: "success_booked" },
-                    { text: "Truck 2847, driver John Smith.", quality: "normal", path: "success_booked" },
-                    { text: "I'll send that later.", quality: "weak", path: "warning" }
+                    { text: "Understood. What documents and photos? BOL, POD, seal photos?", quality: "excellent", path: "master" },
+                    { text: "What documents needed?", quality: "good", path: "master" }
+                ]
+            },
+            {
+                brokerQuestion: "Signed BOL, POD with stamp, seal photos both ends. Also photos of trailer interior before loading - it's high-value.",
+                dispatcherPrompt: "💡 Страховка и сертификаты",
+                suggestions: [
+                    { text: "$250K cargo insurance through Progressive, covers electronics. Can email certificate in 10 minutes. Need W9 and carrier packet?", quality: "excellent", path: "master" },
+                    { text: "$250K insurance. Can send cert right away. Need W9?", quality: "good", path: "master" }
+                ]
+            },
+            {
+                brokerQuestion: "Yes, send W9, insurance, and carrier packet. I'll set you up as new carrier, takes 15 minutes.",
+                dispatcherPrompt: "💡 Проверьте broker credit",
+                suggestions: [
+                    { text: "Perfect. Before we finalize, can you tell me about your payment history? How long in business and credit rating? Want to make sure my factoring company won't have issues.", quality: "excellent", path: "master" },
+                    { text: "Will do. Your payment history? Any issues with factors?", quality: "good", path: "master" }
+                ]
+            },
+            {
+                brokerQuestion: "12 years in business, A-rated with TBS and major factors. We pay on time - check our RMIS score. Your factor won't have issues.",
+                dispatcherPrompt: "💡 Финальное подтверждение",
+                suggestions: [
+                    { text: "Excellent. Confirming: $2,600 all-in, detention $50/hr after 2hrs, TONU $300/$500, layover $200/day, no lumpers, direct load, call 2hrs ahead. Payment through TBS. Sending MC, insurance, W9, packet now.", quality: "excellent", path: "master" },
+                    { text: "Great. $2,600, detention $50/hr, TONU $300/$500. Sending docs.", quality: "good", path: "master" }
+                ]
+            },
+            {
+                brokerQuestion: "Perfect. Truck number, driver name, and cell phone?",
+                dispatcherPrompt: "💡 Детали водителя",
+                suggestions: [
+                    { text: "Truck 2847, 2021 Freightliner. Driver John Smith, 12 years experience, clean MVR, 555-0123. John specializes in high-value cargo, hauled for Best Buy and Samsung. Will be there 8 AM sharp.", quality: "excellent", path: "master" },
+                    { text: "Truck 2847, John Smith, 555-0123. 12 years experience, 8 AM pickup.", quality: "good", path: "master" }
+                ]
+            },
+            {
+                brokerQuestion: "Great. Rate con coming in 2 minutes. Have John call when loaded with seal number and photos.",
+                dispatcherPrompt: "💡 Подтверждение и следующие шаги",
+                suggestions: [
+                    { text: "Perfect Sarah. John will call when loaded with seal and photos. Thanks for working with me on the rate. Looking forward to building a relationship with Midwest Freight.", quality: "excellent", path: "master" },
+                    { text: "Will do. John will call when loaded. Thanks Sarah.", quality: "good", path: "master" }
+                ]
+            },
+            {
+                brokerQuestion: "Sounds good. One more thing - any trucks running back from Dallas? I might have a backhaul.",
+                dispatcherPrompt: "💡 БОНУС! Backhaul opportunity",
+                suggestions: [
+                    { text: "Actually yes! John will be empty in Dallas after delivery. What do you have? Always looking for good backhauls.", quality: "excellent", path: "success_booked" },
+                    { text: "Yes, empty in Dallas. What's the backhaul?", quality: "good", path: "success_booked" }
+                ]
+            },
+            {
+                brokerQuestion: "I'll send details after this one rolls. Talk soon!",
+                dispatcherPrompt: "✅ ОТЛИЧНО! Груз + backhaul opportunity",
+                suggestions: [
+                    { text: "Perfect! Looking forward to it. Have a great day!", quality: "excellent", path: "end" }
                 ]
             }
         ],
         warning: [
             {
-                brokerQuestion: "I need more details from you. This is a high-value load and I need to make sure you're professional.",
-                dispatcherPrompt: "💡 Брокер сомневается. Будьте более профессиональны",
+                brokerQuestion: "I need more details. This is high-value and I need professional carriers.",
+                dispatcherPrompt: "💡 Будьте профессиональнее",
                 suggestions: [
-                    { text: "I apologize for being brief. Let me give you complete information: Star Transport, MC 445566, 25 dry vans, 8 years in business, excellent safety rating. My driver John Smith has 12 years experience, truck 2847 is a 2021 Freightliner with current DOT inspection. We're fully insured with $100K cargo coverage. How can I help you feel confident about this load?", quality: "excellent", path: "master" },
-                    { text: "Sorry, let me be more detailed. MC 445566, Star Transport, experienced driver, fully insured. What else do you need?", quality: "good", path: "master" },
-                    { text: "What information do you need?", quality: "normal", path: "warning" },
-                    { text: "I gave you my MC number.", quality: "weak", path: "reject_unprofessional" }
-                ]
-            }
-        ],
-        warning_strict: [
-            {
-                brokerQuestion: "Look, I need a professional carrier for this load. If you can't provide basic information upfront, I'm moving on to the next call.",
-                dispatcherPrompt: "💡 ПОСЛЕДНИЙ ШАНС! Будьте максимально профессиональны",
-                suggestions: [
-                    { text: "Sarah, I apologize for the confusion. Let me start over professionally: Alex from Star Transport, MC 445566. We're a reliable carrier with 25 dry vans, 8 years in business, excellent safety rating. Driver John Smith, 12 years experience, truck 2847, zero deadhead from Chicago. $100K cargo insurance, current certificates. We can make your 8 AM pickup tomorrow and deliver Thursday at 2 PM. I'm looking for $2,700 for this load. Can we work together?", quality: "excellent", path: "master" },
-                    { text: "I apologize. MC 445566, Star Transport, experienced driver, zero deadhead, can make schedule. Looking for $2,700.", quality: "good", path: "master" },
-                    { text: "Sorry, what do you need from me?", quality: "normal", path: "reject_unprofessional" },
-                    { text: "Fine, forget it.", quality: "weak", path: "reject_unprofessional" }
-                ]
-            }
-        ],
-        reject_rate_final: [
-            {
-                brokerQuestion: "That rate is way too high. I can't work with that. Thanks anyway.",
-                dispatcherPrompt: "❌ Груз потерян - слишком высокая ставка",
-                suggestions: [
-                    { text: "Understood. Thanks for your time.", quality: "normal", path: "end" }
-                ]
-            }
-        ],
-        reject_weak_final: [
-            {
-                brokerQuestion: "Okay, we're booked at $2,500. Send me your info.",
-                dispatcherPrompt: "⚠️ Груз забронирован, но вы оставили деньги на столе",
-                suggestions: [
-                    { text: "Great, sending info now.", quality: "normal", path: "end" }
-                ]
-            }
-        ],
-        reject_unprofessional: [
-            {
-                brokerQuestion: "I'm going to pass on this. I need a more professional carrier. Good luck.",
-                dispatcherPrompt: "❌ Груз потерян - непрофессиональное поведение",
-                suggestions: [
-                    { text: "Understood. Have a good day.", quality: "normal", path: "end" }
+                    { text: "I apologize. Star Transport, MC 445566, 25 vans, 8 years, excellent safety. Driver John Smith, 12 years, truck 2847, 2021 Freightliner, current DOT. $250K insurance, zero claims 5 years. TBS Factoring. How can I help you feel confident?", quality: "excellent", path: "master" },
+                    { text: "Sorry. MC 445566, experienced driver, $250K insurance, zero claims. What else?", quality: "good", path: "master" }
                 ]
             }
         ],
         success_booked: [
             {
-                brokerQuestion: "Perfect. I'm sending you the rate confirmation now. Check your email in 2 minutes. Have John call me when he's loaded.",
-                dispatcherPrompt: "✅ УСПЕХ! Груз забронирован по хорошей ставке",
+                brokerQuestion: "Perfect. Looking forward to working with you!",
+                dispatcherPrompt: "✅ УСПЕХ! Груз забронирован",
                 suggestions: [
-                    { text: "Excellent. I'll have John call you when he's loaded. Thanks for working with me on the rate, Sarah.", quality: "excellent", path: "end" },
-                    { text: "Great, will do. Thanks Sarah.", quality: "good", path: "end" }
+                    { text: "Same here! Thanks!", quality: "excellent", path: "end" }
                 ]
             }
         ]
     }
 };
 
-// Add to allScenarios array
+// Add to allScenarios
 if (typeof allScenarios !== 'undefined') {
     allScenarios.push(scenario_chicago_dallas);
-    console.log('✅ Added realistic scenario: Chicago → Dallas');
+    console.log('✅ Added: Chicago → Dallas (18 steps, unique questions)');
 }
 
-console.log('✅ Realistic scenarios 2026 loaded successfully');
+console.log('✅ Realistic scenarios 2026 loaded');
