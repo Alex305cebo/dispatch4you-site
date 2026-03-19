@@ -244,6 +244,19 @@
             border: 2px solid rgba(99, 102, 241, 0.3);
         }
 
+        .pricing-card.premium-card {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(244, 63, 94, 0.1));
+            border: 3px solid #ec4899;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.3), 0 10px 40px rgba(0, 0, 0, 0.3);
+            transform: scale(1.02);
+        }
+
+        .pricing-card.premium-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.5), 0 20px 60px rgba(0, 0, 0, 0.4);
+            border-color: #f43f5e;
+        }
+
         .popular-badge {
             position: absolute;
             top: -12px;
@@ -1150,23 +1163,27 @@
         <div class="container">
             <div class="pricing-grid">
 
-                <!-- Free Trial Plan -->
+                <!-- Basic Plan -->
                 <div class="pricing-card">
                     <div class="popular-badge" style="background: linear-gradient(135deg, #10b981, #14b8a6);">🎁
-                        Бесплатно</div>
-                    <h3 class="plan-name">Ознакомительный</h3>
-                    <p class="plan-description">Бесплатный пробный доступ на 7 дней ко всем материалам платформы</p>
+                        БЕСПЛАТНО</div>
+                    <h3 class="plan-name">Базовый</h3>
+                    <p class="plan-description">Ограниченный доступ только к информации</p>
                     <div class="plan-price">
                         <span class="price-currency" style="font-size: 24px;">FREE</span>
                         <span class="price-amount" style="font-size: 48px;">0</span>
                     </div>
-                    <p class="price-note">Доступ на 7 дней</p>
+                    <p class="price-note">Доступ навсегда</p>
                     <ul class="plan-features">
-                        <li><span class="feature-icon">✓</span> Доступ ко всем модулям (7 дней)</li>
-                        <li><span class="feature-icon">✓</span> Просмотр всех материалов</li>
-                        <li><span class="feature-icon">✓</span> Тестовый доступ к инструментам</li>
-                        <li><span class="feature-icon">✓</span> AI-симулятор переговоров</li>
-                        <li><span class="feature-icon">✓</span> Без кредитной карты</li>
+                        <li><span class="feature-icon">✓</span> Доступ к теоретическим материалам</li>
+                        <li><span class="feature-icon">✓</span> Базовая документация</li>
+                        <li><span class="feature-icon">✓</span> Общие инструкции</li>
+                        <li><span class="feature-icon">✓</span> Информация о штатах</li>
+                        <li><span class="feature-icon">✓</span> Доступ к комьюнити</li>
+                        <li><span class="feature-icon">✗</span> <span style="opacity: 0.5;">Нет практических
+                                инструментов</span></li>
+                        <li><span class="feature-icon">✗</span> <span style="opacity: 0.5;">Нет симуляторов и
+                                кейсов</span></li>
                     </ul>
                     <a href="register.html" class="btn btn-secondary plan-cta"
                         style="background: linear-gradient(135deg, #10b981, #14b8a6);">🚀 Начать бесплатно</a>
@@ -1195,7 +1212,9 @@
                 </div>
 
                 <!-- Professional Plan -->
-                <div class="pricing-card">
+                <div class="pricing-card premium-card">
+                    <div class="popular-badge" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">💎 ПРЕМИУМ
+                    </div>
                     <h3 class="plan-name">Премиум</h3>
                     <p class="plan-description">Всё + личный ментор и доступ к закрытому сообществу</p>
                     <div class="plan-price">
@@ -1212,7 +1231,8 @@
                         <li><span class="feature-icon">✓</span> Работа на живом примере</li>
                         <li><span class="feature-icon">✓</span> Финальный экзамен и сертификат</li>
                     </ul>
-                    <a href="checkout.html?plan=premium" class="btn btn-primary plan-cta">Купить курс</a>
+                    <a href="checkout.html?plan=premium" class="btn btn-primary plan-cta"
+                        style="background: linear-gradient(135deg, #ec4899, #f43f5e);">💎 Купить Премиум</a>
                 </div>
 
             </div>
