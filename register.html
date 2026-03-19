@@ -320,6 +320,10 @@
           <input type="email" id="email" placeholder="your@email.com" required>
         </div>
         <div class="form-group">
+          <label>Номер телефона <span style="color: var(--text-muted); font-weight: 400;">(необязательно)</span></label>
+          <input type="tel" id="phone" placeholder="+1 (555) 123-4567">
+        </div>
+        <div class="form-group">
           <label>Пароль</label>
           <input type="password" id="password" placeholder="Минимум 8 символов" required minlength="8">
         </div>
@@ -366,15 +370,22 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    function saveUserToFirestore(user, firstName, lastName) {
-      return setDoc(doc(db, 'users', user.uid), {
+    function saveUserToFirestore(user, firstName, lastName, phone = '') {
+      const userData = {
         uid: user.uid, firstName, lastName,
         email: user.email,
         displayName: user.displayName || (firstName + ' ' + lastName),
         photoURL: user.photoURL || '',
         lastLogin: serverTimestamp(),
         provider: user.providerData[0]?.providerId || 'password'
-      }, { merge: true });
+      };
+
+      // Добавляем телефон только если он указан
+      if (phone && phone.trim()) {
+        userData.phone = phone.trim();
+      }
+
+      return setDoc(doc(db, 'users', user.uid), userData, { merge: true });
     }
 
     const errorMsg = document.getElementById('errorMsg');
@@ -404,6 +415,7 @@
       const firstName = document.getElementById('firstName').value.trim();
       const lastName = document.getElementById('lastName').value.trim();
       const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
       const password = document.getElementById('password').value;
       const confirm = document.getElementById('confirmPassword').value;
       const btn = document.getElementById('submitBtn');
@@ -415,9 +427,9 @@
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: firstName + ' ' + lastName });
-        localStorage.setItem('user', JSON.stringify({ uid: cred.user.uid, firstName, lastName, email }));
+        localStorage.setItem('user', JSON.stringify({ uid: cred.user.uid, firstName, lastName, email, phone }));
         try {
-          await saveUserToFirestore(cred.user, firstName, lastName);
+          await saveUserToFirestore(cred.user, firstName, lastName, phone);
           console.log('✅ Firestore: пользователь сохранён');
         } catch (fsErr) {
           console.error('❌ Firestore error:', fsErr.code, fsErr.message);
@@ -455,4 +467,3 @@
 </body>
 
 </html>
-
