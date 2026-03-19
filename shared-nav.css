@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 10000;
     background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -120,6 +120,7 @@
 /* Dropdown Menu */
 .nav-dropdown {
     position: relative;
+    z-index: 10001;
 }
 
 .nav-dropdown .nav-link {
@@ -149,14 +150,15 @@
     top: 100%;
     left: 0;
     right: 0;
-    height: 12px;
+    height: 20px;
     background: transparent;
+    z-index: 1000;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 8px);
     left: 0;
     min-width: 240px;
     background: rgba(15, 23, 42, 0.98);
@@ -165,15 +167,13 @@
     border: 1px solid rgba(99, 102, 241, 0.2);
     border-radius: 16px;
     padding: 12px;
-    margin-top: 0;
-    padding-top: 12px;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4),
         0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    z-index: 1000;
+    z-index: 10001;
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
+    pointer-events: auto;
 }
 
 .nav-dropdown:hover .dropdown-content {
