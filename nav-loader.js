@@ -32,7 +32,7 @@
             </a>
             <div class="nav-links">
                 <a href="{{BASE}}index.html" class="nav-link" data-short="Главная">Главная</a>
-                <div class="nav-dropdown">
+                <div class="nav-dropdown has-mega">
                     <a href="{{BASE}}courses.html" class="nav-link" data-short="Курсы">Курсы</a>
                     <div class="dropdown-content">
                         <a href="{{BASE}}pages/documentation.html" style="background:rgba(99,102,241,0.15);border-left:3px solid #6366f1;font-weight:700;color:#ffffff;">🎓 База знаний</a>
@@ -63,6 +63,18 @@
                     </div>
                 </div>
             </div>
+            <div class="nav-search">
+                <input type="text" class="search-input" placeholder="Поиск... (Ctrl+K)" />
+                <span class="search-icon">🔍</span>
+            </div>
+            <div class="nav-user-profile" style="display: none;" id="navUserProfile">
+                <div class="user-avatar">👤</div>
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span class="user-name">Студент</span>
+                    <span class="user-progress">Прогресс: 45%</span>
+                </div>
+                <div class="notification-badge">3</div>
+            </div>
             <div class="nav-actions">
                 <a href="{{BASE}}login.html" class="btn-login">Войти</a>
                 <a href="{{BASE}}register.html" class="btn-signup">Регистрация</a>
@@ -75,6 +87,10 @@
 </nav>
 <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+        <span class="mobile-menu-title">📚 Меню</span>
+        <button class="mobile-menu-close" onclick="document.getElementById('mobileMenu').classList.remove('active'); document.getElementById('mobileMenuOverlay').classList.remove('active'); document.body.style.overflow = '';">✕</button>
+    </div>
     <div class="mobile-nav-links">
         <div class="mobile-nav-actions">
             <a href="{{BASE}}login.html" class="btn-login">Войти</a>
@@ -147,6 +163,12 @@
                 window._pendingNavAuthUpdate = null;
             }
 
+            // Загружаем улучшенный скрипт навигации
+            loadEnhancedScript();
+
+            // Загружаем breadcrumbs
+            loadBreadcrumbs();
+
         } catch (e) {
             console.warn('nav-loader: fetch не удался, используем inline fallback', e);
             let html = NAV_INLINE.replace(/\{\{BASE\}\}/g, BASE);
@@ -160,7 +182,40 @@
             initMobileMenu();
             document.dispatchEvent(new Event('navLoaded'));
             if (typeof window.updateAuthUI === 'function') window.updateAuthUI();
+            loadEnhancedScript();
+            loadBreadcrumbs();
         }
+    }
+
+    function loadEnhancedScript() {
+        // Проверяем, не загружен ли уже скрипт
+        if (document.querySelector('script[src*="nav-enhanced.js"]')) {
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = BASE + 'nav-enhanced.js';
+        script.async = true;
+        document.head.appendChild(script);
+    }
+
+    function loadBreadcrumbs() {
+        // Проверяем, не загружены ли уже breadcrumbs
+        if (document.querySelector('script[src*="breadcrumbs.js"]')) {
+            return;
+        }
+
+        // Загружаем CSS
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = BASE + 'breadcrumbs.css';
+        document.head.appendChild(link);
+
+        // Загружаем JS
+        const script = document.createElement('script');
+        script.src = BASE + 'breadcrumbs.js';
+        script.async = true;
+        document.head.appendChild(script);
     }
 
     function highlightActive() {
