@@ -13,9 +13,10 @@
  */
 
 // 🔐 Секретный ключ (измени на свой!)
-define('WEBHOOK_SECRET', 'твой_секретный_ключ_здесь');
+// Придумай сложный пароль, например: generate_random_string_here_123456
+define('WEBHOOK_SECRET', 'CHANGE_THIS_SECRET_KEY_NOW');
 
-// 📁 Путь к репозиторию
+// 📁 Путь к репозиторию (замени u123456789 на свой username)
 define('REPO_PATH', '/home/u123456789/public_html');
 
 // 📝 Лог файл
