@@ -402,11 +402,10 @@
         /* Plan Details Section */
         .plan-details-section {
             padding: 80px 0;
-            background: rgba(15, 23, 42, 0.5);
         }
 
         .plan-detail-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: transparent;
             border: 2px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 40px;
@@ -422,12 +421,12 @@
 
         .plan-detail-card.featured {
             border-color: rgba(99, 102, 241, 0.4);
-            background: rgba(99, 102, 241, 0.05);
+            background: transparent;
         }
 
         .plan-detail-card.premium {
             border-color: rgba(236, 72, 153, 0.4);
-            background: rgba(236, 72, 153, 0.05);
+            background: transparent;
         }
 
         .plan-detail-header {
@@ -509,7 +508,7 @@
         }
 
         .plan-detail-note {
-            background: rgba(99, 102, 241, 0.1);
+            background: transparent;
             border-left: 3px solid #6366f1;
             padding: 20px;
             border-radius: 8px;
@@ -519,7 +518,7 @@
         }
 
         .plan-detail-guarantee {
-            background: rgba(34, 197, 94, 0.1);
+            background: transparent;
             border-left: 3px solid #22c55e;
             padding: 20px;
             border-radius: 8px;
@@ -591,11 +590,19 @@
             border-radius: 16px;
             padding: 32px;
             transition: all 0.3s;
+            position: relative;
         }
 
         .faq-item:hover {
             border-color: rgba(99, 102, 241, 0.3);
             background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .faq-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            display: inline-block;
         }
 
         .faq-question {
@@ -1225,39 +1232,39 @@
                 <div class="plan-detail-header">
                     <div class="plan-detail-badge free">Бесплатно</div>
                     <h3 class="plan-detail-title">Базовый</h3>
-                    <p class="plan-detail-subtitle">Идеально для знакомства с профессией диспетчера</p>
+                    <p class="plan-detail-subtitle">Ограниченный доступ только к информации</p>
                 </div>
                 <div class="plan-detail-content">
                     <h4>Что входит:</h4>
                     <ul class="detail-features-list">
-                        <li><span class="detail-icon">📚</span> <strong>Демо версия всех функций</strong> - попробуйте
-                            все инструменты платформы</li>
-                        <li><span class="detail-icon">📖</span> <strong>Постоянный доступ ко всей теории</strong> -
-                            изучайте материалы в любое время</li>
-                        <li><span class="detail-icon">📝</span> <strong>Базовые материалы</strong> - шаблоны документов
-                            и чек-листы</li>
-                        <li><span class="detail-icon">👥</span> <strong>Доступ к сообществу</strong> - общайтесь с
+                        <li><span class="detail-icon">📖</span> <strong>Доступ к теоретическим материалам</strong> -
+                            читайте всю информацию о профессии диспетчера</li>
+                        <li><span class="detail-icon">📚</span> <strong>Базовая документация</strong> - изучайте основы
+                            работы диспетчера</li>
+                        <li><span class="detail-icon">📝</span> <strong>Общие инструкции</strong> - ознакомьтесь с
+                            процессами и процедурами</li>
+                        <li><span class="detail-icon">🗺️</span> <strong>Информация о штатах</strong> - базовые сведения
+                            о работе в США</li>
+                        <li><span class="detail-icon">👥</span> <strong>Доступ к комьюнити</strong> - общайтесь с
                             другими студентами</li>
-                        <li><span class="detail-icon">🎯</span> <strong>10 практических кейсов</strong> - решайте
-                            реальные задачи диспетчера</li>
-                        <li><span class="detail-icon">💬</span> <strong>Демо симулятор</strong> - попробуйте переговоры
-                            с брокерами</li>
-                        <li><span class="detail-icon">📊</span> <strong>Базовая аналитика</strong> - отслеживайте свой
-                            прогресс</li>
                     </ul>
                     <div class="plan-detail-note">
-                        <strong>Идеально для:</strong> Тех, кто хочет понять, подходит ли им профессия диспетчера,
-                        прежде чем инвестировать в полный курс.
+                        <strong>Ограничения:</strong> Нет доступа к практическим инструментам, симуляторам, кейсам,
+                        квизам, аудио материалам и интерактивным функциям. Только чтение теоретической информации.
+                    </div>
+                    <div class="plan-detail-note" style="margin-top: 16px;">
+                        <strong>Идеально для:</strong> Тех, кто хочет бесплатно ознакомиться с теорией профессии
+                        диспетчера перед принятием решения об инвестиции в полное обучение.
                     </div>
                 </div>
             </div>
 
-            <!-- Диспетчер Plan Details -->
+            <!-- Полный доступ Plan Details -->
             <div class="plan-detail-card featured">
                 <div class="plan-detail-header">
                     <div class="plan-detail-badge pro">Популярный</div>
-                    <h3 class="plan-detail-title">Диспетчер - $750</h3>
-                    <p class="plan-detail-subtitle">Полный курс для серьезного старта карьеры</p>
+                    <h3 class="plan-detail-title">Полный доступ - $1,000</h3>
+                    <p class="plan-detail-subtitle">Полный курс для серьезного старта карьеры диспетчера</p>
                 </div>
                 <div class="plan-detail-content">
                     <h4>Что входит:</h4>
@@ -1289,39 +1296,40 @@
                     </ul>
                     <div class="plan-detail-note">
                         <strong>Идеально для:</strong> Тех, кто серьезно настроен начать карьеру диспетчера и хочет
-                        получить все необходимые знания и инструменты для успешного старта.
+                        получить все необходимые знания и инструменты для успешного старта. Это закрытое комьюнити
+                        профессионалов.
                     </div>
                 </div>
             </div>
 
-            <!-- Профессионал Plan Details -->
+            <!-- Премиум Plan Details -->
             <div class="plan-detail-card premium">
                 <div class="plan-detail-header">
                     <div class="plan-detail-badge premium">Премиум</div>
-                    <h3 class="plan-detail-title">Профессионал - $1,200</h3>
+                    <h3 class="plan-detail-title">Премиум - $1,500</h3>
                     <p class="plan-detail-subtitle">Максимальная поддержка и гарантия трудоустройства</p>
                 </div>
                 <div class="plan-detail-content">
-                    <h4>Всё из тарифа "Диспетчер" +</h4>
+                    <h4>Всё из тарифа "Полный доступ" +</h4>
                     <ul class="detail-features-list">
                         <li><span class="detail-icon">🎧</span> <strong>Аудио версия всего курса</strong> - слушайте
                             материалы в дороге, на прогулке или дома</li>
                         <li><span class="detail-icon">👨‍🏫</span> <strong>Личный ментор 24/7</strong> - опытный
                             диспетчер всегда на связи для ответов на вопросы</li>
-                        <li><span class="detail-icon">💬</span> <strong>Доступ к закрытому чату</strong> - премиум
-                            сообщество с экспертами и успешными диспетчерами</li>
+                        <li><span class="detail-icon">💬</span> <strong>Доступ к закрытому премиум чату</strong> -
+                            эксклюзивное сообщество с экспертами и успешными диспетчерами</li>
                         <li><span class="detail-icon">🎥</span> <strong>Работа на живом примере</strong> - ментор
                             показывает реальную работу в режиме реального времени</li>
                         <li><span class="detail-icon">💼</span> <strong>Помощь в трудоустройстве</strong> - составление
                             резюме, подготовка к собеседованиям</li>
                         <li><span class="detail-icon">🤝</span> <strong>Рекомендации работодателям</strong> - прямые
                             контакты с компаниями-партнерами</li>
-                        <li><span class="detail-icon">📋</span> <strong>Финальный экзамен</strong> - проверка знаний с
-                            детальным разбором</li>
+                        <li><span class="detail-icon">📋</span> <strong>Финальный экзамен и сертификат</strong> -
+                            официальное подтверждение ваших знаний</li>
                         <li><span class="detail-icon">📞</span> <strong>Индивидуальные консультации</strong> - разбор
-                            ваших конкретных ситуаций</li>
+                            ваших конкретных ситуаций один на один</li>
                         <li><span class="detail-icon">🎯</span> <strong>Персональный план развития</strong> -
-                            индивидуальная программа обучения</li>
+                            индивидуальная программа обучения под ваши цели</li>
                         <li><span class="detail-icon">⚡</span> <strong>Приоритетная поддержка</strong> - ответы на
                             вопросы в течение 1 часа</li>
                         <li><span class="detail-icon">🔥</span> <strong>Эксклюзивные материалы</strong> - продвинутые
@@ -1329,11 +1337,12 @@
                     </ul>
                     <div class="plan-detail-note">
                         <strong>Идеально для:</strong> Тех, кто хочет максимально быстро и эффективно освоить профессию
-                        с гарантией трудоустройства и постоянной поддержкой эксперта.
+                        с гарантией трудоустройства и постоянной поддержкой эксперта. Это VIP-уровень закрытого
+                        комьюнити.
                     </div>
                     <div class="plan-detail-guarantee">
-                        <strong>🎯 Гарантия:</strong> После прохождения финального экзамена мы гарантируем помощь в
-                        трудоустройстве.
+                        <strong>🎯 Гарантия трудоустройства:</strong> После прохождения финального экзамена мы
+                        гарантируем помощь в трудоустройстве и прямые рекомендации работодателям.
                     </div>
                 </div>
             </div>
@@ -1345,48 +1354,82 @@
         <div class="container">
             <div class="faq-header">
                 <h2 class="faq-title">Часто задаваемые вопросы</h2>
-                <p class="faq-subtitle">Ответы на популярные вопросы о тарифах</p>
+                <p class="faq-subtitle">Всё, что нужно знать о тарифах и обучении</p>
             </div>
 
             <div class="faq-grid">
                 <div class="faq-item">
-                    <h3 class="faq-question">Можно ли перейти с бесплатного плана на платный?</h3>
+                    <div class="faq-icon">🎯</div>
+                    <h3 class="faq-question">Как работает бесплатный пробный период?</h3>
                     <p class="faq-answer">
-                        Да, вы можете в любой момент обновить свой план. Все ваши достижения и прогресс сохранятся,
-                        и вы получите доступ ко всем дополнительным материалам и функциям.
+                        После регистрации вы автоматически получаете 7 дней полного доступа ко всем материалам
+                        платформы.
+                        Никаких кредитных карт не требуется. Это закрытое комьюнити для серьезных студентов.
                     </p>
                 </div>
 
                 <div class="faq-item">
+                    <div class="faq-icon">💳</div>
                     <h3 class="faq-question">Какие способы оплаты вы принимаете?</h3>
                     <p class="faq-answer">
-                        Мы принимаем все основные кредитные карты (Visa, Mastercard, American Express),
-                        PayPal, а также банковские переводы для корпоративных клиентов.
+                        Мы принимаем Stripe (все карты), PayPal, а также переводы через Zelle, Venmo и Cash App для
+                        клиентов из США.
+                        Оплата производится один раз - никаких подписок.
                     </p>
                 </div>
 
                 <div class="faq-item">
-                    <h3 class="faq-question">Можно ли отменить подписку в любое время?</h3>
-                    <p class="faq-answer">
-                        Да, вы можете отменить подписку в любое время без штрафов. Доступ к материалам
-                        сохранится до конца оплаченного периода.
-                    </p>
-                </div>
-
-                <div class="faq-item">
-                    <h3 class="faq-question">Что включает помощь в трудоустройстве?</h3>
-                    <p class="faq-answer">
-                        Мы помогаем составить резюме, подготовиться к собеседованиям, предоставляем доступ
-                        к базе вакансий и рекомендуем вас нашим партнерам-работодателям.
-                    </p>
-                </div>
-
-                <div class="faq-item">
+                    <div class="faq-icon">⏰</div>
                     <h3 class="faq-question">Сколько длится доступ к курсу?</h3>
                     <p class="faq-answer">
-                        При покупке тарифа "Диспетчер" или "Профессионал" вы получаете пожизненный доступ ко всем
-                        материалам курса,
-                        включая все будущие обновления и новые модули.
+                        При покупке любого платного тарифа ($1,000 или $1,500) вы получаете пожизненный доступ ко всем
+                        материалам курса, включая все будущие обновления и новые модули. Учитесь в своем темпе.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-icon">🚀</div>
+                    <h3 class="faq-question">Можно ли перейти с одного тарифа на другой?</h3>
+                    <p class="faq-answer">
+                        Да! Вы можете в любой момент обновить тариф с "Полный доступ" ($1,000) на "Премиум" ($1,500).
+                        Все ваши достижения и прогресс сохранятся, доплатите только разницу.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-icon">💼</div>
+                    <h3 class="faq-question">Что включает помощь в трудоустройстве?</h3>
+                    <p class="faq-answer">
+                        В тарифе "Премиум" ($1,500): составление резюме, подготовка к собеседованиям, прямые
+                        рекомендации
+                        компаниям-партнерам, доступ к закрытым вакансиям и личный ментор для консультаций.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-icon">🎓</div>
+                    <h3 class="faq-question">Получу ли я сертификат после обучения?</h3>
+                    <p class="faq-answer">
+                        Да, в тарифе "Премиум" ($1,500) после прохождения финального экзамена вы получаете официальный
+                        сертификат, который подтверждает ваши знания и навыки работы диспетчером.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-icon">👨‍🏫</div>
+                    <h3 class="faq-question">Как работает личный ментор в премиум тарифе?</h3>
+                    <p class="faq-answer">
+                        Опытный диспетчер доступен 24/7 в закрытом чате для ответов на вопросы, разбора ваших ситуаций,
+                        проведения индивидуальных консультаций и показа реальной работы в режиме реального времени.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-icon">🔒</div>
+                    <h3 class="faq-question">Это действительно закрытое комьюнити?</h3>
+                    <p class="faq-answer">
+                        Да, это не открытая платформа. Доступ предоставляется только после регистрации и верификации.
+                        Мы создаем профессиональное сообщество серьезных студентов и практикующих диспетчеров.
                     </p>
                 </div>
             </div>
