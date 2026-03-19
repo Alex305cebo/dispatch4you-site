@@ -22,9 +22,6 @@ sftp.json
 deploy-to-hostinger.ps1
 upload-simple.ps1
 
-# Git deployment (новый метод)
-# deploy.sh и deploy.ps1 можно коммитить
-
 # Logs
 logs/
 *.log
@@ -51,6 +48,7 @@ desktop.ini
 *.backup
 *.bak
 *.old
+backup_*/
 
 # Build files
 dist/
@@ -63,3 +61,18 @@ temp/
 
 # Archives
 *.zip
+
+# Session reports (не нужны на продакшене)
+SESSION-*.md
+
+# Test files (не нужны на продакшене)
+test-*.html
+*-test.html
+
+# Development projects (не для продакшена)
+audio-learning-platform/
+dispatcher-cards-app/
+dispatcher-training-v2/
+dispatcher-training-v2-html/
+hero-react-app/
+hero-scroll-section/

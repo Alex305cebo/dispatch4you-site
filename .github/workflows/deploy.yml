@@ -1,21 +1,30 @@
-name: Deploy to Hostinger
+name: 🚀 Deploy to Hostinger
 
 on:
-  workflow_dispatch:  # Запуск только вручную
   push:
     branches:
       - main
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - '**.py'
+      - '**.ps1'
+      - '**.bat'
+      - '**.sh'
+      - '.gitignore'
+  workflow_dispatch:
 
 jobs:
   deploy:
+    name: 📦 Deploy to Production
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
       
-    - name: Deploy via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    - name: 🚀 Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
@@ -23,3 +32,32 @@ jobs:
         server-dir: /public_html/
         protocol: ftps
         port: 21
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/.kiro/**
+          **/backup_*/**
+          **/*.md
+          **/*.txt
+          **/SESSION-*.md
+          **/.vscode/**
+          **/audio-learning-platform/**
+          **/dispatcher-cards-app/**
+          **/dispatcher-training-v2/**
+          **/dispatcher-training-v2-html/**
+          **/hero-react-app/**
+          **/hero-scroll-section/**
+          **/__tests__/**
+          **/test-*.html
+          **/*.py
+          **/*.ps1
+          **/*.bat
+          **/*.sh
+          **/*.zip
+          
+    - name: ✅ Deploy Success
+      run: |
+        echo "✅ Деплой успешно завершен!"
+        echo "🌐 Сайт: https://dispatch4you.com"
+        echo "⏱️ Время: $(date)"
