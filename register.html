@@ -370,14 +370,15 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    function saveUserToFirestore(user, firstName, lastName, phone = '') {
+    function saveUserToFirestore(user, firstName, lastName, phone = '', additionalData = {}) {
       const userData = {
         uid: user.uid, firstName, lastName,
         email: user.email,
         displayName: user.displayName || (firstName + ' ' + lastName),
         photoURL: user.photoURL || '',
         lastLogin: serverTimestamp(),
-        provider: user.providerData[0]?.providerId || 'password'
+        provider: user.providerData[0]?.providerId || 'password',
+        ...additionalData
       };
 
       // Добавляем телефон только если он указан
@@ -427,16 +428,36 @@
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: firstName + ' ' + lastName });
-        localStorage.setItem('user', JSON.stringify({ uid: cred.user.uid, firstName, lastName, email, phone }));
+
+        // Calculate 7-day trial expiration
+        const trialEndDate = new Date();
+        trialEndDate.setDate(trialEndDate.getDate() + 7);
+
+        localStorage.setItem('user', JSON.stringify({
+          uid: cred.user.uid,
+          firstName,
+          lastName,
+          email,
+          phone,
+          trialActive: true,
+          trialEndDate: trialEndDate.toISOString(),
+          subscriptionType: 'trial'
+        }));
+
         try {
-          await saveUserToFirestore(cred.user, firstName, lastName, phone);
-          console.log('✅ Firestore: пользователь сохранён');
+          await saveUserToFirestore(cred.user, firstName, lastName, phone, {
+            trialActive: true,
+            trialEndDate: trialEndDate,
+            subscriptionType: 'trial',
+            registrationDate: serverTimestamp()
+          });
+          console.log('✅ Firestore: пользователь сохранён с пробным периодом');
         } catch (fsErr) {
           console.error('❌ Firestore error:', fsErr.code, fsErr.message);
-          // Не блокируем регистрацию — пользователь создан в Auth
         }
-        showSuccess('Аккаунт создан! Перенаправляем...');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+
+        showSuccess('🎉 Аккаунт создан! Вам предоставлен бесплатный доступ на 7 дней!');
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 2000);
       } catch (err) {
         showError(translateError(err.code));
         btn.disabled = false; btn.textContent = 'Создать аккаунт';
@@ -451,10 +472,29 @@
         const parts = (user.displayName || '').split(' ');
         const firstName = parts[0] || user.email.split('@')[0];
         const lastName = parts.slice(1).join(' ') || '';
-        localStorage.setItem('user', JSON.stringify({ uid: user.uid, firstName, lastName, email: user.email }));
+
+        // Calculate 7-day trial expiration
+        const trialEndDate = new Date();
+        trialEndDate.setDate(trialEndDate.getDate() + 7);
+
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          firstName,
+          lastName,
+          email: user.email,
+          trialActive: true,
+          trialEndDate: trialEndDate.toISOString(),
+          subscriptionType: 'trial'
+        }));
+
         try {
-          await saveUserToFirestore(user, firstName, lastName);
-          console.log('✅ Firestore: пользователь сохранён (Google)');
+          await saveUserToFirestore(user, firstName, lastName, '', {
+            trialActive: true,
+            trialEndDate: trialEndDate,
+            subscriptionType: 'trial',
+            registrationDate: serverTimestamp()
+          });
+          console.log('✅ Firestore: пользователь сохранён (Google) с пробным периодом');
         } catch (fsErr) {
           console.error('❌ Firestore error (Google):', fsErr.code, fsErr.message);
         }
