@@ -1,115 +1,98 @@
-# Настройка автоматического деплоя на Hostinger
+# 🚀 Настройка автоматического деплоя
 
-## Способ 1: GitHub Actions (Рекомендуется)
+## Что это даёт?
+После каждого `git push` файлы автоматически загружаются на ваш хостинг через FTP.
 
-### Шаг 1: Получите FTP данные от Hostinger
+---
 
-1. Войдите в панель управления Hostinger
-2. Перейдите в раздел "FTP Accounts" или "Файловый менеджер"
-3. Создайте или используйте существующий FTP аккаунт
-4. Запишите:
-   - FTP Server (например: ftp.yourdomain.com)
-   - FTP Username (например: u123456789)
-   - FTP Password
+## 📋 Инструкция по настройке
+
+### Шаг 1: Получите FTP данные от хостинга
+
+Вам нужны 3 параметра:
+1. **FTP Server** (адрес сервера) - например: `ftp.dispatch4you.com` или `dispatch4you.com`
+2. **FTP Username** (имя пользователя) - например: `dispatch4you@dispatch4you.com`
+3. **FTP Password** (пароль) - ваш FTP пароль
+
+**Где найти:**
+- В cPanel → "FTP Accounts" → "Configure FTP Client"
+- Или в письме от хостинга при регистрации
+
+---
 
 ### Шаг 2: Добавьте секреты в GitHub
 
-1. Откройте ваш репозиторий на GitHub: https://github.com/Alex305cebo/dispatch4you-site
-2. Перейдите в Settings → Secrets and variables → Actions
-3. Нажмите "New repository secret" и добавьте:
-   - Name: `FTP_SERVER`, Value: ваш FTP сервер (например: ftp.dispatch4you.com)
-   - Name: `FTP_USERNAME`, Value: ваш FTP логин
-   - Name: `FTP_PASSWORD`, Value: ваш FTP пароль
+1. Откройте ваш репозиторий: https://github.com/Alex305cebo/Dispatch4you-Courses
+2. Перейдите в **Settings** (Настройки)
+3. В левом меню выберите **Secrets and variables** → **Actions**
+4. Нажмите **New repository secret**
+5. Добавьте 3 секрета:
 
-### Шаг 3: Проверьте путь к папке
+#### Секрет 1: FTP_SERVER
+- Name: `FTP_SERVER`
+- Secret: `ваш_ftp_сервер` (например: `ftp.dispatch4you.com`)
+- Нажмите **Add secret**
 
-В файле `.github/workflows/deploy.yml` измените `server-dir` если нужно:
-- Для основного домена: `/public_html/`
-- Для поддомена: `/public_html/subdomain/`
+#### Секрет 2: FTP_USERNAME
+- Name: `FTP_USERNAME`
+- Secret: `ваш_ftp_логин` (например: `dispatch4you@dispatch4you.com`)
+- Нажмите **Add secret**
 
-### Шаг 4: Готово!
-
-Теперь при каждом push в ветку `main` файлы автоматически загрузятся на Hostinger.
+#### Секрет 3: FTP_PASSWORD
+- Name: `FTP_PASSWORD`
+- Secret: `ваш_ftp_пароль`
+- Нажмите **Add secret**
 
 ---
 
-## Способ 2: Hostinger Git Deploy (Альтернатива)
+### Шаг 3: Проверьте путь к папке на сервере
 
-Если у вас есть доступ к SSH на Hostinger:
+В файле `.github/workflows/deploy.yml` указан путь: `/public_html/`
 
-### Шаг 1: Подключитесь к Hostinger через SSH
-
-```bash
-ssh u123456789@yourdomain.com
-```
-
-### Шаг 2: Клонируйте репозиторий
-
-```bash
-cd public_html
-git clone https://github.com/Alex305cebo/dispatch4you-site.git .
-```
-
-### Шаг 3: Создайте скрипт автообновления
-
-Создайте файл `update.sh`:
-
-```bash
-#!/bin/bash
-cd /home/u123456789/public_html
-git pull origin main
-```
-
-### Шаг 4: Настройте webhook
-
-1. В GitHub: Settings → Webhooks → Add webhook
-2. Payload URL: https://yourdomain.com/webhook.php
-3. Content type: application/json
-4. Secret: создайте секретный ключ
-
-Создайте `webhook.php`:
-
-```php
-<?php
-$secret = 'YOUR_SECRET_KEY';
-$payload = file_get_contents('php://input');
-$signature = hash_hmac('sha256', $payload, $secret);
-
-if (hash_equals('sha256=' . $signature, $_SERVER['HTTP_X_HUB_SIGNATURE_256'])) {
-    shell_exec('/home/u123456789/public_html/update.sh 2>&1');
-    echo "Deployed successfully!";
-} else {
-    http_response_code(403);
-    echo "Invalid signature";
-}
-?>
+Если у вас другая папка (например `/www/` или `/httpdocs/`), измените строку:
+```yaml
+server-dir: /public_html/
 ```
 
 ---
 
-## Тестирование
+### Шаг 4: Задеплойте изменения
 
-После настройки:
+```bash
+git add .
+git commit -m "Setup auto-deploy via GitHub Actions"
+git push
+```
 
-1. Сделайте изменение в коде
-2. Запустите: `.\auto-deploy.ps1 -message "Test auto deploy"`
-3. Проверьте GitHub Actions (вкладка Actions в репозитории)
-4. Проверьте сайт через 1-2 минуты
+После этого:
+1. Перейдите на GitHub в раздел **Actions**
+2. Вы увидите запущенный процесс деплоя
+3. Дождитесь зелёной галочки ✅
+4. Файлы автоматически загрузятся на хостинг!
 
 ---
 
-## Устранение проблем
+## ✅ Готово!
 
-### GitHub Actions не запускается
-- Проверьте, что файл `.github/workflows/deploy.yml` в ветке main
-- Проверьте вкладку Actions в GitHub
+Теперь при каждом `git push` файлы будут автоматически обновляться на сайте!
 
-### Ошибка FTP подключения
-- Проверьте правильность FTP данных
-- Убедитесь, что FTP доступ включен в Hostinger
-- Проверьте, что IP GitHub не заблокирован
+---
 
-### Файлы не обновляются
-- Проверьте путь `server-dir` в deploy.yml
-- Очистите кеш браузера (Ctrl+F5)
-- Проверьте логи в GitHub Actions
+## 🔧 Устранение проблем
+
+### Ошибка: "Failed to connect to FTP"
+- Проверьте правильность FTP_SERVER (без `ftp://` в начале)
+- Убедитесь, что FTP доступ разрешён в настройках хостинга
+
+### Ошибка: "Authentication failed"
+- Проверьте FTP_USERNAME и FTP_PASSWORD
+- Попробуйте подключиться через FileZilla с этими данными
+
+### Ошибка: "Directory not found"
+- Измените `server-dir` на правильный путь к папке сайта
+
+---
+
+## 📞 Нужна помощь?
+
+Если что-то не работает, пришлите скриншот ошибки из GitHub Actions.
