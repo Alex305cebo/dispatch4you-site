@@ -31,7 +31,7 @@ window.updateAuthUI = function () {
             <span style="font-size:11px;color:#a5b4fc;font-weight:500;">Личный кабинет</span>
           </div>
         </a>
-        <a href="#" class="btn-login" onclick="authLogout(event)" style="padding:10px 18px;border:1px solid rgba(239,68,68,0.35);border-radius:14px;color:#fca5a5;font-size:13px;font-weight:600;background:rgba(239,68,68,0.12);transition:all 0.3s;backdrop-filter:blur(10px);min-width:90px;text-align:center;" onmouseover="this.style.background='rgba(239,68,68,0.2)';this.style.borderColor='rgba(239,68,68,0.5)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(239,68,68,0.12)';this.style.borderColor='rgba(239,68,68,0.35)';this.style.transform=''">
+        <a href="#" class="btn-login" onclick="authLogout(event)" style="display:flex;align-items:center;justify-content:center;height:56px;padding:0 18px;border:1px solid rgba(239,68,68,0.35);border-radius:14px;color:#fca5a5;font-size:13px;font-weight:600;background:rgba(239,68,68,0.12);transition:all 0.3s;backdrop-filter:blur(10px);min-width:90px;" onmouseover="this.style.background='rgba(239,68,68,0.2)';this.style.borderColor='rgba(239,68,68,0.5)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(239,68,68,0.12)';this.style.borderColor='rgba(239,68,68,0.35)';this.style.transform=''">
           <span style="font-size:14px;">🚪</span> Выйти
         </a>
       </div>`;
