@@ -45,7 +45,6 @@
 
     html {
       scroll-behavior: smooth;
-      overflow-x: hidden;
       width: 100%;
       max-width: 100vw;
     }
@@ -55,7 +54,6 @@
       background: var(--bg-darker);
       color: var(--text-primary);
       line-height: 1.6;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       transition: background 0.3s ease, color 0.3s ease;
@@ -67,12 +65,6 @@
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      overflow-x: hidden;
-      width: 100%;
-      max-width: 100vw;
     }
 
     /* Animated gradient background */
@@ -5641,38 +5633,95 @@
       z-index: 1;
     }
 
-    /* Ensure navigation is always on top */
-    #nav-placeholder,
+    /* Ensure navigation is always on top and sticky */
+    #nav-placeholder {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999999 !important;
+      width: 100% !important;
+    }
+
+    #nav-placeholder .navbar {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999999 !important;
+      width: 100% !important;
+    }
+
     .navbar {
       position: sticky !important;
       top: 0 !important;
       z-index: 9999999 !important;
+      width: 100% !important;
     }
   </style>
 
-  <div id="nav-placeholder"></div>
+  <div id="nav-placeholder" style="position: sticky; top: 0; z-index: 9999999;"></div>
   <script src="nav-loader.js"></script>
 
   <script>
     // Принудительно делаем navbar sticky после загрузки
     document.addEventListener('navLoaded', function () {
       const navbar = document.querySelector('.navbar');
+      const placeholder = document.getElementById('nav-placeholder');
+
       if (navbar) {
-        navbar.style.position = 'sticky';
-        navbar.style.top = '0';
-        navbar.style.zIndex = '9999999';
+        navbar.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
       }
+
+      if (placeholder) {
+        placeholder.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
+      }
+
+      console.log('Navbar sticky applied: YES');
+
+      // Применяем каждые 100мс в течение 2 секунд после загрузки
+      let attempts = 0;
+      const interval = setInterval(function () {
+        if (navbar) {
+          navbar.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
+        }
+        if (placeholder) {
+          placeholder.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
+        }
+        attempts++;
+        if (attempts >= 20) {
+          clearInterval(interval);
+        }
+      }, 100);
     });
 
     // Также пробуем сразу, если navbar уже загружен
     setTimeout(function () {
       const navbar = document.querySelector('.navbar');
+      const placeholder = document.getElementById('nav-placeholder');
+
       if (navbar) {
-        navbar.style.position = 'sticky';
-        navbar.style.top = '0';
-        navbar.style.zIndex = '9999999';
+        navbar.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
       }
+
+      if (placeholder) {
+        placeholder.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
+      }
+
+      console.log('Navbar sticky applied (timeout): YES');
     }, 100);
+
+    // И ещё раз через секунду
+    setTimeout(function () {
+      const navbar = document.querySelector('.navbar');
+      const placeholder = document.getElementById('nav-placeholder');
+
+      if (navbar) {
+        navbar.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
+      }
+
+      if (placeholder) {
+        placeholder.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 9999999 !important; width: 100% !important;';
+      }
+
+      console.log('Navbar sticky applied (1s): YES');
+    }, 1000);
   </script>
 
   <!-- Neural Background Canvas -->
