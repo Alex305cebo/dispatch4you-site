@@ -20,6 +20,7 @@ window.updateAuthUI = function () {
     const lastName = user.lastName || '';
     const fullName = `${firstName} ${lastName}`.trim() || name;
     const initials = (firstName[0] || '') + (lastName[0] || '');
+    const xp = user.xp || 0;
     const dashHref = isPages() ? '../dashboard.html' : 'dashboard.html';
 
     const html = `
@@ -28,7 +29,10 @@ window.updateAuthUI = function () {
           <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:white;box-shadow:0 2px 8px rgba(99,102,241,0.4);">${initials || '👤'}</div>
           <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;">
             <span style="font-weight:700;font-size:14px;color:#e0e7ff;line-height:1;">${fullName}</span>
-            <span style="font-size:11px;color:#a5b4fc;font-weight:500;">Личный кабинет</span>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:11px;color:#a5b4fc;font-weight:500;">Личный кабинет</span>
+              <span style="font-size:10px;color:#fbbf24;font-weight:700;background:rgba(251,191,36,0.15);padding:2px 6px;border-radius:6px;border:1px solid rgba(251,191,36,0.3);">⚡ ${xp} XP</span>
+            </div>
           </div>
         </a>
         <a href="#" class="btn-login" onclick="authLogout(event)" style="display:flex;align-items:center;justify-content:center;height:56px;padding:0 18px;border:1px solid rgba(239,68,68,0.35);border-radius:14px;color:#fca5a5;font-size:13px;font-weight:600;background:rgba(239,68,68,0.12);transition:all 0.3s;backdrop-filter:blur(10px);min-width:90px;" onmouseover="this.style.background='rgba(239,68,68,0.2)';this.style.borderColor='rgba(239,68,68,0.5)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(239,68,68,0.12)';this.style.borderColor='rgba(239,68,68,0.35)';this.style.transform=''">
