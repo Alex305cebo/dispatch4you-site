@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10000;
+    z-index: 99999;
     background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -120,7 +120,7 @@
 /* Dropdown Menu */
 .nav-dropdown {
     position: relative;
-    z-index: 10001;
+    z-index: 100000;
 }
 
 .nav-dropdown .nav-link {
@@ -169,7 +169,7 @@
     padding: 12px;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4),
         0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    z-index: 10001;
+    z-index: 100000;
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
