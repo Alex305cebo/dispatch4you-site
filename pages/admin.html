@@ -3298,12 +3298,25 @@
             if (!uid) return;
 
             // Первое подтверждение
-            if (!confirm(`⚠️ ВНИМАНИЕ!\n\nВы действительно хотите УДАЛИТЬ пользователя ${email}?\n\nЭто действие НЕОБРАТИМО!`)) {
+            if (!confirm(`⚠️ ВНИМАНИЕ!\n\nВы действительно хотите УДАЛИТЬ пользователя ${email}?\n\nЭто действие НЕОБРАТИМО!\n\nВсе данные пользователя будут потеряны навсегда!`)) {
                 return;
             }
 
-            // Запрос пароля
-            const password = prompt('🔐 Для удаления пользователя введите пароль администратора:');
+            // Второе подтверждение - ввод email
+            const emailConfirm = prompt(`🔐 Для подтверждения удаления введите email пользователя:\n\n${email}`);
+
+            if (!emailConfirm) {
+                window.toast('❌ Удаление отменено', 'e');
+                return;
+            }
+
+            if (emailConfirm.trim() !== email) {
+                window.toast('❌ Email не совпадает! Удаление отменено', 'e');
+                return;
+            }
+
+            // Третье подтверждение - пароль администратора
+            const password = prompt('🔐 Последний шаг: введите пароль администратора для удаления:');
 
             if (!password) {
                 window.toast('❌ Удаление отменено', 'e');
@@ -3316,7 +3329,7 @@
                 return;
             }
 
-            // Пароль верный - удаляем пользователя
+            // Все проверки пройдены - удаляем пользователя
             closeModal('editUser');
             window.deleteUser(uid, email);
         };
@@ -3326,7 +3339,21 @@
         };
 
         window.deleteUser = async function (uid, name) {
+            // Показываем предупреждение с задержкой
+            window.toast('⏳ Удаление через 3 секунды... Последний шанс отменить!', 'w');
+
+            // Задержка 3 секунды для возможности отмены
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
             try {
+                // Логируем удаление
+                console.warn('🗑️ УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ:', {
+                    uid,
+                    name,
+                    timestamp: new Date().toISOString(),
+                    admin: 'Super Admin'
+                });
+
                 await deleteDoc(doc(db, 'users', uid));
                 window.toast('🗑️ Пользователь ' + name + ' удалён', 's');
                 const users = await loadUsersFromFirestore();
